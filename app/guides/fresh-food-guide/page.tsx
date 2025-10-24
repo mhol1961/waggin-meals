@@ -392,7 +392,7 @@ export default function FreshFoodGuidePage() {
           </h2>
           <p className="text-center text-[16px] text-[#666666] mb-8 max-w-3xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Most recommended protein sources for your dog
-          </h3>
+          </p>
 
           <div className="overflow-x-auto shadow-lg rounded-lg">
             <table className="w-full bg-white">

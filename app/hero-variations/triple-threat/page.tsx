@@ -63,7 +63,7 @@ export default function TripleThreatFullPage() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
-              {icon: BookOpen, color: '#a5b5eb', title: 'Expert Consultations', desc: 'One-on-one nutrition consultations tailored to your dog's unique health needs, sensitivities, and goals.', points: ['Custom nutrition plans', 'Food sensitivity testing', 'Ongoing support', 'Virtual or in-person'], cta: 'Book Consultation', href: '/nutrition-services'},
+              {icon: BookOpen, color: '#a5b5eb', title: 'Expert Consultations', desc: "One-on-one nutrition consultations tailored to your dog's unique health needs, sensitivities, and goals.", points: ['Custom nutrition plans', 'Food sensitivity testing', 'Ongoing support', 'Virtual or in-person'], cta: 'Book Consultation', href: '/nutrition-services'},
               {icon: ShoppingCart, color: '#10b981', title: 'Fresh Prepared Meals', desc: 'Nutritionally balanced, locally-sourced fresh meals delivered to your door—no prep work required.', points: ['Human-grade ingredients', 'Balanced by nutritionist', 'Fresh, never frozen', 'Local delivery available'], cta: 'Shop Fresh Meals', href: '/shop'},
               {icon: GraduationCap, color: '#f59e0b', title: 'Education & Resources', desc: 'Free guides, calculators, and science-based resources to help you make informed nutrition decisions.', points: ['Fresh food feeding guide', 'Feeding calculator', 'Science-based articles', 'Events & workshops'], cta: 'Access Resources', href: '/resources'}
             ].map((service, i) => (
@@ -90,7 +90,7 @@ export default function TripleThreatFullPage() {
 
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              {[{num: '500+', label: 'Dogs Helped'}, {num: '15+', label: 'Years Experience'}, {num: '2', label: 'Master\'s Degrees'}, {num: '95%', label: 'Satisfaction Rate'}].map((stat, i) => (
+              {[{num: '500+', label: 'Dogs Helped'}, {num: '15+', label: 'Years Experience'}, {num: '2', label: "Master's Degrees"}, {num: '95%', label: 'Satisfaction Rate'}].map((stat, i) => (
                 <div key={i}>
                   <div className="text-4xl font-bold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>{stat.num}</div>
                   <div className="text-sm text-[#666666]">{stat.label}</div>
@@ -118,7 +118,7 @@ export default function TripleThreatFullPage() {
               <Image src="/images/2025/07/Chicken-Superfood-Cake-Board-scaled.jpg" alt="Chicken Superfood Board" width={2560} height={1716} className="rounded-md" />
             </div>
             <div className="space-y-10 lg:pt-20">
-              <h2 className="text-[43px] font-normal leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>Doggy Farm Kitchens weren&apos;t a thing ~ until now!</h2>
+              <h2 className="text-[43px] font-normal leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>Doggy Farm Kitchens weren't a thing ~ until now!</h2>
               {[
                 {title: 'Farm-Fresh & Sustainably Sourced', desc: 'Highest-quality ingredients from our own farms and trusted partners—because your pet deserves the best.'},
                 {title: 'Nutritionist-Formulated, Handcrafted', desc: 'Created by an Animal Nutritionist and prepared in our commercial farm kitchen using advanced animal science.'},
@@ -148,7 +148,7 @@ export default function TripleThreatFullPage() {
         <h2 className="text-center text-[35px] font-semibold text-[#333333] mb-12" style={{ fontFamily: "'Poppins', sans-serif" }}>Happy Customers & Waggin Tails</h2>
         <div className="mx-auto max-w-[1080px] grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            {quote: '"Our dog Maisy absolutely devours the fresh meals that Christie prepares. Can\'t recommend her enough."', author: 'Matt Wolfe + Maisy'},
+            {quote: "\"Our dog Maisy absolutely devours the fresh meals that Christie prepares. Can't recommend her enough.\"", author: 'Matt Wolfe + Maisy'},
             {quote: '"Christie is so helpful, kind & very knowledgeable about canine nutrition!"', author: 'Elizabeth Joslin'},
             {quote: '"My dogs love this food!! I know both are getting the best quality ingredients."', author: 'Amber Munoz'},
             {quote: '"Top notch, healthiest possible dog meals! The new location is fantastic!!"', author: 'Thom Slater'}

@@ -60,7 +60,7 @@ export default function DiagnosticDetectiveFullPage() {
               </p>
 
               <div className="space-y-3 mb-8">
-                {['Solved cases that stumped veterinarians and specialists', 'Advanced testing for food sensitivities and nutritional imbalances', 'Dual Master\'s degrees in nutrition science'].map((point, i) => (
+                {['Solved cases that stumped veterinarians and specialists', 'Advanced testing for food sensitivities and nutritional imbalances', "Dual Master's degrees in nutrition science"].map((point, i) => (
                   <div key={i} className="flex items-start">
                     <svg className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
@@ -136,7 +136,7 @@ export default function DiagnosticDetectiveFullPage() {
               <Image src="/images/2025/07/Chicken-Superfood-Cake-Board-scaled.jpg" alt="Chicken Superfood Board" width={2560} height={1716} className="rounded-md" />
             </div>
             <div className="space-y-10 lg:pt-20">
-              <h2 className="text-[43px] font-normal leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>Doggy Farm Kitchens weren&apos;t a thing ~ until now!</h2>
+              <h2 className="text-[43px] font-normal leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>Doggy Farm Kitchens weren't a thing ~ until now!</h2>
               {[
                 {title: 'Farm-Fresh & Sustainably Sourced', desc: 'Highest-quality ingredients from our own farms and trusted partners—because your pet deserves the best.'},
                 {title: 'Nutritionist-Formulated, Handcrafted', desc: 'Created by an Animal Nutritionist and prepared in our commercial farm kitchen using advanced animal science.'},
@@ -168,7 +168,7 @@ export default function DiagnosticDetectiveFullPage() {
         <h2 className="text-center text-[35px] font-semibold text-[#333333] mb-12" style={{ fontFamily: "'Poppins', sans-serif" }}>Happy Customers & Waggin Tails</h2>
         <div className="mx-auto max-w-[1080px] grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            {quote: '"Our dog Maisy absolutely devours the fresh meals that Christie prepares. Can\'t recommend her enough."', author: 'Matt Wolfe + Maisy'},
+            {quote: "\"Our dog Maisy absolutely devours the fresh meals that Christie prepares. Can't recommend her enough.\"", author: 'Matt Wolfe + Maisy'},
             {quote: '"Christie is so helpful, kind & very knowledgeable about canine nutrition!"', author: 'Elizabeth Joslin'},
             {quote: '"My dogs love this food!! I know both are getting the best quality ingredients."', author: 'Amber Munoz'},
             {quote: '"Top notch, healthiest possible dog meals! The new location is fantastic!!"', author: 'Thom Slater'}

@@ -89,7 +89,7 @@ export default function ScienceEducatorFullPage() {
             <div className="space-y-6">
               {[
                 {icon: BookOpen, color: 'blue', title: 'Fresh Food Feeding Guide', desc: 'Complete guide to transitioning and feeding fresh food safely', href: '/guides/fresh-food-guide'},
-                {icon: Calculator, color: 'amber', title: 'Feeding Calculator', desc: 'Calculate exact portions based on your dog's age, weight, and activity', href: '/feeding-calculator'},
+                {icon: Calculator, color: 'amber', title: 'Feeding Calculator', desc: "Calculate exact portions based on your dog's age, weight, and activity", href: '/feeding-calculator'},
                 {icon: FileText, color: 'green', title: 'Nutrition Articles & Blog', desc: 'Evidence-based insights on puppies, weight management, and more', href: '/blog'},
                 {icon: Video, color: 'purple', title: 'Events & Workshops', desc: 'Join live sessions and learn directly from Christie', href: '/events'}
               ].map((resource, i) => (
@@ -118,7 +118,7 @@ export default function ScienceEducatorFullPage() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[{num: '10K+', label: 'Guide Downloads'}, {num: '500+', label: 'Dogs Thriving'}, {num: '2', label: 'Master\'s Degrees'}, {num: '15+', label: 'Years Teaching'}].map((stat, i) => (
+              {[{num: '10K+', label: 'Guide Downloads'}, {num: '500+', label: 'Dogs Thriving'}, {num: '2', label: "Master's Degrees"}, {num: '15+', label: 'Years Teaching'}].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-4xl font-bold text-blue-600 mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>{stat.num}</div>
                   <div className="text-sm text-[#666666]">{stat.label}</div>
@@ -146,7 +146,7 @@ export default function ScienceEducatorFullPage() {
               <Image src="/images/2025/07/Chicken-Superfood-Cake-Board-scaled.jpg" alt="Chicken Superfood Board" width={2560} height={1716} className="rounded-md" />
             </div>
             <div className="space-y-10 lg:pt-20">
-              <h2 className="text-[43px] font-normal leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>Doggy Farm Kitchens weren&apos;t a thing ~ until now!</h2>
+              <h2 className="text-[43px] font-normal leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>Doggy Farm Kitchens weren't a thing ~ until now!</h2>
               {[
                 {title: 'Farm-Fresh & Sustainably Sourced', desc: 'Highest-quality ingredients from our own farms and trusted partners—because your pet deserves the best.'},
                 {title: 'Nutritionist-Formulated, Handcrafted', desc: 'Created by an Animal Nutritionist and prepared in our commercial farm kitchen using advanced animal science.'},
@@ -176,7 +176,7 @@ export default function ScienceEducatorFullPage() {
         <h2 className="text-center text-[35px] font-semibold text-[#333333] mb-12" style={{ fontFamily: "'Poppins', sans-serif" }}>Happy Customers & Waggin Tails</h2>
         <div className="mx-auto max-w-[1080px] grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            {quote: '"Our dog Maisy absolutely devours the fresh meals that Christie prepares. Can\'t recommend her enough."', author: 'Matt Wolfe + Maisy'},
+            {quote: "\"Our dog Maisy absolutely devours the fresh meals that Christie prepares. Can't recommend her enough.\"", author: 'Matt Wolfe + Maisy'},
             {quote: '"Christie is so helpful, kind & very knowledgeable about canine nutrition!"', author: 'Elizabeth Joslin'},
             {quote: '"My dogs love this food!! I know both are getting the best quality ingredients."', author: 'Amber Munoz'},
             {quote: '"Top notch, healthiest possible dog meals! The new location is fantastic!!"', author: 'Thom Slater'}

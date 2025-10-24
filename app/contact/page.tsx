@@ -4,8 +4,10 @@ import { useState, FormEvent } from 'react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    phone: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,28 +25,58 @@ export default function ContactPage() {
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      const response = await fetch('/api/contact', {
+      // Send to email API (existing functionality)
+      const emailResponse = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          message: formData.message
+        }),
       });
 
-      const data = await response.json();
+      // Send to GoHighLevel CRM (new functionality)
+      const ghlResponse = await fetch('/api/ghl/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          source: 'contact-form'
+        }),
+      });
 
-      if (response.ok) {
+      const emailData = await emailResponse.json();
+      const ghlData = await ghlResponse.json();
+
+      if (emailResponse.ok) {
         setSubmitStatus({
           type: 'success',
-          message: data.message || 'Message sent successfully! We\'ll get back to you within 24 hours.'
+          message: emailData.message || "Message sent successfully! We'll get back to you within 24 hours."
         });
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
       } else {
         setSubmitStatus({
           type: 'error',
-          message: data.error || 'Failed to send message. Please try again.'
+          message: emailData.error || 'Failed to send message. Please try again.'
         });
       }
+
+      // Log GHL integration status (non-blocking)
+      if (ghlData.placeholder) {
+        console.log('Contact saved locally - GHL integration pending configuration');
+      } else if (ghlData.success) {
+        console.log('Contact successfully added to GoHighLevel CRM');
+      }
+
     } catch (error) {
       setSubmitStatus({
         type: 'error',
@@ -176,26 +208,50 @@ export default function ContactPage() {
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="firstName"
                     className="block text-sm font-semibold text-[#3c3a47] mb-2"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
-                    Name *
+                    First Name *
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                     required
                     disabled={isSubmitting}
                     className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
-                    placeholder="Your name"
+                    placeholder="First name"
                   />
                 </div>
 
+                <div>
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-semibold text-[#3c3a47] mb-2"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                  >
+                    Last Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    required
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                    placeholder="Last name"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2">
                 <div>
                   <label
                     htmlFor="email"
@@ -215,6 +271,27 @@ export default function ContactPage() {
                     className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                     placeholder="your@email.com"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-semibold text-[#3c3a47] mb-2"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                  >
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                    placeholder="(555) 123-4567"
                   />
                 </div>
               </div>

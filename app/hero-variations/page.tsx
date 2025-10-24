@@ -5,7 +5,7 @@ export default function HeroVariationsIndex() {
     {
       id: 'diagnostic-detective',
       title: 'Variation A: The Diagnostic Detective',
-      description: 'For desperate pet owners with complex cases vets can\'t solve',
+      description: "For desperate pet owners with complex cases vets can't solve",
       target: 'Premium clients with urgent, mysterious health issues',
       cta: 'Book Diagnostic Consultation',
     },

@@ -71,7 +71,7 @@ export default function Home() {
               {/* Heading */}
               <div>
                 <h2 className="text-[43px] font-normal leading-tight text-black md:text-[32px] sm:text-[24px]" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                  Doggy Farm Kitchens weren&apos;t a thing ~ until now!
+                  Doggy Farm Kitchens weren't a thing ~ until now!
                 </h2>
               </div>
 
@@ -241,11 +241,11 @@ export default function Home() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
-                quote: '"Our dog Maisy absolutely devours the fresh meals that Christie prepares. And it\'s satisfying to know the food is prepared by a pet nutritionist. Can\'t recommend her enough."',
+                quote: "\"Our dog Maisy absolutely devours the fresh meals that Christie prepares. And it's satisfying to know the food is prepared by a pet nutritionist. Can't recommend her enough.\"",
                 author: 'Matt Wolfe + Maisy'
               },
               {
-                quote: '"Our large pup loves their food and broth! Christie is so helpful, kind & very knowledgeable about canine nutrition! You can tell she genuinely cares about your dog\'s health and not just selling products. They also offer a private dog park that you can rent hourly! We recently rented the park for our pups birthday and had a blast."',
+                quote: "\"Our large pup loves their food and broth! Christie is so helpful, kind & very knowledgeable about canine nutrition! You can tell she genuinely cares about your dog's health and not just selling products. They also offer a private dog park that you can rent hourly! We recently rented the park for our pups birthday and had a blast.\"",
                 author: 'Elizabeth Joslin'
               },
               {

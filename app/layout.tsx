@@ -3,6 +3,8 @@ import { Abril_Fatface, Poppins } from 'next/font/google';
 import './globals.css';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
+import { CartProvider } from '@/contexts/cart-context';
+import CartDrawer from '@/components/cart-drawer';
 
 const abrilFatface = Abril_Fatface({
   subsets: ['latin'],
@@ -29,9 +31,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${abrilFatface.variable} ${poppins.variable} antialiased`}>
-        <Navigation />
-        {children}
-        <Footer />
+        <CartProvider>
+          <Navigation />
+          {children}
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

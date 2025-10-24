@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     // Create transporter
     // Note: For production, configure SMTP credentials in environment variables
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: false, // true for 465, false for other ports
@@ -147,7 +147,7 @@ This is an automated response. Please do not reply to this email.
 
     return NextResponse.json({
       success: true,
-      message: 'Message sent successfully! We\'ll get back to you within 24 hours.',
+      message: "Message sent successfully! We'll get back to you within 24 hours.",
     });
 
   } catch (error) {

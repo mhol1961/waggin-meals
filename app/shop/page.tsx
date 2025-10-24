@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { collections } from '@/data/products';
+import AddToCartButton from '@/components/add-to-cart-button';
 
 export default function ShopPage() {
 
@@ -136,12 +137,27 @@ export default function ShopPage() {
                       ))}
                     </div>
 
-                    {/* View Product Button */}
-                    <div className="block w-full bg-[#a5b5eb] text-white text-center px-4 py-2 rounded-lg font-semibold group-hover:bg-[#8a9fd9] transition-colors"
-                      style={{ fontFamily: "'Poppins', sans-serif" }}
-                    >
-                      View Product
-                    </div>
+                    {/* Add to Cart Button */}
+                    {product.inStock ? (
+                      <AddToCartButton
+                        product={{
+                          id: product.id,
+                          handle: product.handle,
+                          title: product.title,
+                          price: product.price,
+                          images: product.images,
+                          weight: product.weight,
+                        }}
+                        variant="primary"
+                        className="w-full px-4 py-2 rounded-lg"
+                      />
+                    ) : (
+                      <div className="block w-full bg-gray-300 text-gray-600 text-center px-4 py-2 rounded-lg font-semibold cursor-not-allowed"
+                        style={{ fontFamily: "'Poppins', sans-serif" }}
+                      >
+                        Out of Stock
+                      </div>
+                    )}
                   </div>
                 </Link>
               ))}

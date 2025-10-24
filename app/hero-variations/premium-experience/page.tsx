@@ -76,7 +76,7 @@ export default function PremiumExperienceFullPage() {
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {[
               {icon: Shield, title: 'Comprehensive Assessment', desc: 'In-depth health history, food sensitivity testing, and advanced nutritional analysis—leaving no stone unturned.'},
-              {icon: Star, title: 'Bespoke Nutrition Plan', desc: 'Custom-designed meal plans with recipes, supplements, and ongoing adjustments as your dog's needs evolve.'},
+              {icon: Star, title: 'Bespoke Nutrition Plan', desc: "Custom-designed meal plans with recipes, supplements, and ongoing adjustments as your dog's needs evolve."},
               {icon: Crown, title: 'Priority VIP Access', desc: 'Direct access to Christie for questions, meal delivery coordination, and complimentary follow-up consultations.'}
             ].map((feature, i) => (
               <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all">
@@ -95,8 +95,8 @@ export default function PremiumExperienceFullPage() {
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {title: '90-Minute Initial Consultation', desc: 'Deep-dive assessment with Christie (in-person or virtual)'},
-                {title: 'Complete Food Sensitivity Panel', desc: 'Identify hidden triggers affecting your dog's health'},
-                {title: 'Custom Meal Plan & Recipes', desc: 'Tailored to your dog's unique needs and your lifestyle'},
+                {title: 'Complete Food Sensitivity Panel', desc: "Identify hidden triggers affecting your dog's health"},
+                {title: 'Custom Meal Plan & Recipes', desc: "Tailored to your dog's unique needs and your lifestyle"},
                 {title: 'Supplement Recommendations', desc: 'Research-backed supplements for optimal health'},
                 {title: 'Fresh Meal Delivery Option', desc: 'Chef-prepared meals delivered to your door (local clients)'},
                 {title: 'Quarterly Progress Reviews', desc: 'Ongoing optimization and plan adjustments'},
@@ -122,7 +122,7 @@ export default function PremiumExperienceFullPage() {
           </div>
 
           <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-center">
-            {['Dual Master\'s Degrees', '15+ Years Expertise', '500+ Elite Clients', 'Nationwide Service'].map((item, i) => (
+            {["Dual Master's Degrees", '15+ Years Expertise', '500+ Elite Clients', 'Nationwide Service'].map((item, i) => (
               <div key={i} className="flex items-center gap-2">
                 <Check className="w-6 h-6 text-amber-400" />
                 <span className="text-sm font-semibold text-gray-200">{item}</span>
@@ -160,7 +160,7 @@ export default function PremiumExperienceFullPage() {
               <Image src="/images/2025/07/Chicken-Superfood-Cake-Board-scaled.jpg" alt="Chicken Superfood Board" width={2560} height={1716} className="rounded-md" />
             </div>
             <div className="space-y-10 lg:pt-20">
-              <h2 className="text-[43px] font-normal leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>Doggy Farm Kitchens weren&apos;t a thing ~ until now!</h2>
+              <h2 className="text-[43px] font-normal leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>Doggy Farm Kitchens weren't a thing ~ until now!</h2>
               {[
                 {title: 'Farm-Fresh & Sustainably Sourced', desc: 'Highest-quality ingredients from our own farms and trusted partners—because your pet deserves the best.'},
                 {title: 'Nutritionist-Formulated, Handcrafted', desc: 'Created by an Animal Nutritionist and prepared in our commercial farm kitchen using advanced animal science.'},

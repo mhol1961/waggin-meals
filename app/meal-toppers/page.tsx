@@ -257,7 +257,7 @@ export default function MealToppersPage() {
               {
                 icon: Star,
                 title: 'Entice Picky Eaters',
-                desc: 'Make meals irresistible—even the fussiest dogs can't resist the added flavor and aroma.'
+                desc: "Make meals irresistible—even the fussiest dogs can't resist the added flavor and aroma."
               },
               {
                 icon: Heart,

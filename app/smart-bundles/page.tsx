@@ -49,7 +49,7 @@ export default function SmartBundlesPage() {
       savings: 60,
       image: '/images/woman-with-white-dog.webp',
       servings: '42 meals + supplements',
-      description: 'The complete package—meals, supplements, and exclusive access to Christie's expertise for optimal health.',
+      description: "The complete package—meals, supplements, and exclusive access to Christie's expertise for optimal health.",
       includes: [
         '21 Beef & Sweet Potato Bowls (1 lb each)',
         '21 Chicken Superfood Boards (1 lb each)',
@@ -257,7 +257,7 @@ export default function SmartBundlesPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { step: '1', title: 'Choose Your Bundle', desc: 'Select the bundle that fits your dog's needs and your lifestyle.' },
+              { step: '1', title: 'Choose Your Bundle', desc: "Select the bundle that fits your dog's needs and your lifestyle." },
               { step: '2', title: 'We Prepare & Deliver', desc: 'Meals are freshly prepared in our farm kitchen and delivered to your door.' },
               { step: '3', title: 'Serve & Enjoy', desc: 'Simply thaw, portion, and serve. Watch your dog love every bite!' }
             ].map((step, i) => (
@@ -288,15 +288,15 @@ export default function SmartBundlesPage() {
               },
               {
                 q: 'Can I customize my bundle?',
-                a: 'Absolutely! Contact us at shopwagginmeals@gmail.com and Christie can help create a custom bundle tailored to your dog's specific needs.'
+                a: "Absolutely! Contact us at shopwagginmeals@gmail.com and Christie can help create a custom bundle tailored to your dog's specific needs."
               },
               {
-                q: 'What if my dog doesn't like it?',
-                a: 'We offer a 100% satisfaction guarantee. If your dog doesn't love our food within the first 14 days, we'll provide a full refund—no questions asked.'
+                q: "What if my dog doesn't like it?",
+                a: "We offer a 100% satisfaction guarantee. If your dog doesn't love our food within the first 14 days, we'll provide a full refund—no questions asked."
               },
               {
-                q: 'How do I know which bundle is right for my dog?',
-                a: 'Bundle selection depends on your dog's weight, activity level, and health status. Use our feeding calculator or book a free 15-minute consultation with Christie for personalized guidance.'
+                q: "How do I know which bundle is right for my dog?",
+                a: "Bundle selection depends on your dog's weight, activity level, and health status. Use our feeding calculator or book a free 15-minute consultation with Christie for personalized guidance."
               },
               {
                 q: 'Do you ship nationwide?',
@@ -320,15 +320,15 @@ export default function SmartBundlesPage() {
         <div className="mx-auto max-w-[1080px] grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
             {
-              quote: '"The Wellness Bundle has been a game-changer! My dog's energy levels are through the roof, and his coat has never looked better."',
+              quote: "\"The Wellness Bundle has been a game-changer! My dog's energy levels are through the roof, and his coat has never looked better.\"",
               author: 'Sarah M.'
             },
             {
-              quote: '"I love that I don't have to think about meal prep anymore. The bundles make it so easy to give my dog real, nutritious food."',
+              quote: "\"I love that I don't have to think about meal prep anymore. The bundles make it so easy to give my dog real, nutritious food.\"",
               author: 'David K.'
             },
             {
-              quote: '"Worth every penny! The Premium Bundle with the consultation helped us address my dog's allergies. Christie is amazing!"',
+              quote: "\"Worth every penny! The Premium Bundle with the consultation helped us address my dog's allergies. Christie is amazing!\"",
               author: 'Jennifer L.'
             }
           ].map((t, i) => (

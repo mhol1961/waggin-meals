@@ -1,79 +1,66 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { createClient } from '@supabase/supabase-js';
+import NewsletterSignupForm from '@/components/newsletter-signup-form';
 
-// Sample blog posts - these will be replaced with actual content management
-const featuredPost = {
-  title: "5 Signs Your Dog Needs a Custom Meal Plan (And How to Get One)",
-  excerpt: "Is your dog constantly scratching, experiencing digestive issues, or lacking energy? These could be signs that their current diet isn't meeting their unique nutritional needs. Learn the warning signs and how a customized meal plan can transform your dog's health.",
-  image: "/images/woman-with-white-dog.webp",
-  category: "Nutrition Basics",
-  date: "January 15, 2025",
-  readTime: "8 min read",
-  slug: "signs-your-dog-needs-custom-meal-plan",
-};
+// Force dynamic rendering to always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-const blogPosts = [
-  {
-    title: "Kibble vs Fresh Food: What Vets Don't Tell You",
-    excerpt: "Discover the truth about commercial kibble and why fresh food might be the better choice for your dog's long-term health.",
-    category: "Nutrition Basics",
-    date: "January 10, 2025",
-    readTime: "6 min read",
-    slug: "kibble-vs-fresh-food",
-  },
-  {
-    title: "How to Transition Your Picky Eater to Fresh Food",
-    excerpt: "Step-by-step strategies to help even the most stubborn dogs embrace a healthier diet without stress or hunger strikes.",
-    category: "Feeding Tips",
-    date: "January 5, 2025",
-    readTime: "5 min read",
-    slug: "transition-picky-eater-fresh-food",
-  },
-  {
-    title: "The Truth About Dog Food Labels: A Pet Nutritionist's Guide",
-    excerpt: "Learn to decode marketing jargon and ingredient lists to make informed decisions about what you're really feeding your dog.",
-    category: "Ingredient Insights",
-    date: "December 28, 2024",
-    readTime: "7 min read",
-    slug: "truth-about-dog-food-labels",
-  },
-  {
-    title: "Seasonal Nutrition: What to Feed Your Dog in Winter",
-    excerpt: "Adjust your dog's diet for colder months to maintain energy, support immune function, and keep their coat healthy.",
-    category: "Seasonal Tips",
-    date: "December 20, 2024",
-    readTime: "4 min read",
-    slug: "seasonal-nutrition-winter",
-  },
-  {
-    title: "Real Client Story: How Fresh Food Healed Bella's Digestive Issues",
-    excerpt: "Meet Bella, a 6-year-old Golden Retriever who suffered from chronic diarrhea for years—until we created her custom meal plan.",
-    category: "Success Stories",
-    date: "December 15, 2024",
-    readTime: "6 min read",
-    slug: "bella-digestive-issues-success-story",
-  },
-  {
-    title: "Top 10 Superfoods for Dogs (And How to Add Them to Meals)",
-    excerpt: "Boost your dog's nutrition with these nutrient-dense whole foods that support everything from joint health to brain function.",
-    category: "Ingredient Insights",
-    date: "December 10, 2024",
-    readTime: "5 min read",
-    slug: "top-10-superfoods-for-dogs",
-  },
-];
+async function getBlogPosts() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
-const categories = [
-  "All Posts",
-  "Nutrition Basics",
-  "Feeding Tips",
-  "Ingredient Insights",
-  "Success Stories",
-  "Seasonal Tips",
-  "Health Conditions",
-];
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .eq('is_published', true)
+    .order('published_date', { ascending: false });
 
-export default function BlogPage() {
+  if (error || !data || data.length === 0) {
+    return [];
+  }
+
+  // Transform database posts to match original format
+  return data.map(post => ({
+    title: post.title,
+    excerpt: post.excerpt || '',
+    image: post.featured_image || '/images/woman-with-white-dog.webp',
+    category: post.category,
+    date: new Date(post.published_date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }),
+    readTime: post.read_time ? `${post.read_time} min read` : '',
+    slug: post.slug,
+  }));
+}
+
+async function getCategories() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const { data } = await supabase
+    .from('blog_posts')
+    .select('category')
+    .eq('is_published', true);
+
+  if (!data) return ["All Posts", "Nutrition Basics", "Feeding Tips", "Ingredient Insights", "Success Stories", "Seasonal Tips", "Health Conditions"];
+
+  const uniqueCategories = Array.from(new Set(data.map(p => p.category).filter(Boolean)));
+  return ["All Posts", ...uniqueCategories];
+}
+
+export default async function BlogPage() {
+  const allPosts = await getBlogPosts();
+  const categories = await getCategories();
+
+  // Featured post is the most recent
+  const featuredPost = allPosts[0] || null;
+  const blogPosts = allPosts.slice(1);
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
@@ -113,50 +100,52 @@ export default function BlogPage() {
       </section>
 
       {/* Featured Post */}
-      <section className="bg-[#f8f9fa] px-4 py-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-            <div className="grid md:grid-cols-2 gap-0">
-              <div className="relative h-64 md:h-auto">
-                <Image
-                  src={featuredPost.image}
-                  alt={featuredPost.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-[#a5b5eb] text-white px-4 py-1 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    Featured
-                  </span>
+      {featuredPost && (
+        <section className="bg-[#f8f9fa] px-4 py-16">
+          <div className="mx-auto max-w-6xl">
+            <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+              <div className="grid md:grid-cols-2 gap-0">
+                <div className="relative h-64 md:h-auto">
+                  <Image
+                    src={featuredPost.image}
+                    alt={featuredPost.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-[#a5b5eb] text-white px-4 py-1 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Featured
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="p-8 md:p-12 flex flex-col justify-center">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-semibold text-[#a5b5eb] uppercase tracking-wide" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    {featuredPost.category}
-                  </span>
-                  <span className="text-xs text-[#999999]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    {featuredPost.date} · {featuredPost.readTime}
-                  </span>
+                <div className="p-8 md:p-12 flex flex-col justify-center">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-xs font-semibold text-[#a5b5eb] uppercase tracking-wide" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      {featuredPost.category}
+                    </span>
+                    <span className="text-xs text-[#999999]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      {featuredPost.date} · {featuredPost.readTime}
+                    </span>
+                  </div>
+                  <h2 className="text-3xl font-normal text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                    {featuredPost.title}
+                  </h2>
+                  <p className="text-[15px] text-[#666666] mb-6 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    {featuredPost.excerpt}
+                  </p>
+                  <Link
+                    href={`/blog/${featuredPost.slug}`}
+                    className="inline-block bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                  >
+                    Read Full Article →
+                  </Link>
                 </div>
-                <h2 className="text-3xl font-normal text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                  {featuredPost.title}
-                </h2>
-                <p className="text-[15px] text-[#666666] mb-6 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  {featuredPost.excerpt}
-                </p>
-                <Link
-                  href={`/blog/${featuredPost.slug}`}
-                  className="inline-block bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
-                  style={{ fontFamily: "'Poppins', sans-serif" }}
-                >
-                  Read Full Article →
-                </Link>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Blog Posts Grid */}
       <section className="bg-white px-4 py-16">
@@ -223,23 +212,7 @@ export default function BlogPage() {
           <p className="text-[16px] text-[#666666] mb-8" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Get weekly nutrition tips, recipes, and exclusive insights delivered to your inbox
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-[#a5b5eb]"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
-            />
-            <button
-              className="bg-[#a5b5eb] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors whitespace-nowrap"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
-            >
-              Subscribe
-            </button>
-          </div>
-          <p className="text-xs text-[#999999] mt-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            No spam, ever. Unsubscribe anytime.
-          </p>
+          <NewsletterSignupForm source="blog" variant="blog" />
         </div>
       </section>
 

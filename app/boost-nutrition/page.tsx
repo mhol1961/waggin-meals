@@ -35,7 +35,7 @@ export default function BoostNutritionPage() {
       price: 22,
       size: '16 oz',
       image: '/images/2025/07/Chicken-Superfood-Cake-Board-scaled.jpg',
-      description: 'Named after Christie's own rescued dog, this gentle, easy-to-digest stew was formulated to help dogs heal from illness, surgery, or digestive upset.',
+      description: "Named after Christie's own rescued dog, this gentle, easy-to-digest stew was formulated to help dogs heal from illness, surgery, or digestive upset.",
       keyBenefits: [
         'Gentle on sensitive stomachs',
         'Supports recovery & healing',
@@ -228,7 +228,7 @@ export default function BoostNutritionPage() {
               {
                 icon: Droplets,
                 title: 'As a Meal Topper',
-                desc: 'Pour 1-4 oz over your dog's regular meals to add flavor, moisture, and nutrition.',
+                desc: "Pour 1-4 oz over your dog's regular meals to add flavor, moisture, and nutrition.",
                 color: 'blue'
               },
               {
@@ -336,12 +336,12 @@ export default function BoostNutritionPage() {
         <div className="mx-auto max-w-[1080px] grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
             {
-              quote: '"The bone broth helped my senior Lab so much with his arthritis. He's moving better and seems much more comfortable!"',
+              quote: "\"The bone broth helped my senior Lab so much with his arthritis. He's moving better and seems much more comfortable!\"",
               author: 'Karen R.',
               product: 'Bone Broth'
             },
             {
-              quote: '"Prince Jax Stew was a lifesaver after my dog's surgery. She couldn't keep anything down, but this stew was gentle and helped her recover."',
+              quote: "\"Prince Jax Stew was a lifesaver after my dog's surgery. She couldn't keep anything down, but this stew was gentle and helped her recover.\"",
               author: 'Tom M.',
               product: 'Prince Jax Healing Stew'
             },

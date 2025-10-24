@@ -216,7 +216,7 @@ export default function NutritionServices() {
                 <ul className="space-y-3 mb-6">
                   {[
                     { title: 'Full Nutritional Assessment', desc: 'Evaluation of up to two dogs, including breed-specific needs, age, weight, medical history, and dietary restrictions.' },
-                    { title: 'Custom Meal Plan & Recipe Formulation', desc: 'Science-based formulation tailored to your dog\'s unique health profile.' },
+                    { title: 'Custom Meal Plan & Recipe Formulation', desc: "Science-based formulation tailored to your dog's unique health profile." },
                     { title: 'Supplement Protocol', desc: 'Evidence-supported supplement recommendations with sourcing guidance.' },
                     { title: 'Meal Preparation Guidance', desc: 'Instructions for cooked, or hybrid diets, including recommended tools and techniques.' },
                     { title: 'Ongoing Support', desc: 'Two follow-up consultations (including a 3-month milestone evaluation) plus continuous email/phone support.' },
@@ -339,7 +339,7 @@ export default function NutritionServices() {
 
                 <ul className="space-y-2 mb-8">
                   {[
-                    'Identify your dog\'s specific needs',
+                    "Identify your dog's specific needs",
                     'Evaluate commercial fresh food and cut through marketing claims',
                     'Manage health issues with specialized diet plans',
                     'Ensure a smooth transition to avoid digestive upset'

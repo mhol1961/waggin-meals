@@ -84,7 +84,7 @@ export default function IngredientSourcingPage() {
               {
                 icon: ShieldCheck,
                 title: 'Quality Guaranteed',
-                desc: 'Human-grade, USDA-certified ingredients only. If we wouldn't eat it ourselves, it doesn't go in the bowl.'
+                desc: "Human-grade, USDA-certified ingredients only. If we wouldn't eat it ourselves, it doesn't go in the bowl."
               }
             ].map((item, i) => (
               <div key={i} className="bg-[#f5f5f5] rounded-xl shadow-lg p-8 text-center">
