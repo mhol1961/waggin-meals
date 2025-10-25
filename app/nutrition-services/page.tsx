@@ -3,14 +3,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, X } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ComplianceBanner } from '@/components/compliance-banner';
 
 export default function NutritionServices() {
   const [candyStoryOpen, setCandyStoryOpen] = useState(false);
-  const [disclaimerVisible, setDisclaimerVisible] = useState(true);
 
   return (
     <main className="bg-white">
+      <ComplianceBanner />
+
       {/* Hero Section - Redesigned with Darker Gradient */}
       <section className="relative bg-gradient-to-br from-[#4c51bf] via-[#5a3a8f] to-[#6b46c1] px-4 py-20 overflow-hidden">
         {/* Animated Background Elements */}
