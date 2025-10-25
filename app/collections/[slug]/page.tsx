@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';
 import { getCollectionBySlug, getProductsForCollection } from '@/data/collections';
-import { products as allProducts } from '@/data/products';
+import { allProducts } from '@/data/products';
 
 type SortOption = 'featured' | 'price-low' | 'price-high' | 'name' | 'newest';
 type ViewMode = 'grid' | 'list';
