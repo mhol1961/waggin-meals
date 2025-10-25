@@ -562,34 +562,6 @@ export default function NutritionServices() {
           </div>
         </div>
       </section>
-
-      {/* Dismissible Sticky Bottom FDA Disclaimer Banner */}
-      {disclaimerVisible && (
-        <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-2xl z-50 border-t-4 border-indigo-400">
-          <div className="mx-auto max-w-7xl px-4 py-4">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <svg className="w-5 h-5 text-yellow-300 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <h3 className="text-sm font-bold" style={{ fontFamily: "'Poppins', sans-serif" }}>FDA-Approved Quality Promise</h3>
-                </div>
-                <p className="text-xs leading-relaxed text-white/90" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Our <strong>Gently Cooked Human Grade Food for Dogs</strong> is approved through the <strong>FDA Pet Feed Program</strong> and scientifically formulated by an Animal Nutritionist to meet <strong>AAFCO standards for dogs of all ages</strong>. Products are formulated for dogs only. Content is educational and not a substitute for veterinary advice. Always consult your vet for health decisions.
-                </p>
-              </div>
-              <button
-                onClick={() => setDisclaimerVisible(false)}
-                className="flex-shrink-0 text-white/80 hover:text-white hover:bg-white/10 rounded-full p-2 transition-colors"
-                aria-label="Close disclaimer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </main>
   );
 }
