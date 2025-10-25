@@ -1,12 +1,41 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { FileText, BookOpen, ArrowRight } from 'lucide-react';
+import { FileText, BookOpen, ArrowRight, LogOut } from 'lucide-react';
 
 export default function AdminDashboard() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/admin/auth/logout', {
+        method: 'POST',
+      });
+
+      if (response.ok) {
+        router.push('/admin/login');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb]">
       <div className="max-w-4xl mx-auto px-4 py-16">
+        {/* Header with Logout */}
+        <div className="flex justify-end mb-8">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 text-sm text-[#666666] hover:text-[#3c3a47] transition-colors"
+            style={{ fontFamily: "'Poppins', sans-serif" }}
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
+          </button>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-12">
           <h1
