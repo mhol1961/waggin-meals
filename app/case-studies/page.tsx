@@ -1,56 +1,52 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { filterCaseStudies, sortCaseStudies, getDogSize, type CaseStudy, type CaseStudyFilters, type DogSize } from '@/types/case-study';
 
-// Sample case studies - will be replaced with database data
-const sampleCaseStudies: CaseStudy[] = [
-  {
-    id: '1',
-    slug: 'bella-weight-loss-transformation',
-    dogName: 'Bella',
-    breed: 'Labrador Retriever',
-    age: 6,
-    weight: 85,
-    sex: 'spayed-female',
-    ownerName: 'Sarah M.',
-    location: 'Austin, TX',
-    title: "How Bella Lost 15 Pounds and Regained Her Energy",
-    summary: "Bella went from overweight and lethargic to healthy and playful in just 4 months with a custom fresh food plan.",
-    healthIssues: ['Weight Management', 'Energy & Vitality'],
-    symptoms: ['Overweight', 'Low energy', 'Joint pain', 'Difficulty climbing stairs'],
-    diagnosis: 'Obesity, early arthritis',
-    problemDuration: '2 years',
-    timeToResults: '4 months',
-    productsUsed: ['Chicken & Sweet Potato Meal', 'Joint Support Supplement'],
-    servicesUsed: ['3-Month Custom Meal Plan', 'Monthly Check-ins'],
-    resultsAchieved: [
-      'Lost 15 pounds safely',
-      'Energy levels tripled',
-      'Playful like a puppy again',
-      'No more joint pain',
-      'Climbs stairs easily'
-    ],
-    beforeMetrics: { weight: 85, energy: 'Very low' },
-    afterMetrics: { weight: 70, energy: 'High' },
-    fullStory: '<p>Bella\'s transformation story...</p>',
-    ownerQuote: "I was skeptical about fresh food, but Christie's custom meal plan completely transformed Bella's life. She lost weight gradually and safely, and now she plays like a puppy again! The best investment I've ever made in her health.",
-    christieNotes: 'Bella\'s case demonstrates how proper portion control combined with nutrient-dense fresh food can reverse obesity and improve quality of life.',
-    beforePhotos: ['/images/woman-with-white-dog.webp'],
-    afterPhotos: ['/images/woman-with-white-dog.webp'],
-    heroImage: '/images/woman-with-white-dog.webp',
-    category: 'Weight Management',
-    tags: ['labrador', 'weight-loss', 'obesity', 'arthritis', 'senior'],
-    featured: true,
-    published: true,
-    publishedAt: '2024-10-01',
-    createdAt: '2024-10-01',
-    updatedAt: '2024-10-01',
-  },
-  // Add more sample cases...
-];
+// Helper function to map database fields to frontend types
+function mapDatabaseToFrontend(dbCase: any): CaseStudy {
+  return {
+    id: dbCase.id,
+    slug: dbCase.slug,
+    dogName: dbCase.dog_name,
+    breed: dbCase.breed,
+    age: dbCase.age,
+    weight: parseFloat(dbCase.weight),
+    sex: dbCase.sex,
+    ownerName: dbCase.owner_name,
+    location: dbCase.location,
+    title: dbCase.title,
+    summary: dbCase.summary,
+    healthIssues: dbCase.health_issues || [],
+    symptoms: dbCase.symptoms || [],
+    diagnosis: dbCase.diagnosis || '',
+    problemDuration: dbCase.problem_duration || '',
+    timeToResults: dbCase.time_to_results || '',
+    productsUsed: dbCase.products_used || [],
+    servicesUsed: dbCase.services_used || [],
+    customPlan: dbCase.custom_plan,
+    resultsAchieved: dbCase.results_achieved || [],
+    beforeMetrics: dbCase.before_metrics || { weight: dbCase.before_weight, energy: dbCase.before_energy },
+    afterMetrics: dbCase.after_metrics || { weight: dbCase.after_weight, energy: dbCase.after_energy },
+    fullStory: dbCase.full_story,
+    ownerQuote: dbCase.owner_quote,
+    christieNotes: dbCase.christie_notes,
+    beforePhotos: dbCase.before_photos || [],
+    afterPhotos: dbCase.after_photos || [],
+    heroImage: dbCase.hero_image || '/images/woman-with-white-dog.webp',
+    category: dbCase.category || '',
+    tags: dbCase.tags || [],
+    featured: dbCase.featured,
+    published: dbCase.published,
+    publishedAt: dbCase.published_at,
+    createdAt: dbCase.created_at,
+    updatedAt: dbCase.updated_at,
+    seoTitle: dbCase.seo_title,
+    seoDescription: dbCase.seo_description,
+  };
+}
 
 type ViewMode = 'grid' | 'list';
 type SortOption = 'newest' | 'oldest' | 'featured' | 'name';
@@ -71,6 +67,8 @@ const HEALTH_ISSUE_OPTIONS = [
 const DOG_SIZE_OPTIONS: DogSize[] = ['Toy', 'Small', 'Medium', 'Large', 'Giant'];
 
 export default function CaseStudiesPage() {
+  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedHealthIssues, setSelectedHealthIssues] = useState<string[]>([]);
   const [selectedSize, setSelectedSize] = useState<DogSize | ''>('');
@@ -78,6 +76,28 @@ export default function CaseStudiesPage() {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [sortBy, setSortBy] = useState<SortOption>('featured');
   const [showFilters, setShowFilters] = useState(false);
+
+  // Fetch case studies from API
+  useEffect(() => {
+    async function fetchCaseStudies() {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/case-studies?limit=100');
+        if (!response.ok) throw new Error('Failed to fetch case studies');
+
+        const data = await response.json();
+        const mappedCases = (data.caseStudies || []).map(mapDatabaseToFrontend);
+        setCaseStudies(mappedCases);
+      } catch (error) {
+        console.error('Error fetching case studies:', error);
+        setCaseStudies([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCaseStudies();
+  }, []);
 
   // Filter and sort case studies
   const filteredAndSortedCases = useMemo(() => {
@@ -88,9 +108,9 @@ export default function CaseStudiesPage() {
       ageRange: selectedAgeRange,
     };
 
-    const filtered = filterCaseStudies(sampleCaseStudies, filters);
+    const filtered = filterCaseStudies(caseStudies, filters);
     return sortCaseStudies(filtered, sortBy);
-  }, [searchQuery, selectedHealthIssues, selectedSize, selectedAgeRange, sortBy]);
+  }, [caseStudies, searchQuery, selectedHealthIssues, selectedSize, selectedAgeRange, sortBy]);
 
   const toggleHealthIssue = (issue: string) => {
     setSelectedHealthIssues(prev =>

@@ -93,63 +93,71 @@ export default function NewCaseStudyPage() {
     setSaving(true);
 
     try {
-      const caseStudyData: Partial<CaseStudy> = {
+      const caseStudyData = {
         dogName,
         breed,
         age: parseInt(age),
-        weight: parseInt(weight),
+        weight: parseFloat(weight),
         sex,
         ownerName,
         location,
         title,
         summary,
-        slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
         healthIssues,
         symptoms: symptoms.split('\n').filter(s => s.trim()),
-        diagnosis: diagnosis || undefined,
-        problemDuration,
-        timeToResults,
+        diagnosis: diagnosis || null,
+        problemDuration: problemDuration || null,
+        timeToResults: timeToResults || null,
         productsUsed: productsUsed.split('\n').filter(p => p.trim()),
         servicesUsed: servicesUsed.split('\n').filter(s => s.trim()),
-        customPlan: customPlan || undefined,
+        customPlan: customPlan || null,
         resultsAchieved: resultsAchieved.split('\n').filter(r => r.trim()),
         beforeMetrics: {
-          weight: beforeWeight ? parseInt(beforeWeight) : undefined,
+          weight: beforeWeight ? parseFloat(beforeWeight) : undefined,
           energy: beforeEnergy || undefined,
         },
         afterMetrics: {
-          weight: afterWeight ? parseInt(afterWeight) : undefined,
+          weight: afterWeight ? parseFloat(afterWeight) : undefined,
           energy: afterEnergy || undefined,
         },
         fullStory,
         ownerQuote,
-        christieNotes: christieNotes || undefined,
+        christieNotes: christieNotes || null,
         beforePhotos: [],
         afterPhotos: [],
         heroImage: heroImage || '/images/woman-with-white-dog.webp',
-        category,
+        category: category || null,
         tags: tags.split(',').map(t => t.trim()).filter(t => t),
         featured,
         published: publish,
-        publishedAt: publish ? new Date().toISOString() : undefined,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        seoTitle: seoTitle || undefined,
-        seoDescription: seoDescription || undefined,
+        seoTitle: seoTitle || null,
+        seoDescription: seoDescription || null,
       };
 
-      // TODO: Replace with actual API call
-      console.log('Saving case study:', caseStudyData);
+      // Call API to create case study
+      const response = await fetch('/api/admin/case-studies', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(caseStudyData),
+      });
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to save case study');
+      }
+
+      const result = await response.json();
+      console.log('Case study saved:', result.caseStudy);
 
       alert(`Case study ${publish ? 'published' : 'saved as draft'} successfully!`);
       router.push('/admin/case-studies');
 
     } catch (error) {
       console.error('Error saving case study:', error);
-      alert('Failed to save case study. Please try again.');
+      alert(error instanceof Error ? error.message : 'Failed to save case study. Please try again.');
     } finally {
       setSaving(false);
     }
