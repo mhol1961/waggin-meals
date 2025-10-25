@@ -1,22 +1,10 @@
 import Image from 'next/image';
+import { ComplianceBanner } from '@/components/compliance-banner';
 
 export default function Home() {
   return (
     <main className="bg-white">
-      {/* FDA-Required Disclaimer Banner */}
-      <section className="bg-[#f0f7ff] border-b-2 border-[#a5b5eb] px-4 py-4">
-        <div className="mx-auto max-w-6xl">
-          <h3 className="text-[16px] font-semibold text-[#3c3a47] mb-2 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Our Promise
-          </h3>
-          <p className="text-[14px] text-[#666666] leading-relaxed mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            At Waggin Meals, we believe your dog deserves real food made with love. Our <strong>Gently Cooked Human Grade Food for Dogs</strong> is approved through the <strong>FDA Pet Feed Program</strong> and scientifically formulated by an Animal Nutritionist to meet <strong>AAFCO standards for dog(s) of all ages</strong>.
-          </p>
-          <p className="text-[13px] text-[#666666] leading-relaxed text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            <strong>Important Info:</strong> Our meals are specially formulated for dogs and are not intended for human consumption. Content on this site is for educational purposes only and not a substitute for veterinary advice. Always consult your vet for any health-related decisions about your dog.
-          </p>
-        </div>
-      </section>
+      <ComplianceBanner />
 
       {/* Hero Section - Centered Title */}
       <section className="bg-white px-4 py-16 text-center">
@@ -71,7 +59,7 @@ export default function Home() {
               {/* Heading */}
               <div>
                 <h2 className="text-[43px] font-normal leading-tight text-black md:text-[32px] sm:text-[24px]" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                  Doggy Farm Kitchens weren't a thing ~ until now!
+                  Doggy Farm Kitchens weren&apos;t a thing ~ until now!
                 </h2>
               </div>
 
@@ -241,11 +229,11 @@ export default function Home() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
-                quote: "\"Our dog Maisy absolutely devours the fresh meals that Christie prepares. And it's satisfying to know the food is prepared by a pet nutritionist. Can't recommend her enough.\"",
+                quote: '"Our dog Maisy absolutely devours the fresh meals that Christie prepares. And it\'s satisfying to know the food is prepared by a pet nutritionist. Can\'t recommend her enough."',
                 author: 'Matt Wolfe + Maisy'
               },
               {
-                quote: "\"Our large pup loves their food and broth! Christie is so helpful, kind & very knowledgeable about canine nutrition! You can tell she genuinely cares about your dog's health and not just selling products. They also offer a private dog park that you can rent hourly! We recently rented the park for our pups birthday and had a blast.\"",
+                quote: '"Our large pup loves their food and broth! Christie is so helpful, kind & very knowledgeable about canine nutrition! You can tell she genuinely cares about your dog\'s health and not just selling products. They also offer a private dog park that you can rent hourly! We recently rented the park for our pups birthday and had a blast."',
                 author: 'Elizabeth Joslin'
               },
               {

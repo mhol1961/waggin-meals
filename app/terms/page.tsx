@@ -26,23 +26,47 @@ export default function TermsPage() {
 
           <div className="space-y-8 text-[15px] leading-relaxed text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
 
-            {/* Agreement to Terms */}
+            {/* About Us */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                Agreement to Terms
+                1. About Us
+              </h2>
+              <p>
+                Waggin Meals Nutrition Co. provides human-grade, FDA-approved food for dogs that's lovingly formulated by our founder, Christie. We believe in transparency, whole ingredients, and nutrition backed by real science—not fillers or fluff.
+              </p>
+            </div>
+
+            {/* Acceptance of Terms */}
+            <div>
+              <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                2. Acceptance of Terms
               </h2>
               <p className="mb-4">
-                These Terms of Service ("Terms") constitute a legally binding agreement between you and Waggin Meals Pet Nutrition Co. ("Company," "we," "us," or "our") concerning your access to and use of our website and services.
+                By browsing our website, creating an account, or placing an order, you agree to these Terms and our Privacy Policy. If you're using our site on behalf of someone else (like ordering for a pet), you affirm you have their permission.
               </p>
-              <p className="mb-4">
-                By accessing or using our website, you agree that you have read, understood, and agree to be bound by these Terms. If you do not agree with these Terms, you must not access or use our website or services.
+            </div>
+
+            {/* Products and Services */}
+            <div>
+              <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                3. Products and Services
+              </h2>
+              <p className="mb-4">Our products are:</p>
+              <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
+                <li>Human-grade dog food</li>
+                <li>Nutritional supplements for dogs</li>
+                <li>Subscription meal plans</li>
+                <li>Personalized feeding recommendations</li>
+              </ul>
+              <p className="bg-[#fff3cd] border-l-4 border-[#ffc107] p-4 rounded">
+                <strong>Important:</strong> Our products are not intended to diagnose, treat, cure, or prevent any disease. The content on our site is for informational purposes only and is not a substitute for veterinary advice.
               </p>
             </div>
 
             {/* Use of Services */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                Use of Our Services
+                4. Use of Our Services
               </h2>
               <p className="mb-3">
                 You may use our services only in compliance with these Terms and all applicable laws. You agree not to:
@@ -62,7 +86,7 @@ export default function TermsPage() {
             {/* Account Registration */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                Account Registration
+                5. Account Registration
               </h2>
               <p className="mb-4">
                 When you create an account with us, you must provide accurate, complete, and current information. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.

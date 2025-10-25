@@ -35,6 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# WordPress backup files
-*.wpress
-/wordpress-files/
+# wordpress backup files
+wordpress-files/

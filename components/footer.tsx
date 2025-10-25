@@ -11,7 +11,7 @@ export function Footer() {
               Our Promise
             </h3>
             <p className="text-sm leading-relaxed text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              We don't compete with big box companies. What we offer is <strong>specialized nutrition</strong>. We listen, and do not use computer-generated responses to determine what your special dog needs. <strong>Because every dog is different.</strong> Our meals are scientifically formulated by a Canine Integrative Animal Nutritionist using farm-fresh, sustainably sourced ingredients.
+              We don&apos;t compete with big box companies. What we offer is <strong>specialized nutrition</strong>. We listen, and do not use computer-generated responses to determine what your special dog needs. <strong>Because every dog is different.</strong> Our meals are scientifically formulated by a Canine Integrative Animal Nutritionist using farm-fresh, sustainably sourced ingredients.
             </p>
           </div>
 
@@ -83,7 +83,7 @@ export function Footer() {
                   href="/about"
                   className="text-[#3c3a47] hover:text-[#a5b5eb] transition-colors"
                 >
-                  Let's Chat!
+                  Let&apos;s Chat!
                 </Link>
               </li>
               <li className="border-l-2 border-[#a5b5eb] pl-3">

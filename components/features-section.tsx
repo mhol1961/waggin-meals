@@ -11,7 +11,7 @@ const features = [
     icon: Heart,
     title: 'Nutritionist Formulated, Handcrafted',
     description:
-      "Created by an Animal Nutritionist (with 2 Master's degrees and pursuing a PhD in Animal Nutrition). We offer a specialized nutrition, bite sizes, and do not mass-produce.",
+      'Created by an Animal Nutritionist (with 2 Master\'s degrees and pursuing a PhD in Animal Nutrition). We offer a specialized nutrition, bite sizes, and do not mass-produce.',
   },
   {
     icon: CheckCircle,

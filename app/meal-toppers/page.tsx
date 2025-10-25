@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Sparkles, Check, Star, Award, ChefHat, Heart } from 'lucide-react';
+import { ComplianceBanner } from '@/components/compliance-banner';
 
 export default function MealToppersPage() {
   const toppers = [
@@ -81,20 +82,7 @@ export default function MealToppersPage() {
 
   return (
     <main className="bg-white">
-      {/* FDA Disclaimer */}
-      <section className="bg-[#f0f7ff] border-b-2 border-[#a5b5eb] px-4 py-4">
-        <div className="mx-auto max-w-6xl">
-          <h3 className="text-[16px] font-semibold text-[#3c3a47] mb-2 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Our Promise
-          </h3>
-          <p className="text-[14px] text-[#666666] leading-relaxed mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            At Waggin Meals, we believe your dog deserves real food made with love. Our <strong>Gently Cooked Human Grade Food for Dogs</strong> is approved through the <strong>FDA Pet Feed Program</strong> and scientifically formulated by an Animal Nutritionist to meet <strong>AAFCO standards for dog(s) of all ages</strong>.
-          </p>
-          <p className="text-[13px] text-[#666666] leading-relaxed text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            <strong>Important Info:</strong> Our meals are specially formulated for dogs and are not intended for human consumption. Content on this site is for educational purposes only and not a substitute for veterinary advice. Always consult your vet for any health-related decisions about your dog.
-          </p>
-        </div>
-      </section>
+      <ComplianceBanner />
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#f0f9ff] via-[#fef7e8] to-[#f0fdf4] px-4 py-20 overflow-hidden">
@@ -257,7 +245,7 @@ export default function MealToppersPage() {
               {
                 icon: Star,
                 title: 'Entice Picky Eaters',
-                desc: "Make meals irresistible—even the fussiest dogs can't resist the added flavor and aroma."
+                desc: 'Make meals irresistible—even the fussiest dogs can\'t resist the added flavor and aroma.'
               },
               {
                 icon: Heart,

@@ -1,34 +1,10 @@
 // Waggin Meals Products Data
 // Source: Shopify Export (shopify-files/products_export_1.csv)
 
-export interface Product {
-  id: string;
-  handle: string;
-  title: string;
-  description: string;
-  price: number;
-  compareAtPrice?: number;
-  images: string[];
-  category: string;
-  collection: string;
-  tags: string[];
-  status: 'active' | 'draft';
-  ingredients?: string;
-  analysis?: string;
-  weight?: string;
-  sku?: string;
-  inStock: boolean;
-  stockQty?: number;
-}
+import { Product, Collection, ProductVariant } from '@/types/product';
 
-export interface Collection {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  image: string;
-  products: Product[];
-}
+// Export types for backwards compatibility
+export type { Product, Collection, ProductVariant };
 
 // === FRESH FOOD COLLECTION ===
 export const freshFoodProducts: Product[] = [
@@ -36,7 +12,7 @@ export const freshFoodProducts: Product[] = [
     id: 'chicken-sweet-potato',
     handle: 'chicken-farm-meal-copy',
     title: 'Chicken & Sweet Potato Farm Meal',
-    description: '800 Grams - 4 cups. Fresh chicken with sweet potatoes, organic superfoods, and essential supplements for complete nutrition.',
+    description: 'Fresh chicken with sweet potatoes, organic superfoods, and essential supplements for complete nutrition. Available in multiple sizes to fit your feeding schedule.',
     price: 15.99,
     images: [
       '/images/products/ChickenandSweetPotatoBowl.jpg',
@@ -51,7 +27,43 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 3%, Moisture (max) 74%',
     weight: '800g (4 cups)',
     inStock: true,
-    stockQty: 9908
+    stockQty: 9908,
+    hasVariants: true,
+    variants: [
+      {
+        id: 'chicken-sp-4cup',
+        sku: 'WM-CHICKEN-SP-4CUP',
+        title: '4-Cup Pack',
+        price: 15.99,
+        weight: '800g',
+        servings: 4,
+        inStock: true,
+        stockQty: 50,
+      },
+      {
+        id: 'chicken-sp-8cup',
+        sku: 'WM-CHICKEN-SP-8CUP',
+        title: '8-Cup Pack (Save 10%)',
+        price: 28.78,
+        compareAtPrice: 31.98,
+        weight: '1.6kg',
+        servings: 8,
+        inStock: true,
+        stockQty: 35,
+        isDefault: true,
+      },
+      {
+        id: 'chicken-sp-12cup',
+        sku: 'WM-CHICKEN-SP-12CUP',
+        title: '12-Cup Pack (Save 15%)',
+        price: 40.77,
+        compareAtPrice: 47.97,
+        weight: '2.4kg',
+        servings: 12,
+        inStock: true,
+        stockQty: 20,
+      },
+    ],
   },
   {
     id: 'chicken-rice',
@@ -72,7 +84,8 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 73%',
     weight: '800g (4 cups)',
     inStock: true,
-    stockQty: 9892
+    stockQty: 9892,
+    hasVariants: false,
   },
   {
     id: 'turkey-rice',

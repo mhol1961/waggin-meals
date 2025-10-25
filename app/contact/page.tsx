@@ -1,13 +1,12 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import Link from 'next/link';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
-    phone: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,58 +24,28 @@ export default function ContactPage() {
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      // Send to email API (existing functionality)
-      const emailResponse = await fetch('/api/contact', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          message: formData.message
-        }),
+        body: JSON.stringify(formData),
       });
 
-      // Send to GoHighLevel CRM (new functionality)
-      const ghlResponse = await fetch('/api/ghl/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-          source: 'contact-form'
-        }),
-      });
+      const data = await response.json();
 
-      const emailData = await emailResponse.json();
-      const ghlData = await ghlResponse.json();
-
-      if (emailResponse.ok) {
+      if (response.ok) {
         setSubmitStatus({
           type: 'success',
-          message: emailData.message || "Message sent successfully! We'll get back to you within 24 hours."
+          message: data.message || 'Message sent successfully! We\'ll get back to you within 24 hours.'
         });
-        setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+        setFormData({ name: '', email: '', message: '' });
       } else {
         setSubmitStatus({
           type: 'error',
-          message: emailData.error || 'Failed to send message. Please try again.'
+          message: data.error || 'Failed to send message. Please try again.'
         });
       }
-
-      // Log GHL integration status (non-blocking)
-      if (ghlData.placeholder) {
-        console.log('Contact saved locally - GHL integration pending configuration');
-      } else if (ghlData.success) {
-        console.log('Contact successfully added to GoHighLevel CRM');
-      }
-
     } catch (error) {
       setSubmitStatus({
         type: 'error',
@@ -162,6 +131,36 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* Free Consultation Callout */}
+      <section className="bg-white px-4 py-12">
+        <div className="mx-auto max-w-5xl">
+          <div className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] rounded-2xl p-8 md:p-12 text-center">
+            <div className="max-w-3xl mx-auto">
+              <div className="text-5xl mb-4">🐾</div>
+              <h2 className="text-3xl font-normal text-white mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                Looking for Personalized Nutrition Advice?
+              </h2>
+              <p className="text-lg text-white mb-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Schedule a <strong>free consultation</strong> with our certified canine nutritionist!
+                We'll create a custom nutrition plan tailored to your pet's unique needs.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link
+                  href="/contact-expert"
+                  className="bg-white text-[#a5b5eb] px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#f8f9fa] transition-colors inline-block"
+                  style={{ fontFamily: "'Poppins', sans-serif" }}
+                >
+                  Request Free Consultation
+                </Link>
+                <span className="text-white text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  or use the quick contact form below
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Form Section */}
       <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-3xl">
@@ -208,50 +207,26 @@ export default function ContactPage() {
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
                   <label
-                    htmlFor="firstName"
+                    htmlFor="name"
                     className="block text-sm font-semibold text-[#3c3a47] mb-2"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
-                    First Name *
+                    Name *
                   </label>
                   <input
                     type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                     disabled={isSubmitting}
                     className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
-                    placeholder="First name"
+                    placeholder="Your name"
                   />
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="lastName"
-                    className="block text-sm font-semibold text-[#3c3a47] mb-2"
-                    style={{ fontFamily: "'Poppins', sans-serif" }}
-                  >
-                    Last Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                    required
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
-                    style={{ fontFamily: "'Poppins', sans-serif" }}
-                    placeholder="Last name"
-                  />
-                </div>
-              </div>
-
-              <div className="grid gap-6 md:grid-cols-2">
                 <div>
                   <label
                     htmlFor="email"
@@ -271,27 +246,6 @@ export default function ContactPage() {
                     className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                     placeholder="your@email.com"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-semibold text-[#3c3a47] mb-2"
-                    style={{ fontFamily: "'Poppins', sans-serif" }}
-                  >
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
-                    style={{ fontFamily: "'Poppins', sans-serif" }}
-                    placeholder="(555) 123-4567"
                   />
                 </div>
               </div>

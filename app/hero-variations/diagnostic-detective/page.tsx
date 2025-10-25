@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { ComplianceBanner } from '@/components/compliance-banner';
 
 export default function DiagnosticDetectiveFullPage() {
   return (
@@ -17,20 +18,7 @@ export default function DiagnosticDetectiveFullPage() {
         </div>
       </nav>
 
-      {/* FDA Disclaimer */}
-      <section className="bg-[#f0f7ff] border-b-2 border-[#a5b5eb] px-4 py-4">
-        <div className="mx-auto max-w-6xl">
-          <h3 className="text-[16px] font-semibold text-[#3c3a47] mb-2 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Our Promise
-          </h3>
-          <p className="text-[14px] text-[#666666] leading-relaxed mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            At Waggin Meals, we believe your dog deserves real food made with love. Our <strong>Gently Cooked Human Grade Food for Dogs</strong> is approved through the <strong>FDA Pet Feed Program</strong> and scientifically formulated by an Animal Nutritionist to meet <strong>AAFCO standards for dog(s) of all ages</strong>.
-          </p>
-          <p className="text-[13px] text-[#666666] leading-relaxed text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            <strong>Important Info:</strong> Our meals are specially formulated for dogs and are not intended for human consumption. Content on this site is for educational purposes only and not a substitute for veterinary advice. Always consult your vet for any health-related decisions about your dog.
-          </p>
-        </div>
-      </section>
+      <ComplianceBanner />
 
       {/* HERO: VARIATION A - THE DIAGNOSTIC DETECTIVE */}
       <section className="relative bg-gradient-to-br from-[#f8f9fa] via-white to-[#e8f4fb] px-4 py-20 overflow-hidden">

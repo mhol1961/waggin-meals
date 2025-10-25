@@ -1,7 +1,7 @@
 const testimonials = [
   {
     quote:
-      "Our dog Misty loves Waggin Meals! And it's satisfying to see how much she looks forward to and gets excited for this company. Can't recommend Waggin Meals highly enough!",
+      'Our dog Misty loves Waggin Meals! And it\'s satisfying to see how much she looks forward to and gets excited for this company. Can\'t recommend Waggin Meals highly enough!',
     author: 'Mark Smith - Missy',
   },
   {

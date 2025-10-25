@@ -30,6 +30,34 @@ export default function HeroVariationsIndex() {
       target: 'High-end clients wanting white-glove service',
       cta: 'Schedule VIP Consultation',
     },
+    {
+      id: 'biome-color-palette',
+      title: 'Variation E: The Biome Color Palette',
+      description: 'Color-coded microbiome storytelling you can plate at home',
+      target: 'Design-forward pet parents + chronic gut cases',
+      cta: 'Build Palette / Join Workshop',
+    },
+    {
+      id: 'biome-experience',
+      title: 'Variation F: Biome Rewards Studio',
+      description: 'AnimalBiome-inspired hero with rewards + chat flourishes',
+      target: 'Clients who love premium DTC biotech vibes',
+      cta: 'Preview Rewards Studio',
+    },
+    {
+      id: 'waggin-biome-fusion',
+      title: 'Variation G: Waggin Biome Fusion',
+      description: 'Refined Waggin palette with structured hero + modal capture',
+      target: 'Homepage candidate for immediate implementation',
+      cta: 'Review Fusion Concept',
+    },
+    {
+      id: 'waggin-holistic-experience',
+      title: 'Variation H: Holistic Hero Refresh',
+      description: 'All-Waggin imagery, elevated compliance band, chat + modal system',
+      target: 'Clients wanting AnimalBiome polish with Waggin assets only',
+      cta: 'Open Holistic Variant',
+    },
   ];
 
   return (
