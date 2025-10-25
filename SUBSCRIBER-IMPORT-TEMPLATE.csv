@@ -1,0 +1,4 @@
+email,first_name,last_name,phone,dog_name,dog_breed,dog_age,subscription_frequency,subscription_products,subscription_price,next_billing_date,tags,subscription_status,notes
+jane.smith@example.com,Jane,Smith,555-123-4567,Max,Golden Retriever,Adult (1-7),Monthly,"Beef & Sweet Potato Bowl (2), Joint Support (1)",89.97,2024-02-15,"Active Subscriber,Needs Re-Authorization",Pending Payment,Ships 1st of month
+john.doe@example.com,John,Doe,555-234-5678,Bella,Labrador,Senior (7+),Bi-Weekly,"Chicken Superfood Board (3)",119.97,2024-02-08,"Active Subscriber,Needs Re-Authorization,High Value Subscriber",Pending Payment,Prefers Friday delivery
+sarah.johnson@example.com,Sarah,Johnson,555-345-6789,Charlie,Beagle,Puppy (0-1),Monthly,"Puppy Formula (2), Probiotic (1)",74.98,2024-02-20,"Active Subscriber,Needs Re-Authorization",Pending Payment,New puppy - started 3 months ago

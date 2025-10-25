@@ -42,175 +42,157 @@ export default function PrivacyPage() {
             {/* Information We Collect */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                1. Information We Collect
+                Information We Collect
               </h2>
-              <p className="mb-4">
-                We collect information in several ways, including when you place an order, subscribe to our newsletter, fill out forms, or browse our site.
-              </p>
 
-              <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 mt-4 flex items-center">
-                <span className="mr-2">🐾</span> Personal Information
+              <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 mt-4">
+                Personal Information
               </h3>
-              <p className="mb-3">We may collect:</p>
+              <p className="mb-3">
+                We may collect personal information that you voluntarily provide to us when you:
+              </p>
+              <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
+                <li>Contact us through our contact form</li>
+                <li>Schedule a nutrition consultation</li>
+                <li>Place an order for products</li>
+                <li>Subscribe to our newsletter</li>
+                <li>Create an account on our website</li>
+              </ul>
+              <p className="mb-3">
+                This information may include:
+              </p>
               <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>Name</li>
-                <li>Email address</li>
-                <li>Phone number</li>
-                <li>Shipping & billing address</li>
-                <li>Payment information (processed securely through third-party providers)</li>
-                <li>Your dog's name, age, weight, and dietary info (for personalized services)</li>
+                <li>Name and contact information (email address, phone number, mailing address)</li>
+                <li>Payment information (processed securely through third-party payment processors)</li>
+                <li>Information about your dog(s) (name, breed, age, weight, health conditions, dietary preferences)</li>
+                <li>Consultation notes and nutrition plans</li>
               </ul>
 
-              <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 mt-6 flex items-center">
-                <span className="mr-2">🐾</span> Automatically Collected Information
+              <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 mt-6">
+                Automatically Collected Information
               </h3>
-              <p className="mb-3">When you visit our site, we may collect:</p>
-              <ul className="list-disc list-inside space-y-2 ml-4 mb-3">
-                <li>IP address</li>
-                <li>Browser type</li>
-                <li>Device type</li>
-                <li>Pages visited</li>
-                <li>Time spent on the site</li>
-                <li>Referring URL</li>
-              </ul>
-              <p className="text-sm text-[#666666]">
-                This is collected via cookies and analytics tools like Google Analytics.
+              <p className="mb-3">
+                When you visit our website, we may automatically collect certain information about your device and browsing behavior, including:
               </p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>IP address and browser type</li>
+                <li>Operating system and device information</li>
+                <li>Pages visited and time spent on pages</li>
+                <li>Referring website addresses</li>
+                <li>Clickstream data</li>
+              </ul>
             </div>
 
             {/* How We Use Your Information */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                2. How We Use Your Information
-              </h2>
-              <p className="mb-3">We use your information to:</p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>Process and fulfill orders</li>
-                <li>Deliver meals and supplements</li>
-                <li>Personalize nutrition recommendations</li>
-                <li>Respond to customer service requests</li>
-                <li>Send marketing emails (with your consent)</li>
-                <li>Improve website performance and user experience</li>
-                <li>Detect and prevent fraud or misuse</li>
-              </ul>
-            </div>
-
-            {/* Sharing Information */}
-            <div>
-              <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                3. Sharing Your Information
-              </h2>
-              <p className="mb-4 font-semibold text-[#a5b5eb]">
-                We do not sell or rent your personal data.
-              </p>
-              <p className="mb-3">We may share your information with:</p>
-              <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
-                <li>Trusted third parties (e.g., shipping providers, payment processors)</li>
-                <li>Service providers who help us operate our website or run promotions</li>
-                <li>Legal authorities if required to comply with laws or protect our rights</li>
-              </ul>
-              <p>
-                All third parties we work with are contractually obligated to protect your data.
-              </p>
-            </div>
-
-            {/* Email Marketing */}
-            <div>
-              <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                4. Email Marketing & Communication
+                How We Use Your Information
               </h2>
               <p className="mb-3">
-                If you sign up for our newsletter or promotions, we may send you emails about:
+                We use the information we collect to:
               </p>
-              <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
-                <li>New products</li>
-                <li>Feeding tips and nutrition advice</li>
-                <li>Special offers and discounts</li>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>Provide, operate, and maintain our website and services</li>
+                <li>Process your orders and deliver products</li>
+                <li>Provide personalized nutrition consultations and recommendations</li>
+                <li>Communicate with you about your orders, consultations, and inquiries</li>
+                <li>Send you marketing communications (with your consent)</li>
+                <li>Improve our website, products, and services</li>
+                <li>Respond to customer service requests and support needs</li>
+                <li>Protect against fraudulent or illegal activity</li>
+                <li>Comply with legal obligations</li>
               </ul>
-              <p>
-                You can unsubscribe at any time by clicking the link at the bottom of any email, or by contacting us directly.
-              </p>
             </div>
 
-            {/* Cookies and Tracking */}
+            {/* Information Sharing */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                5. Cookies and Tracking
+                How We Share Your Information
               </h2>
-              <p className="mb-3">We use cookies to:</p>
+              <p className="mb-3">
+                We may share your information with:
+              </p>
               <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
-                <li>Understand how visitors use our website</li>
-                <li>Improve functionality and content</li>
-                <li>Provide personalized experiences</li>
+                <li><strong>Service Providers:</strong> Third-party companies that help us operate our business (payment processors, shipping companies, email service providers)</li>
+                <li><strong>Legal Requirements:</strong> When required by law, court order, or government request</li>
+                <li><strong>Business Transfers:</strong> In connection with a merger, sale, or other business transaction</li>
+                <li><strong>With Your Consent:</strong> When you explicitly authorize us to share your information</li>
               </ul>
               <p>
-                You can disable cookies in your browser settings, but it may affect how our site works for you.
+                We do not sell, rent, or trade your personal information to third parties for their marketing purposes.
               </p>
             </div>
 
             {/* Data Security */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                6. How We Protect Your Data
+                Data Security
               </h2>
-              <p className="mb-3">We use:</p>
-              <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
-                <li>SSL encryption for all website traffic</li>
-                <li>Secure payment gateways (we do not store credit card info)</li>
-                <li>Access controls for employee accounts</li>
-                <li>Routine software updates and security monitoring</li>
-              </ul>
+              <p className="mb-4">
+                We implement appropriate technical and organizational security measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+              </p>
               <p>
-                Despite our best efforts, no system is 100% secure, so we urge you to protect your passwords and avoid sharing sensitive information via unencrypted means.
+                Payment information is processed through secure, PCI-compliant third-party payment processors. We do not store complete payment card information on our servers.
+              </p>
+            </div>
+
+            {/* Cookies and Tracking */}
+            <div>
+              <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                Cookies and Tracking Technologies
+              </h2>
+              <p className="mb-3">
+                We may use cookies, web beacons, and similar tracking technologies to collect information about your browsing activities. You can control cookies through your browser settings, but disabling cookies may affect your ability to use certain features of our website.
               </p>
             </div>
 
             {/* Your Rights */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                8. Your Data Rights
+                Your Privacy Rights
               </h2>
               <p className="mb-3">
-                Depending on where you live, you may have rights to:
+                Depending on your location, you may have certain rights regarding your personal information, including:
               </p>
               <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
-                <li>Request access to the data we have on you</li>
-                <li>Correct or update your personal info</li>
-                <li>Delete your information (right to be forgotten)</li>
-                <li>Opt out of certain data uses</li>
+                <li>The right to access and receive a copy of your personal information</li>
+                <li>The right to correct inaccurate or incomplete information</li>
+                <li>The right to delete your personal information</li>
+                <li>The right to opt-out of marketing communications</li>
+                <li>The right to restrict or object to certain processing of your information</li>
               </ul>
               <p>
-                To exercise these rights, contact us at <a href="mailto:info@wagginmeals.com" className="text-[#a5b5eb] hover:text-[#8a9fd9]">info@wagginmeals.com</a>.
+                To exercise these rights, please contact us using the information provided below.
               </p>
             </div>
 
             {/* Third-Party Links */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                9. Third-Party Links
+                Third-Party Websites
               </h2>
               <p>
-                Our site may contain links to third-party sites (e.g., Instagram, payment processors). We are not responsible for the privacy practices of these websites. Please review their policies separately.
+                Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of these external sites. We encourage you to review the privacy policies of any third-party sites you visit.
               </p>
             </div>
 
             {/* Children's Privacy */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                7. Children's Privacy
+                Children's Privacy
               </h2>
               <p>
-                Our site is not intended for children under 13. We do not knowingly collect data from children. If we learn that a child has submitted information, we will delete it immediately.
+                Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us immediately.
               </p>
             </div>
 
-            {/* Policy Updates */}
+            {/* Changes to Privacy Policy */}
             <div>
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                10. Policy Updates
+                Changes to This Privacy Policy
               </h2>
               <p>
-                We may update this Privacy Policy from time to time. If we make material changes, we'll notify you by updating this page and posting the new effective date. Continued use of the site constitutes acceptance of any changes.
+                We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. We encourage you to review this Privacy Policy periodically.
               </p>
             </div>
 
@@ -224,7 +206,7 @@ export default function PrivacyPage() {
               </p>
               <div className="space-y-2">
                 <p><strong>Waggin Meals Pet Nutrition Co.</strong></p>
-                <p>Email: <a href="mailto:info@wagginmeals.com" className="text-[#a5b5eb] hover:text-[#8a9fd9]">info@wagginmeals.com</a></p>
+                <p>Email: <a href="mailto:privacy@wagginmeals.com" className="text-[#a5b5eb] hover:text-[#8a9fd9]">privacy@wagginmeals.com</a></p>
                 <p className="mt-4">
                   <Link
                     href="/contact"

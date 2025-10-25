@@ -1,166 +1,282 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { getAdminSession } from '@/lib/admin-auth';
 import Link from 'next/link';
-import { FileText, BookOpen, ArrowRight, LogOut } from 'lucide-react';
+import {
+  getAllBlogPosts,
+  getAllVideos,
+  getAllTestimonials,
+  getAllEvents,
+  getAllResources,
+  getAllProducts,
+} from '@/lib/supabase/server';
 
-export default function AdminDashboard() {
-  const router = useRouter();
+export default async function AdminDashboard() {
+  // Check authentication
+  const session = await getAdminSession();
 
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('/api/admin/auth/logout', {
-        method: 'POST',
-      });
+  if (!session) {
+    redirect('/admin/login');
+  }
 
-      if (response.ok) {
-        router.push('/admin/login');
-      }
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
+  // Fetch content statistics
+  const [blogPosts, videos, testimonials, events, resources, products] =
+    await Promise.all([
+      getAllBlogPosts(false), // Get all, not just published
+      getAllVideos(false),
+      getAllTestimonials(false),
+      getAllEvents(false),
+      getAllResources(false),
+      getAllProducts(false),
+    ]);
+
+  const stats = [
+    {
+      name: 'Blog Posts',
+      total: blogPosts.length,
+      published: blogPosts.filter((p) => p.is_published).length,
+      icon: '📝',
+      href: '/admin/blog',
+    },
+    {
+      name: 'Videos',
+      total: videos.length,
+      published: videos.filter((v) => v.is_published).length,
+      icon: '🎥',
+      href: '/admin/videos',
+    },
+    {
+      name: 'Testimonials',
+      total: testimonials.length,
+      published: testimonials.filter((t) => t.is_published).length,
+      icon: '⭐',
+      href: '/admin/testimonials',
+    },
+    {
+      name: 'Events',
+      total: events.length,
+      published: events.filter((e) => e.is_published).length,
+      icon: '📅',
+      href: '/admin/events',
+    },
+    {
+      name: 'Resources',
+      total: resources.length,
+      published: resources.filter((r) => r.is_published).length,
+      icon: '📄',
+      href: '/admin/resources',
+    },
+    {
+      name: 'Products',
+      total: products.length,
+      published: products.filter((p) => p.is_published).length,
+      icon: '🛍️',
+      href: '/admin/products',
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb]">
-      <div className="max-w-4xl mx-auto px-4 py-16">
-        {/* Header with Logout */}
-        <div className="flex justify-end mb-8">
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 text-sm text-[#666666] hover:text-[#3c3a47] transition-colors"
-            style={{ fontFamily: "'Poppins', sans-serif" }}
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
-        </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-serif font-bold text-gray-900">
+              Waggin Meals CMS
+            </h1>
+            <p className="text-sm text-gray-600">
+              Welcome back, {session.username}
+            </p>
+          </div>
 
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1
-            className="text-5xl font-normal text-[#3c3a47] mb-4"
-            style={{ fontFamily: "'Abril Fatface', serif" }}
-          >
-            Admin Dashboard
-          </h1>
-          <p
-            className="text-lg text-[#666666]"
-            style={{ fontFamily: "'Poppins', sans-serif" }}
-          >
-            Manage your content and case studies
+          <div className="flex items-center gap-4">
+            <Link
+              href="/"
+              className="text-sm text-gray-600 hover:text-gray-900 transition"
+              target="_blank"
+            >
+              View Site
+            </Link>
+            <form action="/api/admin/logout" method="POST">
+              <button
+                type="submit"
+                className="text-sm bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg transition"
+              >
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Message */}
+        <div className="mb-8">
+          <h2 className="text-3xl font-serif font-bold text-gray-900 mb-2">
+            Dashboard
+          </h2>
+          <p className="text-gray-600">
+            Manage all your website content in one place
           </p>
         </div>
 
-        {/* Admin Cards */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Blog Management */}
-          <Link
-            href="/admin/blog/new"
-            className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border-2 border-transparent hover:border-[#a5b5eb]"
-          >
-            <div className="flex items-start justify-between mb-4">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#a5b5eb] to-[#c5d4f7] flex items-center justify-center">
-                <FileText className="w-7 h-7 text-white" />
+        {/* Quick Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {stats.map((stat) => (
+            <Link
+              key={stat.name}
+              href={stat.href}
+              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-4xl">{stat.icon}</div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-gray-900">
+                    {stat.total}
+                  </div>
+                  <div className="text-sm text-gray-500">Total</div>
+                </div>
               </div>
-              <ArrowRight className="w-6 h-6 text-[#a5b5eb] opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-            <h2
-              className="text-2xl font-bold text-[#3c3a47] mb-2"
-              style={{ fontFamily: "'Abril Fatface', serif" }}
-            >
-              Blog Posts
-            </h2>
-            <p
-              className="text-[#666666] leading-relaxed"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
-            >
-              Create and manage blog posts for pet nutrition insights and educational content.
-            </p>
-          </Link>
 
-          {/* Case Studies Management */}
-          <Link
-            href="/admin/case-studies/new"
-            className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border-2 border-transparent hover:border-[#a5b5eb]"
-          >
-            <div className="flex items-start justify-between mb-4">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#a5b5eb] to-[#c5d4f7] flex items-center justify-center">
-                <BookOpen className="w-7 h-7 text-white" />
+              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition">
+                {stat.name}
+              </h3>
+
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-600">Published:</span>
+                <span className="font-semibold text-green-600">
+                  {stat.published}
+                </span>
               </div>
-              <ArrowRight className="w-6 h-6 text-[#a5b5eb] opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-            <h2
-              className="text-2xl font-bold text-[#3c3a47] mb-2"
-              style={{ fontFamily: "'Abril Fatface', serif" }}
-            >
-              Case Studies
-            </h2>
-            <p
-              className="text-[#666666] leading-relaxed"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
-            >
-              Document success stories and transformations from your nutrition consulting work.
-            </p>
-          </Link>
+
+              <div className="flex items-center justify-between text-sm mt-1">
+                <span className="text-gray-600">Drafts:</span>
+                <span className="font-semibold text-gray-600">
+                  {stat.total - stat.published}
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
 
-        {/* Quick Links */}
-        <div className="mt-12 bg-white rounded-2xl p-8 shadow-lg">
-          <h3
-            className="text-xl font-bold text-[#3c3a47] mb-4"
-            style={{ fontFamily: "'Abril Fatface', serif" }}
-          >
-            Quick Links
+        {/* Quick Actions */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            Quick Actions
           </h3>
-          <div className="grid sm:grid-cols-2 gap-3">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link
-              href="/blog"
-              className="text-[#a5b5eb] hover:text-[#8a9fd9] transition-colors text-sm font-medium"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
+              href="/admin/blog/new"
+              className="flex items-center gap-3 p-4 bg-orange-50 hover:bg-orange-100 rounded-lg transition group"
             >
-              → View Published Blog Posts
+              <div className="text-2xl">✍️</div>
+              <div>
+                <div className="font-semibold text-gray-900 group-hover:text-orange-600">
+                  New Blog Post
+                </div>
+                <div className="text-sm text-gray-600">
+                  Write a new article
+                </div>
+              </div>
             </Link>
+
             <Link
-              href="/case-studies"
-              className="text-[#a5b5eb] hover:text-[#8a9fd9] transition-colors text-sm font-medium"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
+              href="/admin/videos/new"
+              className="flex items-center gap-3 p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition group"
             >
-              → View Published Case Studies
+              <div className="text-2xl">🎬</div>
+              <div>
+                <div className="font-semibold text-gray-900 group-hover:text-blue-600">
+                  Add Video
+                </div>
+                <div className="text-sm text-gray-600">
+                  Upload a new video
+                </div>
+              </div>
             </Link>
+
             <Link
-              href="/"
-              className="text-[#a5b5eb] hover:text-[#8a9fd9] transition-colors text-sm font-medium"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
+              href="/admin/testimonials/new"
+              className="flex items-center gap-3 p-4 bg-green-50 hover:bg-green-100 rounded-lg transition group"
             >
-              → Back to Website
+              <div className="text-2xl">💬</div>
+              <div>
+                <div className="font-semibold text-gray-900 group-hover:text-green-600">
+                  Add Testimonial
+                </div>
+                <div className="text-sm text-gray-600">
+                  Share success story
+                </div>
+              </div>
+            </Link>
+
+            <Link
+              href="/admin/events/new"
+              className="flex items-center gap-3 p-4 bg-purple-50 hover:bg-purple-100 rounded-lg transition group"
+            >
+              <div className="text-2xl">🎪</div>
+              <div>
+                <div className="font-semibold text-gray-900 group-hover:text-purple-600">
+                  Create Event
+                </div>
+                <div className="text-sm text-gray-600">
+                  Schedule workshop
+                </div>
+              </div>
+            </Link>
+
+            <Link
+              href="/admin/resources/new"
+              className="flex items-center gap-3 p-4 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition group"
+            >
+              <div className="text-2xl">📚</div>
+              <div>
+                <div className="font-semibold text-gray-900 group-hover:text-yellow-600">
+                  Upload Resource
+                </div>
+                <div className="text-sm text-gray-600">
+                  Add PDF guide
+                </div>
+              </div>
+            </Link>
+
+            <Link
+              href="/admin/products/new"
+              className="flex items-center gap-3 p-4 bg-pink-50 hover:bg-pink-100 rounded-lg transition group"
+            >
+              <div className="text-2xl">🛒</div>
+              <div>
+                <div className="font-semibold text-gray-900 group-hover:text-pink-600">
+                  Add Product
+                </div>
+                <div className="text-sm text-gray-600">
+                  List for sale
+                </div>
+              </div>
             </Link>
           </div>
         </div>
 
-        {/* Info Banner */}
-        <div className="mt-8 bg-[#d1ecf1] border-l-4 border-[#0c5460] rounded-lg p-6">
-          <div className="flex items-start">
-            <svg className="h-6 w-6 text-[#0c5460] mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
-            </svg>
-            <div>
-              <h4
-                className="text-sm font-semibold text-[#0c5460] mb-1"
-                style={{ fontFamily: "'Poppins', sans-serif" }}
-              >
-                Content Management System
-              </h4>
-              <p
-                className="text-sm text-[#0c5460]"
-                style={{ fontFamily: "'Poppins', sans-serif" }}
-              >
-                All content is stored in Supabase. Blog posts and case studies support rich text formatting with images and links.
-              </p>
-            </div>
+        {/* Help Section */}
+        <div className="mt-8 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl p-6 border border-orange-200">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Need Help?
+          </h3>
+          <p className="text-gray-700 mb-4">
+            Check out the documentation or contact support for assistance with the CMS.
+          </p>
+          <div className="flex gap-4">
+            <a
+              href="/supabase/README.md"
+              className="text-sm bg-white hover:bg-gray-50 px-4 py-2 rounded-lg transition font-medium"
+              target="_blank"
+            >
+              View Documentation
+            </a>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Heart, Shield, Zap, Droplets, Check, Sparkles, Award } from 'lucide-react';
-import { ComplianceBanner } from '@/components/compliance-banner';
 
 export default function BoostNutritionPage() {
   const products = [
@@ -36,7 +35,7 @@ export default function BoostNutritionPage() {
       price: 22,
       size: '16 oz',
       image: '/images/2025/07/Chicken-Superfood-Cake-Board-scaled.jpg',
-      description: 'Named after Christie\'s own rescued dog, this gentle, easy-to-digest stew was formulated to help dogs heal from illness, surgery, or digestive upset.',
+      description: "Named after Christie's own rescued dog, this gentle, easy-to-digest stew was formulated to help dogs heal from illness, surgery, or digestive upset.",
       keyBenefits: [
         'Gentle on sensitive stomachs',
         'Supports recovery & healing',
@@ -60,7 +59,20 @@ export default function BoostNutritionPage() {
 
   return (
     <main className="bg-white">
-      <ComplianceBanner />
+      {/* FDA Disclaimer */}
+      <section className="bg-[#f0f7ff] border-b-2 border-[#a5b5eb] px-4 py-4">
+        <div className="mx-auto max-w-6xl">
+          <h3 className="text-[16px] font-semibold text-[#3c3a47] mb-2 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Our Promise
+          </h3>
+          <p className="text-[14px] text-[#666666] leading-relaxed mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            At Waggin Meals, we believe your dog deserves real food made with love. Our <strong>Gently Cooked Human Grade Food for Dogs</strong> is approved through the <strong>FDA Pet Feed Program</strong> and scientifically formulated by an Animal Nutritionist to meet <strong>AAFCO standards for dog(s) of all ages</strong>.
+          </p>
+          <p className="text-[13px] text-[#666666] leading-relaxed text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <strong>Important Info:</strong> Our meals are specially formulated for dogs and are not intended for human consumption. Content on this site is for educational purposes only and not a substitute for veterinary advice. Always consult your vet for any health-related decisions about your dog.
+          </p>
+        </div>
+      </section>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#fef3c7] via-white to-[#f0f9ff] px-4 py-20 overflow-hidden">
@@ -216,7 +228,7 @@ export default function BoostNutritionPage() {
               {
                 icon: Droplets,
                 title: 'As a Meal Topper',
-                desc: 'Pour 1-4 oz over your dog\'s regular meals to add flavor, moisture, and nutrition.',
+                desc: "Pour 1-4 oz over your dog's regular meals to add flavor, moisture, and nutrition.",
                 color: 'blue'
               },
               {
@@ -324,12 +336,12 @@ export default function BoostNutritionPage() {
         <div className="mx-auto max-w-[1080px] grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
             {
-              quote: '"The bone broth helped my senior Lab so much with his arthritis. He\'s moving better and seems much more comfortable!"',
+              quote: "\"The bone broth helped my senior Lab so much with his arthritis. He's moving better and seems much more comfortable!\"",
               author: 'Karen R.',
               product: 'Bone Broth'
             },
             {
-              quote: '"Prince Jax Stew was a lifesaver after my dog\'s surgery. She couldn\'t keep anything down, but this stew was gentle and helped her recover."',
+              quote: "\"Prince Jax Stew was a lifesaver after my dog's surgery. She couldn't keep anything down, but this stew was gentle and helped her recover.\"",
               author: 'Tom M.',
               product: 'Prince Jax Healing Stew'
             },

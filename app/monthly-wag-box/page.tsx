@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Gift, Calendar, Heart, Star, Check, Sparkles, TrendingUp, X } from 'lucide-react';
-import { ComplianceBanner } from '@/components/compliance-banner';
 
 export default function MonthlyWagBoxPage() {
   const boxTiers = [
@@ -23,7 +22,7 @@ export default function MonthlyWagBoxPage() {
       color: 'blue'
     },
     {
-      name: 'Waggin\' Supreme Box',
+      name: "Waggin' Supreme Box",
       price: 69,
       priceInterval: '/month',
       popular: true,
@@ -67,7 +66,20 @@ export default function MonthlyWagBoxPage() {
 
   return (
     <main className="bg-white">
-      <ComplianceBanner />
+      {/* FDA Disclaimer */}
+      <section className="bg-[#f0f7ff] border-b-2 border-[#a5b5eb] px-4 py-4">
+        <div className="mx-auto max-w-6xl">
+          <h3 className="text-[16px] font-semibold text-[#3c3a47] mb-2 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Our Promise
+          </h3>
+          <p className="text-[14px] text-[#666666] leading-relaxed mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            At Waggin Meals, we believe your dog deserves real food made with love. Our <strong>Gently Cooked Human Grade Food for Dogs</strong> is approved through the <strong>FDA Pet Feed Program</strong> and scientifically formulated by an Animal Nutritionist to meet <strong>AAFCO standards for dog(s) of all ages</strong>.
+          </p>
+          <p className="text-[13px] text-[#666666] leading-relaxed text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <strong>Important Info:</strong> Our meals are specially formulated for dogs and are not intended for human consumption. Content on this site is for educational purposes only and not a substitute for veterinary advice. Always consult your vet for any health-related decisions about your dog.
+          </p>
+        </div>
+      </section>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#fef3c7] via-[#fef7e8] to-[#f0f9ff] px-4 py-20 overflow-hidden">
@@ -226,9 +238,9 @@ export default function MonthlyWagBoxPage() {
 
           <div className="grid md:grid-cols-4 gap-6">
             {[
-              { step: '1', icon: Gift, title: 'Choose Your Box', desc: 'Select the subscription tier that fits your dog\'s needs.' },
+              { step: '1', icon: Gift, title: 'Choose Your Box', desc: "Select the subscription tier that fits your dog's needs." },
               { step: '2', icon: Calendar, title: 'Set Your Schedule', desc: 'Choose monthly, bi-monthly, or customize your delivery frequency.' },
-              { step: '3', icon: Heart, title: 'We Prepare & Pack', desc: 'Christie\'s team hand-packs your box with fresh meals and goodies.' },
+              { step: '3', icon: Heart, title: 'We Prepare & Pack', desc: "Christie's team hand-packs your box with fresh meals and goodies." },
               { step: '4', icon: Sparkles, title: 'Enjoy & Repeat', desc: 'Boxes arrive on schedule. Your dog loves it, every single time!' }
             ].map((step, i) => (
               <div key={i} className="bg-white rounded-xl shadow-lg p-6 text-center">
@@ -283,7 +295,7 @@ export default function MonthlyWagBoxPage() {
               {
                 icon: Gift,
                 title: 'Priority Support',
-                desc: 'Subscribers get priority access to Christie\'s expertise, exclusive content, and VIP customer support.'
+                desc: "Subscribers get priority access to Christie's expertise, exclusive content, and VIP customer support."
               }
             ].map((benefit, i) => (
               <div key={i} className="bg-[#f5f5f5] rounded-xl p-6 text-center">
@@ -308,15 +320,15 @@ export default function MonthlyWagBoxPage() {
             {
               quote: '"Best decision ever! My dog gets so excited when the Wag Box arrives. The variety keeps mealtime interesting and his health has improved dramatically."',
               author: 'Rachel T.',
-              plan: 'Waggin\' Supreme Box'
+              plan: "Waggin' Supreme Box"
             },
             {
-              quote: '"I love that I never have to worry about running out of food. The surprise treats are always a hit, and Christie\'s monthly tips are so helpful!"',
+              quote: "\"I love that I never have to worry about running out of food. The surprise treats are always a hit, and Christie's monthly tips are so helpful!\"",
               author: 'Michael P.',
               plan: 'Tail Wagger Box'
             },
             {
-              quote: '"Worth every penny for the VIP box. The personalized check-ins with Christie have been invaluable for managing my dog\'s allergies."',
+              quote: "\"Worth every penny for the VIP box. The personalized check-ins with Christie have been invaluable for managing my dog's allergies.\"",
               author: 'Linda S.',
               plan: 'VIP Wellness Box'
             }
@@ -353,12 +365,12 @@ export default function MonthlyWagBoxPage() {
                 a: 'Boxes ship on the 15th of each month. Your first box ships within 3-5 business days of subscribing, then monthly thereafter.'
               },
               {
-                q: 'Can I customize what\'s in my box?',
+                q: "Can I customize what's in my box?",
                 a: 'VIP Wellness Box subscribers can customize their meal recipes. All subscribers can note dietary restrictions or preferences in their account settings.'
               },
               {
-                q: 'What if my dog doesn\'t like something in the box?',
-                a: 'We offer a 100% satisfaction guarantee. If your dog doesn\'t love any item, contact us and we\'ll replace it or credit your account—no questions asked.'
+                q: "What if my dog doesn't like something in the box?",
+                a: "We offer a 100% satisfaction guarantee. If your dog doesn't love any item, contact us and we'll replace it or credit your account—no questions asked."
               },
               {
                 q: 'How do I store the fresh meals?',

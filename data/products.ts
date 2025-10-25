@@ -1,10 +1,34 @@
 // Waggin Meals Products Data
 // Source: Shopify Export (shopify-files/products_export_1.csv)
 
-import { Product, Collection, ProductVariant } from '@/types/product';
+export interface Product {
+  id: string;
+  handle: string;
+  title: string;
+  description: string;
+  price: number;
+  compareAtPrice?: number;
+  images: string[];
+  category: string;
+  collection: string;
+  tags: string[];
+  status: 'active' | 'draft';
+  ingredients?: string;
+  analysis?: string;
+  weight?: string;
+  sku?: string;
+  inStock: boolean;
+  stockQty?: number;
+}
 
-// Export types for backwards compatibility
-export type { Product, Collection, ProductVariant };
+export interface Collection {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  image: string;
+  products: Product[];
+}
 
 // === FRESH FOOD COLLECTION ===
 export const freshFoodProducts: Product[] = [
@@ -12,7 +36,7 @@ export const freshFoodProducts: Product[] = [
     id: 'chicken-sweet-potato',
     handle: 'chicken-farm-meal-copy',
     title: 'Chicken & Sweet Potato Farm Meal',
-    description: 'Fresh chicken with sweet potatoes, organic superfoods, and essential supplements for complete nutrition. Available in multiple sizes to fit your feeding schedule.',
+    description: '800 Grams - 4 cups. Fresh chicken with sweet potatoes, organic superfoods, and essential supplements for complete nutrition.',
     price: 15.99,
     images: [
       '/images/products/ChickenandSweetPotatoBowl.jpg',
@@ -27,43 +51,7 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 3%, Moisture (max) 74%',
     weight: '800g (4 cups)',
     inStock: true,
-    stockQty: 9908,
-    hasVariants: true,
-    variants: [
-      {
-        id: 'chicken-sp-4cup',
-        sku: 'WM-CHICKEN-SP-4CUP',
-        title: '4-Cup Pack',
-        price: 15.99,
-        weight: '800g',
-        servings: 4,
-        inStock: true,
-        stockQty: 50,
-      },
-      {
-        id: 'chicken-sp-8cup',
-        sku: 'WM-CHICKEN-SP-8CUP',
-        title: '8-Cup Pack (Save 10%)',
-        price: 28.78,
-        compareAtPrice: 31.98,
-        weight: '1.6kg',
-        servings: 8,
-        inStock: true,
-        stockQty: 35,
-        isDefault: true,
-      },
-      {
-        id: 'chicken-sp-12cup',
-        sku: 'WM-CHICKEN-SP-12CUP',
-        title: '12-Cup Pack (Save 15%)',
-        price: 40.77,
-        compareAtPrice: 47.97,
-        weight: '2.4kg',
-        servings: 12,
-        inStock: true,
-        stockQty: 20,
-      },
-    ],
+    stockQty: 9908
   },
   {
     id: 'chicken-rice',
@@ -84,8 +72,7 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 73%',
     weight: '800g (4 cups)',
     inStock: true,
-    stockQty: 9892,
-    hasVariants: false,
+    stockQty: 9892
   },
   {
     id: 'turkey-rice',
@@ -106,8 +93,7 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 74%',
     weight: '800g (4 cups)',
     inStock: true,
-    stockQty: 9918,
-    hasVariants: false
+    stockQty: 9918
   },
   {
     id: 'turkey-sweet-potato',
@@ -128,8 +114,7 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 3%, Moisture (max) 76%',
     weight: '800g (4 cups)',
     inStock: true,
-    stockQty: 9854,
-    hasVariants: false
+    stockQty: 9854
   },
   {
     id: 'beef-sweet-potato',
@@ -150,8 +135,7 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 11%, Crude Fat (min) 8%, Crude Fiber (max) 1.5%, Moisture (max) 72%',
     weight: '750g (4 cups)',
     inStock: true,
-    stockQty: 9891,
-    hasVariants: false
+    stockQty: 9891
   },
   {
     id: 'beef-rice',
@@ -172,8 +156,7 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 11%, Crude Fat (min) 8%, Crude Fiber (max) 1.5%, Moisture (max) 72%',
     weight: '750g (4 cups)',
     inStock: true,
-    stockQty: 9881,
-    hasVariants: false
+    stockQty: 9881
   },
   {
     id: 'low-protein-salmon',
@@ -193,8 +176,7 @@ export const freshFoodProducts: Product[] = [
     analysis: 'As fed: Protein 5.4%, Fat 1.3%, Carbohydrates 16.8%, Moisture 73.3%. 1.2 kcal/g, 264 kcal/cup',
     weight: '2 cups per pack',
     inStock: true,
-    stockQty: 12,
-    hasVariants: false
+    stockQty: 12
   },
   {
     id: 'pup-a-loaf',
@@ -215,8 +197,7 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 6%, Crude Fiber (max) 1%, Moisture (max) 78%',
     weight: '390g (6 slices)',
     inStock: true,
-    stockQty: 45,
-    hasVariants: false
+    stockQty: 45
   },
   {
     id: 'chicken-superfood-cakes',
@@ -237,8 +218,7 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 7.5%, Crude Fat (min) 4%, Crude Fiber (max) 1%, Moisture (max) 72%',
     weight: '430g (4 cakes)',
     inStock: true,
-    stockQty: 72,
-    hasVariants: false
+    stockQty: 72
   }
 ];
 
@@ -258,8 +238,7 @@ export const mealToppersProducts: Product[] = [
     ingredients: 'Beef, Blueberries, Leafy Greens, Pumpkin, Coconut, Fish Oil, Turmeric',
     weight: '6 lbs',
     inStock: false,
-    stockQty: 13,
-    hasVariants: false
+    stockQty: 13
   },
   {
     id: 'chicken-topper',
@@ -275,8 +254,7 @@ export const mealToppersProducts: Product[] = [
     ingredients: 'Chicken, Blueberries, Leafy Greens, Pumpkin, Coconut, Fish Oil, Turmeric',
     weight: '6 oz',
     inStock: true,
-    stockQty: 15,
-    hasVariants: false
+    stockQty: 15
   },
   {
     id: 'lamb-topper',
@@ -292,8 +270,7 @@ export const mealToppersProducts: Product[] = [
     ingredients: 'Lamb, Blueberries, Leafy Greens, Pumpkin, Coconut, Fish Oil, Turmeric',
     weight: '6 oz',
     inStock: true,
-    stockQty: 19,
-    hasVariants: false
+    stockQty: 19
   },
   {
     id: 'salmon-topper',
@@ -309,8 +286,7 @@ export const mealToppersProducts: Product[] = [
     ingredients: 'Salmon, Blueberries, Leafy Greens, Pumpkin, Coconut, Fish Oil, Turmeric',
     weight: '6 lbs',
     inStock: true,
-    stockQty: 16,
-    hasVariants: false
+    stockQty: 16
   },
   {
     id: 'bone-veggie-broth',
@@ -331,8 +307,7 @@ export const mealToppersProducts: Product[] = [
     analysis: 'Crude Protein (min) 1%, Crude Fat (min) 0.10%, Crude Fiber (Max) 1%, Moisture (max) 100%',
     weight: '950g (4 cups)',
     inStock: true,
-    stockQty: 9936,
-    hasVariants: false
+    stockQty: 9936
   },
   {
     id: 'prince-jax-stew',
@@ -353,8 +328,7 @@ export const mealToppersProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 78%',
     weight: '300g',
     inStock: true,
-    stockQty: 959,
-    hasVariants: false
+    stockQty: 959
   }
 ];
 
@@ -378,8 +352,7 @@ export const treatsProducts: Product[] = [
     ingredients: 'Beef, Whole Oats, Apples, Bananas, Cottage Cheese, Eggs, Ginger, Turmeric, Oregano, Coconut Oil, Safflower Oil',
     weight: '13 meatballs',
     inStock: true,
-    stockQty: 4,
-    hasVariants: false
+    stockQty: 4
   },
   {
     id: 'turmeric-eggs-bacon',
@@ -395,8 +368,7 @@ export const treatsProducts: Product[] = [
     ingredients: 'Wheat Flour, Dried Eggs, Vegetable Glycerin, Turmeric Powder, Malted Barley, Natural Bacon Flavor, Liquid smoke, Brown rice',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 12,
-    hasVariants: false
+    stockQty: 12
   },
   {
     id: 'spinach-mozzarella-kale',
@@ -412,8 +384,7 @@ export const treatsProducts: Product[] = [
     ingredients: 'Spinach, Mozzarella, Kale, Probiotics, Wheat Flour, Vegetable Glycerin',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 17,
-    hasVariants: false
+    stockQty: 17
   },
   {
     id: 'apple-chicken-bites',
@@ -429,8 +400,7 @@ export const treatsProducts: Product[] = [
     ingredients: 'Apples, Chicken, Wheat Flour, Vegetable Glycerin',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 26,
-    hasVariants: false
+    stockQty: 26
   },
   {
     id: 'beet-bites',
@@ -446,8 +416,7 @@ export const treatsProducts: Product[] = [
     ingredients: 'Beets, Wheat Flour, Vegetable Glycerin',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 28,
-    hasVariants: false
+    stockQty: 28
   },
   {
     id: 'lamb-chips',
@@ -466,8 +435,7 @@ export const treatsProducts: Product[] = [
     ingredients: 'Lamb Hearts',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 5,
-    hasVariants: false
+    stockQty: 5
   },
   {
     id: 'venison-sausages',
@@ -483,8 +451,7 @@ export const treatsProducts: Product[] = [
     ingredients: 'Venison',
     weight: '7.5 oz',
     inStock: true,
-    stockQty: 17,
-    hasVariants: false
+    stockQty: 17
   },
   {
     id: 'duck-bars',
@@ -501,8 +468,7 @@ export const treatsProducts: Product[] = [
     analysis: 'Protein (min) 13.0%, Crude Fat (min) 5.0%, Fiber (max) 3.0%, Moisture (max) 25.0%',
     weight: 'Multiple sizes',
     inStock: true,
-    stockQty: 17,
-    hasVariants: false
+    stockQty: 17
   }
 ];
 

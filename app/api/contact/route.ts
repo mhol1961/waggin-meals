@@ -147,7 +147,7 @@ This is an automated response. Please do not reply to this email.
 
     return NextResponse.json({
       success: true,
-      message: 'Message sent successfully! We\'ll get back to you within 24 hours.',
+      message: "Message sent successfully! We'll get back to you within 24 hours.",
     });
 
   } catch (error) {

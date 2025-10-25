@@ -5,8 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { getProductByHandle, getProductsByCollection } from '@/data/products';
-import { ProductVariantSelector } from '@/components/product-variant-selector';
-import { ProductVariant } from '@/types/product';
+import AddToCartButton from '@/components/add-to-cart-button';
 
 export default function ProductPage() {
   const params = useParams();
@@ -14,11 +13,6 @@ export default function ProductPage() {
   const product = getProductByHandle(handle);
 
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
-    product?.hasVariants && product?.variants
-      ? (product.variants.find(v => v.isDefault) || product.variants[0])
-      : null
-  );
 
   if (!product) {
     return (
@@ -123,15 +117,15 @@ export default function ProductPage() {
               <div className="mb-6">
                 <div className="flex items-baseline gap-3">
                   <span className="text-4xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    ${(selectedVariant?.price || product.price).toFixed(2)}
+                    ${product.price.toFixed(2)}
                   </span>
-                  {(selectedVariant?.compareAtPrice || product.compareAtPrice) && (
+                  {product.compareAtPrice && (
                     <span className="text-xl text-[#999999] line-through" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                      ${(selectedVariant?.compareAtPrice || product.compareAtPrice)?.toFixed(2)}
+                      ${product.compareAtPrice.toFixed(2)}
                     </span>
                   )}
                 </div>
-                {!product.hasVariants && product.weight && (
+                {product.weight && (
                   <p className="text-[16px] text-[#666666] mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     {product.weight}
                   </p>
@@ -142,16 +136,6 @@ export default function ProductPage() {
               <p className="text-[16px] leading-relaxed text-[#666666] mb-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 {product.description}
               </p>
-
-              {/* Product Variants Selector */}
-              {product.hasVariants && product.variants && product.variants.length > 0 && (
-                <div className="mb-8">
-                  <ProductVariantSelector
-                    variants={product.variants}
-                    onVariantChange={(variant) => setSelectedVariant(variant)}
-                  />
-                </div>
-              )}
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-8">
@@ -190,26 +174,50 @@ export default function ProductPage() {
 
               {/* CTA Buttons */}
               <div className="space-y-3">
-                <Link
-                  href="/contact"
-                  className="block w-full bg-[#a5b5eb] text-white text-center px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
-                  style={{ fontFamily: "'Poppins', sans-serif" }}
-                >
-                  Contact to Order
-                </Link>
-                <Link
-                  href="/nutrition-services"
-                  className="block w-full bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] text-center px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors"
-                  style={{ fontFamily: "'Poppins', sans-serif" }}
-                >
-                  Schedule Consultation
-                </Link>
+                {product.inStock ? (
+                  <>
+                    <AddToCartButton
+                      product={{
+                        id: product.id,
+                        handle: product.handle,
+                        title: product.title,
+                        price: product.price,
+                        images: product.images,
+                        weight: product.weight,
+                      }}
+                      variant="primary"
+                      className="w-full px-8 py-4 rounded-lg text-lg"
+                    />
+                    <Link
+                      href="/nutrition-services"
+                      className="block w-full bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] text-center px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors"
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
+                    >
+                      Schedule Consultation
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-full bg-gray-300 text-gray-600 text-center px-8 py-4 rounded-lg text-lg font-semibold cursor-not-allowed"
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
+                    >
+                      Out of Stock
+                    </div>
+                    <Link
+                      href="/contact"
+                      className="block w-full bg-[#a5b5eb] text-white text-center px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
+                    >
+                      Contact for Availability
+                    </Link>
+                  </>
+                )}
               </div>
 
-              {/* Phase 2 Note */}
-              <div className="bg-[#fff3cd] rounded-lg p-4 mt-6">
-                <p className="text-sm text-[#856404]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Online ordering coming soon! For now, please contact us to place your order.
+              {/* Shipping Note */}
+              <div className="bg-[#e8f4fb] rounded-lg p-4 mt-6">
+                <p className="text-sm text-[#0c5460]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Free shipping on orders over $50. All orders ship fresh within 2-3 business days.
                 </p>
               </div>
             </div>

@@ -1,89 +1,111 @@
-import nodemailer from 'nodemailer';
+import { generateOrderConfirmationEmail, generateOrderShippedEmail } from './email-templates';
 
-interface SendEmailOptions {
-  to: string | string[];
+interface SendEmailParams {
+  to: string;
   subject: string;
   html: string;
-  from?: string;
-  replyTo?: string;
+  text: string;
 }
 
-// Lazy-initialize SMTP transporter to avoid build-time errors
-let transporter: nodemailer.Transporter | null = null;
+async function sendEmail({ to, subject, html, text }: SendEmailParams): Promise<boolean> {
+  // Check if Resend API key is configured
+  if (!process.env.RESEND_API_KEY) {
+    console.warn('RESEND_API_KEY not configured. Email not sent.');
+    console.log('Email details:', { to, subject });
+    return false;
+  }
 
-function getTransporter(): nodemailer.Transporter {
-  if (!transporter) {
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: process.env.EMAIL_FROM || 'Waggin Meals <orders@wagginmeals.com>',
+        to: [to],
+        subject,
+        html,
+        text,
+      }),
+    });
 
-    if (!smtpUser || !smtpPass) {
-      throw new Error('SMTP_USER and SMTP_PASS environment variables are required');
+    if (!response.ok) {
+      const error = await response.text();
+      console.error('Failed to send email:', error);
+      return false;
     }
 
-    transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: smtpUser,
-        pass: smtpPass,
-      },
-    });
+    const data = await response.json();
+    console.log('Email sent successfully:', data.id);
+    return true;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return false;
   }
-  return transporter;
 }
 
-/**
- * Send an email using SMTP (nodemailer)
- * @param options - Email options (to, subject, html, optional from/replyTo)
- * @returns Promise with send result
- */
-export async function sendEmail(options: SendEmailOptions) {
-  const {
-    to,
+export async function sendOrderConfirmationEmail(orderData: any): Promise<boolean> {
+  const { subject, html, text } = generateOrderConfirmationEmail(orderData);
+
+  return sendEmail({
+    to: orderData.customer_email,
     subject,
     html,
-    from = process.env.SMTP_USER || 'wagginmeals@gmail.com',
-    replyTo = 'info@wagginmeals.com',
-  } = options;
-
-  try {
-    const smtp = getTransporter();
-    const result = await smtp.sendMail({
-      from,
-      to: Array.isArray(to) ? to.join(', ') : to,
-      subject,
-      html,
-      replyTo,
-    });
-
-    console.log('Email sent successfully:', result.messageId);
-    return result;
-  } catch (error) {
-    console.error('Failed to send email:', error);
-    throw error;
-  }
+    text,
+  });
 }
 
-/**
- * Send multiple emails in batch
- * @param emails - Array of email options
- * @returns Promise with batch send results
- */
-export async function sendBatchEmails(emails: SendEmailOptions[]) {
-  try {
-    const results = await Promise.allSettled(
-      emails.map((email) => sendEmail(email))
-    );
+export async function sendOrderShippedEmail(orderData: any): Promise<boolean> {
+  const { subject, html, text } = generateOrderShippedEmail(orderData);
 
-    const successful = results.filter((r) => r.status === 'fulfilled').length;
-    const failed = results.filter((r) => r.status === 'rejected').length;
+  return sendEmail({
+    to: orderData.customer_email,
+    subject,
+    html,
+    text,
+  });
+}
 
-    console.log(`Batch email send complete: ${successful} successful, ${failed} failed`);
+export async function sendAdminOrderNotification(orderData: any): Promise<boolean> {
+  const adminEmail = process.env.ADMIN_EMAIL;
 
-    return results;
-  } catch (error) {
-    console.error('Failed to send batch emails:', error);
-    throw error;
+  if (!adminEmail) {
+    console.warn('ADMIN_EMAIL not configured. Admin notification not sent.');
+    return false;
   }
+
+  const subject = `New Order #${orderData.order_number} - Waggin Meals`;
+  const html = `
+    <h2>New Order Received</h2>
+    <p><strong>Order Number:</strong> ${orderData.order_number}</p>
+    <p><strong>Customer:</strong> ${orderData.customer_first_name} ${orderData.customer_last_name}</p>
+    <p><strong>Email:</strong> ${orderData.customer_email}</p>
+    <p><strong>Total:</strong> $${orderData.total.toFixed(2)}</p>
+    <p><strong>Items:</strong></p>
+    <ul>
+      ${orderData.items.map((item: any) => `
+        <li>${item.product_name} ${item.variant_title ? `(${item.variant_title})` : ''} - Qty: ${item.quantity}</li>
+      `).join('')}
+    </ul>
+    <p><a href="${process.env.NEXT_PUBLIC_SITE_URL}/admin/orders/${orderData.id}">View Order Details</a></p>
+  `;
+  const text = `
+New Order Received
+
+Order Number: ${orderData.order_number}
+Customer: ${orderData.customer_first_name} ${orderData.customer_last_name}
+Email: ${orderData.customer_email}
+Total: $${orderData.total.toFixed(2)}
+
+View order: ${process.env.NEXT_PUBLIC_SITE_URL}/admin/orders/${orderData.id}
+  `;
+
+  return sendEmail({
+    to: adminEmail,
+    subject,
+    html,
+    text,
+  });
 }
