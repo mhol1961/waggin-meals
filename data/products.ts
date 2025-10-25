@@ -106,7 +106,8 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 74%',
     weight: '800g (4 cups)',
     inStock: true,
-    stockQty: 9918
+    stockQty: 9918,
+    hasVariants: false
   },
   {
     id: 'turkey-sweet-potato',
@@ -127,7 +128,8 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 3%, Moisture (max) 76%',
     weight: '800g (4 cups)',
     inStock: true,
-    stockQty: 9854
+    stockQty: 9854,
+    hasVariants: false
   },
   {
     id: 'beef-sweet-potato',
@@ -148,7 +150,8 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 11%, Crude Fat (min) 8%, Crude Fiber (max) 1.5%, Moisture (max) 72%',
     weight: '750g (4 cups)',
     inStock: true,
-    stockQty: 9891
+    stockQty: 9891,
+    hasVariants: false
   },
   {
     id: 'beef-rice',
@@ -169,7 +172,8 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 11%, Crude Fat (min) 8%, Crude Fiber (max) 1.5%, Moisture (max) 72%',
     weight: '750g (4 cups)',
     inStock: true,
-    stockQty: 9881
+    stockQty: 9881,
+    hasVariants: false
   },
   {
     id: 'low-protein-salmon',
@@ -189,7 +193,8 @@ export const freshFoodProducts: Product[] = [
     analysis: 'As fed: Protein 5.4%, Fat 1.3%, Carbohydrates 16.8%, Moisture 73.3%. 1.2 kcal/g, 264 kcal/cup',
     weight: '2 cups per pack',
     inStock: true,
-    stockQty: 12
+    stockQty: 12,
+    hasVariants: false
   },
   {
     id: 'pup-a-loaf',
@@ -210,7 +215,8 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 6%, Crude Fiber (max) 1%, Moisture (max) 78%',
     weight: '390g (6 slices)',
     inStock: true,
-    stockQty: 45
+    stockQty: 45,
+    hasVariants: false
   },
   {
     id: 'chicken-superfood-cakes',
@@ -231,7 +237,8 @@ export const freshFoodProducts: Product[] = [
     analysis: 'Crude Protein (min) 7.5%, Crude Fat (min) 4%, Crude Fiber (max) 1%, Moisture (max) 72%',
     weight: '430g (4 cakes)',
     inStock: true,
-    stockQty: 72
+    stockQty: 72,
+    hasVariants: false
   }
 ];
 
@@ -251,7 +258,8 @@ export const mealToppersProducts: Product[] = [
     ingredients: 'Beef, Blueberries, Leafy Greens, Pumpkin, Coconut, Fish Oil, Turmeric',
     weight: '6 lbs',
     inStock: false,
-    stockQty: 13
+    stockQty: 13,
+    hasVariants: false
   },
   {
     id: 'chicken-topper',
@@ -267,7 +275,8 @@ export const mealToppersProducts: Product[] = [
     ingredients: 'Chicken, Blueberries, Leafy Greens, Pumpkin, Coconut, Fish Oil, Turmeric',
     weight: '6 oz',
     inStock: true,
-    stockQty: 15
+    stockQty: 15,
+    hasVariants: false
   },
   {
     id: 'lamb-topper',
@@ -283,7 +292,8 @@ export const mealToppersProducts: Product[] = [
     ingredients: 'Lamb, Blueberries, Leafy Greens, Pumpkin, Coconut, Fish Oil, Turmeric',
     weight: '6 oz',
     inStock: true,
-    stockQty: 19
+    stockQty: 19,
+    hasVariants: false
   },
   {
     id: 'salmon-topper',
@@ -299,7 +309,8 @@ export const mealToppersProducts: Product[] = [
     ingredients: 'Salmon, Blueberries, Leafy Greens, Pumpkin, Coconut, Fish Oil, Turmeric',
     weight: '6 lbs',
     inStock: true,
-    stockQty: 16
+    stockQty: 16,
+    hasVariants: false
   },
   {
     id: 'bone-veggie-broth',
@@ -320,7 +331,8 @@ export const mealToppersProducts: Product[] = [
     analysis: 'Crude Protein (min) 1%, Crude Fat (min) 0.10%, Crude Fiber (Max) 1%, Moisture (max) 100%',
     weight: '950g (4 cups)',
     inStock: true,
-    stockQty: 9936
+    stockQty: 9936,
+    hasVariants: false
   },
   {
     id: 'prince-jax-stew',
@@ -341,7 +353,8 @@ export const mealToppersProducts: Product[] = [
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 78%',
     weight: '300g',
     inStock: true,
-    stockQty: 959
+    stockQty: 959,
+    hasVariants: false
   }
 ];
 
@@ -365,7 +378,8 @@ export const treatsProducts: Product[] = [
     ingredients: 'Beef, Whole Oats, Apples, Bananas, Cottage Cheese, Eggs, Ginger, Turmeric, Oregano, Coconut Oil, Safflower Oil',
     weight: '13 meatballs',
     inStock: true,
-    stockQty: 4
+    stockQty: 4,
+    hasVariants: false
   },
   {
     id: 'turmeric-eggs-bacon',
@@ -381,7 +395,8 @@ export const treatsProducts: Product[] = [
     ingredients: 'Wheat Flour, Dried Eggs, Vegetable Glycerin, Turmeric Powder, Malted Barley, Natural Bacon Flavor, Liquid smoke, Brown rice',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 12
+    stockQty: 12,
+    hasVariants: false
   },
   {
     id: 'spinach-mozzarella-kale',
@@ -397,7 +412,8 @@ export const treatsProducts: Product[] = [
     ingredients: 'Spinach, Mozzarella, Kale, Probiotics, Wheat Flour, Vegetable Glycerin',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 17
+    stockQty: 17,
+    hasVariants: false
   },
   {
     id: 'apple-chicken-bites',
@@ -413,7 +429,8 @@ export const treatsProducts: Product[] = [
     ingredients: 'Apples, Chicken, Wheat Flour, Vegetable Glycerin',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 26
+    stockQty: 26,
+    hasVariants: false
   },
   {
     id: 'beet-bites',
@@ -429,7 +446,8 @@ export const treatsProducts: Product[] = [
     ingredients: 'Beets, Wheat Flour, Vegetable Glycerin',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 28
+    stockQty: 28,
+    hasVariants: false
   },
   {
     id: 'lamb-chips',
@@ -448,7 +466,8 @@ export const treatsProducts: Product[] = [
     ingredients: 'Lamb Hearts',
     weight: '6.5 oz',
     inStock: true,
-    stockQty: 5
+    stockQty: 5,
+    hasVariants: false
   },
   {
     id: 'venison-sausages',
@@ -464,7 +483,8 @@ export const treatsProducts: Product[] = [
     ingredients: 'Venison',
     weight: '7.5 oz',
     inStock: true,
-    stockQty: 17
+    stockQty: 17,
+    hasVariants: false
   },
   {
     id: 'duck-bars',
@@ -481,7 +501,8 @@ export const treatsProducts: Product[] = [
     analysis: 'Protein (min) 13.0%, Crude Fat (min) 5.0%, Fiber (max) 3.0%, Moisture (max) 25.0%',
     weight: 'Multiple sizes',
     inStock: true,
-    stockQty: 17
+    stockQty: 17,
+    hasVariants: false
   }
 ];
 
