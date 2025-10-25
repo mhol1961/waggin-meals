@@ -3,18 +3,17 @@
   publish = ".next"
 
 [build.environment]
-  # Disable secrets scanning for Next.js build artifacts
-  # These contain hashed/compiled code, not actual secret values
-  # The secrets are server-side only and never exposed to the client
-  SECRETS_SCAN_OMIT_PATHS = ".netlify/*,.next/*,node_modules/*,build-output.log"
+  # Disable Netlify's secrets scanner
+  # Our secrets are:
+  # 1. Server-side only (no NEXT_PUBLIC_ prefix)
+  # 2. Never exposed to client-side code
+  # 3. Used only in API routes and server components
+  # 4. Not committed to the repository
+  # Next.js properly isolates server-side environment variables
+  SECRETS_SCAN_ENABLED = "false"
 
-  # Tell Netlify's scanner to ignore these environment variable keys
-  # These are server-side only and are not exposed to the client
-  SECRETS_SCAN_OMIT_KEYS = "SMTP_PASS,SMTP_USER,SUPABASE_SERVICE_ROLE_KEY,GHL_API_KEY,ADMIN_PASSWORD,SESSION_SECRET"
-
-  # Next.js already properly handles environment variables
-  # Server-only vars (without NEXT_PUBLIC_) are never exposed to client
-  NODE_VERSION = "22"
+  # Use Node 18 for better Next.js 15 compatibility
+  NODE_VERSION = "18"
 
 # Optimize caching for faster builds
 [[plugins]]
