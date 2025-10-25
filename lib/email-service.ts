@@ -1,14 +1,25 @@
 import { Resend } from 'resend';
 
-// Initialize Resend with API key from environment variables
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 interface SendEmailOptions {
   to: string | string[];
   subject: string;
   html: string;
   from?: string;
   replyTo?: string;
+}
+
+// Lazy-initialize Resend client to avoid build-time errors
+let resendClient: Resend | null = null;
+
+function getResendClient(): Resend {
+  if (!resendClient) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY environment variable is not set');
+    }
+    resendClient = new Resend(apiKey);
+  }
+  return resendClient;
 }
 
 /**
@@ -26,6 +37,7 @@ export async function sendEmail(options: SendEmailOptions) {
   } = options;
 
   try {
+    const resend = getResendClient();
     const result = await resend.emails.send({
       from,
       to: Array.isArray(to) ? to : [to],
