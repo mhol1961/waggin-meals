@@ -30,6 +30,34 @@ export default function HeroVariationsIndex() {
       target: 'High-end clients wanting white-glove service',
       cta: 'Schedule VIP Consultation',
     },
+    {
+      id: 'biome-color-palette',
+      title: 'Variation E: Biome Color Palette',
+      description: 'Gut health focus with biome branding',
+      target: 'Science-minded pet owners interested in microbiome',
+      cta: 'Explore Gut Health Solutions',
+    },
+    {
+      id: 'biome-experience',
+      title: 'Variation F: Biome Experience',
+      description: 'Immersive gut health and biome approach',
+      target: 'Pet owners seeking holistic health transformation',
+      cta: 'Start Biome Journey',
+    },
+    {
+      id: 'waggin-biome-fusion',
+      title: 'Variation G: Waggin Biome Fusion',
+      description: 'Combines Waggin Meals branding with biome science',
+      target: 'Customers wanting proven science + brand trust',
+      cta: 'Discover the Science',
+    },
+    {
+      id: 'waggin-holistic-experience',
+      title: 'Variation H: Waggin Holistic Experience',
+      description: 'Complete wellness approach with Waggin Meals',
+      target: 'Pet owners seeking comprehensive health solutions',
+      cta: 'Begin Wellness Journey',
+    },
   ];
 
   return (
@@ -41,7 +69,7 @@ export default function HeroVariationsIndex() {
             Hero Section Variations
           </h1>
           <p className="text-lg text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Compare 4 different hero section designs for the Waggin Meals home page
+            Compare 8 different hero section designs for the Waggin Meals home page
           </p>
         </div>
       </section>
