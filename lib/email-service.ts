@@ -1,4 +1,4 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 interface SendEmailOptions {
   to: string | string[];
@@ -8,22 +8,33 @@ interface SendEmailOptions {
   replyTo?: string;
 }
 
-// Lazy-initialize Resend client to avoid build-time errors
-let resendClient: Resend | null = null;
+// Lazy-initialize SMTP transporter to avoid build-time errors
+let transporter: nodemailer.Transporter | null = null;
 
-function getResendClient(): Resend {
-  if (!resendClient) {
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      throw new Error('RESEND_API_KEY environment variable is not set');
+function getTransporter(): nodemailer.Transporter {
+  if (!transporter) {
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+
+    if (!smtpUser || !smtpPass) {
+      throw new Error('SMTP_USER and SMTP_PASS environment variables are required');
     }
-    resendClient = new Resend(apiKey);
+
+    transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
   }
-  return resendClient;
+  return transporter;
 }
 
 /**
- * Send an email using Resend
+ * Send an email using SMTP (nodemailer)
  * @param options - Email options (to, subject, html, optional from/replyTo)
  * @returns Promise with send result
  */
@@ -32,21 +43,21 @@ export async function sendEmail(options: SendEmailOptions) {
     to,
     subject,
     html,
-    from = 'Waggin Meals <noreply@wagginmeals.com>',
+    from = process.env.SMTP_USER || 'wagginmeals@gmail.com',
     replyTo = 'info@wagginmeals.com',
   } = options;
 
   try {
-    const resend = getResendClient();
-    const result = await resend.emails.send({
+    const smtp = getTransporter();
+    const result = await smtp.sendMail({
       from,
-      to: Array.isArray(to) ? to : [to],
+      to: Array.isArray(to) ? to.join(', ') : to,
       subject,
       html,
       replyTo,
     });
 
-    console.log('Email sent successfully:', result);
+    console.log('Email sent successfully:', result.messageId);
     return result;
   } catch (error) {
     console.error('Failed to send email:', error);

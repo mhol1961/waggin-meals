@@ -18,20 +18,14 @@ SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>
 ```
 **Required** - Database connection for blog posts, case studies, and admin panel.
 
-### Email Configuration
-```
-RESEND_API_KEY=re_xxx
-```
-**Required** - Resend API key for sending emails via contact forms.
-
-#### Legacy SMTP Configuration (Optional - if using SMTP instead of Resend)
+### Email Configuration (SMTP)
 ```
 SMTP_USER=wagginmeals@gmail.com
 SMTP_PASS=<your-smtp-password>
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 ```
-**Optional** - Only needed if using SMTP email service instead of Resend.
+**Required** - SMTP credentials for sending emails via contact forms. Use Gmail app-specific password.
 
 ### GoHighLevel CRM Integration
 ```
@@ -79,6 +73,6 @@ The following variables **MUST** be set for the build to succeed:
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 The following variables are needed for runtime functionality:
-- `RESEND_API_KEY` - Contact forms will fail without this (but build will succeed)
-- `ADMIN_USERNAME` / `ADMIN_PASSWORD` - Admin panel won't be accessible
+- `SMTP_USER` / `SMTP_PASS` / `SMTP_HOST` / `SMTP_PORT` - Contact forms will fail without these
+- `ADMIN_USERNAME` / `ADMIN_PASSWORD` / `SESSION_SECRET` - Admin panel won't be accessible
 - `GHL_API_KEY` / `GHL_LOCATION_ID` - CRM integration won't work (if enabled)
