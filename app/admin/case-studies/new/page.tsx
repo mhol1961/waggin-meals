@@ -73,7 +73,7 @@ export default function NewCaseStudyPage() {
   const [seoTitle, setSeoTitle] = useState('');
   const [seoDescription, setSeoDescription] = useState('');
 
-  const handleDocumentUpload = async (html: string, extractedTitle: string) => {
+  const handleDocumentUpload = async (html: string, extractedTitle?: string) => {
     setFullStory(html);
     if (extractedTitle && !title) {
       setTitle(extractedTitle);
