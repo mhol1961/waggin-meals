@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createServerClient } from '@/lib/supabase/server';
 
 // GET /api/case-studies/[slug] - Get single published case study by slug (public endpoint)
 export async function GET(
@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   try {
-    const supabase = createClient();
+    const supabase = createServerClient();
     const { slug } = params;
 
     const { data, error } = await supabase

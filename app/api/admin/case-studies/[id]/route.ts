@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createServerClient } from '@/lib/supabase/server';
 import { verifyAdminAuth } from '@/lib/admin-auth';
 
 // GET /api/admin/case-studies/[id] - Get single case study
@@ -14,7 +14,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = createServerClient();
     const { id } = params;
 
     const { data, error } = await supabase
@@ -48,7 +48,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = createServerClient();
     const { id } = params;
     const body = await request.json();
 
@@ -145,7 +145,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = createServerClient();
     const { id } = params;
 
     const { error } = await supabase
