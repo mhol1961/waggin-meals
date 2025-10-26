@@ -170,7 +170,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   ARTICLE TAGS
                 </h3>
                 <div className="flex flex-wrap gap-3">
-                  {post.tags.map((tag) => (
+                  {post.tags.map((tag: string) => (
                     <span
                       key={tag}
                       className="px-4 py-2 bg-gradient-to-r from-[#a5b5eb]/10 to-[#c5d4f7]/10 text-[#3c3a47] rounded-full text-[14px] font-medium border border-[#a5b5eb]/20 hover:border-[#a5b5eb] transition-colors"
