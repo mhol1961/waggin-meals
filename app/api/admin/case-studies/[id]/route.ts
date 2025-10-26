@@ -5,7 +5,7 @@ import { verifyAdminAuth } from '@/lib/admin-auth';
 // GET /api/admin/case-studies/[id] - Get single case study
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify admin authentication
@@ -15,7 +15,7 @@ export async function GET(
     }
 
     const supabase = createServerClient();
-    const { id } = params;
+    const { id } = await context.params;
 
     const { data, error } = await supabase
       .from('case_studies')
@@ -39,7 +39,7 @@ export async function GET(
 // PUT /api/admin/case-studies/[id] - Update case study
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify admin authentication
@@ -49,7 +49,7 @@ export async function PUT(
     }
 
     const supabase = createServerClient();
-    const { id } = params;
+    const { id } = await context.params;
     const body = await request.json();
 
     // Check if case study exists
@@ -136,7 +136,7 @@ export async function PUT(
 // DELETE /api/admin/case-studies/[id] - Delete case study
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify admin authentication
@@ -146,7 +146,7 @@ export async function DELETE(
     }
 
     const supabase = createServerClient();
-    const { id } = params;
+    const { id } = await context.params;
 
     const { error } = await supabase
       .from('case_studies')

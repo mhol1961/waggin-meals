@@ -47,11 +47,11 @@ function transformCaseStudy(dbRow: any) {
 // GET /api/case-studies/[slug] - Get single published case study by slug (public endpoint)
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  context: { params: Promise<{ slug: string }> }
 ) {
   try {
     const supabase = createServerClient();
-    const { slug } = params;
+    const { slug } = await context.params;
 
     const { data, error } = await supabase
       .from('case_studies')
