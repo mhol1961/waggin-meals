@@ -102,8 +102,8 @@ const navItems = [
 
 export default function UltimateHomepage() {
   const [showModal, setShowModal] = useState(false);
-  const [showGHLChat, setShowGHLChat] = useState(false);
-  const [chatWidgetOpen, setChatWidgetOpen] = useState(true);
+  const [showChatView, setShowChatView] = useState(false);
+  const [chatWidgetOpen, setChatWidgetOpen] = useState(false);
   const [testimonialVisible, setTestimonialVisible] = useState(true);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -424,7 +424,7 @@ export default function UltimateHomepage() {
           </Link>
         </div>
 
-        {/* Floating GHL Chat Widget */}
+        {/* Floating Chat Widget */}
         {chatWidgetOpen ? (
           <div className="absolute bottom-6 right-6 z-50 w-96 bg-white border border-[#eadfce] rounded-3xl shadow-2xl overflow-hidden">
             {/* Header with close button */}
@@ -446,21 +446,21 @@ export default function UltimateHomepage() {
             <div className="flex border-b border-[#f0e5d6]">
               <button
                 className={`flex-1 text-sm font-semibold py-3 transition-colors ${
-                  !showGHLChat
+                  !showChatView
                     ? 'border-b-2 border-[#2f4b38] text-[#2f4b38]'
                     : 'text-[#a0a0a0] hover:text-[#2f4b38]'
                 }`}
-                onClick={() => setShowGHLChat(false)}
+                onClick={() => setShowChatView(false)}
               >
                 Quick Answers
               </button>
               <button
                 className={`flex-1 text-sm font-semibold py-3 transition-colors ${
-                  showGHLChat
+                  showChatView
                     ? 'border-b-2 border-[#2f4b38] text-[#2f4b38]'
                     : 'text-[#a0a0a0] hover:text-[#2f4b38]'
                 }`}
-                onClick={() => setShowGHLChat(true)}
+                onClick={() => setShowChatView(true)}
               >
                 Chat / Voice
               </button>
@@ -468,7 +468,7 @@ export default function UltimateHomepage() {
 
             {/* Content */}
             <div className="p-4 max-h-96 overflow-y-auto">
-              {!showGHLChat ? (
+              {!showChatView ? (
                 <div className="space-y-4">
                   <p className="text-xs text-[#756b5d] mb-3">Select a question below or start a chat</p>
                   {faqs.map((faq, index) => (
@@ -494,9 +494,9 @@ export default function UltimateHomepage() {
               ) : (
                 <div className="text-center py-6">
                   <MessageCircle className="w-10 h-10 text-[#2f4b38] mx-auto mb-4" />
-                  <p className="font-semibold text-base mb-2">GHL Chat Integration</p>
+                  <p className="font-semibold text-base mb-2">Ready to Chat?</p>
                   <p className="text-sm text-[#756b5d] mb-4">
-                    This will connect to your GoHighLevel chat/voice bot when ready.
+                    We're here to help answer your questions and discuss your pet's nutrition needs.
                   </p>
                   <Link
                     href="/contact"
