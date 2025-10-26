@@ -58,6 +58,13 @@ export default function HeroVariationsIndex() {
       target: 'Pet owners seeking comprehensive health solutions',
       cta: 'Begin Wellness Journey',
     },
+    {
+      id: 'ultimate-homepage',
+      title: 'Variation I: Ultimate Homepage ⭐ NEW',
+      description: 'Best elements combined: "When vets can\'t find answers" hook, palette visualization, GHL chat integration, Christie\'s credentials',
+      target: 'All customer segments - comprehensive approach',
+      cta: 'Book Free Consultation',
+    },
   ];
 
   return (
@@ -69,7 +76,7 @@ export default function HeroVariationsIndex() {
             Hero Section Variations
           </h1>
           <p className="text-lg text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Compare 8 different hero section designs for the Waggin Meals home page
+            Compare 9 different hero section designs for the Waggin Meals home page
           </p>
         </div>
       </section>
