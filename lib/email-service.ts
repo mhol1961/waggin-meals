@@ -7,7 +7,7 @@ interface SendEmailParams {
   text: string;
 }
 
-async function sendEmail({ to, subject, html, text }: SendEmailParams): Promise<boolean> {
+export async function sendEmail({ to, subject, html, text }: SendEmailParams): Promise<boolean> {
   // Check if Resend API key is configured
   if (!process.env.RESEND_API_KEY) {
     console.warn('RESEND_API_KEY not configured. Email not sent.');

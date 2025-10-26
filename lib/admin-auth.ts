@@ -176,3 +176,16 @@ export function redirectToLogin(request: NextRequest): NextResponse {
 export function redirectToDashboard(request: NextRequest): NextResponse {
   return NextResponse.redirect(new URL('/admin', request.url));
 }
+
+/**
+ * Verify admin authentication for API routes
+ * Alias for requireAdminAuth to match expected import name
+ */
+export async function verifyAdminAuth(
+  request: NextRequest
+): Promise<
+  | { authenticated: true; session: { username: string } }
+  | { authenticated: false; response: NextResponse }
+> {
+  return requireAdminAuth(request);
+}

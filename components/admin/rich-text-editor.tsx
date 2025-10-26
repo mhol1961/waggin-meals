@@ -13,7 +13,7 @@ interface RichTextEditorProps {
   placeholder?: string;
 }
 
-export default function RichTextEditor({
+function RichTextEditor({
   content,
   onChange,
   placeholder = 'Start writing...',
@@ -292,3 +292,7 @@ export default function RichTextEditor({
     </div>
   );
 }
+
+// Export both default and named for compatibility
+export default RichTextEditor;
+export { RichTextEditor };
