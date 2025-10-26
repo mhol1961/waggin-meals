@@ -53,7 +53,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
   }
 
   return (
-    <AdminLayout title={`Order ${order.order_number}`}>
+    <AdminLayout title={`Order ${order.order_number}`} username={session.username}>
       <OrderDetailClient order={order} />
     </AdminLayout>
   );

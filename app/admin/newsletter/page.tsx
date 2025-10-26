@@ -41,7 +41,7 @@ export default async function NewsletterPage() {
   };
 
   return (
-    <AdminLayout title="Newsletter Subscribers">
+    <AdminLayout title="Newsletter Subscribers" username={session.username}>
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
