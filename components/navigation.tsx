@@ -39,7 +39,13 @@ const navItems = [
     ]
   },
   { label: 'Shop', href: '/shop' },
-  { label: 'Success Stories', href: '/testimonials' },
+  {
+    label: 'Success Stories',
+    dropdown: [
+      { label: 'Case Studies', href: '/case-studies' },
+      { label: 'Testimonials', href: '/testimonials' },
+    ]
+  },
   { label: 'Contact', href: '/contact' },
 ];
 
