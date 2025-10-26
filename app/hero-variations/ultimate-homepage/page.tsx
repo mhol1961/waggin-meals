@@ -61,6 +61,31 @@ const faqs = [
   { question: 'Can you work with my vet?', answer: 'Absolutely! We provide vet-ready documentation and collaborate with your veterinary team.' },
 ];
 
+const floatingTestimonials = [
+  { name: 'Matt Wolfe', text: 'Our dog Maisy absolutely devours the fresh meals!' },
+  { name: 'Elizabeth Joslin', text: 'Christie is so helpful & knowledgeable!' },
+  { name: 'Amber Munoz', text: 'My dogs love this food!! Best quality ingredients.' },
+];
+
+const fullTestimonials = [
+  {
+    name: 'Matt Wolfe + Maisy',
+    text: 'Our dog Maisy absolutely devours the fresh meals that Christie prepares. And it\'s satisfying to know the food is prepared by a pet nutritionist. Can\'t recommend her enough.',
+  },
+  {
+    name: 'Elizabeth Joslin',
+    text: 'Our large pup loves their food and broth! Christie is so helpful, kind & very knowledgeable about canine nutrition! You can tell she genuinely cares about your dog\'s health and not just selling products. They also offer a private dog park that you can rent hourly! We recently rented the park for our pups birthday and had a blast.',
+  },
+  {
+    name: 'Amber Munoz',
+    text: 'My dogs love this food!! I love the convenience and nutritional value this company provides. I know both of my dogs are getting the best quality ingredients. Both my girls look forward to meal times as they love the taste of the food and jump for joy.',
+  },
+  {
+    name: 'Thom Slater',
+    text: 'Top notch, prepared fresh on-site healthiest possible dog meals and treats! Certified and experienced owners & staff who care about your pets and you!! The new location is fantastic!!',
+  },
+];
+
 const navItems = [
   { label: 'Home', href: '/' },
   {
@@ -106,6 +131,8 @@ export default function UltimateHomepage() {
   const [testimonialVisible, setTestimonialVisible] = useState(true);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentFloatingTestimonial, setCurrentFloatingTestimonial] = useState(0);
+  const [showFloatingTestimonial, setShowFloatingTestimonial] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowModal(true), 3500);
@@ -116,6 +143,30 @@ export default function UltimateHomepage() {
   useEffect(() => {
     const timer = setTimeout(() => setTestimonialVisible(false), 8000);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Floating testimonials cycle
+  useEffect(() => {
+    const showTestimonial = () => {
+      setShowFloatingTestimonial(true);
+      setTimeout(() => {
+        setShowFloatingTestimonial(false);
+      }, 4500); // Show for 4.5 seconds
+    };
+
+    // Show first testimonial after 2 seconds
+    const initialTimer = setTimeout(showTestimonial, 2000);
+
+    // Cycle through testimonials
+    const interval = setInterval(() => {
+      setCurrentFloatingTestimonial((prev) => (prev + 1) % floatingTestimonials.length);
+      showTestimonial();
+    }, 7000); // New testimonial every 7 seconds
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -421,6 +472,43 @@ export default function UltimateHomepage() {
           </Link>
         </div>
 
+        {/* Floating Testimonial Pop-ins */}
+        {showFloatingTestimonial && (
+          <div
+            className={`absolute top-1/2 z-40 transform -translate-y-1/2 transition-all duration-700 ${
+              currentFloatingTestimonial % 2 === 0
+                ? 'left-4 animate-in slide-in-from-left-8 fade-in'
+                : 'right-4 animate-in slide-in-from-right-8 fade-in'
+            }`}
+            style={{
+              animation: showFloatingTestimonial
+                ? 'slideIn 0.5s ease-out, fadeOut 0.5s ease-in 4s'
+                : 'none'
+            }}
+          >
+            <div className="bg-white border-2 border-[#ded2bf] rounded-2xl shadow-2xl p-4 max-w-xs backdrop-blur-sm bg-white/95">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2f4b38] to-[#1f3324] flex items-center justify-center text-white font-bold text-sm" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  {floatingTestimonials[currentFloatingTestimonial].name[0]}
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-[#2f4b38]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    {floatingTestimonials[currentFloatingTestimonial].name}
+                  </p>
+                  <div className="flex text-[#f6a723]">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <Star key={index} className="w-3 h-3 fill-current" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-[#4a443b] italic leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                "{floatingTestimonials[currentFloatingTestimonial].text}"
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Floating Chat Widget */}
         {chatWidgetOpen ? (
           <div className="absolute bottom-6 right-6 z-50 w-96 bg-white border border-[#eadfce] rounded-3xl shadow-2xl overflow-hidden">
@@ -640,44 +728,59 @@ export default function UltimateHomepage() {
         </div>
       </section>
 
-      {/* Testimonial Section */}
-      <section className="px-4 py-20 bg-white">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-semibold text-[#bc2c2c] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            What Pet Parents Say
-          </p>
-          <h2 className="text-[42px] text-[#1f1a16] mb-12" style={{ fontFamily: "'Abril Fatface', serif" }}>
-            Real Results, Real Relief
-          </h2>
+      {/* Happy Customers & Waggin Tails Section */}
+      <section className="px-4 py-20 bg-gradient-to-b from-white to-[#f5f1ea]">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <p className="text-sm font-semibold text-[#bc2c2c] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              What Pet Parents Say
+            </p>
+            <h2 className="text-[42px] text-[#1f1a16] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              Happy Customers & Waggin Tails
+            </h2>
+            <p className="text-lg text-[#4a443b] max-w-3xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              Real stories from real pet parents who trusted us with their dog's health and nutrition.
+            </p>
+          </div>
 
-          <div className="bg-gradient-to-br from-[#f5f1ea] to-white border-2 border-[#ded2bf] rounded-3xl shadow-xl p-8 md:p-10">
-            <div className="flex flex-col items-center mb-6">
-              <Image
-                src="/images/woman-with-white-dog.webp"
-                alt="Happy customer with dog"
-                width={80}
-                height={80}
-                className="rounded-full object-cover border-4 border-white shadow-lg mb-4"
-              />
-              <div>
-                <p className="text-xl font-semibold text-[#2f4b38] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Leah + Augie
-                </p>
-                <div className="flex justify-center text-[#f6a723] mb-4">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <svg key={index} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                    </svg>
-                  ))}
+          <div className="grid md:grid-cols-2 gap-6">
+            {fullTestimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-white border-2 border-[#ded2bf] rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:border-[#bc2c2c]/30 transition-all"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#2f4b38] to-[#1f3324] flex items-center justify-center text-white font-bold text-lg shadow-md" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                    {testimonial.name[0]}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-base font-semibold text-[#2f4b38]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      {testimonial.name}
+                    </p>
+                    <div className="flex text-[#f6a723]">
+                      {Array.from({ length: 5 }).map((_, starIndex) => (
+                        <Star key={starIndex} className="w-4 h-4 fill-current" />
+                      ))}
+                    </div>
+                  </div>
                 </div>
+                <p className="text-sm text-[#4a443b] leading-relaxed italic" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  "{testimonial.text}"
+                </p>
               </div>
-            </div>
-            <p className="text-lg italic text-[#3c3a47] leading-relaxed mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              "The palette visuals made it so easy to explain Augie's plan to our vet. Christie's guidance was life-changing. Within two weeks, Augie's energy returned and his digestive issues completely resolved."
-            </p>
-            <p className="text-sm text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              Portland, Oregon
-            </p>
+            ))}
+          </div>
+
+          {/* View All Testimonials CTA */}
+          <div className="text-center mt-12">
+            <Link
+              href="/testimonials"
+              className="inline-flex items-center gap-2 bg-[#2f4b38] text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-[#1f3324] transition-all shadow-lg hover:shadow-xl"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
+              Read More Success Stories
+              <span className="transition-transform group-hover:translate-x-1">→</span>
+            </Link>
           </div>
         </div>
       </section>
