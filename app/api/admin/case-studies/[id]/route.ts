@@ -55,7 +55,7 @@ export async function PUT(
     // Check if case study exists
     const { data: existing, error: fetchError } = await supabase
       .from('case_studies')
-      .select('id')
+      .select('id, published, published_at')
       .eq('id', id)
       .single();
 
