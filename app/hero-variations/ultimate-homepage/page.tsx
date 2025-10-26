@@ -168,7 +168,7 @@ export default function UltimateHomepage() {
                       </button>
                       {activeDropdown === item.label && item.dropdown && (
                         <div className="absolute left-0 top-full mt-1 w-64 bg-white rounded-lg shadow-xl border border-[#ded2bf] py-2 z-50">
-                          {item.dropdown.map((dropdownItem) => (
+                          {item.dropdown?.map((dropdownItem) => (
                             <Link
                               key={dropdownItem.href}
                               href={dropdownItem.href}
