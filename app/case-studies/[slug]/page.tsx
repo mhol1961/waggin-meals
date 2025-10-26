@@ -8,82 +8,6 @@ import { ArrowLeft, Calendar, MapPin, Scale, Ruler, Heart, Clock, CheckCircle2, 
 import type { CaseStudy } from '@/types/case-study';
 import { getDogSize } from '@/types/case-study';
 
-// Sample data - will be replaced with API call
-const sampleCaseStudies: CaseStudy[] = [
-  {
-    id: '1',
-    slug: 'bella-weight-loss-transformation',
-    dogName: 'Bella',
-    breed: 'Labrador Retriever',
-    age: 6,
-    weight: 85,
-    sex: 'spayed-female',
-    ownerName: 'Sarah M.',
-    location: 'Austin, TX',
-    title: "How Bella Lost 15 Pounds and Regained Her Energy",
-    summary: "Bella went from overweight and lethargic to healthy and playful in just 4 months with a custom fresh food plan.",
-    healthIssues: ['Weight Management', 'Energy & Vitality'],
-    symptoms: ['Overweight', 'Low energy', 'Joint pain', 'Difficulty climbing stairs'],
-    diagnosis: 'Obesity, early arthritis',
-    problemDuration: '2 years',
-    timeToResults: '4 months',
-    productsUsed: ['Chicken & Sweet Potato Meal', 'Joint Support Supplement'],
-    servicesUsed: ['3-Month Custom Meal Plan', 'Monthly Check-ins'],
-    resultsAchieved: [
-      'Lost 15 pounds safely',
-      'Energy levels tripled',
-      'Playful like a puppy again',
-      'No more joint pain',
-      'Climbs stairs easily'
-    ],
-    beforeMetrics: { weight: 85, energy: 'Very low' },
-    afterMetrics: { weight: 70, energy: 'High' },
-    fullStory: `
-      <h2>The Problem</h2>
-      <p>When Sarah first contacted us, Bella had been struggling with weight issues for over two years. At 85 pounds, she was significantly overweight for her frame, and the extra weight was taking a toll on her joints and overall quality of life.</p>
-
-      <h2>The Symptoms</h2>
-      <p>Bella showed several concerning symptoms:</p>
-      <ul>
-        <li>Extreme lethargy and reluctance to play</li>
-        <li>Difficulty climbing stairs</li>
-        <li>Early signs of arthritis in her hips</li>
-        <li>Rapid weight gain despite diet kibble</li>
-        <li>Loss of interest in walks</li>
-      </ul>
-
-      <h2>The Custom Solution</h2>
-      <p>We created a personalized nutrition plan for Bella that included:</p>
-      <ul>
-        <li>Precise portion control based on her ideal weight (70 lbs)</li>
-        <li>High-protein, low-fat fresh meals with chicken and sweet potato</li>
-        <li>Joint support supplements to ease arthritis pain</li>
-        <li>Monthly check-ins to adjust portions as she lost weight</li>
-      </ul>
-
-      <h2>The Transformation</h2>
-      <p>Within the first month, Sarah noticed Bella had more energy. By month two, she was losing weight steadily (about 1-2 pounds per week). By month four, Bella had reached her ideal weight and was acting like a puppy again!</p>
-
-      <h2>The Results Today</h2>
-      <p>Bella now maintains her healthy weight of 70 pounds, plays enthusiastically, climbs stairs with ease, and shows no signs of joint pain. Sarah continues to feed her our custom meal plan to maintain these incredible results.</p>
-    `,
-    ownerQuote: "I was skeptical about fresh food, but Christie\'s custom meal plan completely transformed Bella\'s life. She lost weight gradually and safely, and now she plays like a puppy again! The best investment I\'ve ever made in her health.",
-    christieNotes: 'Bella\'s case demonstrates how proper portion control combined with nutrient-dense fresh food can reverse obesity and improve quality of life. The key was creating sustainable habits and making gradual changes.',
-    beforePhotos: ['/images/woman-with-white-dog.webp'],
-    afterPhotos: ['/images/woman-with-white-dog.webp'],
-    heroImage: '/images/woman-with-white-dog.webp',
-    category: 'Weight Management',
-    tags: ['labrador', 'weight-loss', 'obesity', 'arthritis', 'senior'],
-    featured: true,
-    published: true,
-    publishedAt: '2024-10-01',
-    createdAt: '2024-10-01',
-    updatedAt: '2024-10-01',
-    seoTitle: 'How Bella the Labrador Lost 15 Pounds with Fresh Food | Waggin Meals',
-    seoDescription: 'Read how Bella, a 6-year-old Labrador, lost 15 pounds and regained her energy in 4 months with a custom fresh food plan from Waggin Meals.',
-  },
-];
-
 export default function CaseStudyDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
@@ -91,10 +15,28 @@ export default function CaseStudyDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Replace with actual API call
-    const study = sampleCaseStudies.find(cs => cs.slug === slug);
-    setCaseStudy(study || null);
-    setLoading(false);
+    async function fetchCaseStudy() {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/case-studies/${slug}`);
+
+        if (!response.ok) {
+          setCaseStudy(null);
+          setLoading(false);
+          return;
+        }
+
+        const data = await response.json();
+        setCaseStudy(data.caseStudy);
+      } catch (error) {
+        console.error('Error fetching case study:', error);
+        setCaseStudy(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCaseStudy();
   }, [slug]);
 
   if (loading) {
