@@ -125,10 +125,20 @@ async function processSubscription(subscription: any, results: any) {
     return;
   }
 
+  // Validate transaction ID exists
+  const transactionId = chargeResult.transactionId;
+  if (!transactionId) {
+    console.warn('Charge returned no transactionId for subscription', {
+      subscriptionId: subscription.id
+    });
+    results.failed++;
+    return;
+  }
+
   // Create order from successful charge
   const order = await createOrderFromSubscription(
     subscription,
-    chargeResult.transactionId
+    transactionId
   );
 
   if (!order) {
