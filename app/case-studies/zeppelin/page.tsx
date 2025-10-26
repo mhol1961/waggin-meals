@@ -379,6 +379,51 @@ export default function ZeppelinCaseStudy() {
                 </ul>
               </div>
 
+              {/* Helpful Resources */}
+              <div className="bg-white rounded-2xl p-6 border-2 border-[#e0e0e0]">
+                <h3 className="text-[18px] font-bold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  Helpful Resources
+                </h3>
+                <div className="space-y-3">
+                  <Link
+                    href="/feeding-calculator"
+                    className="flex items-center justify-between p-3 bg-[#f8f9fa] rounded-lg hover:bg-[#e8f4fb] transition-colors group"
+                  >
+                    <span className="text-[14px] font-medium text-[#3c3a47] group-hover:text-[#bc2c2c]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      🔢 Feeding Calculator
+                    </span>
+                    <span className="text-[#a5b5eb] group-hover:text-[#bc2c2c]">→</span>
+                  </Link>
+                  <Link
+                    href="/blog"
+                    className="flex items-center justify-between p-3 bg-[#f8f9fa] rounded-lg hover:bg-[#e8f4fb] transition-colors group"
+                  >
+                    <span className="text-[14px] font-medium text-[#3c3a47] group-hover:text-[#bc2c2c]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      📖 Nutrition Insights
+                    </span>
+                    <span className="text-[#a5b5eb] group-hover:text-[#bc2c2c]">→</span>
+                  </Link>
+                  <Link
+                    href="/testimonials"
+                    className="flex items-center justify-between p-3 bg-[#f8f9fa] rounded-lg hover:bg-[#e8f4fb] transition-colors group"
+                  >
+                    <span className="text-[14px] font-medium text-[#3c3a47] group-hover:text-[#bc2c2c]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      ⭐ Client Testimonials
+                    </span>
+                    <span className="text-[#a5b5eb] group-hover:text-[#bc2c2c]">→</span>
+                  </Link>
+                  <Link
+                    href="/guides/fresh-food-guide"
+                    className="flex items-center justify-between p-3 bg-[#f8f9fa] rounded-lg hover:bg-[#e8f4fb] transition-colors group"
+                  >
+                    <span className="text-[14px] font-medium text-[#3c3a47] group-hover:text-[#bc2c2c]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      📚 Fresh Food Guide
+                    </span>
+                    <span className="text-[#a5b5eb] group-hover:text-[#bc2c2c]">→</span>
+                  </Link>
+                </div>
+              </div>
+
               {/* Referral Program */}
               <div className="bg-gradient-to-br from-[#a5b5eb]/10 to-[#c5d4f7]/10 rounded-2xl p-6 border-2 border-[#a5b5eb]/20">
                 <h3 className="text-[18px] font-bold text-[#3c3a47] mb-3" style={{ fontFamily: "'Abril Fatface', serif" }}>
