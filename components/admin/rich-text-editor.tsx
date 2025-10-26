@@ -11,12 +11,14 @@ interface RichTextEditorProps {
   content: string;
   onChange: (content: string) => void;
   placeholder?: string;
+  onImageUpload?: (file: File) => Promise<string>;
 }
 
 function RichTextEditor({
   content,
   onChange,
   placeholder = 'Start writing...',
+  onImageUpload,
 }: RichTextEditorProps) {
   const editor = useEditor({
     immediatelyRender: false,
@@ -50,12 +52,33 @@ function RichTextEditor({
     },
   });
 
-  const addImage = useCallback(() => {
-    const url = window.prompt('Enter image URL:');
-    if (url && editor) {
-      editor.chain().focus().setImage({ src: url }).run();
+  const addImage = useCallback(async () => {
+    if (onImageUpload && editor) {
+      // Create file input for image upload
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = async (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          try {
+            const url = await onImageUpload(file);
+            editor.chain().focus().setImage({ src: url }).run();
+          } catch (error) {
+            console.error('Error uploading image:', error);
+            alert('Failed to upload image. Please try again.');
+          }
+        }
+      };
+      input.click();
+    } else if (editor) {
+      // Fall back to URL prompt if no upload handler
+      const url = window.prompt('Enter image URL:');
+      if (url) {
+        editor.chain().focus().setImage({ src: url }).run();
+      }
     }
-  }, [editor]);
+  }, [editor, onImageUpload]);
 
   const setLink = useCallback(() => {
     const previousUrl = editor?.getAttributes('link').href;
