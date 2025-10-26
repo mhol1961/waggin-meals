@@ -219,11 +219,53 @@ export async function POST(request: NextRequest) {
       </div>
     `;
 
+    // Plain-text version of email for Christie
+    const emailText = `NEW FREE CONSULTATION REQUEST
+
+CONTACT INFORMATION
+Name: ${body.firstName} ${body.lastName}
+Email: ${body.email}
+Phone: ${body.phone}
+Address: ${body.address}, ${body.city}, ${body.state} ${body.zipCode}
+
+PET INFORMATION (${body.pets.length} ${body.pets.length === 1 ? 'Pet' : 'Pets'})
+${body.pets.map((pet: any, index: number) => `
+Pet ${index + 1}: ${pet.name}
+- Type: ${pet.type}
+- Breed: ${pet.breed}
+- Age: ${pet.age}
+- Weight: ${pet.weight}
+- Sex: ${pet.sex}
+- Neutered/Spayed: ${pet.neutered ? 'Yes' : 'No'}
+${pet.healthConcerns ? `- Health Concerns: ${pet.healthConcerns}` : ''}
+${pet.currentFeeding ? `- Current Feeding: ${pet.currentFeeding}` : ''}
+${pet.healthGoals ? `- Health Goals: ${pet.healthGoals}` : ''}
+${pet.supplements ? `- Supplements/Medications: ${pet.supplements}` : ''}
+${pet.behavioralChanges ? `- Behavioral/Appetite Changes: ${pet.behavioralChanges}` : ''}
+${pet.proteinPreferences ? `- Protein Preferences: ${pet.proteinPreferences}` : ''}
+`).join('\n')}
+
+BUDGET & DELIVERY PREFERENCES
+Current Weekly Spending: ${body.currentSpending || 'Not provided'}
+Preferred Delivery Frequency: ${body.deliveryFrequency || 'Not provided'}
+${body.additionalNotes ? `\nADDITIONAL NOTES\n${body.additionalNotes}` : ''}
+
+NEXT STEPS
+1. Review the pet information and health concerns
+2. Contact the client within 24-48 hours
+3. Schedule the free consultation
+4. Prepare personalized nutrition recommendations
+
+---
+Waggin Meals Pet Nutrition Co.
+info@wagginmeals.com`;
+
     // Send email to Christie
     await sendEmail({
       to: process.env.ADMIN_EMAIL || 'info@wagginmeals.com',
       subject: `New Free Consultation Request - ${body.firstName} ${body.lastName} (${body.pets.length} ${body.pets.length === 1 ? 'pet' : 'pets'})`,
       html: emailHtml,
+      text: emailText,
     });
 
     // Send confirmation email to customer
@@ -277,10 +319,37 @@ export async function POST(request: NextRequest) {
       </div>
     `;
 
+    // Plain-text version of confirmation email for customer
+    const customerEmailText = `Thank You!
+
+Hi ${body.firstName},
+
+Thank you for requesting a free nutrition consultation for ${body.pets.map(p => p.name).filter(n => n).join(', ')}!
+
+We've received your information and are excited to help create a personalized nutrition plan tailored to your pet's unique needs.
+
+WHAT HAPPENS NEXT?
+
+- We'll review your pet's information within 24-48 hours
+- One of our certified nutritionists will contact you to schedule your consultation
+- You'll receive a personalized nutrition plan and product recommendations
+- We'll answer all your questions and provide ongoing support
+
+If you have any immediate questions, please don't hesitate to reach out at info@wagginmeals.com.
+
+Warm regards,
+Christie & The Waggin Meals Team
+
+---
+Waggin Meals Pet Nutrition Co.
+info@wagginmeals.com
+wagginmeals.com`;
+
     await sendEmail({
       to: body.email,
       subject: 'Thank You for Your Consultation Request - Waggin Meals',
       html: customerEmailHtml,
+      text: customerEmailText,
     });
 
     return NextResponse.json(
