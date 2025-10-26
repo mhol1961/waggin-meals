@@ -224,7 +224,7 @@ export default function UltimateHomepage() {
                         {item.label}
                         <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
                       </button>
-                      {activeDropdown === item.label && (
+                      {activeDropdown === item.label && item.dropdown && (
                         <div className="pl-4 space-y-1 mt-1">
                           {item.dropdown.map((dropdownItem) => (
                             <Link
