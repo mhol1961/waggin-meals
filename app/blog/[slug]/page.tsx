@@ -274,7 +274,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Bottom CTA Section */}
       <section className="bg-gradient-to-br from-[#2f4b38] to-[#3a5a45] text-white py-16 mt-12">
         <div className="container mx-auto px-4 text-center max-w-4xl">
-          <h2 className="text-[36px] md:text-[42px] font-bold mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+          <h2 className="text-white text-[36px] md:text-[42px] font-bold mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Ready to Transform Your Dog's Health?
           </h2>
           <p className="text-[18px] mb-8 text-white/90" style={{ fontFamily: "'Poppins', sans-serif" }}>
