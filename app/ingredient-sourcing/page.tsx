@@ -1,13 +1,10 @@
 import Link from 'next/link';
-import { ComplianceBanner } from '@/components/compliance-banner';
 import Image from 'next/image';
 import { Leaf, MapPin, Award, ShieldCheck, Heart, Sprout, Check } from 'lucide-react';
 
 export default function IngredientSourcingPage() {
   return (
     <main className="bg-white">
-      <ComplianceBanner />
-
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#f0fdf4] via-white to-[#fef3c7] px-4 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">

@@ -100,12 +100,9 @@ const navItems = [
     label: 'Resources',
     dropdown: [
       { label: 'Fresh Food Feeding Guide', href: '/guides/fresh-food-guide' },
-      { label: 'Feeding Calculator', href: '#calculator' },
+      { label: 'Feeding Calculator', href: '/feeding-calculator' },
       { label: 'Free PDF Guides', href: '/resources' },
-      { label: 'Feeding Made Simple', href: '/feeding-made-simple' },
-      { label: 'Recommended Products', href: '/recommended-products' },
       { label: 'Pet Nutrition Insights', href: '/blog' },
-      { label: 'Events Calendar', href: '/events' },
     ]
   },
   {
@@ -127,7 +124,7 @@ const navItems = [
   },
 ];
 
-export default function UltimateHomepage() {
+export default function HeightMedium() {
   const [showModal, setShowModal] = useState(false);
   const [showChatView, setShowChatView] = useState(false);
   const [chatWidgetOpen, setChatWidgetOpen] = useState(false);
@@ -318,15 +315,20 @@ export default function UltimateHomepage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative px-4 py-16 overflow-hidden">
+      {/* Hero Section - MEDIUM VERSION */}
+      <section className="relative px-4 py-12 overflow-hidden">
+        {/* Version Indicator */}
+        <div className="absolute top-4 right-4 bg-[#bc2c2c] text-white px-4 py-2 rounded-lg text-xs font-bold z-50 shadow-lg">
+          Hero Height: MEDIUM (Balanced Spacing)
+        </div>
+
         {/* Subtle background gradients */}
         <div className="absolute inset-0 pointer-events-none opacity-40">
           <div className="absolute -top-40 -left-24 w-96 h-96 bg-[#bc2c2c]/8 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-[#2f4b38]/8 rounded-full blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-6xl relative z-10 grid lg:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
+        <div className="mx-auto max-w-6xl relative z-10 grid lg:grid-cols-[1.15fr_0.85fr] gap-12 items-center">
           {/* Left Column: Copy & CTA */}
           <div>
             <div className="inline-flex items-center gap-2 bg-white border border-[#ded2bf] rounded-full px-4 py-2 mb-6 shadow-sm">
@@ -336,7 +338,7 @@ export default function UltimateHomepage() {
               </span>
             </div>
 
-            <h1 className="text-[58px] leading-[1.1] text-[#1f1a16] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+            <h1 className="text-[48px] leading-[1.1] text-[#1f1a16] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
               When veterinarians can't find answers,
               <br />
               <span className="text-[#bc2c2c]">we dig deeper.</span>

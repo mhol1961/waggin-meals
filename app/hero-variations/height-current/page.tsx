@@ -100,12 +100,9 @@ const navItems = [
     label: 'Resources',
     dropdown: [
       { label: 'Fresh Food Feeding Guide', href: '/guides/fresh-food-guide' },
-      { label: 'Feeding Calculator', href: '#calculator' },
+      { label: 'Feeding Calculator', href: '/feeding-calculator' },
       { label: 'Free PDF Guides', href: '/resources' },
-      { label: 'Feeding Made Simple', href: '/feeding-made-simple' },
-      { label: 'Recommended Products', href: '/recommended-products' },
       { label: 'Pet Nutrition Insights', href: '/blog' },
-      { label: 'Events Calendar', href: '/events' },
     ]
   },
   {
@@ -127,7 +124,7 @@ const navItems = [
   },
 ];
 
-export default function UltimateHomepage() {
+export default function HeightCurrent() {
   const [showModal, setShowModal] = useState(false);
   const [showChatView, setShowChatView] = useState(false);
   const [chatWidgetOpen, setChatWidgetOpen] = useState(false);
@@ -318,8 +315,13 @@ export default function UltimateHomepage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section - CURRENT VERSION (UNCHANGED) */}
       <section className="relative px-4 py-16 overflow-hidden">
+        {/* Version Indicator */}
+        <div className="absolute top-4 right-4 bg-[#bc2c2c] text-white px-4 py-2 rounded-lg text-xs font-bold z-50 shadow-lg">
+          Hero Height: CURRENT (Maximum Spacing)
+        </div>
+
         {/* Subtle background gradients */}
         <div className="absolute inset-0 pointer-events-none opacity-40">
           <div className="absolute -top-40 -left-24 w-96 h-96 bg-[#bc2c2c]/8 rounded-full blur-3xl" />

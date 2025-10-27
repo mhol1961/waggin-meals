@@ -60,10 +60,17 @@ export default function HeroVariationsIndex() {
     },
     {
       id: 'ultimate-homepage',
-      title: 'Variation I: Ultimate Homepage ⭐ NEW',
+      title: 'Variation I: Ultimate Homepage ⭐',
       description: 'Best elements combined: "When vets can\'t find answers" hook, palette visualization, GHL chat integration, Christie\'s credentials',
       target: 'All customer segments - comprehensive approach',
       cta: 'Book Free Consultation',
+    },
+    {
+      id: 'luxury-expert-homepage',
+      title: 'Variation J: Luxury Expert Homepage ⭐ NEW',
+      description: 'Compact logo (40% smaller), calculator section with side-by-side quiz, rotating problem text, all features from Variation I',
+      target: 'Luxury clients wanting expert help with calculator tool',
+      cta: 'Calculate Your Dog\'s Needs / Book Consultation',
     },
   ];
 
@@ -76,7 +83,7 @@ export default function HeroVariationsIndex() {
             Hero Section Variations
           </h1>
           <p className="text-lg text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Compare 9 different hero section designs for the Waggin Meals home page
+            Compare 10 different hero section designs for the Waggin Meals home page
           </p>
         </div>
       </section>

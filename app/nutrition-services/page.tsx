@@ -3,16 +3,128 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { ComplianceBanner } from '@/components/compliance-banner';
+import { ChevronDown, ChevronUp, X } from 'lucide-react';
+
+type ConsultationType = 'comprehensive' | 'free';
+
+interface FormData {
+  // Step 1: Your Information
+  ownerName: string;
+  email: string;
+  phone: string;
+  city: string;
+  state: string;
+
+  // Step 2: About Your Dog
+  dogName: string;
+  breed: string;
+  age: string;
+  weight: string;
+  gender: 'male' | 'female' | '';
+  spayedNeutered: 'yes' | 'no' | '';
+
+  // Step 3: Current Diet
+  currentFood: string;
+  durationOnDiet: string;
+  portionSize: string;
+  feedingFrequency: string;
+
+  // Step 4: Health Concerns
+  allergies: string;
+  sensitivities: string;
+  chronicConditions: string;
+  medications: string;
+  recentVetVisits: string;
+
+  // Step 5: Goals & Preferences
+  goals: string;
+  consultationType: ConsultationType;
+  specialRequests: string;
+  preferredFormat: 'zoom' | 'facetime' | 'in-person' | '';
+}
 
 export default function NutritionServices() {
   const [candyStoryOpen, setCandyStoryOpen] = useState(false);
+  const [questionnaireOpen, setQuestionnaireOpen] = useState(false);
+  const [consultationType, setConsultationType] = useState<ConsultationType>('comprehensive');
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const [formData, setFormData] = useState<FormData>({
+    ownerName: '',
+    email: '',
+    phone: '',
+    city: '',
+    state: '',
+    dogName: '',
+    breed: '',
+    age: '',
+    weight: '',
+    gender: '',
+    spayedNeutered: '',
+    currentFood: '',
+    durationOnDiet: '',
+    portionSize: '',
+    feedingFrequency: '',
+    allergies: '',
+    sensitivities: '',
+    chronicConditions: '',
+    medications: '',
+    recentVetVisits: '',
+    goals: '',
+    consultationType: 'comprehensive',
+    specialRequests: '',
+    preferredFormat: ''
+  });
+
+  const openQuestionnaire = (type: ConsultationType) => {
+    setConsultationType(type);
+    setFormData({ ...formData, consultationType: type });
+    setQuestionnaireOpen(true);
+    setShowSuccess(false);
+  };
+
+  const closeQuestionnaire = () => {
+    setQuestionnaireOpen(false);
+    setShowSuccess(false);
+  };
+
+  const updateFormData = (field: keyof FormData, value: string) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  const validateForm = (): boolean => {
+    // Required fields validation
+    return !!(
+      formData.ownerName &&
+      formData.email &&
+      formData.phone &&
+      formData.city &&
+      formData.state &&
+      formData.dogName &&
+      formData.breed &&
+      formData.age &&
+      formData.weight &&
+      formData.gender &&
+      formData.spayedNeutered &&
+      formData.currentFood &&
+      formData.durationOnDiet &&
+      formData.portionSize &&
+      formData.feedingFrequency &&
+      formData.goals &&
+      formData.preferredFormat
+    );
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      console.log('Form submitted:', formData);
+      setShowSuccess(true);
+      // TODO: Send to database/email
+    }
+  };
 
   return (
     <main className="bg-white">
-      <ComplianceBanner />
-
       {/* Hero Section - Redesigned with Darker Gradient */}
       <section className="relative bg-gradient-to-br from-[#4c51bf] via-[#5a3a8f] to-[#6b46c1] px-4 py-20 overflow-hidden">
         {/* Animated Background Elements */}
@@ -260,13 +372,14 @@ export default function NutritionServices() {
                 </div>
 
                 <button
+                  onClick={() => openQuestionnaire('comprehensive')}
                   className="w-full bg-[#5a3a8f] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#6b46c1] transition-colors shadow-lg"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Schedule Now →
                 </button>
                 <p className="text-center text-xs text-[#999999] mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Complete intake quiz after booking
+                  Complete intake quiz to get started
                 </p>
               </div>
             </div>
@@ -356,13 +469,14 @@ export default function NutritionServices() {
                 </ul>
 
                 <button
+                  onClick={() => openQuestionnaire('free')}
                   className="w-full bg-[#fbbf24] text-[#3c3a47] px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#f59e0b] transition-colors shadow-lg"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Schedule Your Free Session →
                 </button>
                 <p className="text-center text-xs text-[#999999] mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Complete intake quiz after booking
+                  Complete intake quiz to get started
                 </p>
               </div>
             </div>
@@ -562,6 +676,531 @@ export default function NutritionServices() {
           </div>
         </div>
       </section>
+
+      {/* Consultation Questionnaire Modal */}
+      {questionnaireOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl my-8 relative">
+            {/* Close Button */}
+            <button
+              onClick={closeQuestionnaire}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
+              aria-label="Close questionnaire"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Header */}
+            <div className="bg-gradient-to-r from-[#5a3a8f] to-[#6b46c1] px-8 py-6 rounded-t-2xl">
+              <h2 className="text-2xl font-normal text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                {consultationType === 'comprehensive'
+                  ? 'Comprehensive Consultation Questionnaire'
+                  : 'Free 15-Minute Consultation Questionnaire'}
+              </h2>
+              <p className="text-white/90 text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Please complete all required fields below
+              </p>
+            </div>
+
+            {/* Success Message */}
+            {showSuccess ? (
+              <div className="px-8 py-12 text-center">
+                <div className="mb-6">
+                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                    Thank You!
+                  </h3>
+                  <p className="text-[15px] text-[#666666] leading-relaxed mb-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Your consultation request has been submitted successfully. Christie will review your information and reach out within 24-48 hours to schedule your appointment.
+                  </p>
+                  <button
+                    onClick={closeQuestionnaire}
+                    className="bg-[#5a3a8f] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#6b46c1] transition-colors"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {/* Form Content - Single Scrollable Page */}
+                <div className="px-8 py-8 max-h-[70vh] overflow-y-auto">
+                  <div className="space-y-8">
+
+                    {/* Section 1: Your Information */}
+                    <div className="space-y-6">
+                      <div className="border-b border-gray-300 pb-3">
+                        <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Your Information
+                        </h3>
+                        <p className="text-sm text-[#666666] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Let's start with your contact details so we can reach out to schedule your consultation.
+                        </p>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Your Full Name <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.ownerName}
+                          onChange={(e) => updateFormData('ownerName', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          placeholder="John Smith"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Email Address <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => updateFormData('email', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          placeholder="john@example.com"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Phone Number <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => updateFormData('phone', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          placeholder="(555) 123-4567"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                            City <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={formData.city}
+                            onChange={(e) => updateFormData('city', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                            placeholder="Asheville"
+                            style={{ fontFamily: "'Poppins', sans-serif" }}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                            State <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={formData.state}
+                            onChange={(e) => updateFormData('state', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                            placeholder="NC"
+                            style={{ fontFamily: "'Poppins', sans-serif" }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Section 2: About Your Dog */}
+                    <div className="space-y-6">
+                      <div className="border-b border-gray-300 pb-3">
+                        <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          About Your Dog
+                        </h3>
+                        <p className="text-sm text-[#666666] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Tell us about your furry friend so we can create the perfect nutrition plan.
+                        </p>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Dog's Name <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.dogName}
+                          onChange={(e) => updateFormData('dogName', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          placeholder="Max"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Breed <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.breed}
+                          onChange={(e) => updateFormData('breed', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          placeholder="Golden Retriever (or Mixed)"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                            Age <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={formData.age}
+                            onChange={(e) => updateFormData('age', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                            placeholder="5 years"
+                            style={{ fontFamily: "'Poppins', sans-serif" }}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                            Weight <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={formData.weight}
+                            onChange={(e) => updateFormData('weight', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                            placeholder="60 lbs"
+                            style={{ fontFamily: "'Poppins', sans-serif" }}
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Gender <span className="text-red-500">*</span>
+                        </label>
+                        <div className="flex gap-4">
+                          <label className="flex items-center cursor-pointer">
+                            <input
+                              type="radio"
+                              value="male"
+                              checked={formData.gender === 'male'}
+                              onChange={(e) => updateFormData('gender', e.target.value)}
+                              className="mr-2"
+                            />
+                            <span className="text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Male</span>
+                          </label>
+                          <label className="flex items-center cursor-pointer">
+                            <input
+                              type="radio"
+                              value="female"
+                              checked={formData.gender === 'female'}
+                              onChange={(e) => updateFormData('gender', e.target.value)}
+                              className="mr-2"
+                            />
+                            <span className="text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Female</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Spayed/Neutered? <span className="text-red-500">*</span>
+                        </label>
+                        <div className="flex gap-4">
+                          <label className="flex items-center cursor-pointer">
+                            <input
+                              type="radio"
+                              value="yes"
+                              checked={formData.spayedNeutered === 'yes'}
+                              onChange={(e) => updateFormData('spayedNeutered', e.target.value)}
+                              className="mr-2"
+                            />
+                            <span className="text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Yes</span>
+                          </label>
+                          <label className="flex items-center cursor-pointer">
+                            <input
+                              type="radio"
+                              value="no"
+                              checked={formData.spayedNeutered === 'no'}
+                              onChange={(e) => updateFormData('spayedNeutered', e.target.value)}
+                              className="mr-2"
+                            />
+                            <span className="text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>No</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Section 3: Current Diet */}
+                    <div className="space-y-6">
+                      <div className="border-b border-gray-300 pb-3">
+                        <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Current Diet
+                        </h3>
+                        <p className="text-sm text-[#666666] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Understanding your dog's current diet helps us create a better nutrition plan.
+                        </p>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Current Food Brand & Type <span className="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          value={formData.currentFood}
+                          onChange={(e) => updateFormData('currentFood', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          rows={3}
+                          placeholder="e.g., Blue Buffalo Chicken & Brown Rice, homemade meals, raw diet, etc."
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          How Long on Current Diet? <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.durationOnDiet}
+                          onChange={(e) => updateFormData('durationOnDiet', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          placeholder="e.g., 6 months, 2 years"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Portion Size Per Meal <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.portionSize}
+                          onChange={(e) => updateFormData('portionSize', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          placeholder="e.g., 2 cups, 1.5 cups"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Feeding Frequency <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.feedingFrequency}
+                          onChange={(e) => updateFormData('feedingFrequency', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          placeholder="e.g., Twice daily (morning and evening)"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Section 4: Health Concerns */}
+                    <div className="space-y-6">
+                      <div className="border-b border-gray-300 pb-3">
+                        <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Health Concerns
+                        </h3>
+                        <p className="text-sm text-[#666666] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Share any health issues or concerns. This information helps us provide the best recommendations.
+                        </p>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Known Allergies
+                        </label>
+                        <textarea
+                          value={formData.allergies}
+                          onChange={(e) => updateFormData('allergies', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          rows={2}
+                          placeholder="e.g., chicken, wheat, environmental allergens"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Food Sensitivities or Intolerances
+                        </label>
+                        <textarea
+                          value={formData.sensitivities}
+                          onChange={(e) => updateFormData('sensitivities', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          rows={2}
+                          placeholder="e.g., upset stomach with beef, gas with dairy"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Chronic Health Conditions
+                        </label>
+                        <textarea
+                          value={formData.chronicConditions}
+                          onChange={(e) => updateFormData('chronicConditions', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          rows={2}
+                          placeholder="e.g., arthritis, kidney disease, diabetes, obesity"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Current Medications & Supplements
+                        </label>
+                        <textarea
+                          value={formData.medications}
+                          onChange={(e) => updateFormData('medications', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          rows={2}
+                          placeholder="List all medications, supplements, and dosages"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Recent Veterinary Visits
+                        </label>
+                        <textarea
+                          value={formData.recentVetVisits}
+                          onChange={(e) => updateFormData('recentVetVisits', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          rows={2}
+                          placeholder="e.g., Annual checkup last month - all clear"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Section 5: Goals & Preferences */}
+                    <div className="space-y-6">
+                      <div className="border-b border-gray-300 pb-3">
+                        <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Goals & Preferences
+                        </h3>
+                        <p className="text-sm text-[#666666] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Tell us what you hope to achieve and how you'd like to schedule your consultation.
+                        </p>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          What Are Your Main Goals? <span className="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          value={formData.goals}
+                          onChange={(e) => updateFormData('goals', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          rows={4}
+                          placeholder="e.g., Improve digestion, manage weight, switch to fresh food, address allergies, optimize overall health"
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Preferred Consultation Format <span className="text-red-500">*</span>
+                        </label>
+                        <div className="space-y-2">
+                          <label className="flex items-center cursor-pointer p-3 border border-gray-300 rounded-lg hover:border-[#5a3a8f] hover:bg-purple-50 transition-colors">
+                            <input
+                              type="radio"
+                              value="zoom"
+                              checked={formData.preferredFormat === 'zoom'}
+                              onChange={(e) => updateFormData('preferredFormat', e.target.value)}
+                              className="mr-3"
+                            />
+                            <span className="text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Zoom</span>
+                          </label>
+                          <label className="flex items-center cursor-pointer p-3 border border-gray-300 rounded-lg hover:border-[#5a3a8f] hover:bg-purple-50 transition-colors">
+                            <input
+                              type="radio"
+                              value="facetime"
+                              checked={formData.preferredFormat === 'facetime'}
+                              onChange={(e) => updateFormData('preferredFormat', e.target.value)}
+                              className="mr-3"
+                            />
+                            <span className="text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>FaceTime</span>
+                          </label>
+                          <label className="flex items-center cursor-pointer p-3 border border-gray-300 rounded-lg hover:border-[#5a3a8f] hover:bg-purple-50 transition-colors">
+                            <input
+                              type="radio"
+                              value="in-person"
+                              checked={formData.preferredFormat === 'in-person'}
+                              onChange={(e) => updateFormData('preferredFormat', e.target.value)}
+                              className="mr-3"
+                            />
+                            <div className="flex-1">
+                              <span className="text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>In-Person (Asheville, NC area)</span>
+                              <p className="text-xs text-[#999999] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                                Travel fees may apply based on location
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Any Special Requests or Additional Information?
+                        </label>
+                        <textarea
+                          value={formData.specialRequests}
+                          onChange={(e) => updateFormData('specialRequests', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          rows={3}
+                          placeholder="Any additional details you'd like Christie to know before your consultation..."
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        />
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                {/* Submit Button */}
+                <div className="px-8 py-6 bg-gray-50 rounded-b-2xl border-t border-gray-200">
+                  <button
+                    onClick={handleSubmit}
+                    disabled={!validateForm()}
+                    className={`w-full px-8 py-4 rounded-lg text-lg font-semibold transition-colors ${
+                      validateForm()
+                        ? 'bg-[#5a3a8f] text-white hover:bg-[#6b46c1] shadow-lg'
+                        : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    }`}
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                  >
+                    Submit Consultation Request
+                  </button>
+                  {!validateForm() && (
+                    <p className="text-xs text-red-500 text-center mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Please fill in all required fields marked with *
+                    </p>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 }

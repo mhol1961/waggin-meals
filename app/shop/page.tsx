@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { ComplianceBanner } from '@/components/compliance-banner';
 import Link from 'next/link';
 import { collections } from '@/data/products';
 import AddToCartButton from '@/components/add-to-cart-button';
@@ -8,8 +7,6 @@ export default function ShopPage() {
 
   return (
     <main className="bg-white min-h-screen">
-      <ComplianceBanner />
-
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">

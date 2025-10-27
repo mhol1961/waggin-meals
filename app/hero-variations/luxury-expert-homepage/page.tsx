@@ -3,21 +3,57 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { X, CheckCircle2, Award, FlaskConical, UtensilsCrossed, HeartPulse, Gift, MessageCircle, CalendarDays, Sparkles, Star, ChevronDown, Menu, ShieldCheck, Stethoscope, Leaf, Mail, Phone, MapPin } from 'lucide-react';
+import { X, CheckCircle2, Award, FlaskConical, UtensilsCrossed, HeartPulse, Calculator, ClipboardList, MessageCircle, ChevronDown, Menu, ShieldCheck, Stethoscope, Leaf, Mail, Phone, Star, ArrowRight, Gift } from 'lucide-react';
+
+const rotatingProblems = [
+  'Digestive Issues',
+  'Skin Problems',
+  'Weight Management',
+  'Food Sensitivities',
+  'Low Energy',
+];
 
 const heroBullets = [
-  'Microbiome testing with visual palette reports',
-  'Chef-crafted fresh meals, toppers & broths',
-  'Expert nutrition consulting & concierge support',
+  'Dual-Master\'s Certified Canine Nutritionist',
+  'Over 520 Dogs Transformed & Thriving',
+  'Personal Chef Service with Concierge Support',
+];
+
+const quickAssessmentQuestions = [
+  {
+    id: 'primary_concern',
+    question: 'What is your primary concern?',
+    options: ['Digestive health', 'Skin/coat issues', 'Weight management', 'Energy levels', 'Food allergies', 'Other'],
+  },
+  {
+    id: 'current_diet',
+    question: 'What does your dog currently eat?',
+    options: ['Kibble only', 'Wet food', 'Mix of kibble & wet', 'Raw diet', 'Home-cooked', 'Not sure'],
+  },
+  {
+    id: 'vet_diagnosis',
+    question: 'Has your vet diagnosed any conditions?',
+    options: ['Yes, diagnosed', 'Tests done, no answers', 'No diagnosis yet', 'Not applicable'],
+  },
+  {
+    id: 'tried_solutions',
+    question: 'What have you already tried?',
+    options: ['Changed food brands', 'Medications', 'Supplements', 'Special diet', 'Nothing yet', 'Multiple things'],
+  },
+  {
+    id: 'urgency',
+    question: 'How urgent is your need?',
+    options: ['Very urgent', 'Moderately urgent', 'Looking to improve', 'Just exploring'],
+  },
 ];
 
 const services = [
   {
     icon: FlaskConical,
     tag: 'Testing',
-    title: 'Gut Health Analysis',
-    description: 'Comprehensive microbiome testing with easy-to-understand color palette visuals you can share with your vet.',
-    cta: 'Learn About Testing',
+    title: 'Microbiome Analysis',
+    description: 'Comprehensive gut health testing with visual palette reports you can share with your vet.',
+    cta: 'Learn More',
     href: '/nutrition-services',
     accent: '#2f4b38',
   },
@@ -25,7 +61,7 @@ const services = [
     icon: UtensilsCrossed,
     tag: 'Meals',
     title: 'Custom Fresh Food',
-    description: 'Small-batch, seasonally rotated bowls, toppers, and bone broths tailored to your dog\'s unique needs.',
+    description: 'Small-batch, chef-crafted meals tailored to your dog\'s unique nutritional needs.',
     cta: 'Browse Menu',
     href: '/shop',
     accent: '#bc2c2c',
@@ -33,56 +69,30 @@ const services = [
   {
     icon: HeartPulse,
     tag: 'Consulting',
-    title: 'Nutrition Concierge',
-    description: 'Personalized plans, ongoing support, and vet-ready documentation from certified nutrition specialists.',
-    cta: 'Book Consultation',
+    title: 'Expert Consultation',
+    description: 'Personalized nutrition plans with ongoing support from our certified nutritionist.',
+    cta: 'Book Now',
     href: '/contact-expert',
     accent: '#a4341f',
   },
 ];
 
-const stats = [
-  { label: 'Dogs Thriving', value: '520+' },
-  { label: 'Avg. Symptom Relief', value: '17 days' },
-  { label: 'Success Rate', value: '94%' },
-];
-
-const paletteColors = [
-  { name: 'Protein', color: '#bc2c2c', description: 'Muscle & energy' },
-  { name: 'Greens', color: '#2f4b38', description: 'Gut flora support' },
-  { name: 'Carbs', color: '#f6a723', description: 'Sustained energy' },
-  { name: 'Fats', color: '#8a5a26', description: 'Coat & brain health' },
-];
-
-const faqs = [
-  { question: 'What is included in a consultation?', answer: 'Comprehensive health assessment, custom meal plan, supplement recommendations, and ongoing support.' },
-  { question: 'How does microbiome testing work?', answer: 'Simple at-home sample collection, lab analysis, and detailed palette visualization of your dog\'s gut health.' },
-  { question: 'Do you ship nationwide?', answer: 'Yes! Fresh meals ship weekly. Local delivery available in Portland metro area.' },
-  { question: 'Can you work with my vet?', answer: 'Absolutely! We provide vet-ready documentation and collaborate with your veterinary team.' },
-];
-
-const floatingTestimonials = [
-  { name: 'Matt Wolfe', text: 'Our dog Maisy absolutely devours the fresh meals!' },
-  { name: 'Elizabeth Joslin', text: 'Christie is so helpful & knowledgeable!' },
-  { name: 'Amber Munoz', text: 'My dogs love this food!! Best quality ingredients.' },
-];
-
-const fullTestimonials = [
+const testimonials = [
   {
-    name: 'Matt Wolfe + Maisy',
-    text: 'Our dog Maisy absolutely devours the fresh meals that Christie prepares. And it\'s satisfying to know the food is prepared by a pet nutritionist. Can\'t recommend her enough.',
+    name: 'Matt Wolfe',
+    text: 'Our dog Maisy absolutely devours the fresh meals that Christie prepares. Can\'t recommend her enough.',
   },
   {
     name: 'Elizabeth Joslin',
-    text: 'Our large pup loves their food and broth! Christie is so helpful, kind & very knowledgeable about canine nutrition! You can tell she genuinely cares about your dog\'s health and not just selling products. They also offer a private dog park that you can rent hourly! We recently rented the park for our pups birthday and had a blast.',
+    text: 'Christie is so helpful, kind & very knowledgeable about canine nutrition! She genuinely cares about your dog\'s health.',
   },
   {
     name: 'Amber Munoz',
-    text: 'My dogs love this food!! I love the convenience and nutritional value this company provides. I know both of my dogs are getting the best quality ingredients. Both my girls look forward to meal times as they love the taste of the food and jump for joy.',
+    text: 'My dogs love this food!! I know both of my dogs are getting the best quality ingredients.',
   },
   {
     name: 'Thom Slater',
-    text: 'Top notch, prepared fresh on-site healthiest possible dog meals and treats! Certified and experienced owners & staff who care about your pets and you!! The new location is fantastic!!',
+    text: 'Top notch, prepared fresh on-site healthiest possible dog meals! Certified and experienced owners who care!',
   },
 ];
 
@@ -127,78 +137,109 @@ const navItems = [
   },
 ];
 
-export default function UltimateHomepage() {
+const faqs = [
+  { question: 'What is included in a consultation?', answer: 'Comprehensive health assessment, custom meal plan, supplement recommendations, and ongoing support.' },
+  { question: 'How does microbiome testing work?', answer: 'Simple at-home sample collection, lab analysis, and detailed palette visualization of your dog\'s gut health.' },
+  { question: 'Do you ship nationwide?', answer: 'Yes! Fresh meals ship weekly. Local delivery available in Portland metro area.' },
+  { question: 'Can you work with my vet?', answer: 'Absolutely! We provide vet-ready documentation and collaborate with your veterinary team.' },
+];
+
+export default function LuxuryExpertHomepage() {
   const [showModal, setShowModal] = useState(false);
-  const [showChatView, setShowChatView] = useState(false);
-  const [chatWidgetOpen, setChatWidgetOpen] = useState(false);
-  const [testimonialVisible, setTestimonialVisible] = useState(true);
+  const [currentProblem, setCurrentProblem] = useState(0);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentFloatingTestimonial, setCurrentFloatingTestimonial] = useState(0);
-  const [showFloatingTestimonial, setShowFloatingTestimonial] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [quizStep, setQuizStep] = useState(0);
+  const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
+  const [chatWidgetOpen, setChatWidgetOpen] = useState(false);
+  const [showChatView, setShowChatView] = useState(false);
 
+  // Calculator state
+  const [dogWeight, setDogWeight] = useState('');
+  const [dogAge, setDogAge] = useState('');
+  const [activityLevel, setActivityLevel] = useState('moderate');
+  const [calculatedCalories, setCalculatedCalories] = useState<number | null>(null);
+
+  // Rotating text effect
   useEffect(() => {
-    const timer = setTimeout(() => setShowModal(true), 3500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Auto-hide testimonial after 8 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => setTestimonialVisible(false), 8000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Floating testimonials cycle
-  useEffect(() => {
-    const showTestimonial = () => {
-      setShowFloatingTestimonial(true);
-      setTimeout(() => {
-        setShowFloatingTestimonial(false);
-      }, 4500); // Show for 4.5 seconds
-    };
-
-    // Show first testimonial after 2 seconds
-    const initialTimer = setTimeout(showTestimonial, 2000);
-
-    // Cycle through testimonials
     const interval = setInterval(() => {
-      setCurrentFloatingTestimonial((prev) => (prev + 1) % floatingTestimonials.length);
-      showTestimonial();
-    }, 7000); // New testimonial every 7 seconds
-
-    return () => {
-      clearTimeout(initialTimer);
-      clearInterval(interval);
-    };
+      setCurrentProblem((prev) => (prev + 1) % rotatingProblems.length);
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
+
+  // Newsletter modal
+  useEffect(() => {
+    const timer = setTimeout(() => setShowModal(true), 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleQuizAnswer = (questionId: string, answer: string) => {
+    setQuizAnswers({ ...quizAnswers, [questionId]: answer });
+    if (quizStep < quickAssessmentQuestions.length - 1) {
+      setQuizStep(quizStep + 1);
+    } else {
+      // Quiz complete, show calculator
+      setShowQuiz(false);
+      // Scroll to calculator
+      document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const calculateCalories = () => {
+    if (!dogWeight || !dogAge) return;
+
+    const weight = parseFloat(dogWeight);
+    const age = parseFloat(dogAge);
+
+    // Basic RER calculation: 70 * (weight in kg)^0.75
+    const weightKg = weight / 2.205; // Convert lbs to kg
+    const rer = 70 * Math.pow(weightKg, 0.75);
+
+    // Activity multipliers
+    const multipliers = {
+      low: 1.2,
+      moderate: 1.6,
+      high: 2.0,
+    };
+
+    let dailyCalories = rer * multipliers[activityLevel as keyof typeof multipliers];
+
+    // Age adjustments
+    if (age < 1) dailyCalories *= 1.5; // Puppies need more
+    if (age > 7) dailyCalories *= 0.9; // Seniors need slightly less
+
+    setCalculatedCalories(Math.round(dailyCalories));
+  };
 
   return (
     <main className="bg-[#f5f1ea] min-h-screen">
       {/* Announcement Bar */}
-      <div className="bg-[#2f4b38] text-white text-center text-sm py-3 px-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
-        Free insulated tote on local delivery · Weekly Nutrition Workshops · Complimentary vet-ready lab summaries
+      <div className="bg-[#2f4b38] text-white text-center text-xs py-2.5 px-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+        Free insulated tote on local delivery · Weekly Nutrition Workshops · Complimentary vet-ready reports
       </div>
 
-      {/* Custom Navigation */}
-      <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-[#ded2bf] px-4 py-5">
+      {/* Compact Navigation */}
+      <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-[#ded2bf] px-4 py-3">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-4">
+            <Link href="/" className="flex items-center gap-3">
               <Image
                 src="/images/logo-waggin-meals.png"
                 alt="Waggin Meals"
-                width={120}
-                height={120}
-                className="rounded-full border border-[#ded2bf] shadow-lg"
+                width={72}
+                height={72}
+                className="rounded-full border border-[#ded2bf] shadow-md"
               />
               <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-[#a4341f]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-[8.4px] uppercase tracking-[0.25em] text-[#a4341f]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Waggin Meals
                 </p>
-                <p className="text-2xl text-[#2f4b38]" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                <p className="text-[14.4px] leading-tight text-[#2f4b38]" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   Holistic Nutrition Studio
                 </p>
-                <p className="text-xs text-[#5c5549] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-[7.2px] text-[#5c5549] mt-0.5" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Founded by Christie Webb, Certified Canine Nutritionist
                 </p>
               </div>
@@ -215,7 +256,10 @@ export default function UltimateHomepage() {
                 >
                   {'dropdown' in item ? (
                     <>
-                      <button className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-[#2f4b38] px-3 py-2 hover:text-[#bc2c2c] transition-colors">
+                      <button
+                        className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-[#2f4b38] px-3 py-2 hover:text-[#bc2c2c] transition-colors"
+                        suppressHydrationWarning
+                      >
                         {item.label}
                         <ChevronDown className="w-3 h-3" />
                       </button>
@@ -225,7 +269,7 @@ export default function UltimateHomepage() {
                             <Link
                               key={dropdownItem.href}
                               href={dropdownItem.href}
-                              className="block px-4 py-2 text-xs text-[#2f4b38] hover:bg-[#f5f1ea] transition-colors"
+                              className="block px-4 py-2 text-sm text-[#2f4b38] hover:bg-[#f5f1ea] transition-colors"
                               style={{ fontFamily: "'Poppins', sans-serif" }}
                             >
                               {dropdownItem.label}
@@ -258,27 +302,28 @@ export default function UltimateHomepage() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="lg:hidden p-2 text-[#2f4b38] hover:bg-[#f5f1ea] rounded-md"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5" />
             </button>
           </div>
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="lg:hidden mt-4 pb-4 border-t border-[#ded2bf] pt-4">
+            <div className="lg:hidden mt-3 pb-3 border-t border-[#ded2bf] pt-3">
               {navItems.map((item) => (
                 <div key={item.label}>
                   {'dropdown' in item ? (
                     <>
                       <button
                         onClick={() => setActiveDropdown(activeDropdown === item.label ? null : item.label)}
-                        className="w-full flex items-center justify-between text-sm font-semibold text-[#2f4b38] px-4 py-2 hover:bg-[#f5f1ea] rounded-md"
+                        className="w-full flex items-center justify-between text-sm font-semibold text-[#2f4b38] px-3 py-2 hover:bg-[#f5f1ea] rounded-md"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
+                        suppressHydrationWarning
                       >
                         {item.label}
-                        <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
                       </button>
                       {activeDropdown === item.label && item.dropdown && (
-                        <div className="pl-4 space-y-1 mt-1">
+                        <div className="pl-3 space-y-1 mt-1">
                           {item.dropdown.map((dropdownItem) => (
                             <Link
                               key={dropdownItem.href}
@@ -296,7 +341,7 @@ export default function UltimateHomepage() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="block text-sm font-semibold text-[#2f4b38] px-4 py-2 hover:bg-[#f5f1ea] rounded-md"
+                      className="block text-sm font-semibold text-[#2f4b38] px-3 py-2 hover:bg-[#f5f1ea] rounded-md"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                       onClick={() => setMobileMenuOpen(false)}
                     >
@@ -307,7 +352,7 @@ export default function UltimateHomepage() {
               ))}
               <Link
                 href="/contact"
-                className="block text-center bg-[#bc2c2c] text-white px-5 py-3 rounded-full text-sm font-semibold hover:bg-[#90211b] transition-colors mt-4 mx-4"
+                className="block text-center bg-[#bc2c2c] text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-[#90211b] transition-colors mt-3 mx-3"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -332,45 +377,24 @@ export default function UltimateHomepage() {
             <div className="inline-flex items-center gap-2 bg-white border border-[#ded2bf] rounded-full px-4 py-2 mb-6 shadow-sm">
               <Award className="w-4 h-4 text-[#bc2c2c]" />
               <span className="text-xs font-semibold text-[#2f4b38] uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Certified Nutrition Specialists
+                Certified Nutrition Expert
               </span>
             </div>
 
-            <h1 className="text-[58px] leading-[1.1] text-[#1f1a16] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
-              When veterinarians can't find answers,
+            {/* H1 with rotating text */}
+            <h1 className="text-[48px] leading-[1.1] text-[#1f1a16] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              Board-Certified Nutritionist
               <br />
-              <span className="text-[#bc2c2c]">we dig deeper.</span>
+              Solving{' '}
+              <span className="text-[#bc2c2c]">
+                {rotatingProblems[currentProblem]}
+              </span>
             </h1>
 
+            {/* Subheading */}
             <p className="text-lg text-[#4a443b] mb-8 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              Combine cutting-edge microbiome testing, custom fresh-food plans, and expert guidance to transform your dog's health—starting with their gut.
+              When your vet can't find answers, our certified nutrition expert digs deeper into gut health, custom meal plans, and lasting results. <strong>520+ dogs transformed</strong> with white-glove service.
             </p>
-
-            {/* Palette Preview */}
-            <div className="bg-white rounded-2xl border border-[#ded2bf] p-6 mb-8 shadow-md">
-              <p className="text-xs uppercase tracking-[0.4em] text-[#a4341f] font-semibold mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Our Palette System
-              </p>
-              <p className="text-sm text-[#4a443b] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Every meal is balanced across four key nutrient categories—visualized with our signature color palette:
-              </p>
-              <div className="grid grid-cols-2 gap-3">
-                {paletteColors.map((item) => (
-                  <div key={item.name} className="flex items-center gap-3">
-                    <div
-                      className="w-10 h-10 rounded-full shadow-inner border-2 border-white"
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-[#1f1a16]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                        {item.name}
-                      </p>
-                      <p className="text-xs text-[#5c5549]">{item.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
 
             {/* Bullets */}
             <div className="space-y-3 mb-8">
@@ -385,33 +409,48 @@ export default function UltimateHomepage() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-4 mb-10">
               <Link
-                href="/contact-expert"
-                className="bg-[#2f4b38] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#1f3324] transition-all hover:shadow-xl"
+                href="#calculator"
+                className="bg-[#2f4b38] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#1f3324] transition-all hover:shadow-xl inline-flex items-center gap-2"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
-                Book Free Consultation
+                <Calculator className="w-5 h-5" />
+                Calculate Your Dog's Needs
               </Link>
               <Link
-                href="/case-studies"
+                href="/contact-expert"
                 className="border-2 border-[#2f4b38] text-[#2f4b38] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#2f4b38] hover:text-white transition-colors"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
-                View Success Stories
+                Book Free Consultation
               </Link>
             </div>
 
             {/* Stats */}
             <div className="flex gap-10 pt-6 border-t border-[#ded2bf]">
-              {stats.map((stat) => (
-                <div key={stat.label}>
-                  <p className="text-4xl text-[#2f4b38] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                    {stat.value}
-                  </p>
-                  <p className="text-xs uppercase tracking-wide text-[#5c5549] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
+              <div>
+                <p className="text-4xl text-[#2f4b38] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  520+
+                </p>
+                <p className="text-xs uppercase tracking-wide text-[#5c5549] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Dogs Thriving
+                </p>
+              </div>
+              <div>
+                <p className="text-4xl text-[#2f4b38] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  17 days
+                </p>
+                <p className="text-xs uppercase tracking-wide text-[#5c5549] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Avg. Relief
+                </p>
+              </div>
+              <div>
+                <p className="text-4xl text-[#2f4b38] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  94%
+                </p>
+                <p className="text-xs uppercase tracking-wide text-[#5c5549] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Success Rate
+                </p>
+              </div>
             </div>
           </div>
 
@@ -450,7 +489,7 @@ export default function UltimateHomepage() {
                   <p className="text-2xl font-semibold text-[#1f1a16] mt-1" style={{ fontFamily: "'Abril Fatface', serif" }}>
                     Better Belly Bundle
                   </p>
-                  <p className="text-sm text-[#5c5549]">Fresh meals + bone broth + palette guide</p>
+                  <p className="text-sm text-[#5c5549]">Fresh meals + bone broth</p>
                 </div>
                 <Link
                   href="/shop"
@@ -474,43 +513,6 @@ export default function UltimateHomepage() {
             Waggin Rewards
           </Link>
         </div>
-
-        {/* Floating Testimonial Pop-ins */}
-        {showFloatingTestimonial && (
-          <div
-            className={`absolute top-1/2 z-40 transform -translate-y-1/2 transition-all duration-700 ${
-              currentFloatingTestimonial % 2 === 0
-                ? 'left-4 animate-in slide-in-from-left-8 fade-in'
-                : 'right-4 animate-in slide-in-from-right-8 fade-in'
-            }`}
-            style={{
-              animation: showFloatingTestimonial
-                ? 'slideIn 0.5s ease-out, fadeOut 0.5s ease-in 4s'
-                : 'none'
-            }}
-          >
-            <div className="bg-white border-2 border-[#ded2bf] rounded-2xl shadow-2xl p-4 max-w-xs backdrop-blur-sm bg-white/95">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2f4b38] to-[#1f3324] flex items-center justify-center text-white font-bold text-sm" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                  {floatingTestimonials[currentFloatingTestimonial].name[0]}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-[#2f4b38]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    {floatingTestimonials[currentFloatingTestimonial].name}
-                  </p>
-                  <div className="flex text-[#f6a723]">
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <Star key={index} className="w-3 h-3 fill-current" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-[#4a443b] italic leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                "{floatingTestimonials[currentFloatingTestimonial].text}"
-              </p>
-            </div>
-          </div>
-        )}
 
         {/* Floating Chat Widget */}
         {chatWidgetOpen ? (
@@ -605,63 +607,251 @@ export default function UltimateHomepage() {
             <span className="text-sm font-semibold">Need Help?</span>
           </button>
         )}
+      </section>
 
-        {/* Floating Testimonial - positioned to avoid overlap, animates in and auto-hides */}
-        {testimonialVisible && (
-          <div className="hidden lg:block absolute left-1/4 -translate-x-1/2 bottom-12 z-40 bg-white border-2 border-[#ded2bf] rounded-2xl shadow-xl p-4 w-64 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex items-center gap-3 mb-3">
-              <Image
-                src="/images/woman-with-white-dog.webp"
-                alt="Happy customer"
-                width={54}
-                height={54}
-                className="rounded-full object-cover"
-              />
-              <div>
-                <p className="text-sm font-semibold text-[#2f4b38]">Leah + Augie</p>
-                <div className="flex text-[#f6a723]">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star key={index} className="w-4 h-4 fill-current" />
-                  ))}
-                </div>
-              </div>
-            </div>
-            <p className="text-xs text-[#4a443b]">
-              "Palette visuals made it easy to brief our vet. Christie&apos;s concierge support kept us on track every step."
+      {/* Stunning Quiz + Calculator Section */}
+      <section id="calculator" className="px-4 py-16 bg-gradient-to-br from-white to-[#f5f1ea]">
+        <div className="mx-auto max-w-5xl">
+          <div className="text-center mb-10">
+            <p className="text-sm font-semibold text-[#bc2c2c] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              Personalized Nutrition Planning
+            </p>
+            <h2 className="text-4xl text-[#1f1a16] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              Start Your Dog's Transformation
+            </h2>
+            <p className="text-base text-[#4a443b] max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              Answer a few quick questions to get personalized feeding recommendations, or jump straight to our calculator.
             </p>
           </div>
-        )}
+
+          <div className="bg-white rounded-3xl border-2 border-[#ded2bf] shadow-2xl overflow-hidden">
+            {/* Tabs */}
+            <div className="flex border-b border-[#ded2bf]">
+              <button
+                onClick={() => setShowQuiz(true)}
+                className={`flex-1 py-4 text-sm font-semibold transition-colors ${
+                  showQuiz
+                    ? 'border-b-2 border-[#2f4b38] text-[#2f4b38] bg-[#f5f1ea]'
+                    : 'text-[#888] hover:text-[#2f4b38]'
+                }`}
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                <ClipboardList className="w-5 h-5 inline-block mr-2" />
+                Quick Assessment
+              </button>
+              <button
+                onClick={() => setShowQuiz(false)}
+                className={`flex-1 py-4 text-sm font-semibold transition-colors ${
+                  !showQuiz
+                    ? 'border-b-2 border-[#2f4b38] text-[#2f4b38] bg-[#f5f1ea]'
+                    : 'text-[#888] hover:text-[#2f4b38]'
+                }`}
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                <Calculator className="w-5 h-5 inline-block mr-2" />
+                Feeding Calculator
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-8 md:p-10">
+              {showQuiz ? (
+                <div className="max-w-2xl mx-auto">
+                  <div className="mb-6">
+                    <div className="flex justify-between items-center mb-4">
+                      <p className="text-sm text-[#5c5549]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        Question {quizStep + 1} of {quickAssessmentQuestions.length}
+                      </p>
+                      <div className="flex gap-1">
+                        {quickAssessmentQuestions.map((_, index) => (
+                          <div
+                            key={index}
+                            className={`w-8 h-1 rounded-full ${
+                              index <= quizStep ? 'bg-[#2f4b38]' : 'bg-[#ded2bf]'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <h3 className="text-2xl text-[#1f1a16] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                      {quickAssessmentQuestions[quizStep].question}
+                    </h3>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {quickAssessmentQuestions[quizStep].options.map((option) => (
+                      <button
+                        key={option}
+                        onClick={() => handleQuizAnswer(quickAssessmentQuestions[quizStep].id, option)}
+                        className="border-2 border-[#ded2bf] rounded-xl p-4 text-left hover:border-[#2f4b38] hover:bg-[#f5f1ea] transition-all text-sm font-medium"
+                        style={{ fontFamily: "'Poppins', sans-serif" }}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+
+                  {quizStep > 0 && (
+                    <button
+                      onClick={() => setQuizStep(quizStep - 1)}
+                      className="mt-6 text-sm text-[#2f4b38] hover:text-[#bc2c2c] font-semibold"
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
+                    >
+                      ← Back
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <div className="max-w-2xl mx-auto">
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-[#2f4b38] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        Dog's Weight (lbs)
+                      </label>
+                      <input
+                        type="number"
+                        value={dogWeight}
+                        onChange={(e) => setDogWeight(e.target.value)}
+                        placeholder="e.g., 45"
+                        className="w-full px-4 py-3 border-2 border-[#ded2bf] rounded-xl focus:outline-none focus:border-[#2f4b38] transition-colors"
+                        style={{ fontFamily: "'Poppins', sans-serif" }}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-[#2f4b38] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        Dog's Age (years)
+                      </label>
+                      <input
+                        type="number"
+                        value={dogAge}
+                        onChange={(e) => setDogAge(e.target.value)}
+                        placeholder="e.g., 5"
+                        className="w-full px-4 py-3 border-2 border-[#ded2bf] rounded-xl focus:outline-none focus:border-[#2f4b38] transition-colors"
+                        style={{ fontFamily: "'Poppins', sans-serif" }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block text-sm font-semibold text-[#2f4b38] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Activity Level
+                    </label>
+                    <div className="grid grid-cols-3 gap-3">
+                      {['low', 'moderate', 'high'].map((level) => (
+                        <button
+                          key={level}
+                          onClick={() => setActivityLevel(level)}
+                          className={`py-3 px-4 rounded-xl text-sm font-semibold transition-all ${
+                            activityLevel === level
+                              ? 'bg-[#2f4b38] text-white'
+                              : 'border-2 border-[#ded2bf] text-[#5c5549] hover:border-[#2f4b38]'
+                          }`}
+                          style={{ fontFamily: "'Poppins', sans-serif" }}
+                        >
+                          {level.charAt(0).toUpperCase() + level.slice(1)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={calculateCalories}
+                    className="w-full bg-[#2f4b38] text-white py-4 rounded-xl text-base font-semibold hover:bg-[#1f3324] transition-colors shadow-lg hover:shadow-xl"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                  >
+                    Calculate Daily Calories
+                  </button>
+
+                  {calculatedCalories && (
+                    <div className="mt-8 bg-gradient-to-br from-[#2f4b38] to-[#1f3324] rounded-2xl p-8 text-white">
+                      <div className="text-center mb-6">
+                        <p className="text-sm opacity-90 mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Recommended Daily Calories
+                        </p>
+                        <p className="text-5xl font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                          {calculatedCalories}
+                        </p>
+                        <p className="text-sm opacity-90 mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          calories per day
+                        </p>
+                      </div>
+
+                      <div className="border-t border-white/20 pt-6 space-y-3 text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <p className="flex items-start gap-2">
+                          <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                          <span>This is a baseline estimate. Actual needs vary by metabolism, health conditions, and lifestyle.</span>
+                        </p>
+                        <p className="flex items-start gap-2">
+                          <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                          <span>For a personalized meal plan tailored to your dog's unique needs, book a consultation.</span>
+                        </p>
+                      </div>
+
+                      <Link
+                        href="/contact-expert"
+                        className="mt-6 w-full bg-white text-[#2f4b38] py-3 rounded-xl text-base font-semibold hover:bg-[#f5f1ea] transition-colors inline-flex items-center justify-center gap-2"
+                        style={{ fontFamily: "'Poppins', sans-serif" }}
+                      >
+                        Get Personalized Plan
+                        <ArrowRight className="w-5 h-5" />
+                      </Link>
+                    </div>
+                  )}
+
+                  <p className="mt-6 text-xs text-center text-[#888]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Note: This calculator provides general estimates. For precise nutrition planning based on your dog's health history and goals, we recommend a consultation with Christie.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="text-center mt-8">
+            <p className="text-sm text-[#5c5549] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              Want a complete nutrition analysis with microbiome testing and custom meal plans?
+            </p>
+            <Link
+              href="/nutrition-services"
+              className="inline-flex items-center gap-2 bg-[#bc2c2c] text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-[#90211b] transition-colors shadow-lg"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
+              Book Expert Consultation ($395)
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* Three Services Section */}
-      <section className="px-4 py-20 bg-white">
+      <section className="px-4 py-16 bg-white">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-[#bc2c2c] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Our Three-Part Approach
             </p>
-            <h2 className="text-[42px] text-[#1f1a16] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+            <h2 className="text-4xl text-[#1f1a16] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
               Test. Feed. Thrive.
             </h2>
-            <p className="text-lg text-[#4a443b] max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-base text-[#4a443b] max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
               We combine science, fresh food, and personalized support to give your dog the health breakthrough they deserve.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {services.map((service) => {
               const IconComponent = service.icon;
               return (
                 <div
                   key={service.title}
-                  className="rounded-3xl border-2 border-[#ded2bf] bg-[#fdfbf7] shadow-md p-8 hover:shadow-2xl hover:border-[#bc2c2c]/30 transition-all group"
+                  className="rounded-2xl border-2 border-[#ded2bf] bg-[#fdfbf7] shadow-md p-6 hover:shadow-xl hover:border-[#bc2c2c]/30 transition-all group"
                 >
-                  <div className="flex items-center justify-between mb-5">
+                  <div className="flex items-center justify-between mb-4">
                     <div
-                      className="w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg"
+                      className="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg"
                       style={{ backgroundColor: service.accent }}
                     >
-                      <IconComponent className="w-7 h-7" />
+                      <IconComponent className="w-6 h-6" />
                     </div>
                     <span
                       className="text-xs font-semibold px-3 py-1 rounded-full text-white"
@@ -671,11 +861,11 @@ export default function UltimateHomepage() {
                     </span>
                   </div>
 
-                  <h3 className="text-2xl text-[#1f1a16] mb-3 group-hover:text-[#bc2c2c] transition-colors" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  <h3 className="text-xl text-[#1f1a16] mb-3 group-hover:text-[#bc2c2c] transition-colors" style={{ fontFamily: "'Abril Fatface', serif" }}>
                     {service.title}
                   </h3>
 
-                  <p className="text-sm text-[#4a443b] mb-6 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <p className="text-sm text-[#4a443b] mb-5 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     {service.description}
                   </p>
 
@@ -695,33 +885,36 @@ export default function UltimateHomepage() {
       </section>
 
       {/* Christie's Credentials Section */}
-      <section className="px-4 py-20 bg-gradient-to-br from-[#f5f1ea] to-[#e8e3dc]">
+      <section className="px-4 py-16 bg-gradient-to-br from-[#f5f1ea] to-[#e8e3dc]">
         <div className="mx-auto max-w-4xl">
-          <div className="bg-white rounded-[32px] border-2 border-[#ded2bf] shadow-2xl p-10 md:p-12">
-            <div className="flex flex-col md:flex-row gap-8 items-center">
+          <div className="bg-white rounded-3xl border-2 border-[#ded2bf] shadow-2xl p-8 md:p-10">
+            <div className="flex flex-col md:flex-row gap-6 items-center">
               <div className="flex-shrink-0">
-                <div className="w-40 h-40 rounded-full bg-gradient-to-br from-[#2f4b38] to-[#1f3324] flex items-center justify-center text-white shadow-xl border-4 border-white">
-                  <span className="text-6xl font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>C</span>
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#2f4b38] to-[#1f3324] flex items-center justify-center text-white shadow-xl border-4 border-white">
+                  <span className="text-5xl font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>C</span>
                 </div>
               </div>
               <div className="flex-1 text-center md:text-left">
                 <p className="text-sm font-semibold text-[#bc2c2c] uppercase tracking-[0.3em] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Meet Your Expert
                 </p>
-                <h2 className="text-4xl text-[#1f1a16] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                  Christie Webb
+                <h2 className="text-3xl text-[#1f1a16] mb-3" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  Christie Webb, M.A., M.S.
                 </h2>
-                <p className="text-base text-[#4a443b] mb-4 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Certified Canine Nutritionist with over 8 years of experience transforming dogs' lives through personalized nutrition. Christie specializes in gut health, microbiome optimization, and working with dogs who haven't responded to traditional veterinary approaches.
+                <p className="text-sm text-[#4a443b] mb-4 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Dual-master's Canine Integrative Animal Nutritionist with over 8 years transforming dogs' lives through personalized nutrition. Christie specializes in gut health, microbiome optimization, and working with dogs who haven't responded to traditional veterinary approaches.
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                  <span className="bg-[#2f4b38]/10 text-[#2f4b38] px-4 py-2 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <span className="bg-[#2f4b38]/10 text-[#2f4b38] px-3 py-1.5 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Dual-Master's Degree
+                  </span>
+                  <span className="bg-[#2f4b38]/10 text-[#2f4b38] px-3 py-1.5 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     Certified Nutritionist
                   </span>
-                  <span className="bg-[#2f4b38]/10 text-[#2f4b38] px-4 py-2 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <span className="bg-[#2f4b38]/10 text-[#2f4b38] px-3 py-1.5 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     520+ Success Stories
                   </span>
-                  <span className="bg-[#2f4b38]/10 text-[#2f4b38] px-4 py-2 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <span className="bg-[#2f4b38]/10 text-[#2f4b38] px-3 py-1.5 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     Gut Health Specialist
                   </span>
                 </div>
@@ -731,23 +924,23 @@ export default function UltimateHomepage() {
         </div>
       </section>
 
-      {/* Happy Customers & Waggin Tails Section */}
-      <section className="px-4 py-20 bg-gradient-to-b from-white to-[#f5f1ea]">
+      {/* Testimonials Section */}
+      <section className="px-4 py-16 bg-gradient-to-b from-white to-[#f5f1ea]">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-[#bc2c2c] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
               What Pet Parents Say
             </p>
-            <h2 className="text-[42px] text-[#1f1a16] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+            <h2 className="text-4xl text-[#1f1a16] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
               Happy Customers & Waggin Tails
             </h2>
-            <p className="text-lg text-[#4a443b] max-w-3xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-base text-[#4a443b] max-w-3xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Real stories from real pet parents who trusted us with their dog's health and nutrition.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {fullTestimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial, index) => (
               <div
                 key={index}
                 className="bg-white border-2 border-[#ded2bf] rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:border-[#bc2c2c]/30 transition-all"
@@ -757,7 +950,7 @@ export default function UltimateHomepage() {
                     {testimonial.name[0]}
                   </div>
                   <div className="flex-1">
-                    <p className="text-base font-semibold text-[#2f4b38]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <p className="text-sm font-semibold text-[#2f4b38]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       {testimonial.name}
                     </p>
                     <div className="flex text-[#f6a723]">
@@ -774,8 +967,7 @@ export default function UltimateHomepage() {
             ))}
           </div>
 
-          {/* View All Testimonials CTA */}
-          <div className="text-center mt-12">
+          <div className="text-center mt-10">
             <Link
               href="/testimonials"
               className="inline-flex items-center gap-2 bg-[#2f4b38] text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-[#1f3324] transition-all shadow-lg hover:shadow-xl"
@@ -791,7 +983,7 @@ export default function UltimateHomepage() {
       {/* Newsletter Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
-          <div className="bg-white rounded-[32px] shadow-2xl max-w-xl w-full p-8 md:p-10 relative border-2 border-[#ded2bf] animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full p-8 md:p-10 relative border-2 border-[#ded2bf] animate-in fade-in slide-in-from-bottom-4 duration-300">
             <button
               aria-label="Close modal"
               onClick={() => setShowModal(false)}
@@ -804,19 +996,19 @@ export default function UltimateHomepage() {
               <Image
                 src="/images/waggin-logos.png"
                 alt="Waggin Meals logo"
-                width={140}
-                height={140}
+                width={120}
+                height={120}
                 className="rounded-full border-2 border-[#ded2bf] shadow-lg bg-[#f5f1ea]"
               />
               <div className="flex-1">
                 <p className="text-sm font-semibold text-[#bc2c2c] uppercase tracking-[0.3em] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Save $25 Today
                 </p>
-                <h3 className="text-3xl text-[#1f1a16] mb-3" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                <h3 className="text-2xl text-[#1f1a16] mb-3" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   Join Our Nutrition Newsletter
                 </h3>
                 <p className="text-sm text-[#4a443b] mb-5 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Get weekly meal prep tips, palette inspiration, exclusive recipes, and VIP-only discounts delivered to your inbox.
+                  Get weekly meal prep tips, exclusive recipes, and VIP-only discounts delivered to your inbox.
                 </p>
                 <form className="flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
                   <input
@@ -833,9 +1025,6 @@ export default function UltimateHomepage() {
                     Claim My $25
                   </button>
                 </form>
-                <p className="text-xs text-[#666666] mt-3 text-center sm:text-left" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Note: Newsletter signup will be connected to your email system when ready.
-                </p>
               </div>
             </div>
           </div>
@@ -844,7 +1033,6 @@ export default function UltimateHomepage() {
 
       {/* Footer */}
       <footer className="bg-gradient-to-br from-[#2f4b38] to-[#1f3324] text-white mt-16">
-        {/* Main Footer Content */}
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             {/* About Section */}
@@ -858,7 +1046,7 @@ export default function UltimateHomepage() {
                   className="rounded-full border border-[#ded2bf]"
                 />
                 <div>
-                  <p className="text-base font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  <p className="text-sm font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
                     Waggin Meals
                   </p>
                   <p className="text-xs opacity-90" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -866,10 +1054,10 @@ export default function UltimateHomepage() {
                   </p>
                 </div>
               </div>
-              <p className="text-sm leading-relaxed opacity-90 mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <p className="text-xs leading-relaxed opacity-90 mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Specialized nutrition tailored to your dog's unique needs. Every meal scientifically formulated by Christie Webb, Certified Canine Nutritionist.
               </p>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-xs">
                 <div className="flex items-center gap-2 opacity-90">
                   <Mail className="w-4 h-4" />
                   <a href="mailto:info@wagginmeals.com" className="hover:text-[#f6a723] transition-colors">
@@ -887,98 +1075,41 @@ export default function UltimateHomepage() {
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-base font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-sm font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Quick Links
               </h3>
-              <ul className="space-y-2 text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <li>
-                  <Link href="/" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/shop" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Shop
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/nutrition-services" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Nutrition Services
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/case-studies" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Success Stories
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Pet Nutrition Insights
-                  </Link>
-                </li>
+              <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <li><Link href="/" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Home</Link></li>
+                <li><Link href="/shop" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Shop</Link></li>
+                <li><Link href="/nutrition-services" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Nutrition Services</Link></li>
+                <li><Link href="/case-studies" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Success Stories</Link></li>
+                <li><Link href="/blog" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Pet Nutrition Insights</Link></li>
               </ul>
             </div>
 
             {/* Resources */}
             <div>
-              <h3 className="text-base font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-sm font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Resources
               </h3>
-              <ul className="space-y-2 text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <li>
-                  <Link href="/feeding-calculator" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Feeding Calculator
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/guides/fresh-food-guide" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Fresh Food Guide
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/resources" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Free PDF Guides
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/faq" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    FAQs
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Contact Us
-                  </Link>
-                </li>
+              <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <li><Link href="/feeding-calculator" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Feeding Calculator</Link></li>
+                <li><Link href="/guides/fresh-food-guide" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Fresh Food Guide</Link></li>
+                <li><Link href="/resources" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Free PDF Guides</Link></li>
+                <li><Link href="/faq" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">FAQs</Link></li>
+                <li><Link href="/contact" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Contact Us</Link></li>
               </ul>
             </div>
 
             {/* Legal */}
             <div>
-              <h3 className="text-base font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-sm font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Legal
               </h3>
-              <ul className="space-y-2 text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <li>
-                  <Link href="/shipping" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Shipping & Delivery
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/terms" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <a href="https://shopify.com/75736613077/account" target="_blank" rel="noopener noreferrer" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    My Account
-                  </a>
-                </li>
+              <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <li><Link href="/shipping" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Shipping & Delivery</Link></li>
+                <li><Link href="/privacy" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Terms of Service</Link></li>
               </ul>
             </div>
           </div>
@@ -989,7 +1120,7 @@ export default function UltimateHomepage() {
               <div className="flex items-start gap-3">
                 <ShieldCheck className="w-5 h-5 text-[#f6a723] flex-shrink-0" />
                 <div>
-                  <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     FDA Pet Feed Program
                   </p>
                   <p className="text-xs opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -1000,7 +1131,7 @@ export default function UltimateHomepage() {
               <div className="flex items-start gap-3">
                 <Stethoscope className="w-5 h-5 text-[#f6a723] flex-shrink-0" />
                 <div>
-                  <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     Christie Formulated
                   </p>
                   <p className="text-xs opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -1011,7 +1142,7 @@ export default function UltimateHomepage() {
               <div className="flex items-start gap-3">
                 <Leaf className="w-5 h-5 text-[#f6a723] flex-shrink-0" />
                 <div>
-                  <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     AAFCO Complete
                   </p>
                   <p className="text-xs opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -1030,7 +1161,7 @@ export default function UltimateHomepage() {
           </div>
 
           {/* Copyright */}
-          <div className="text-center text-sm opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <div className="text-center text-xs opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
             <p className="mb-2">
               © {new Date().getFullYear()} Waggin Meals Pet Nutrition Co. All rights reserved.
             </p>
