@@ -136,6 +136,21 @@ Currently stored in `.env.local` (local development only).
 
 ## Recent Changes
 
+### January 28, 2025
+- **🔧 Fixed Critical Subscription Billing Bugs** - Production-safety improvements
+  - Fixed JSON.parse error (Supabase JSONB already parsed)
+  - Added duplicate invoice prevention
+  - Fixed customer data access (join customers table)
+  - Fixed retry logic (include past_due subscriptions)
+  - **Note**: Authorize.net integration and email service still pending
+
+### January 27, 2025
+- **✅ Completed Order Management System** - Full customer and admin order workflow
+  - Customer order history and tracking
+  - Admin order fulfillment with packing slips
+  - **CRITICAL**: Fixed admin authentication bypass vulnerability
+  - **See**: `docs/ORDER_MANAGEMENT_SYSTEM.md` for complete documentation
+
 ### January 26, 2025
 - Created ultimate homepage variation combining best elements
 - Added closeable chat widget with FAQ accordion
