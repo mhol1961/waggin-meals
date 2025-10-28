@@ -43,6 +43,9 @@ interface Order {
   payment_status: string;
   payment_intent_id: string | null;
   notes: string | null;
+  tracking_number: string | null;
+  carrier: string | null;
+  shipped_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -75,6 +78,8 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
   const [carrier, setCarrier] = useState('USPS');
   const [showShippingForm, setShowShippingForm] = useState(false);
   const [showPackingSlip, setShowPackingSlip] = useState(false);
+  const [packingSlipAutoPrint, setPackingSlipAutoPrint] = useState(false);
+  const [showPrintMenu, setShowPrintMenu] = useState(false);
 
   const updateOrderStatus = async (newStatus: string) => {
     setIsUpdating(true);
@@ -151,6 +156,24 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
     }
   };
 
+  const getTrackingUrl = (carrier: string | null, trackingNumber: string) => {
+    const tracking = encodeURIComponent(trackingNumber);
+
+    switch (carrier?.toUpperCase()) {
+      case 'USPS':
+        return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking}`;
+      case 'UPS':
+        return `https://www.ups.com/track?tracknum=${tracking}`;
+      case 'FEDEX':
+        return `https://www.fedex.com/fedextrack/?trknbr=${tracking}`;
+      case 'DHL':
+        return `https://www.dhl.com/en/express/tracking.html?AWB=${tracking}`;
+      default:
+        // Generic Google search for unknown carriers
+        return `https://www.google.com/search?q=${tracking}`;
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Order Header */}
@@ -171,15 +194,53 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowPackingSlip(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-[#a5b5eb] text-[#a5b5eb] rounded-lg hover:bg-blue-50 transition-colors font-medium"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-              </svg>
-              Print Packing Slip
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setShowPrintMenu(!showPrintMenu)}
+                className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-[#a5b5eb] text-[#a5b5eb] rounded-lg hover:bg-blue-50 transition-colors font-medium"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Print Packing Slip
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {showPrintMenu && (
+                <>
+                  <div
+                    className="fixed inset-0 z-10"
+                    onClick={() => setShowPrintMenu(false)}
+                  />
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-20">
+                    <button
+                      onClick={() => {
+                        setPackingSlipAutoPrint(false);
+                        setShowPackingSlip(true);
+                        setShowPrintMenu(false);
+                      }}
+                      className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors text-gray-700"
+                    >
+                      <div className="font-medium text-sm">Preview & Print</div>
+                      <div className="text-xs text-gray-500">Review before printing</div>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setPackingSlipAutoPrint(true);
+                        setShowPackingSlip(true);
+                        setShowPrintMenu(false);
+                      }}
+                      className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors text-gray-700"
+                    >
+                      <div className="font-medium text-sm">Quick Print</div>
+                      <div className="text-xs text-gray-500">Print immediately</div>
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
             <span className={`px-3 py-1 rounded-full text-sm font-medium ${STATUS_COLORS[order.status]}`}>
               {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
             </span>
@@ -391,11 +452,57 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
           </div>
         ) : (
           <div className="text-gray-700">
-            {order.status === 'shipped' || order.status === 'delivered' ? (
-              <>
-                <p className="text-sm text-gray-600 mb-1">Status: Order has been shipped</p>
-                {/* Add tracking number display if available */}
-              </>
+            {order.tracking_number ? (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-green-600 font-medium">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Order Shipped</span>
+                </div>
+
+                <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="text-sm font-medium text-gray-700">Tracking Number</p>
+                      <p className="text-base font-mono text-gray-900 mt-1">{order.tracking_number}</p>
+                    </div>
+                    <a
+                      href={getTrackingUrl(order.carrier, order.tracking_number)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-[#a5b5eb] hover:text-[#8a9fd9] font-medium flex items-center gap-1"
+                    >
+                      Track Package
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
+
+                  {order.carrier && (
+                    <div>
+                      <p className="text-sm font-medium text-gray-700">Carrier</p>
+                      <p className="text-base text-gray-900">{order.carrier}</p>
+                    </div>
+                  )}
+
+                  {order.shipped_at && (
+                    <div>
+                      <p className="text-sm font-medium text-gray-700">Shipped On</p>
+                      <p className="text-base text-gray-900">
+                        {new Date(order.shipped_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: '2-digit'
+                        })}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
             ) : (
               <p className="text-gray-500">No tracking information yet</p>
             )}
@@ -442,7 +549,11 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
       {showPackingSlip && (
         <PackingSlip
           order={order}
-          onClose={() => setShowPackingSlip(false)}
+          autoPrint={packingSlipAutoPrint}
+          onClose={() => {
+            setShowPackingSlip(false);
+            setPackingSlipAutoPrint(false);
+          }}
         />
       )}
     </div>
