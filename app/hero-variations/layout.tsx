@@ -10,5 +10,15 @@ export default function HeroVariationsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <style jsx global>{`
+        body > header,
+        body > footer {
+          display: none !important;
+        }
+      `}</style>
+      {children}
+    </>
+  );
 }
