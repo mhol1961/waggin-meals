@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import {
+  sendPaymentRetrySuccessEmail,
+  sendPaymentFailedEmail,
+  sendSubscriptionCancelledEmail,
+} from '@/lib/ghl-email-service';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -187,8 +192,17 @@ async function retryFailedPayment(invoice: any): Promise<string> {
       notes: `Payment retry ${attemptNumber} succeeded. Invoice ${invoice.invoice_number}. Transaction: ${transactionId}`,
     });
 
-    // Send success email
-    await sendPaymentSuccessEmail(subscription, invoice, attemptNumber);
+    // Send success email via GHL
+    await sendPaymentRetrySuccessEmail({
+      customer_email: subscription.customer_email || '',
+      customer_first_name: subscription.customer_first_name || '',
+      customer_last_name: subscription.customer_last_name,
+      customer_phone: subscription.customer_phone,
+      invoice_number: invoice.invoice_number,
+      transaction_id: transactionId,
+      amount: invoice.total,
+      attempt_number: attemptNumber,
+    });
 
     // Create order for fulfillment if not already created
     if (!invoice.order_id) {
@@ -231,8 +245,15 @@ async function retryFailedPayment(invoice: any): Promise<string> {
         notes: `Subscription cancelled after ${MAX_RETRY_ATTEMPTS} failed payment attempts. Invoice ${invoice.invoice_number}`,
       });
 
-      // Send cancellation email
-      await sendSubscriptionCancelledEmail(subscription, attemptNumber);
+      // Send cancellation email via GHL
+      await sendSubscriptionCancelledEmail({
+        customer_email: subscription.customer_email || '',
+        customer_first_name: subscription.customer_first_name || '',
+        customer_last_name: subscription.customer_last_name,
+        customer_phone: subscription.customer_phone,
+        subscription_id: subscription.id,
+        total_attempts: attemptNumber,
+      });
 
       return 'cancelled';
 
@@ -256,8 +277,17 @@ async function retryFailedPayment(invoice: any): Promise<string> {
         notes: `Payment retry ${attemptNumber} failed. Next retry scheduled for ${nextRetryDate.toISOString().split('T')[0]}. Error: ${error.message}`,
       });
 
-      // Send retry notification email
-      await sendPaymentRetryEmail(subscription, attemptNumber, nextRetryDate);
+      // Send retry notification email via GHL
+      await sendPaymentFailedEmail({
+        customer_email: subscription.customer_email || '',
+        customer_first_name: subscription.customer_first_name || '',
+        customer_last_name: subscription.customer_last_name,
+        customer_phone: subscription.customer_phone,
+        subscription_id: subscription.id,
+        invoice_number: invoice.invoice_number,
+        error_message: error.message,
+        next_retry_date: nextRetryDate.toISOString().split('T')[0],
+      });
 
       return 'failed';
     }
@@ -310,62 +340,6 @@ function calculateNextRetryDate(attemptNumber: number): Date {
 }
 
 /**
- * Send email when payment succeeds after retry
- */
-async function sendPaymentSuccessEmail(
-  subscription: any,
-  invoice: any,
-  attemptNumber: number
-) {
-  console.log(`[Email] Sending payment success email for subscription ${subscription.id}`);
-
-  // TODO: Implement with actual email service
-  // await sendEmail({
-  //   to: subscription.customer_email,
-  //   subject: 'Payment Successful - Your subscription is active',
-  //   template: 'payment-retry-success',
-  //   data: { subscription, invoice, attemptNumber }
-  // });
-}
-
-/**
- * Send email when payment fails but will retry
- */
-async function sendPaymentRetryEmail(
-  subscription: any,
-  attemptNumber: number,
-  nextRetryDate: Date
-) {
-  console.log(`[Email] Sending payment retry email for subscription ${subscription.id}`);
-
-  // TODO: Implement with actual email service
-  // await sendEmail({
-  //   to: subscription.customer_email,
-  //   subject: 'Payment Failed - We will try again',
-  //   template: 'payment-retry-scheduled',
-  //   data: { subscription, attemptNumber, nextRetryDate, maxAttempts: MAX_RETRY_ATTEMPTS }
-  // });
-}
-
-/**
- * Send email when subscription is cancelled after max retries
- */
-async function sendSubscriptionCancelledEmail(
-  subscription: any,
-  totalAttempts: number
-) {
-  console.log(`[Email] Sending cancellation email for subscription ${subscription.id}`);
-
-  // TODO: Implement with actual email service
-  // await sendEmail({
-  //   to: subscription.customer_email,
-  //   subject: 'Subscription Cancelled - Payment Issues',
-  //   template: 'subscription-cancelled',
-  //   data: { subscription, totalAttempts, supportEmail: 'support@wagginmeals.com' }
-  // });
-}
-
-/**
  * Create an order record from a successful subscription billing
  */
 async function createSubscriptionOrder(
@@ -377,7 +351,8 @@ async function createSubscriptionOrder(
 
   const orderNumber = `SUB-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${Date.now().toString().slice(-4)}`;
 
-  const items = JSON.parse(subscription.items || '[]');
+  // Items is already a JSONB object from Supabase, no need to parse
+  const items = Array.isArray(subscription.items) ? subscription.items : [];
 
   const { data: order, error: orderError } = await supabase
     .from('orders')

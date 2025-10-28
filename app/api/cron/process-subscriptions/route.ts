@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import {
+  sendSubscriptionReceiptEmail,
+  sendPaymentFailedEmail,
+} from '@/lib/ghl-email-service';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -209,8 +213,20 @@ async function processSubscriptionBilling(subscription: any) {
       notes: `Successful billing for invoice ${invoiceNumber}. Transaction ID: ${transactionId}`,
     });
 
-    // Send receipt email
-    await sendSubscriptionReceiptEmail(subscription, invoice, transactionId);
+    // Send receipt email via GHL
+    const customer = subscription.customer || {};
+    await sendSubscriptionReceiptEmail({
+      customer_email: customer.email || '',
+      customer_first_name: customer.first_name || '',
+      customer_last_name: customer.last_name,
+      customer_phone: customer.phone,
+      subscription_id: subscription.id,
+      invoice_number: invoiceNumber,
+      transaction_id: transactionId,
+      amount: subscription.amount,
+      billing_date: billingDate,
+      items: subscription.items || [],
+    });
 
     // Create order record for inventory tracking and fulfillment
     await createSubscriptionOrder(subscription, invoice, transactionId);
@@ -247,8 +263,19 @@ async function processSubscriptionBilling(subscription: any) {
       notes: `Payment failed for invoice ${invoiceNumber}. Error: ${error.message}`,
     });
 
-    // Send payment failed email
-    await sendPaymentFailedEmail(subscription, error.message);
+    // Send payment failed email via GHL
+    const customer = subscription.customer || {};
+    const nextRetryDate = calculateNextRetryDate(1);
+    await sendPaymentFailedEmail({
+      customer_email: customer.email || '',
+      customer_first_name: customer.first_name || '',
+      customer_last_name: customer.last_name,
+      customer_phone: customer.phone,
+      subscription_id: subscription.id,
+      invoice_number: invoiceNumber,
+      error_message: error.message,
+      next_retry_date: nextRetryDate.toISOString().split('T')[0],
+    });
 
     throw error;
   }
@@ -351,42 +378,6 @@ function generateInvoiceNumber(): string {
   const timestamp = Date.now().toString().slice(-6);
 
   return `INV-${year}${month}${day}-${timestamp}`;
-}
-
-/**
- * Send receipt email after successful payment
- * TODO: Implement email service
- */
-async function sendSubscriptionReceiptEmail(
-  subscription: any,
-  invoice: any,
-  transactionId: string
-) {
-  console.log(`[Email] Sending receipt for subscription ${subscription.id}`);
-
-  // TODO: Implement with actual email service
-  // await sendEmail({
-  //   to: subscription.customer_email,
-  //   subject: `Receipt for your Waggin' Meals subscription - ${invoice.invoice_number}`,
-  //   template: 'subscription-receipt',
-  //   data: { subscription, invoice, transactionId }
-  // });
-}
-
-/**
- * Send email when payment fails
- * TODO: Implement email service
- */
-async function sendPaymentFailedEmail(subscription: any, errorMessage: string) {
-  console.log(`[Email] Sending payment failed email for subscription ${subscription.id}`);
-
-  // TODO: Implement with actual email service
-  // await sendEmail({
-  //   to: subscription.customer_email,
-  //   subject: 'Action Required: Update your payment method',
-  //   template: 'payment-failed',
-  //   data: { subscription, errorMessage }
-  // });
 }
 
 /**
