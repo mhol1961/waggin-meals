@@ -5,13 +5,26 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Subscription } from '@/types/subscription';
 
+interface Invoice {
+  id: string;
+  subscription_id: string;
+  amount: number;
+  status: 'pending' | 'paid' | 'failed';
+  billing_date: string;
+  created_at: string;
+  transaction_id?: string;
+  error_message?: string;
+}
+
 export default function SubscriptionDetailPage() {
   const params = useParams();
   const router = useRouter();
   const subscriptionId = params.id as string;
 
   const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
+  const [invoicesLoading, setInvoicesLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -21,6 +34,7 @@ export default function SubscriptionDetailPage() {
 
   useEffect(() => {
     fetchSubscription();
+    fetchInvoices();
   }, [subscriptionId]);
 
   async function fetchSubscription() {
@@ -38,6 +52,25 @@ export default function SubscriptionDetailPage() {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function fetchInvoices() {
+    try {
+      setInvoicesLoading(true);
+      const response = await fetch(`/api/subscriptions/${subscriptionId}/invoices`);
+
+      if (!response.ok) {
+        console.error('Failed to fetch invoices');
+        return;
+      }
+
+      const data = await response.json();
+      setInvoices(data.invoices || []);
+    } catch (err: any) {
+      console.error('Error fetching invoices:', err);
+    } finally {
+      setInvoicesLoading(false);
     }
   }
 
@@ -130,6 +163,20 @@ export default function SubscriptionDetailPage() {
     return (
       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${styles[status] || 'bg-gray-100 text-gray-800'}`}>
         {status.replace('_', ' ').toUpperCase()}
+      </span>
+    );
+  }
+
+  function getInvoiceStatusBadge(status: string) {
+    const styles: Record<string, string> = {
+      paid: 'bg-green-100 text-green-800',
+      pending: 'bg-yellow-100 text-yellow-800',
+      failed: 'bg-red-100 text-red-800',
+    };
+
+    return (
+      <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${styles[status] || 'bg-gray-100 text-gray-800'}`}>
+        {status.toUpperCase()}
       </span>
     );
   }
@@ -292,6 +339,54 @@ export default function SubscriptionDetailPage() {
             </div>
           </div>
         )}
+
+        {/* Billing History */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Billing History</h2>
+          {invoicesLoading ? (
+            <div className="text-center py-4">
+              <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-solid border-green-600 border-r-transparent"></div>
+              <p className="mt-2 text-sm text-gray-500">Loading invoices...</p>
+            </div>
+          ) : invoices.length === 0 ? (
+            <p className="text-sm text-gray-500 text-center py-4">No billing history yet</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead>
+                  <tr>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Transaction</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {invoices.map((invoice) => (
+                    <tr key={invoice.id} className="hover:bg-gray-50">
+                      <td className="px-3 py-3 text-sm text-gray-900">
+                        {new Date(invoice.billing_date).toLocaleDateString()}
+                      </td>
+                      <td className="px-3 py-3 text-sm text-gray-900">
+                        ${invoice.amount.toFixed(2)}
+                      </td>
+                      <td className="px-3 py-3 text-sm">
+                        {getInvoiceStatusBadge(invoice.status)}
+                      </td>
+                      <td className="px-3 py-3 text-sm text-gray-500">
+                        {invoice.transaction_id ? (
+                          <span className="font-mono text-xs">{invoice.transaction_id.substring(0, 12)}...</span>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
 
         {/* Payment Method */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
