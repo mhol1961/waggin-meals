@@ -55,23 +55,27 @@ interface Order {
 
 export default function OrderDetailPage({ params }: { params: { id: string } }) {
   const [order, setOrder] = useState<Order | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [orderLoading, setOrderLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const { user, session } = useAuth();
+  const { user, loading } = useAuth();
 
   useEffect(() => {
-    if (!session) {
+    // Wait for auth to finish loading
+    if (loading) return;
+
+    // Redirect if not authenticated
+    if (!user) {
       router.push('/auth/login?redirect=/account/orders');
       return;
     }
 
     fetchOrderDetail();
-  }, [session, params.id]);
+  }, [user, loading, params.id]);
 
   async function fetchOrderDetail() {
     try {
-      setLoading(true);
+      setOrderLoading(true);
       const response = await fetch('/api/orders/my-orders');
 
       if (!response.ok) {
@@ -95,7 +99,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
       console.error('Error fetching order:', err);
       setError('Failed to load order details');
     } finally {
-      setLoading(false);
+      setOrderLoading(false);
     }
   }
 
@@ -121,7 +125,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
     );
   }
 
-  if (loading) {
+  if (loading || orderLoading) {
     return (
       <div className="min-h-screen bg-white">
         <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-12">

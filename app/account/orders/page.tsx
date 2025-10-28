@@ -32,22 +32,26 @@ interface Order {
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [ordersLoading, setOrdersLoading] = useState(true);
   const router = useRouter();
-  const { user, session } = useAuth();
+  const { user, loading } = useAuth();
 
   useEffect(() => {
-    if (!session) {
+    // Wait for auth to finish loading
+    if (loading) return;
+
+    // Redirect if not authenticated
+    if (!user) {
       router.push('/auth/login?redirect=/account/orders');
       return;
     }
 
     fetchOrders();
-  }, [session]);
+  }, [user, loading]);
 
   async function fetchOrders() {
     try {
-      setLoading(true);
+      setOrdersLoading(true);
       const response = await fetch('/api/orders/my-orders');
 
       if (!response.ok) {
@@ -63,7 +67,7 @@ export default function OrdersPage() {
     } catch (error) {
       console.error('Error fetching orders:', error);
     } finally {
-      setLoading(false);
+      setOrdersLoading(false);
     }
   }
 
@@ -109,7 +113,7 @@ export default function OrdersPage() {
     );
   }
 
-  if (loading) {
+  if (loading || ordersLoading) {
     return (
       <div className="min-h-screen bg-white">
         <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-12">
