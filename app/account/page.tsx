@@ -1,35 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase-client';
+import { useAuth } from '@/contexts/auth-context';
 import { User, Package, MapPin, Settings, LogOut } from 'lucide-react';
 
 export default function AccountPage() {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const { user, loading, signOut, role } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    checkUser();
-  }, []);
-
-  const checkUser = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-      router.push('/login');
-      return;
-    }
-
-    setUser(user);
-    setLoading(false);
-  };
-
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push('/login');
+    await signOut();
+    router.push('/auth/login');
   };
 
   if (loading) {
@@ -51,6 +33,18 @@ export default function AccountPage() {
       icon: Package,
     },
     {
+      title: 'Subscriptions',
+      description: 'Manage your recurring deliveries',
+      href: '/account/subscriptions',
+      icon: Package,
+    },
+    {
+      title: 'Payment Methods',
+      description: 'Manage your saved payment information',
+      href: '/account/payment-methods',
+      icon: Package,
+    },
+    {
       title: 'Profile',
       description: 'Update your personal information',
       href: '/account/profile',
@@ -69,6 +63,16 @@ export default function AccountPage() {
       icon: Settings,
     },
   ];
+
+  // Add admin dashboard link if user is admin
+  if (role === 'admin') {
+    accountLinks.unshift({
+      title: 'Admin Dashboard',
+      description: 'Manage products, orders, and customers',
+      href: '/admin',
+      icon: Settings,
+    });
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb]">
