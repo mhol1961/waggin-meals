@@ -41,13 +41,22 @@ export async function POST(request: NextRequest) {
     console.log(`[Cron] Starting subscription processing for ${today}`);
 
     // Find all subscriptions due for billing today
+    // Include both 'active' and 'past_due' so failed payments can be retried
     const { data: dueSubscriptions, error: fetchError } = await supabase
       .from('subscriptions')
       .select(`
         *,
-        payment_method:payment_methods(*)
+        payment_method:payment_methods(*),
+        customer:customers(
+          id,
+          email,
+          first_name,
+          last_name,
+          phone,
+          default_shipping_address
+        )
       `)
-      .eq('status', 'active')
+      .in('status', ['active', 'past_due'])
       .lte('next_billing_date', today)
       .order('next_billing_date', { ascending: true });
 
@@ -115,9 +124,23 @@ export async function POST(request: NextRequest) {
 async function processSubscriptionBilling(subscription: any) {
   console.log(`[Billing] Processing subscription ${subscription.id}`);
 
+  const billingDate = new Date().toISOString().split('T')[0];
+
+  // Check if invoice already exists for this billing cycle
+  const { data: existingInvoice } = await supabase
+    .from('subscription_invoices')
+    .select('*')
+    .eq('subscription_id', subscription.id)
+    .eq('billing_date', billingDate)
+    .single();
+
+  if (existingInvoice) {
+    console.log(`[Billing] Invoice already exists for subscription ${subscription.id} on ${billingDate} - skipping`);
+    return; // Skip duplicate billing
+  }
+
   // Create invoice record
   const invoiceNumber = generateInvoiceNumber();
-  const billingDate = new Date().toISOString().split('T')[0];
   const dueDate = new Date();
   dueDate.setDate(dueDate.getDate() + 3); // 3 days to pay
 
@@ -380,8 +403,17 @@ async function createSubscriptionOrder(
   // Generate order number
   const orderNumber = `SUB-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${Date.now().toString().slice(-4)}`;
 
-  // Parse items from subscription
-  const items = JSON.parse(subscription.items);
+  // Items is already a JSONB object from Supabase, no need to parse
+  const items = Array.isArray(subscription.items) ? subscription.items : [];
+
+  if (items.length === 0) {
+    console.warn(`[Order] No items found for subscription ${subscription.id}`);
+    return;
+  }
+
+  // Get customer data
+  const customer = subscription.customer || {};
+  const shippingAddress = customer.default_shipping_address || {};
 
   // Create order
   const { data: order, error: orderError } = await supabase
@@ -395,10 +427,10 @@ async function createSubscriptionOrder(
       shipping_cost: 0,
       tax: 0,
       total: subscription.amount,
-      customer_email: subscription.customer_email || '',
-      customer_first_name: subscription.customer_first_name || '',
-      customer_last_name: subscription.customer_last_name || '',
-      shipping_address: subscription.shipping_address || {},
+      customer_email: customer.email || '',
+      customer_first_name: customer.first_name || '',
+      customer_last_name: customer.last_name || '',
+      shipping_address: shippingAddress,
       payment_intent_id: transactionId,
       notes: `Auto-generated from subscription ${subscription.id} - Invoice ${invoice.invoice_number}`,
     })
