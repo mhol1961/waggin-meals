@@ -127,7 +127,14 @@ const navItems = [
       { label: 'Digestive Health', href: '/digestive-health' },
     ]
   },
-  { label: 'Shop', href: '/shop' },
+  {
+    label: 'Shop',
+    dropdown: [
+      { label: 'Shop All Products', href: '/shop' },
+      { label: 'Bundles & Save', href: '/bundles' },
+      { label: 'Collections', href: '/collections' },
+    ]
+  },
   {
     label: 'Success Stories',
     dropdown: [
