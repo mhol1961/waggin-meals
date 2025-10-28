@@ -62,7 +62,10 @@ CREATE TABLE user_profiles (
 When a new user signs up:
 1. **Trigger fires** - `handle_new_user()` function runs automatically
 2. **Profile created** - Row added to `user_profiles`
-3. **Role assigned** - Default 'customer' role added to `user_roles`
+3. **Customer record created** - Row added to `customers` with same UUID as auth user
+4. **Role assigned** - Default 'customer' role added to `user_roles`
+
+**Key Integration Point:** The `customers.id` matches `auth.users.id`, enabling seamless integration between authentication and subscription/payment systems without additional lookups.
 
 ### Functions
 

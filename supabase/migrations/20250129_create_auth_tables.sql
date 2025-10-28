@@ -40,16 +40,40 @@ CREATE INDEX IF NOT EXISTS idx_user_profiles_user_id ON user_profiles(user_id);
 -- FUNCTIONS
 -- =====================================================
 
--- Function to automatically create user profile and assign customer role
+-- Function to automatically create user profile, customer record, and assign customer role
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
+DECLARE
+  v_first_name TEXT;
+  v_last_name TEXT;
+  v_full_name TEXT;
 BEGIN
+  -- Extract full name from metadata
+  v_full_name := COALESCE(NEW.raw_user_meta_data->>'full_name', '');
+
+  -- Split full name into first and last (simple approach)
+  IF v_full_name != '' THEN
+    v_first_name := COALESCE(SPLIT_PART(v_full_name, ' ', 1), '');
+    v_last_name := COALESCE(NULLIF(SUBSTRING(v_full_name FROM LENGTH(v_first_name) + 2), ''), '');
+  ELSE
+    v_first_name := '';
+    v_last_name := '';
+  END IF;
+
   -- Create user profile
   INSERT INTO public.user_profiles (user_id, full_name)
+  VALUES (NEW.id, NULLIF(v_full_name, ''));
+
+  -- Create customer record with same UUID as auth user
+  -- This ensures customer_id = auth.users.id for seamless integration
+  INSERT INTO public.customers (id, email, first_name, last_name)
   VALUES (
     NEW.id,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', NULL)
-  );
+    NEW.email,
+    NULLIF(v_first_name, ''),
+    NULLIF(v_last_name, '')
+  )
+  ON CONFLICT (id) DO NOTHING;
 
   -- Assign default customer role
   INSERT INTO public.user_roles (user_id, role)

@@ -91,8 +91,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const userRole = await fetchUserRole(data.user.id);
       setRole(userRole);
     }
-
-    return data;
   }
 
   // Sign in existing user
@@ -112,8 +110,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const userRole = await fetchUserRole(data.user.id);
       setRole(userRole);
     }
-
-    return data;
   }
 
   // Sign out

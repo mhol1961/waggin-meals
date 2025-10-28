@@ -13,9 +13,11 @@ Open Supabase SQL Editor and run the migration:
 This creates:
 - `user_roles` table (stores customer/admin roles)
 - `user_profiles` table (stores extended user info)
-- Automatic triggers to create profile + assign role on signup
+- Automatic triggers to create profile + customer record + assign role on signup
 - RLS policies for security
 - Helper functions
+
+**Important:** The trigger automatically creates a `customers` record with the same UUID as the auth user. This ensures seamless integration between authentication and the subscription/payment systems.
 
 ```sql
 -- Copy and paste the entire contents of:
