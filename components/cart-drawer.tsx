@@ -72,7 +72,7 @@ export default function CartDrawer() {
             <div className="space-y-4">
               {items.map((item) => (
                 <div
-                  key={item.id}
+                  key={item.cart_key}
                   className="flex gap-4 bg-[#f8f9fa] rounded-lg p-4"
                 >
                   {/* Product Image */}
@@ -93,6 +93,14 @@ export default function CartDrawer() {
                     >
                       {item.title}
                     </h3>
+                    {item.variant_title && (
+                      <p
+                        className="text-xs text-[#666666] mb-1"
+                        style={{ fontFamily: "'Poppins', sans-serif" }}
+                      >
+                        {item.variant_title}
+                      </p>
+                    )}
                     {item.weight && (
                       <p
                         className="text-xs text-[#666666] mb-2"
@@ -104,7 +112,7 @@ export default function CartDrawer() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.cart_key, item.quantity - 1)}
                           className="w-6 h-6 flex items-center justify-center bg-white border border-gray-300 rounded text-[#666666] hover:bg-gray-100 transition-colors"
                         >
                           -
@@ -116,7 +124,7 @@ export default function CartDrawer() {
                           {item.quantity}
                         </span>
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.cart_key, item.quantity + 1)}
                           className="w-6 h-6 flex items-center justify-center bg-white border border-gray-300 rounded text-[#666666] hover:bg-gray-100 transition-colors"
                         >
                           +
@@ -133,7 +141,7 @@ export default function CartDrawer() {
 
                   {/* Remove Button */}
                   <button
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeItem(item.cart_key)}
                     className="text-[#999999] hover:text-red-600 transition-colors"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

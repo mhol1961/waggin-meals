@@ -3,7 +3,8 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface CartItem {
-  id: string;
+  id: string; // Product ID
+  cart_key: string; // Unique cart identifier (product_id or product_id-variant_id)
   handle: string;
   title: string;
   price: number;
@@ -16,6 +17,10 @@ export interface CartItem {
     frequency: string;
     isSubscription: boolean;
   };
+  // Variant support
+  variant_id?: string; // Variant ID if product has variants
+  variant_title?: string; // e.g., "5lb", "10lb - Beef"
+  sku?: string; // Variant SKU for tracking
 }
 
 interface CartContextType {
@@ -32,6 +37,11 @@ interface CartContextType {
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
+
+// Helper function to generate unique cart item identifier
+function getCartItemId(productId: string, variantId?: string): string {
+  return variantId ? `${productId}-${variantId}` : productId;
+}
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -54,36 +64,38 @@ export function CartProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('waggin-meals-cart', JSON.stringify(items));
   }, [items]);
 
-  const addItem = (newItem: Omit<CartItem, 'quantity'>) => {
+  const addItem = (newItem: Omit<CartItem, 'quantity' | 'cart_key'>) => {
     setItems((currentItems) => {
-      const existingItem = currentItems.find((item) => item.id === newItem.id);
+      // Generate cart_key if not provided
+      const cartKey = getCartItemId(newItem.id, newItem.variant_id);
+      const existingItem = currentItems.find((item) => item.cart_key === cartKey);
 
       if (existingItem) {
         return currentItems.map((item) =>
-          item.id === newItem.id
+          item.cart_key === cartKey
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
 
-      return [...currentItems, { ...newItem, quantity: 1 }];
+      return [...currentItems, { ...newItem, cart_key: cartKey, quantity: 1 }];
     });
     setIsOpen(true);
   };
 
-  const removeItem = (id: string) => {
-    setItems((currentItems) => currentItems.filter((item) => item.id !== id));
+  const removeItem = (cartKey: string) => {
+    setItems((currentItems) => currentItems.filter((item) => item.cart_key !== cartKey));
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = (cartKey: string, quantity: number) => {
     if (quantity < 1) {
-      removeItem(id);
+      removeItem(cartKey);
       return;
     }
 
     setItems((currentItems) =>
       currentItems.map((item) =>
-        item.id === id ? { ...item, quantity } : item
+        item.cart_key === cartKey ? { ...item, quantity } : item
       )
     );
   };
