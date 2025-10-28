@@ -54,11 +54,22 @@ export async function POST(request: NextRequest) {
     console.log(`[Retry] Starting failed payment retry for ${today}`);
 
     // Find all failed invoices that are due for retry
+    // Must join customers table for email/shipping data
     const { data: failedInvoices, error: fetchError } = await supabase
       .from('subscription_invoices')
       .select(`
         *,
-        subscription:subscriptions(*),
+        subscription:subscriptions(
+          *,
+          customer:customers(
+            id,
+            email,
+            first_name,
+            last_name,
+            phone,
+            default_shipping_address
+          )
+        ),
         payment_method:payment_methods(*)
       `)
       .eq('status', 'failed')
@@ -193,11 +204,12 @@ async function retryFailedPayment(invoice: any): Promise<string> {
     });
 
     // Send success email via GHL
+    const customer = subscription.customer || {};
     await sendPaymentRetrySuccessEmail({
-      customer_email: subscription.customer_email || '',
-      customer_first_name: subscription.customer_first_name || '',
-      customer_last_name: subscription.customer_last_name,
-      customer_phone: subscription.customer_phone,
+      customer_email: customer.email || '',
+      customer_first_name: customer.first_name || '',
+      customer_last_name: customer.last_name,
+      customer_phone: customer.phone,
       invoice_number: invoice.invoice_number,
       transaction_id: transactionId,
       amount: invoice.total,
@@ -246,11 +258,12 @@ async function retryFailedPayment(invoice: any): Promise<string> {
       });
 
       // Send cancellation email via GHL
+      const customer = subscription.customer || {};
       await sendSubscriptionCancelledEmail({
-        customer_email: subscription.customer_email || '',
-        customer_first_name: subscription.customer_first_name || '',
-        customer_last_name: subscription.customer_last_name,
-        customer_phone: subscription.customer_phone,
+        customer_email: customer.email || '',
+        customer_first_name: customer.first_name || '',
+        customer_last_name: customer.last_name,
+        customer_phone: customer.phone,
         subscription_id: subscription.id,
         total_attempts: attemptNumber,
       });
@@ -278,11 +291,12 @@ async function retryFailedPayment(invoice: any): Promise<string> {
       });
 
       // Send retry notification email via GHL
+      const customer = subscription.customer || {};
       await sendPaymentFailedEmail({
-        customer_email: subscription.customer_email || '',
-        customer_first_name: subscription.customer_first_name || '',
-        customer_last_name: subscription.customer_last_name,
-        customer_phone: subscription.customer_phone,
+        customer_email: customer.email || '',
+        customer_first_name: customer.first_name || '',
+        customer_last_name: customer.last_name,
+        customer_phone: customer.phone,
         subscription_id: subscription.id,
         invoice_number: invoice.invoice_number,
         error_message: error.message,
@@ -354,6 +368,15 @@ async function createSubscriptionOrder(
   // Items is already a JSONB object from Supabase, no need to parse
   const items = Array.isArray(subscription.items) ? subscription.items : [];
 
+  if (items.length === 0) {
+    console.warn(`[Order] No items found for subscription ${subscription.id}`);
+    return;
+  }
+
+  // Get customer data from joined relation
+  const customer = subscription.customer || {};
+  const shippingAddress = customer.default_shipping_address || {};
+
   const { data: order, error: orderError } = await supabase
     .from('orders')
     .insert({
@@ -365,10 +388,10 @@ async function createSubscriptionOrder(
       shipping_cost: 0,
       tax: 0,
       total: subscription.amount,
-      customer_email: subscription.customer_email || '',
-      customer_first_name: subscription.customer_first_name || '',
-      customer_last_name: subscription.customer_last_name || '',
-      shipping_address: subscription.shipping_address || {},
+      customer_email: customer.email || '',
+      customer_first_name: customer.first_name || '',
+      customer_last_name: customer.last_name || '',
+      shipping_address: shippingAddress,
       payment_intent_id: transactionId,
       notes: `Auto-generated from subscription ${subscription.id} - Invoice ${invoice.invoice_number} (Retry)`,
     })
