@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import PackingSlip from './packing-slip';
 
 interface OrderItem {
   id: string;
@@ -73,6 +74,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
   const [trackingNumber, setTrackingNumber] = useState('');
   const [carrier, setCarrier] = useState('USPS');
   const [showShippingForm, setShowShippingForm] = useState(false);
+  const [showPackingSlip, setShowPackingSlip] = useState(false);
 
   const updateOrderStatus = async (newStatus: string) => {
     setIsUpdating(true);
@@ -168,9 +170,20 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
               })}
             </p>
           </div>
-          <span className={`px-3 py-1 rounded-full text-sm font-medium ${STATUS_COLORS[order.status]}`}>
-            {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-          </span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowPackingSlip(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-[#a5b5eb] text-[#a5b5eb] rounded-lg hover:bg-blue-50 transition-colors font-medium"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+              </svg>
+              Print Packing Slip
+            </button>
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${STATUS_COLORS[order.status]}`}>
+              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+            </span>
+          </div>
         </div>
 
         {/* Status Update */}
@@ -424,6 +437,14 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
           </p>
         )}
       </div>
+
+      {/* Packing Slip Modal */}
+      {showPackingSlip && (
+        <PackingSlip
+          order={order}
+          onClose={() => setShowPackingSlip(false)}
+        />
+      )}
     </div>
   );
 }
