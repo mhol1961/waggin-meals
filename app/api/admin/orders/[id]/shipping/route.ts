@@ -20,9 +20,9 @@ export async function POST(
 ) {
   try {
     // Verify admin authentication
-    const isAdmin = await verifyAdminAuth(request);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const authResult = await verifyAdminAuth(request);
+    if (!authResult.authenticated) {
+      return authResult.response;
     }
 
     const { id } = await params;

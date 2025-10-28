@@ -10,9 +10,9 @@ const supabase = createClient(
 export async function POST(request: NextRequest) {
   try {
     // Verify admin authentication
-    const isAdmin = await verifyAdminAuth(request);
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const authResult = await verifyAdminAuth(request);
+    if (!authResult.authenticated) {
+      return authResult.response;
     }
 
     const body = await request.json();
