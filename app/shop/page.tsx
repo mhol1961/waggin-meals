@@ -19,6 +19,39 @@ export default function ShopPage() {
         </div>
       </section>
 
+      {/* Bundles Promotion Banner */}
+      <section className="bg-gradient-to-r from-[#2f4b38] to-[#3d5e49] px-4 py-12">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <div className="inline-block bg-[#ffc107] text-[#2f4b38] px-3 py-1 rounded-full text-sm font-bold mb-3">
+                SAVE UP TO $19
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                Premium Nutrition Bundles
+              </h2>
+              <p className="text-lg text-white/90 mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Save big with our curated bundles. Customize your selection or choose a pre-configured package.
+              </p>
+              <ul className="text-white/80 text-sm space-y-1 mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <li>✓ Free Shipping Included</li>
+                <li>✓ Flexible Delivery Options</li>
+                <li>✓ Subscribe & Save an Extra 3%</li>
+              </ul>
+            </div>
+            <div className="flex-shrink-0">
+              <Link
+                href="/bundles"
+                className="inline-block bg-white text-[#2f4b38] px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#f5f1ea] transition-colors shadow-lg"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                View Bundles →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Coming Soon Notice - Phase 2 */}
       <section className="bg-[#fff3cd] border-b-4 border-[#ffc107] px-4 py-6">
         <div className="mx-auto max-w-4xl">

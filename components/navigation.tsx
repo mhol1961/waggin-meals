@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '@/contexts/cart-context';
 
-// Navigation structure with dropdowns
+// Navigation structure with dropdowns - Updated
 const navItems = [
   { label: 'Home', href: '/' },
   {
@@ -38,7 +38,14 @@ const navItems = [
       { label: 'Digestive Health', href: '/digestive-health' },
     ]
   },
-  { label: 'Shop', href: '/shop' },
+  {
+    label: 'Shop',
+    dropdown: [
+      { label: 'Shop All Products', href: '/shop' },
+      { label: 'Bundles & Save', href: '/bundles' },
+      { label: 'Collections', href: '/collections' },
+    ]
+  },
   {
     label: 'Success Stories',
     dropdown: [

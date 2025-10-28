@@ -10,6 +10,12 @@ export interface CartItem {
   quantity: number;
   image: string;
   weight?: string;
+  isBundle?: boolean;
+  bundleDetails?: {
+    selectedItems: Record<string, string[]>;
+    frequency: string;
+    isSubscription: boolean;
+  };
 }
 
 interface CartContextType {
