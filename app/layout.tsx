@@ -4,6 +4,7 @@ import './globals.css';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { CartProvider } from '@/contexts/cart-context';
+import { AuthProvider } from '@/contexts/auth-context';
 import CartDrawer from '@/components/cart-drawer';
 
 const abrilFatface = Abril_Fatface({
@@ -31,12 +32,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${abrilFatface.variable} ${poppins.variable} antialiased`}>
-        <CartProvider>
-          <Navigation />
-          {children}
-          <Footer />
-          <CartDrawer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Navigation />
+            {children}
+            <Footer />
+            <CartDrawer />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,55 +1,103 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifySessionToken } from './lib/admin-auth';
+import { updateSession, createMiddlewareClient } from '@/lib/supabase/middleware';
 
+/**
+ * Next.js Middleware for Authentication
+ *
+ * Protects routes using Supabase auth:
+ * - /account/* - Requires authentication
+ * - /admin/* - Requires authentication + admin role
+ * - /api/admin/* - Requires authentication + admin role
+ */
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Protect all /admin routes except /admin/login
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    // Read cookie directly from request (can't use cookies() in middleware)
-    const sessionCookie = request.cookies.get('admin-session');
+  // Update session for all requests
+  const response = await updateSession(request);
 
-    if (!sessionCookie) {
-      const loginUrl = new URL('/admin/login', request.url);
-      return NextResponse.redirect(loginUrl);
-    }
+  // Public authentication pages - allow access
+  if (pathname.startsWith('/auth/')) {
+    return response;
+  }
 
-    // Verify the session token
-    const session = await verifySessionToken(sessionCookie.value);
+  // Create Supabase client for middleware
+  const { supabase } = createMiddlewareClient(request);
 
-    if (!session) {
-      const loginUrl = new URL('/admin/login', request.url);
-      return NextResponse.redirect(loginUrl);
+  // Check authentication
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // Protect /account/* routes
+  if (pathname.startsWith('/account')) {
+    if (!user) {
+      const redirectUrl = new URL('/auth/login', request.url);
+      redirectUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(redirectUrl);
     }
   }
 
-  // Protect all /api/admin routes except /api/admin/login
-  if (pathname.startsWith('/api/admin') && pathname !== '/api/admin/login') {
-    // Read cookie directly from request (can't use cookies() in middleware)
-    const sessionCookie = request.cookies.get('admin-session');
+  // Protect /admin/* routes and /api/admin/* routes
+  if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
+    if (!user) {
+      if (pathname.startsWith('/api/')) {
+        return NextResponse.json(
+          { error: 'Unauthorized - Authentication required' },
+          { status: 401 }
+        );
+      }
 
-    if (!sessionCookie) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      const redirectUrl = new URL('/auth/login', request.url);
+      redirectUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(redirectUrl);
     }
 
-    // Verify the session token
-    const session = await verifySessionToken(sessionCookie.value);
+    // Check if user has admin role
+    try {
+      const { data: roleData, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .single();
 
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      if (error || !roleData || roleData.role !== 'admin') {
+        if (pathname.startsWith('/api/')) {
+          return NextResponse.json(
+            { error: 'Forbidden - Admin access required' },
+            { status: 403 }
+          );
+        }
+
+        // Not an admin - redirect to home
+        return NextResponse.redirect(new URL('/', request.url));
+      }
+    } catch (error) {
+      console.error('Error checking admin role:', error);
+
+      if (pathname.startsWith('/api/')) {
+        return NextResponse.json(
+          { error: 'Internal server error' },
+          { status: 500 }
+        );
+      }
+
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public folder
+     */
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
 };
