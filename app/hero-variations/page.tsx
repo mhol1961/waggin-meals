@@ -1,10 +1,4 @@
 import Link from 'next/link';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Hero Section Variations | Waggin Meals',
-  description: 'Compare 10 different hero section designs for the Waggin Meals home page',
-};
 
 export default function HeroVariationsIndex() {
   const variations = [
