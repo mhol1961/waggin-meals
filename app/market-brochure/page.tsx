@@ -5,20 +5,22 @@ import Image from 'next/image';
 export default function MarketBrochurePage() {
   return (
     <>
-      <style jsx global>{`
-        @media print {
-          body {
-            print-color-adjust: exact;
-            -webkit-print-color-adjust: exact;
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media print {
+            body {
+              print-color-adjust: exact;
+              -webkit-print-color-adjust: exact;
+            }
+            .no-print {
+              display: none !important;
+            }
+            .page-break {
+              page-break-after: always;
+            }
           }
-          .no-print {
-            display: none !important;
-          }
-          .page-break {
-            page-break-after: always;
-          }
-        }
-      `}</style>
+        `
+      }} />
 
       <main className="bg-white">
         {/* Print Button - Hides when printing */}

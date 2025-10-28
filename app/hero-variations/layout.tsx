@@ -12,12 +12,14 @@ export default function HeroVariationsLayout({
 }) {
   return (
     <>
-      <style jsx global>{`
-        body > header,
-        body > footer {
-          display: none !important;
-        }
-      `}</style>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          body > header,
+          body > footer {
+            display: none !important;
+          }
+        `
+      }} />
       {children}
     </>
   );
