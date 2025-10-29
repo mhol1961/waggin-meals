@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/auth-context';
@@ -53,7 +53,8 @@ interface Order {
   notes?: string;
 }
 
-export default function OrderDetailPage({ params }: { params: { id: string } }) {
+export default function OrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const [order, setOrder] = useState<Order | null>(null);
   const [orderLoading, setOrderLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -71,7 +72,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
     }
 
     fetchOrderDetail();
-  }, [user, loading, params.id]);
+  }, [user, loading, id]);
 
   async function fetchOrderDetail() {
     try {
@@ -87,7 +88,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
       }
 
       const data = await response.json();
-      const foundOrder = data.orders?.find((o: Order) => o.id === params.id);
+      const foundOrder = data.orders?.find((o: Order) => o.id === id);
 
       if (!foundOrder) {
         setError('Order not found');
