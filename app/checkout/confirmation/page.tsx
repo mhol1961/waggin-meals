@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 
 export const dynamic = 'force-dynamic';
 
-export default function OrderConfirmationPage() {
+function ConfirmationContent() {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get('order');
   const subscriptionId = searchParams.get('subscription');
@@ -267,5 +267,13 @@ export default function OrderConfirmationPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function OrderConfirmationPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <ConfirmationContent />
+    </Suspense>
   );
 }
