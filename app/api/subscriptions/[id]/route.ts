@@ -17,6 +17,8 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const { data: subscription, error } = await supabase
       .from('subscriptions')
       .select('*')
@@ -49,6 +51,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body: UpdateSubscriptionRequest = await request.json();
 
     // Get current subscription
@@ -93,7 +96,7 @@ export async function PATCH(
     const { data: subscription, error: updateError } = await supabase
       .from('subscriptions')
       .update(updates)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -108,7 +111,7 @@ export async function PATCH(
     // Log history
     await supabase.from('subscription_history').insert([
       {
-        subscription_id: params.id,
+        subscription_id: id,
         action: 'updated',
         changed_fields: updates,
         actor_type: 'customer',
@@ -134,6 +137,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { searchParams } = new URL(request.url);
     const reason = searchParams.get('reason');
 
@@ -159,7 +163,7 @@ export async function DELETE(
         cancelled_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       })
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -174,7 +178,7 @@ export async function DELETE(
     // Log history
     await supabase.from('subscription_history').insert([
       {
-        subscription_id: params.id,
+        subscription_id: id,
         action: 'cancelled',
         old_status: currentSub.status,
         new_status: 'cancelled',
