@@ -20,7 +20,7 @@ export async function GET(
     const { data: adjustments, error } = await supabase
       .from('inventory_adjustments')
       .select('*')
-      .eq('variant_id', variantId)
+      .eq('variant_id', id)
       .order('created_at', { ascending: false })
       .limit(50);
 
