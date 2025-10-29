@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import {
+  chargeStoredPaymentMethod,
+  createCustomerProfile,
+  createPaymentProfile,
+  isConfigured as isAuthorizeNetConfigured
+} from '@/lib/authorizenet-service';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -135,36 +141,137 @@ export async function POST(request: NextRequest) {
     let paymentStatus: 'pending' | 'paid' | 'failed' = 'pending';
     let paymentError: string | null = null;
 
-    try {
-      if (payment_method_id) {
-        // Use saved payment method
-        // TODO: Integrate with Authorize.net CIM
-        // const authResponse = await chargeCustomerProfile(payment_method_id, total);
-        // transactionId = authResponse.transactionId;
+    // Check if Authorize.net is configured
+    if (!isAuthorizeNetConfigured()) {
+      console.warn('[Order] Authorize.net not configured - simulating payment success');
+      transactionId = `TEMP-${Date.now()}`;
+      paymentStatus = 'paid';
+    } else {
+      try {
+        if (payment_method_id) {
+          // Use saved payment method - fetch from database
+          const { data: paymentMethod, error: pmError } = await supabase
+            .from('payment_methods')
+            .select('*')
+            .eq('id', payment_method_id)
+            .single();
 
-        // For now, simulate success
-        transactionId = `TEMP-${Date.now()}`;
-        paymentStatus = 'paid';
-      } else if (new_card) {
-        // Process new card payment
-        // TODO: Integrate with Authorize.net Accept.js + API
-        // const authResponse = await chargeCard(new_card, total);
-        // transactionId = authResponse.transactionId;
+          if (pmError || !paymentMethod) {
+            throw new Error('Payment method not found');
+          }
 
-        // For now, simulate success
-        transactionId = `TEMP-${Date.now()}`;
-        paymentStatus = 'paid';
+          if (!paymentMethod.authorize_net_profile_id || !paymentMethod.authorize_net_payment_profile_id) {
+            throw new Error('Payment method not configured for Authorize.net');
+          }
 
-        // Optionally save the card for future use if customer is logged in
-        if (customer_id) {
-          // TODO: Save card to Authorize.net CIM and store reference
-          // const profileResponse = await createCustomerPaymentProfile(customer_id, new_card);
+          // Charge the saved payment method
+          const authResponse = await chargeStoredPaymentMethod({
+            amount: total,
+            customerProfileId: paymentMethod.authorize_net_profile_id,
+            customerPaymentProfileId: paymentMethod.authorize_net_payment_profile_id,
+            invoiceNumber: `WM${Date.now().toString().slice(-8)}`,
+            description: `Order - ${items.length} item(s)`,
+            customerId: customerId,
+            customerEmail: email,
+          });
+
+          if (authResponse.success && authResponse.transactionId) {
+            transactionId = authResponse.transactionId;
+            paymentStatus = 'paid';
+          } else {
+            throw new Error(authResponse.error || 'Payment failed');
+          }
+        } else if (new_card) {
+          // Process new card payment
+          // Step 1: Get or create Authorize.net customer profile
+          let authorizeNetProfileId = customer.authorize_net_profile_id;
+
+          if (!authorizeNetProfileId) {
+            const profileResponse = await createCustomerProfile({
+              customerId: customerId,
+              email: email,
+              description: `${shipping_address.first_name} ${shipping_address.last_name}`,
+            });
+
+            if (!profileResponse.success || !profileResponse.profileId) {
+              throw new Error(profileResponse.error || 'Failed to create customer profile');
+            }
+
+            authorizeNetProfileId = profileResponse.profileId;
+
+            // Save profile ID to customer record
+            await supabase
+              .from('customers')
+              .update({ authorize_net_profile_id: authorizeNetProfileId })
+              .eq('id', customerId);
+          }
+
+          // Step 2: Create payment profile (save card)
+          const expirationDate = `${new_card.expiration_year}-${new_card.expiration_month.padStart(2, '0')}`;
+
+          const paymentProfileResponse = await createPaymentProfile({
+            customerProfileId: authorizeNetProfileId,
+            cardNumber: new_card.card_number,
+            expirationDate: expirationDate,
+            cvv: new_card.cvv,
+            billingAddress: {
+              firstName: new_card.billing_address.first_name,
+              lastName: new_card.billing_address.last_name,
+              address: new_card.billing_address.address,
+              city: new_card.billing_address.city,
+              state: new_card.billing_address.state,
+              zip: new_card.billing_address.zip,
+              country: new_card.billing_address.country || 'US',
+            },
+          });
+
+          if (!paymentProfileResponse.success || !paymentProfileResponse.paymentProfileId) {
+            throw new Error(paymentProfileResponse.error || 'Failed to save payment method');
+          }
+
+          const authorizeNetPaymentProfileId = paymentProfileResponse.paymentProfileId;
+
+          // Step 3: Charge the payment profile
+          const invoiceNumber = `WM${Date.now().toString().slice(-8)}`;
+          const authResponse = await chargeStoredPaymentMethod({
+            amount: total,
+            customerProfileId: authorizeNetProfileId,
+            customerPaymentProfileId: authorizeNetPaymentProfileId,
+            invoiceNumber: invoiceNumber,
+            description: `Order - ${items.length} item(s)`,
+            customerId: customerId,
+            customerEmail: email,
+          });
+
+          if (authResponse.success && authResponse.transactionId) {
+            transactionId = authResponse.transactionId;
+            paymentStatus = 'paid';
+
+            // Step 4: Save payment method to database if customer is logged in
+            if (customer_id) {
+              const last4 = new_card.card_number.slice(-4);
+              await supabase.from('payment_methods').insert({
+                customer_id: customerId,
+                type: new_card.card_type || 'card',
+                last4: last4,
+                brand: new_card.card_type,
+                exp_month: parseInt(new_card.expiration_month),
+                exp_year: parseInt(new_card.expiration_year),
+                is_default: false,
+                authorize_net_profile_id: authorizeNetProfileId,
+                authorize_net_payment_profile_id: authorizeNetPaymentProfileId,
+              });
+            }
+          } else {
+            throw new Error(authResponse.error || 'Payment failed');
+          }
         }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Payment failed';
+        console.error('Payment processing error:', error);
+        paymentStatus = 'failed';
+        paymentError = errorMessage;
       }
-    } catch (error: any) {
-      console.error('Payment processing error:', error);
-      paymentStatus = 'failed';
-      paymentError = error.message || 'Payment failed';
     }
 
     // Generate order number
@@ -297,10 +404,11 @@ export async function POST(request: NextRequest) {
         transaction_id: transactionId,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     console.error('Error in POST /api/checkout/create-order:', error);
     return NextResponse.json(
-      { error: error.message || 'Internal server error' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

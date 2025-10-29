@@ -15,9 +15,13 @@ export default function AdminEditVariantPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [adjustmentHistory, setAdjustmentHistory] = useState<any[]>([]);
+  const [showAdjustmentForm, setShowAdjustmentForm] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     fetchVariant();
+    fetchAdjustmentHistory();
   }, [variantId]);
 
   async function fetchVariant() {
@@ -31,6 +35,72 @@ export default function AdminEditVariantPage() {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function fetchAdjustmentHistory() {
+    try {
+      const response = await fetch(`/api/variants/${variantId}/adjustments`);
+      if (response.ok) {
+        const data = await response.json();
+        setAdjustmentHistory(data.adjustments || []);
+      }
+    } catch (err) {
+      console.error('Failed to fetch adjustment history:', err);
+    }
+  }
+
+  async function handleInventoryAdjustment(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    const adjustment = {
+      quantity_change: parseInt(formData.get('quantity_change') as string),
+      reason: formData.get('reason') as string,
+      notes: formData.get('adjustment_notes') as string,
+    };
+
+    try {
+      const response = await fetch(`/api/variants/${variantId}/adjust-inventory`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(adjustment),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to adjust inventory');
+      }
+
+      alert('Inventory adjusted successfully');
+      setShowAdjustmentForm(false);
+      fetchVariant();
+      fetchAdjustmentHistory();
+      (e.target as HTMLFormElement).reset();
+    } catch (err: any) {
+      alert(err.message);
+    }
+  }
+
+  async function handleDelete() {
+    if (!confirm('Are you sure you want to delete this variant? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/variants/${variantId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to delete variant');
+      }
+
+      alert('Variant deleted successfully');
+      router.push(`/admin/products/${productId}/variants`);
+    } catch (err: any) {
+      alert(err.message);
     }
   }
 
@@ -351,22 +421,151 @@ export default function AdminEditVariantPage() {
             </div>
 
             {/* Actions */}
-            <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-              <Link
-                href={`/admin/products/${productId}/variants`}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-              >
-                Cancel
-              </Link>
+            <div className="flex justify-between items-center pt-4 border-t border-gray-200">
               <button
-                type="submit"
-                disabled={saving}
-                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50"
+                type="button"
+                onClick={handleDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
               >
-                {saving ? 'Saving...' : 'Save Changes'}
+                Delete Variant
               </button>
+              <div className="flex gap-3">
+                <Link
+                  href={`/admin/products/${productId}/variants`}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </Link>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50"
+                >
+                  {saving ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
             </div>
           </form>
+        </div>
+
+        {/* Inventory Adjustment Section */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mt-6">
+          <div className="flex justify-between items-center mb-4">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900">Inventory Adjustments</h2>
+              <p className="text-sm text-gray-600 mt-1">
+                Current inventory: <span className="font-bold">{variant.inventory_quantity}</span> units
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowAdjustmentForm(!showAdjustmentForm)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            >
+              {showAdjustmentForm ? 'Cancel' : 'Adjust Inventory'}
+            </button>
+          </div>
+
+          {/* Adjustment Form */}
+          {showAdjustmentForm && (
+            <form onSubmit={handleInventoryAdjustment} className="mb-6 p-4 bg-gray-50 rounded-lg">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Quantity Change *
+                  </label>
+                  <input
+                    type="number"
+                    name="quantity_change"
+                    required
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    placeholder="e.g., 10 (positive) or -5 (negative)"
+                  />
+                  <p className="mt-1 text-xs text-gray-500">
+                    Positive to add stock, negative to remove
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Reason *
+                  </label>
+                  <select
+                    name="reason"
+                    required
+                    className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  >
+                    <option value="">Select reason...</option>
+                    <option value="restock">Restock</option>
+                    <option value="correction">Correction</option>
+                    <option value="damaged">Damaged/Lost</option>
+                    <option value="return">Customer Return</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Notes
+                </label>
+                <textarea
+                  name="adjustment_notes"
+                  rows={2}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  placeholder="Optional notes about this adjustment"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+              >
+                Submit Adjustment
+              </button>
+            </form>
+          )}
+
+          {/* Adjustment History */}
+          {adjustmentHistory.length > 0 && (
+            <div>
+              <h3 className="text-md font-semibold text-gray-900 mb-3">Recent Adjustments</h3>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Change</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reason</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Notes</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">By</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {adjustmentHistory.slice(0, 10).map((adj) => (
+                      <tr key={adj.id}>
+                        <td className="px-4 py-3 text-sm text-gray-900">
+                          {new Date(adj.created_at).toLocaleDateString()}
+                        </td>
+                        <td className={`px-4 py-3 text-sm font-medium ${adj.quantity_change > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          {adj.quantity_change > 0 ? '+' : ''}{adj.quantity_change}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-900">{adj.reason}</td>
+                        <td className="px-4 py-3 text-sm text-gray-600">{adj.notes || '-'}</td>
+                        <td className="px-4 py-3 text-sm text-gray-600">{adj.adjusted_by || 'system'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {adjustmentHistory.length === 0 && (
+            <p className="text-sm text-gray-500 text-center py-4">
+              No inventory adjustments yet
+            </p>
+          )}
         </div>
       </div>
     </div>

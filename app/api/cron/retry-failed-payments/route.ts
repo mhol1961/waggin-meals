@@ -5,6 +5,7 @@ import {
   sendPaymentFailedEmail,
   sendSubscriptionCancelledEmail,
 } from '@/lib/ghl-email-service';
+import { chargeStoredPaymentMethod } from '@/lib/authorizenet-service';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -66,8 +67,7 @@ export async function POST(request: NextRequest) {
             email,
             first_name,
             last_name,
-            phone,
-            default_shipping_address
+            phone
           )
         ),
         payment_method:payment_methods(*)
@@ -204,17 +204,23 @@ async function retryFailedPayment(invoice: any): Promise<string> {
     });
 
     // Send success email via GHL
-    const customer = subscription.customer || {};
-    await sendPaymentRetrySuccessEmail({
-      customer_email: customer.email || '',
-      customer_first_name: customer.first_name || '',
-      customer_last_name: customer.last_name,
-      customer_phone: customer.phone,
-      invoice_number: invoice.invoice_number,
-      transaction_id: transactionId,
-      amount: invoice.total,
-      attempt_number: attemptNumber,
-    });
+    const customer = subscription.customer;
+    if (!customer || !customer.email) {
+      console.error(`[Retry] CRITICAL: Missing customer data for subscription ${subscription.id}. Cannot send success email.`);
+      console.error(`[Retry] Customer object:`, customer);
+      // Don't fail the whole retry, but log loudly
+    } else {
+      await sendPaymentRetrySuccessEmail({
+        customer_email: customer.email,
+        customer_first_name: customer.first_name || '',
+        customer_last_name: customer.last_name,
+        customer_phone: customer.phone,
+        invoice_number: invoice.invoice_number,
+        transaction_id: transactionId,
+        amount: invoice.total,
+        attempt_number: attemptNumber,
+      });
+    }
 
     // Create order for fulfillment if not already created
     if (!invoice.order_id) {
@@ -258,15 +264,20 @@ async function retryFailedPayment(invoice: any): Promise<string> {
       });
 
       // Send cancellation email via GHL
-      const customer = subscription.customer || {};
-      await sendSubscriptionCancelledEmail({
-        customer_email: customer.email || '',
-        customer_first_name: customer.first_name || '',
-        customer_last_name: customer.last_name,
-        customer_phone: customer.phone,
-        subscription_id: subscription.id,
-        total_attempts: attemptNumber,
-      });
+      const customer = subscription.customer;
+      if (!customer || !customer.email) {
+        console.error(`[Retry] CRITICAL: Missing customer data for subscription ${subscription.id}. Cannot send cancellation email.`);
+        console.error(`[Retry] Customer object:`, customer);
+      } else {
+        await sendSubscriptionCancelledEmail({
+          customer_email: customer.email,
+          customer_first_name: customer.first_name || '',
+          customer_last_name: customer.last_name,
+          customer_phone: customer.phone,
+          subscription_id: subscription.id,
+          total_attempts: attemptNumber,
+        });
+      }
 
       return 'cancelled';
 
@@ -291,17 +302,22 @@ async function retryFailedPayment(invoice: any): Promise<string> {
       });
 
       // Send retry notification email via GHL
-      const customer = subscription.customer || {};
-      await sendPaymentFailedEmail({
-        customer_email: customer.email || '',
-        customer_first_name: customer.first_name || '',
-        customer_last_name: customer.last_name,
-        customer_phone: customer.phone,
-        subscription_id: subscription.id,
-        invoice_number: invoice.invoice_number,
-        error_message: error.message,
-        next_retry_date: nextRetryDate.toISOString().split('T')[0],
-      });
+      const customer = subscription.customer;
+      if (!customer || !customer.email) {
+        console.error(`[Retry] CRITICAL: Missing customer data for subscription ${subscription.id}. Cannot send retry notification email.`);
+        console.error(`[Retry] Customer object:`, customer);
+      } else {
+        await sendPaymentFailedEmail({
+          customer_email: customer.email,
+          customer_first_name: customer.first_name || '',
+          customer_last_name: customer.last_name,
+          customer_phone: customer.phone,
+          subscription_id: subscription.id,
+          invoice_number: invoice.invoice_number,
+          error_message: error.message,
+          next_retry_date: nextRetryDate.toISOString().split('T')[0],
+        });
+      }
 
       return 'failed';
     }
@@ -310,22 +326,41 @@ async function retryFailedPayment(invoice: any): Promise<string> {
 
 /**
  * Charge a payment method via Authorize.net
- * TODO: Implement actual Authorize.net integration
  */
 async function chargePaymentMethod(
   paymentMethod: any,
   amount: number,
   invoiceNumber: string
 ): Promise<string> {
-  // This is a placeholder - will be implemented when Authorize.net credentials are available
-
-  if (!process.env.AUTHORIZENET_API_LOGIN_ID || !process.env.AUTHORIZENET_TRANSACTION_KEY) {
-    console.warn('[Payment] Authorize.net credentials not configured - simulating successful payment');
-    return `RETRY-${Date.now()}`; // Simulated transaction ID
+  if (!paymentMethod) {
+    throw new Error('Payment method not found');
   }
 
-  // TODO: Actual Authorize.net implementation
-  throw new Error('Authorize.net integration not yet implemented');
+  // Check if Authorize.net credentials are configured
+  if (!process.env.AUTHORIZENET_API_LOGIN_ID || !process.env.AUTHORIZENET_TRANSACTION_KEY) {
+    console.warn('[Payment] Authorize.net credentials not configured - simulating successful payment');
+    return `RETRY-${Date.now()}`; // Simulated transaction ID for development
+  }
+
+  // Validate payment method has Authorize.net profile IDs
+  if (!paymentMethod.authorize_net_profile_id || !paymentMethod.authorize_net_payment_profile_id) {
+    throw new Error('Payment method not configured for Authorize.net CIM');
+  }
+
+  // Charge the payment method via Authorize.net CIM
+  const authResponse = await chargeStoredPaymentMethod({
+    amount: amount,
+    customerProfileId: paymentMethod.authorize_net_profile_id,
+    customerPaymentProfileId: paymentMethod.authorize_net_payment_profile_id,
+    invoiceNumber: invoiceNumber,
+    description: `Subscription payment retry - Invoice ${invoiceNumber}`,
+  });
+
+  if (!authResponse.success || !authResponse.transactionId) {
+    throw new Error(authResponse.error || 'Payment processing failed');
+  }
+
+  return authResponse.transactionId;
 }
 
 /**
@@ -375,7 +410,28 @@ async function createSubscriptionOrder(
 
   // Get customer data from joined relation
   const customer = subscription.customer || {};
-  const shippingAddress = customer.default_shipping_address || {};
+
+  // Fetch default shipping address from customer_addresses table
+  const { data: addressData } = await supabase
+    .from('customer_addresses')
+    .select('*')
+    .eq('customer_id', subscription.customer_id)
+    .eq('is_default', true)
+    .eq('address_type', 'shipping')
+    .single();
+
+  // Format shipping address for orders table
+  const shippingAddress = addressData ? {
+    first_name: addressData.first_name || customer.first_name || '',
+    last_name: addressData.last_name || customer.last_name || '',
+    address1: addressData.address_line1,
+    address2: addressData.address_line2 || '',
+    city: addressData.city,
+    state: addressData.state,
+    zip: addressData.zip_code,
+    country: addressData.country || 'US',
+    phone: addressData.phone || customer.phone || ''
+  } : {};
 
   const { data: order, error: orderError } = await supabase
     .from('orders')
@@ -408,13 +464,34 @@ async function createSubscriptionOrder(
     order_id: order.id,
     product_id: item.product_id,
     product_name: item.product_name || item.title,
-    variant_title: item.variant_title,
+    variant_id: item.variant_id || null,
+    variant_title: item.variant_title || null,
     quantity: item.quantity,
     unit_price: item.price,
     total_price: item.price * item.quantity,
   }));
 
   await supabase.from('order_items').insert(orderItems);
+
+  // Update inventory (variant or product level)
+  for (const item of items) {
+    if (item.variant_id) {
+      // Deduct from variant inventory using the database function
+      await supabase.rpc('adjust_variant_inventory', {
+        p_variant_id: item.variant_id,
+        p_quantity_change: -item.quantity,
+        p_reason: 'subscription_renewal',
+        p_order_id: order.id,
+        p_adjusted_by: 'system'
+      });
+    } else {
+      // Deduct from product-level inventory
+      await supabase.rpc('decrement_product_inventory', {
+        product_id: item.product_id,
+        quantity: item.quantity,
+      });
+    }
+  }
 
   // Link invoice to order
   await supabase

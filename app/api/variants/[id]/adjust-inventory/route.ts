@@ -28,7 +28,7 @@ export async function POST(
     }
 
     // Validate reason
-    const validReasons = ['sale', 'restock', 'return', 'damage', 'adjustment', 'subscription'];
+    const validReasons = ['sale', 'restock', 'return', 'damaged', 'correction', 'other', 'adjustment', 'subscription', 'subscription_renewal'];
     if (!validReasons.includes(body.reason)) {
       return NextResponse.json(
         { error: `Invalid reason. Must be one of: ${validReasons.join(', ')}` },

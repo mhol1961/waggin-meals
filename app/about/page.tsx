@@ -1,5 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { generateMetadata as genMeta, PageMetadataPresets } from '@/lib/metadata';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = genMeta(PageMetadataPresets.about);
 
 export default function About() {
   return (

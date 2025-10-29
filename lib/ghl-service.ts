@@ -333,6 +333,117 @@ export async function notifySubscriptionCancelled(data: {
 }
 
 /**
+ * Send delivery skipped event to GHL
+ */
+export async function notifyDeliverySkipped(data: {
+  customer_email: string;
+  customer_first_name: string;
+  customer_last_name?: string;
+  customer_phone?: string;
+  subscription_id: string;
+  frequency: string;
+  old_delivery_date: string;
+  new_delivery_date: string;
+  skip_reason?: string;
+}): Promise<boolean> {
+  return sendGHLWebhook({
+    event_type: 'subscription.delivery_skipped',
+    customer: {
+      email: data.customer_email,
+      first_name: data.customer_first_name,
+      last_name: data.customer_last_name,
+      phone: data.customer_phone,
+    },
+    subscription: {
+      id: data.subscription_id,
+      status: 'active',
+      frequency: data.frequency,
+      amount: 0, // Not relevant for skip event
+      next_billing_date: data.new_delivery_date,
+      items: [],
+    },
+    metadata: {
+      old_delivery_date: data.old_delivery_date,
+      new_delivery_date: data.new_delivery_date,
+      skip_reason: data.skip_reason,
+    },
+  });
+}
+
+/**
+ * Send subscription frequency changed event to GHL
+ */
+export async function notifySubscriptionFrequencyChanged(data: {
+  customer_email: string;
+  customer_first_name: string;
+  customer_last_name?: string;
+  customer_phone?: string;
+  subscription_id: string;
+  old_frequency: string;
+  new_frequency: string;
+  next_billing_date: string;
+  amount: number;
+}): Promise<boolean> {
+  return sendGHLWebhook({
+    event_type: 'subscription.frequency_changed',
+    customer: {
+      email: data.customer_email,
+      first_name: data.customer_first_name,
+      last_name: data.customer_last_name,
+      phone: data.customer_phone,
+    },
+    subscription: {
+      id: data.subscription_id,
+      status: 'active',
+      frequency: data.new_frequency,
+      amount: data.amount,
+      next_billing_date: data.next_billing_date,
+      items: [],
+    },
+    metadata: {
+      old_frequency: data.old_frequency,
+      new_frequency: data.new_frequency,
+    },
+  });
+}
+
+/**
+ * Send subscription address changed event to GHL
+ */
+export async function notifySubscriptionAddressChanged(data: {
+  customer_email: string;
+  customer_first_name: string;
+  customer_last_name?: string;
+  customer_phone?: string;
+  subscription_id: string;
+  old_address: any;
+  new_address: any;
+  next_billing_date: string;
+}): Promise<boolean> {
+  return sendGHLWebhook({
+    event_type: 'subscription.address_changed',
+    customer: {
+      email: data.customer_email,
+      first_name: data.customer_first_name,
+      last_name: data.customer_last_name,
+      phone: data.customer_phone,
+    },
+    subscription: {
+      id: data.subscription_id,
+      status: 'active',
+      frequency: '', // Not relevant for address change
+      amount: 0,
+      next_billing_date: data.next_billing_date,
+      items: [],
+    },
+    metadata: {
+      old_address: data.old_address,
+      new_address: data.new_address,
+    },
+  });
+}
+
+/**
  * Check if GHL integration is configured
  */
 export function isGHLConfigured(): boolean {

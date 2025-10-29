@@ -122,7 +122,7 @@ export default function AdminLowStockPage() {
           </div>
 
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <p className="text-sm text-gray-500">Critical (< 5 units)</p>
+            <p className="text-sm text-gray-500">Critical (&lt; 5 units)</p>
             <p className="mt-2 text-3xl font-bold text-orange-600">
               {variants.filter(v => v.inventory_quantity > 0 && v.inventory_quantity < 5).length}
             </p>

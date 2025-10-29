@@ -75,8 +75,10 @@ export default function BundlesPage() {
     const isSubscription = customSelection.frequency !== 'one-time';
     const finalPrice = isSubscription ? currentBundle.basePrice * 0.97 : currentBundle.basePrice;
 
+    const cartKey = `bundle-${currentBundle.id}-${Date.now()}`;
     addItem({
-      id: `bundle-${currentBundle.id}-${Date.now()}`,
+      id: `bundle-${currentBundle.id}`,
+      cart_key: cartKey,
       handle: currentBundle.slug,
       title: `${currentBundle.name}${isSubscription ? ' (Subscription)' : ''}`,
       price: finalPrice,

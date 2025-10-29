@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import {
+  chargeStoredPaymentMethod,
+  createCustomerProfile,
+  createPaymentProfile,
+  isConfigured as isAuthorizeNetConfigured
+} from '@/lib/authorizenet-service';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -127,23 +133,83 @@ export async function POST(request: NextRequest) {
     let finalPaymentMethodId = payment_method_id;
 
     if (new_card && !payment_method_id) {
-      // Create new payment method with Authorize.net CIM
-      // TODO: Integrate with Authorize.net to create customer payment profile
-      // const authResponse = await createCustomerPaymentProfile(customerId, new_card);
-      // const cimProfileId = authResponse.customerPaymentProfileId;
+      // Check if Authorize.net is configured
+      if (!isAuthorizeNetConfigured()) {
+        return NextResponse.json(
+          { error: 'Payment processing not configured. Subscriptions require Authorize.net.' },
+          { status: 503 }
+        );
+      }
 
-      // For now, create a local payment method record
+      // Step 1: Get or create Authorize.net customer profile
+      let authorizeNetProfileId = customer.authorize_net_profile_id;
+
+      if (!authorizeNetProfileId) {
+        const profileResponse = await createCustomerProfile({
+          customerId: customerId,
+          email: email,
+          description: `${shipping_address.first_name} ${shipping_address.last_name}`,
+        });
+
+        if (!profileResponse.success || !profileResponse.profileId) {
+          return NextResponse.json(
+            { error: profileResponse.error || 'Failed to create customer profile' },
+            { status: 500 }
+          );
+        }
+
+        authorizeNetProfileId = profileResponse.profileId;
+
+        // Save profile ID to customer record
+        await supabase
+          .from('customers')
+          .update({ authorize_net_profile_id: authorizeNetProfileId })
+          .eq('id', customerId);
+      }
+
+      // Step 2: Create payment profile (save card to Authorize.net CIM)
+      const expirationDate = `${new_card.expiration_year}-${new_card.expiration_month.padStart(2, '0')}`;
+
+      const paymentProfileResponse = await createPaymentProfile({
+        customerProfileId: authorizeNetProfileId,
+        cardNumber: new_card.card_number,
+        expirationDate: expirationDate,
+        cvv: new_card.cvv,
+        billingAddress: {
+          firstName: new_card.billing_address.first_name,
+          lastName: new_card.billing_address.last_name,
+          address: new_card.billing_address.address,
+          city: new_card.billing_address.city,
+          state: new_card.billing_address.state,
+          zip: new_card.billing_address.zip,
+          country: new_card.billing_address.country || 'US',
+        },
+      });
+
+      if (!paymentProfileResponse.success || !paymentProfileResponse.paymentProfileId) {
+        return NextResponse.json(
+          { error: paymentProfileResponse.error || 'Failed to save payment method' },
+          { status: 500 }
+        );
+      }
+
+      const authorizeNetPaymentProfileId = paymentProfileResponse.paymentProfileId;
+
+      // Step 3: Save payment method to database
+      const last4 = new_card.card_number.slice(-4);
       const { data: paymentMethod, error: pmError } = await supabase
         .from('payment_methods')
         .insert([
           {
             customer_id: customerId,
-            card_type: new_card.card_type || detectCardType(new_card.card_number),
-            last_four: new_card.card_number.slice(-4),
-            expiration_month: parseInt(new_card.expiration_month),
-            expiration_year: parseInt(new_card.expiration_year),
+            type: new_card.card_type || 'card',
+            last4: last4,
+            brand: new_card.card_type || detectCardType(new_card.card_number),
+            exp_month: parseInt(new_card.expiration_month),
+            exp_year: parseInt(new_card.expiration_year),
             is_default: true, // Make first card default
-            // cim_profile_id: cimProfileId, // TODO: Store Authorize.net CIM ID
+            authorize_net_profile_id: authorizeNetProfileId,
+            authorize_net_payment_profile_id: authorizeNetPaymentProfileId,
           },
         ])
         .select()
@@ -230,11 +296,40 @@ export async function POST(request: NextRequest) {
 
     // Process initial payment
     try {
-      // TODO: Integrate with Authorize.net to charge the payment method
-      // const authResponse = await chargeCustomerProfile(finalPaymentMethodId, price * quantity);
-      // const transactionId = authResponse.transactionId;
+      let transactionId: string | null = null;
 
-      const transactionId = `SUB-INIT-${Date.now()}`;
+      // Fetch the payment method to get Authorize.net IDs
+      const { data: paymentMethod, error: pmError } = await supabase
+        .from('payment_methods')
+        .select('*')
+        .eq('id', finalPaymentMethodId)
+        .single();
+
+      if (pmError || !paymentMethod) {
+        throw new Error('Payment method not found');
+      }
+
+      if (!paymentMethod.authorize_net_profile_id || !paymentMethod.authorize_net_payment_profile_id) {
+        throw new Error('Payment method not configured for Authorize.net');
+      }
+
+      // Charge the payment method via Authorize.net
+      const invoiceNumber = `SUB-${subscription.id.substring(0, 8)}`;
+      const authResponse = await chargeStoredPaymentMethod({
+        amount: price * quantity,
+        customerProfileId: paymentMethod.authorize_net_profile_id,
+        customerPaymentProfileId: paymentMethod.authorize_net_payment_profile_id,
+        invoiceNumber: invoiceNumber,
+        description: `Subscription - ${title}${variant_title ? ' - ' + variant_title : ''}`,
+        customerId: customerId,
+        customerEmail: email,
+      });
+
+      if (!authResponse.success || !authResponse.transactionId) {
+        throw new Error(authResponse.error || 'Payment failed');
+      }
+
+      transactionId = authResponse.transactionId;
 
       // Create initial invoice
       await supabase.from('subscription_invoices').insert([
@@ -292,7 +387,8 @@ export async function POST(request: NextRequest) {
       } catch (ghlError) {
         console.error('Error adding to GHL:', ghlError);
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to process initial payment';
       console.error('Error processing initial payment:', error);
 
       // Update subscription to payment_failed status
@@ -302,7 +398,7 @@ export async function POST(request: NextRequest) {
         .eq('id', subscription.id);
 
       return NextResponse.json(
-        { error: 'Failed to process initial payment' },
+        { error: errorMessage },
         { status: 402 }
       );
     }
@@ -317,10 +413,11 @@ export async function POST(request: NextRequest) {
         amount: price * quantity,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     console.error('Error in POST /api/checkout/create-subscription:', error);
     return NextResponse.json(
-      { error: error.message || 'Internal server error' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

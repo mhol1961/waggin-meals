@@ -21,9 +21,7 @@ const ENVIRONMENT = process.env.AUTHORIZENET_ENVIRONMENT || 'sandbox';
 
 const API_ENDPOINT =
   ENVIRONMENT === 'production'
-    ? 'https://api.authoriz
-
-enet.net/xml/v1/request.api'
+    ? 'https://api.authorize.net/xml/v1/request.api'
     : 'https://apitest.authorize.net/xml/v1/request.api';
 
 interface AuthorizeNetRequest {

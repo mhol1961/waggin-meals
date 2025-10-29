@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { getProductByHandle, getProductsByCollection } from '@/data/products';
 import AddToCartButton from '@/components/add-to-cart-button';
+import VariantSelector from '@/components/variant-selector';
+import type { ProductVariant } from '@/types/product-variant';
 
 export default function ProductPage() {
   const params = useParams();
@@ -13,6 +15,33 @@ export default function ProductPage() {
   const product = getProductByHandle(handle);
 
   const [selectedImage, setSelectedImage] = useState(0);
+  const [variants, setVariants] = useState<ProductVariant[]>([]);
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
+  const [loadingVariants, setLoadingVariants] = useState(false);
+
+  // Fetch variants if product has them
+  useEffect(() => {
+    async function fetchVariants() {
+      if (!product?.hasVariants || !product?.id) return;
+
+      setLoadingVariants(true);
+      try {
+        const response = await fetch(`/api/products/${product.id}/variants`);
+        if (!response.ok) throw new Error('Failed to fetch variants');
+
+        const data = await response.json();
+        setVariants(data.variants || []);
+      } catch (error) {
+        console.error('Error fetching variants:', error);
+      } finally {
+        setLoadingVariants(false);
+      }
+    }
+
+    if (product) {
+      fetchVariants();
+    }
+  }, [product]);
 
   if (!product) {
     return (
@@ -117,15 +146,15 @@ export default function ProductPage() {
               <div className="mb-6">
                 <div className="flex items-baseline gap-3">
                   <span className="text-4xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    ${product.price.toFixed(2)}
+                    ${selectedVariant ? selectedVariant.price.toFixed(2) : product.price.toFixed(2)}
                   </span>
-                  {product.compareAtPrice && (
+                  {(selectedVariant?.compare_at_price || product.compareAtPrice) && (
                     <span className="text-xl text-[#999999] line-through" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                      ${product.compareAtPrice.toFixed(2)}
+                      ${(selectedVariant?.compare_at_price || product.compareAtPrice)!.toFixed(2)}
                     </span>
                   )}
                 </div>
-                {product.weight && (
+                {product.weight && !selectedVariant && (
                   <p className="text-[16px] text-[#666666] mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     {product.weight}
                   </p>
@@ -136,6 +165,17 @@ export default function ProductPage() {
               <p className="text-[16px] leading-relaxed text-[#666666] mb-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 {product.description}
               </p>
+
+              {/* Variant Selector */}
+              {variants.length > 0 && (
+                <div className="mb-6">
+                  <VariantSelector
+                    productId={product.id}
+                    variants={variants}
+                    onVariantChange={(variant) => setSelectedVariant(variant)}
+                  />
+                </div>
+              )}
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-8">
@@ -152,29 +192,61 @@ export default function ProductPage() {
 
               {/* Stock Status */}
               <div className="mb-8">
-                {product.inStock ? (
-                  <div className="flex items-center text-green-600">
-                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                    </svg>
-                    <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                      In Stock
-                      {product.stockQty && product.stockQty < 50 && ` - Only ${product.stockQty} left!`}
-                    </span>
-                  </div>
+                {selectedVariant ? (
+                  // Show variant stock
+                  selectedVariant.track_inventory ? (
+                    selectedVariant.inventory_quantity > 0 ? (
+                      <div className="flex items-center text-green-600">
+                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                        </svg>
+                        <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          In Stock
+                          {selectedVariant.inventory_quantity < 10 && ` - Only ${selectedVariant.inventory_quantity} left!`}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center text-red-600">
+                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
+                        </svg>
+                        <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Out of Stock</span>
+                      </div>
+                    )
+                  ) : (
+                    <div className="flex items-center text-green-600">
+                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      </svg>
+                      <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>In Stock</span>
+                    </div>
+                  )
                 ) : (
-                  <div className="flex items-center text-red-600">
-                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
-                    </svg>
-                    <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Out of Stock</span>
-                  </div>
+                  // Show product-level stock
+                  product.inStock ? (
+                    <div className="flex items-center text-green-600">
+                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      </svg>
+                      <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        In Stock
+                        {product.stockQty && product.stockQty < 50 && ` - Only ${product.stockQty} left!`}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center text-red-600">
+                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
+                      </svg>
+                      <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Out of Stock</span>
+                    </div>
+                  )
                 )}
               </div>
 
               {/* CTA Buttons */}
               <div className="space-y-3">
-                {product.inStock ? (
+                {(selectedVariant ? selectedVariant.inventory_quantity > 0 || !selectedVariant.track_inventory : product.inStock) ? (
                   <>
                     <AddToCartButton
                       product={{
@@ -185,6 +257,17 @@ export default function ProductPage() {
                         images: product.images,
                         weight: product.weight,
                       }}
+                      selectedVariant={
+                        selectedVariant
+                          ? {
+                              variant_id: selectedVariant.id,
+                              variant_title: selectedVariant.title,
+                              sku: selectedVariant.sku,
+                              price: selectedVariant.price,
+                            }
+                          : null
+                      }
+                      disabled={variants.length > 0 && !selectedVariant}
                       variant="primary"
                       className="w-full px-8 py-4 rounded-lg text-lg"
                     />

@@ -72,6 +72,13 @@ export default function HeroVariationsIndex() {
       target: 'Luxury clients wanting expert help with calculator tool',
       cta: 'Calculate Your Dog\'s Needs / Book Consultation',
     },
+    {
+      id: 'lavender-luxe-homepage',
+      title: 'Variation K: Lavender Luxe Homepage',
+      description: 'Pastel purples with education-forward storytelling and refreshed brand tagline',
+      target: 'Design-conscious pet parents seeking science-backed luxury care',
+      cta: 'Explore Lavender Luxe Experience',
+    },
   ];
 
   return (
@@ -83,7 +90,7 @@ export default function HeroVariationsIndex() {
             Hero Section Variations
           </h1>
           <p className="text-lg text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Compare 10 different hero section designs for the Waggin Meals home page
+            Compare 11 different hero section designs for the Waggin Meals home page
           </p>
         </div>
       </section>
@@ -249,3 +256,4 @@ export default function HeroVariationsIndex() {
     </main>
   );
 }
+

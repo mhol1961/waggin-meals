@@ -2,6 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { collections } from '@/data/products';
 import AddToCartButton from '@/components/add-to-cart-button';
+import { generateMetadata as genMeta, PageMetadataPresets } from '@/lib/metadata';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = genMeta(PageMetadataPresets.shop);
 
 export default function ShopPage() {
 

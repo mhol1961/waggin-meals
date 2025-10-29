@@ -84,6 +84,12 @@ export const SHIPPING_ZONES: ShippingZone[] = [
 // Free shipping threshold
 export const FREE_SHIPPING_THRESHOLD = 165.00;
 
+// Hybrid shipping flat rates
+export const FLAT_RATE_SMALL = 9.99;   // < 2 lbs
+export const FLAT_RATE_MEDIUM = 12.99;  // 2-5 lbs
+export const WEIGHT_THRESHOLD_SMALL = 2;
+export const WEIGHT_THRESHOLD_MEDIUM = 5;
+
 // Local delivery cities (Asheville area)
 export const LOCAL_DELIVERY_CITIES = [
   'asheville',
@@ -139,15 +145,31 @@ export function calculateShipping(
     });
   }
 
-  // Standard shipping
-  const standardShippingCost = qualifiesForFreeShipping
-    ? 0
-    : zone.baseRate + (totalWeight * zone.perPoundRate);
+  // Standard shipping - Hybrid model
+  let standardShippingCost = 0;
+  let shippingDescription = '';
+
+  if (qualifiesForFreeShipping) {
+    standardShippingCost = 0;
+    shippingDescription = 'Free shipping on orders $165+';
+  } else if (totalWeight < WEIGHT_THRESHOLD_SMALL) {
+    // Small items: flat rate
+    standardShippingCost = FLAT_RATE_SMALL;
+    shippingDescription = 'Flat rate for small items (< 2 lbs)';
+  } else if (totalWeight < WEIGHT_THRESHOLD_MEDIUM) {
+    // Medium items: flat rate
+    standardShippingCost = FLAT_RATE_MEDIUM;
+    shippingDescription = 'Flat rate for medium items (2-5 lbs)';
+  } else {
+    // Large items: zone-based
+    standardShippingCost = zone.baseRate + ((totalWeight - WEIGHT_THRESHOLD_MEDIUM) * zone.perPoundRate);
+    shippingDescription = `Zone-based pricing to ${zone.name}`;
+  }
 
   availableMethods.push({
     id: 'standard',
     name: qualifiesForFreeShipping ? 'Standard Shipping (FREE!)' : 'Standard Shipping',
-    description: `Delivery to ${zone.name}`,
+    description: shippingDescription,
     estimatedDays: getEstimatedDeliveryDays(zone.id),
     price: standardShippingCost,
     isFree: qualifiesForFreeShipping,

@@ -12,11 +12,18 @@ interface AddToCartButtonProps {
     images: string[];
     weight?: string;
   };
+  selectedVariant?: {
+    variant_id: string;
+    variant_title: string;
+    sku: string;
+    price: number;
+  } | null;
+  disabled?: boolean;
   variant?: 'primary' | 'secondary';
   className?: string;
 }
 
-export default function AddToCartButton({ product, variant = 'primary', className = '' }: AddToCartButtonProps) {
+export default function AddToCartButton({ product, selectedVariant, disabled = false, variant = 'primary', className = '' }: AddToCartButtonProps) {
   const { addItem } = useCart();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -25,14 +32,25 @@ export default function AddToCartButton({ product, variant = 'primary', classNam
     e.stopPropagation();
 
     setIsAdding(true);
-    addItem({
+
+    // Build cart item with variant support
+    const cartItem: any = {
       id: product.id,
       handle: product.handle,
       title: product.title,
-      price: product.price,
+      price: selectedVariant ? selectedVariant.price : product.price,
       image: product.images[0],
       weight: product.weight,
-    });
+    };
+
+    // Add variant fields if variant is selected
+    if (selectedVariant) {
+      cartItem.variant_id = selectedVariant.variant_id;
+      cartItem.variant_title = selectedVariant.variant_title;
+      cartItem.sku = selectedVariant.sku;
+    }
+
+    addItem(cartItem);
 
     // Reset animation after a brief delay
     setTimeout(() => {
@@ -48,7 +66,7 @@ export default function AddToCartButton({ product, variant = 'primary', classNam
   return (
     <button
       onClick={handleAddToCart}
-      disabled={isAdding}
+      disabled={isAdding || disabled}
       className={`${baseClasses} ${variantClasses} ${className}`}
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >

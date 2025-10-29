@@ -1,31 +1,39 @@
-// app/robots.txt/route.ts
-// Dynamic robots.txt generation for search engine crawlers
+import { MetadataRoute } from 'next'
+
+export const dynamic = 'force-static'
 
 export async function GET() {
-  const robotsTxt = `# Waggin Meals Pet Nutrition Co.
+  const robotsTxt = `# Waggin Meals Pet Nutrition - Robots.txt
 # Allow all search engines to crawl the site
 
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://wagginmeals.com/sitemap.xml
-
-# Disallow admin and internal pages
+# Disallow admin and API routes
 Disallow: /admin/
 Disallow: /api/
-Disallow: /_next/
-Disallow: /cart/
 
-# Crawl-delay for aggressive bots
-User-agent: *
-Crawl-delay: 1
-`;
+# Disallow checkout pages (no need to index)
+Disallow: /checkout/
+
+# Disallow hero variations (test pages)
+Disallow: /hero-variations/
+
+# Allow important pages
+Allow: /shop
+Allow: /products
+Allow: /blog
+Allow: /case-studies
+Allow: /nutrition-services
+Allow: /about
+
+# Sitemap location
+Sitemap: ${process.env.NEXT_PUBLIC_SITE_URL || 'https://wagginmeals.com'}/sitemap.xml
+`
 
   return new Response(robotsTxt, {
     headers: {
       'Content-Type': 'text/plain',
-      'Cache-Control': 'public, max-age=86400', // Cache for 1 day
     },
-  });
+  })
 }

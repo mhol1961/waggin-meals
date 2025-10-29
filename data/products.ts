@@ -19,6 +19,7 @@ export interface Product {
   sku?: string;
   inStock: boolean;
   stockQty?: number;
+  hasVariants?: boolean;
 }
 
 export interface Collection {

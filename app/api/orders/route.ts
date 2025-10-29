@@ -145,6 +145,8 @@ export async function POST(request: Request) {
       product_handle: item.handle,
       product_title: item.title,
       product_name: item.title,
+      variant_id: item.variant_id || null,
+      variant_title: item.variant_title || null,
       quantity: item.quantity,
       price: item.price,
       unit_price: item.price,
@@ -158,12 +160,24 @@ export async function POST(request: Request) {
 
     if (itemsError) throw itemsError;
 
-    // Update product inventory
+    // Update inventory (variant or product level)
     for (const item of items) {
-      await supabase.rpc('decrement_product_inventory', {
-        product_id: item.id,
-        quantity: item.quantity,
-      });
+      if (item.variant_id) {
+        // Deduct from variant inventory using the database function
+        await supabase.rpc('adjust_variant_inventory', {
+          p_variant_id: item.variant_id,
+          p_quantity_change: -item.quantity,
+          p_reason: 'sale',
+          p_order_id: order.id,
+          p_adjusted_by: 'system'
+        });
+      } else {
+        // Deduct from product-level inventory
+        await supabase.rpc('decrement_product_inventory', {
+          product_id: item.id,
+          quantity: item.quantity,
+        });
+      }
     }
 
     // Send order confirmation email
@@ -174,7 +188,7 @@ export async function POST(request: Request) {
         customer_email: customerInfo.email,
         items: orderItems.map((item: any) => ({
           product_name: item.product_title,
-          variant_title: null,
+          variant_title: item.variant_title || null,
           quantity: item.quantity,
           unit_price: item.price,
           total_price: item.total

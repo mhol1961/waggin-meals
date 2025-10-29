@@ -30,8 +30,15 @@ async function getOrCreateContact(contactData: GHLContact): Promise<string | nul
   const apiKey = process.env.GHL_API_KEY;
   const locationId = process.env.GHL_LOCATION_ID;
 
+  // CRITICAL: Validate email before attempting contact creation
+  if (!contactData.email || contactData.email.trim() === '') {
+    console.error('[GHL] CRITICAL ERROR: Cannot create contact without valid email address');
+    console.error('[GHL] Contact data received:', JSON.stringify(contactData, null, 2));
+    return null;
+  }
+
   if (!apiKey || !locationId) {
-    console.error('GHL_API_KEY or GHL_LOCATION_ID not configured');
+    console.error('[GHL] CRITICAL ERROR: GHL_API_KEY or GHL_LOCATION_ID not configured');
     return null;
   }
 
@@ -148,8 +155,14 @@ async function sendGHLEmail(params: GHLEmailParams): Promise<boolean> {
   const apiKey = process.env.GHL_API_KEY;
   const locationId = process.env.GHL_LOCATION_ID;
 
+  if (!params.contactId || params.contactId.trim() === '') {
+    console.error('[GHL] CRITICAL ERROR: Cannot send email without valid contactId');
+    console.error('[GHL] Email params:', JSON.stringify({ subject: params.subject, contactId: params.contactId }, null, 2));
+    return false;
+  }
+
   if (!apiKey || !locationId) {
-    console.error('GHL_API_KEY or GHL_LOCATION_ID not configured');
+    console.error('[GHL] CRITICAL ERROR: GHL_API_KEY or GHL_LOCATION_ID not configured');
     return false;
   }
 
@@ -253,7 +266,10 @@ export async function sendSubscriptionReceiptEmail(data: {
   });
 
   if (!contactId) {
-    console.error('[GHL] Failed to get/create contact for receipt email');
+    console.error('[GHL] CRITICAL: Failed to get/create contact for receipt email');
+    console.error('[GHL] Subscription ID:', data.subscription_id);
+    console.error('[GHL] Customer email:', data.customer_email);
+    console.error('[GHL] Invoice:', data.invoice_number);
     return false;
   }
 
@@ -364,6 +380,10 @@ export async function sendPaymentFailedEmail(data: {
   });
 
   if (!contactId) {
+    console.error('[GHL] CRITICAL: Failed to get/create contact for payment failed email');
+    console.error('[GHL] Subscription ID:', data.subscription_id);
+    console.error('[GHL] Customer email:', data.customer_email);
+    console.error('[GHL] Invoice:', data.invoice_number);
     return false;
   }
 
@@ -448,6 +468,10 @@ export async function sendPaymentRetrySuccessEmail(data: {
   });
 
   if (!contactId) {
+    console.error('[GHL] CRITICAL: Failed to get/create contact for payment retry success email');
+    console.error('[GHL] Customer email:', data.customer_email);
+    console.error('[GHL] Invoice:', data.invoice_number);
+    console.error('[GHL] Transaction ID:', data.transaction_id);
     return false;
   }
 
@@ -526,6 +550,10 @@ export async function sendSubscriptionCancelledEmail(data: {
   });
 
   if (!contactId) {
+    console.error('[GHL] CRITICAL: Failed to get/create contact for subscription cancelled email');
+    console.error('[GHL] Subscription ID:', data.subscription_id);
+    console.error('[GHL] Customer email:', data.customer_email);
+    console.error('[GHL] Total attempts:', data.total_attempts);
     return false;
   }
 

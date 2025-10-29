@@ -4,6 +4,7 @@ import {
   sendSubscriptionReceiptEmail,
   sendPaymentFailedEmail,
 } from '@/lib/ghl-email-service';
+import { chargeStoredPaymentMethod } from '@/lib/authorizenet-service';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -56,8 +57,7 @@ export async function POST(request: NextRequest) {
           email,
           first_name,
           last_name,
-          phone,
-          default_shipping_address
+          phone
         )
       `)
       .in('status', ['active', 'past_due'])
@@ -214,19 +214,25 @@ async function processSubscriptionBilling(subscription: any) {
     });
 
     // Send receipt email via GHL
-    const customer = subscription.customer || {};
-    await sendSubscriptionReceiptEmail({
-      customer_email: customer.email || '',
-      customer_first_name: customer.first_name || '',
-      customer_last_name: customer.last_name,
-      customer_phone: customer.phone,
-      subscription_id: subscription.id,
-      invoice_number: invoiceNumber,
-      transaction_id: transactionId,
-      amount: subscription.amount,
-      billing_date: billingDate,
-      items: subscription.items || [],
-    });
+    const customer = subscription.customer;
+    if (!customer || !customer.email) {
+      console.error(`[Billing] CRITICAL: Missing customer data for subscription ${subscription.id}. Cannot send receipt email.`);
+      console.error(`[Billing] Customer object:`, customer);
+      // Don't fail the whole billing, but log loudly
+    } else {
+      await sendSubscriptionReceiptEmail({
+        customer_email: customer.email,
+        customer_first_name: customer.first_name || '',
+        customer_last_name: customer.last_name,
+        customer_phone: customer.phone,
+        subscription_id: subscription.id,
+        invoice_number: invoiceNumber,
+        transaction_id: transactionId,
+        amount: subscription.amount,
+        billing_date: billingDate,
+        items: subscription.items || [],
+      });
+    }
 
     // Create order record for inventory tracking and fulfillment
     await createSubscriptionOrder(subscription, invoice, transactionId);
@@ -264,18 +270,23 @@ async function processSubscriptionBilling(subscription: any) {
     });
 
     // Send payment failed email via GHL
-    const customer = subscription.customer || {};
+    const customer = subscription.customer;
     const nextRetryDate = calculateNextRetryDate(1);
-    await sendPaymentFailedEmail({
-      customer_email: customer.email || '',
-      customer_first_name: customer.first_name || '',
-      customer_last_name: customer.last_name,
-      customer_phone: customer.phone,
-      subscription_id: subscription.id,
-      invoice_number: invoiceNumber,
-      error_message: error.message,
-      next_retry_date: nextRetryDate.toISOString().split('T')[0],
-    });
+    if (!customer || !customer.email) {
+      console.error(`[Billing] CRITICAL: Missing customer data for subscription ${subscription.id}. Cannot send payment failed email.`);
+      console.error(`[Billing] Customer object:`, customer);
+    } else {
+      await sendPaymentFailedEmail({
+        customer_email: customer.email,
+        customer_first_name: customer.first_name || '',
+        customer_last_name: customer.last_name,
+        customer_phone: customer.phone,
+        subscription_id: subscription.id,
+        invoice_number: invoiceNumber,
+        error_message: error.message,
+        next_retry_date: nextRetryDate.toISOString().split('T')[0],
+      });
+    }
 
     throw error;
   }
@@ -283,31 +294,41 @@ async function processSubscriptionBilling(subscription: any) {
 
 /**
  * Charge a payment method via Authorize.net
- * TODO: Implement actual Authorize.net integration
  */
 async function chargePaymentMethod(
   paymentMethod: any,
   amount: number,
   invoiceNumber: string
 ): Promise<string> {
-  // This is a placeholder - will be implemented when Authorize.net credentials are available
-
-  // In production, this would:
-  // 1. Use payment_method.customer_profile_id and payment_profile_id
-  // 2. Create a charge transaction via Authorize.net API
-  // 3. Return the transaction ID
-
-  if (!process.env.AUTHORIZENET_API_LOGIN_ID || !process.env.AUTHORIZENET_TRANSACTION_KEY) {
-    console.warn('[Payment] Authorize.net credentials not configured - simulating successful payment');
-    return `SIM-${Date.now()}`; // Simulated transaction ID
+  if (!paymentMethod) {
+    throw new Error('Payment method not found');
   }
 
-  // TODO: Actual Authorize.net implementation
-  // const authNet = require('authorize-net');
-  // const client = new authNet.APIContracts.createTransaction();
-  // ...
+  // Check if Authorize.net credentials are configured
+  if (!process.env.AUTHORIZENET_API_LOGIN_ID || !process.env.AUTHORIZENET_TRANSACTION_KEY) {
+    console.warn('[Payment] Authorize.net credentials not configured - simulating successful payment');
+    return `SIM-${Date.now()}`; // Simulated transaction ID for development
+  }
 
-  throw new Error('Authorize.net integration not yet implemented');
+  // Validate payment method has Authorize.net profile IDs
+  if (!paymentMethod.authorize_net_profile_id || !paymentMethod.authorize_net_payment_profile_id) {
+    throw new Error('Payment method not configured for Authorize.net CIM');
+  }
+
+  // Charge the payment method via Authorize.net CIM
+  const authResponse = await chargeStoredPaymentMethod({
+    amount: amount,
+    customerProfileId: paymentMethod.authorize_net_profile_id,
+    customerPaymentProfileId: paymentMethod.authorize_net_payment_profile_id,
+    invoiceNumber: invoiceNumber,
+    description: `Subscription billing - Invoice ${invoiceNumber}`,
+  });
+
+  if (!authResponse.success || !authResponse.transactionId) {
+    throw new Error(authResponse.error || 'Payment processing failed');
+  }
+
+  return authResponse.transactionId;
 }
 
 /**
@@ -404,7 +425,28 @@ async function createSubscriptionOrder(
 
   // Get customer data
   const customer = subscription.customer || {};
-  const shippingAddress = customer.default_shipping_address || {};
+
+  // Fetch default shipping address from customer_addresses table
+  const { data: addressData } = await supabase
+    .from('customer_addresses')
+    .select('*')
+    .eq('customer_id', subscription.customer_id)
+    .eq('is_default', true)
+    .eq('address_type', 'shipping')
+    .single();
+
+  // Format shipping address for orders table
+  const shippingAddress = addressData ? {
+    first_name: addressData.first_name || customer.first_name || '',
+    last_name: addressData.last_name || customer.last_name || '',
+    address1: addressData.address_line1,
+    address2: addressData.address_line2 || '',
+    city: addressData.city,
+    state: addressData.state,
+    zip: addressData.zip_code,
+    country: addressData.country || 'US',
+    phone: addressData.phone || customer.phone || ''
+  } : {};
 
   // Create order
   const { data: order, error: orderError } = await supabase
@@ -438,13 +480,34 @@ async function createSubscriptionOrder(
     order_id: order.id,
     product_id: item.product_id,
     product_name: item.product_name || item.title,
-    variant_title: item.variant_title,
+    variant_id: item.variant_id || null,
+    variant_title: item.variant_title || null,
     quantity: item.quantity,
     unit_price: item.price,
     total_price: item.price * item.quantity,
   }));
 
   await supabase.from('order_items').insert(orderItems);
+
+  // Update inventory (variant or product level)
+  for (const item of items) {
+    if (item.variant_id) {
+      // Deduct from variant inventory using the database function
+      await supabase.rpc('adjust_variant_inventory', {
+        p_variant_id: item.variant_id,
+        p_quantity_change: -item.quantity,
+        p_reason: 'subscription_renewal',
+        p_order_id: order.id,
+        p_adjusted_by: 'system'
+      });
+    } else {
+      // Deduct from product-level inventory
+      await supabase.rpc('decrement_product_inventory', {
+        product_id: item.product_id,
+        quantity: item.quantity,
+      });
+    }
+  }
 
   // Link invoice to order
   await supabase
