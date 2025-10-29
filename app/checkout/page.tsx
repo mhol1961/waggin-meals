@@ -106,7 +106,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     const initialFrequencies: SubscriptionFrequency = {};
     subscriptionItems.forEach(item => {
-      initialFrequencies[item.cart_key] = item.subscription?.frequency || 'monthly';
+      initialFrequencies[item.cart_key] = item.bundleDetails?.frequency || 'monthly';
     });
     setSubscriptionFrequencies(initialFrequencies);
   }, [subscriptionItems.length]);
