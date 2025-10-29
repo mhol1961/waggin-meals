@@ -13,7 +13,7 @@ const supabase = createClient(
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify admin authentication
@@ -22,7 +22,7 @@ export async function GET(
     const { data, error } = await supabase
       .from('subscription_history')
       .select('*')
-      .eq('subscription_id', params.id)
+      .eq('subscription_id', id)
       .order('created_at', { ascending: false });
 
     if (error) {

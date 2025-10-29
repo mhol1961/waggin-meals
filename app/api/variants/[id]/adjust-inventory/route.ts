@@ -13,10 +13,10 @@ const supabase = createClient(
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const variantId = params.id;
+    const { id } = await params;
     const body = await request.json();
 
     // Validate required fields

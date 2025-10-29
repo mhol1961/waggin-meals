@@ -15,7 +15,7 @@ const supabase = createClient(
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Require authentication
@@ -25,7 +25,7 @@ export async function GET(
     const { data: subscription, error: subError } = await supabase
       .from('subscriptions')
       .select('customer_id')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (subError || !subscription) {

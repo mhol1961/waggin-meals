@@ -12,10 +12,10 @@ const supabase = createClient(
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const variantId = params.id;
+    const { id } = await params;
 
     const { data: adjustments, error } = await supabase
       .from('inventory_adjustments')

@@ -14,13 +14,13 @@ const supabase = createClient(
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { data: subscription, error } = await supabase
       .from('subscriptions')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (error || !subscription) {
@@ -46,7 +46,7 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const body: UpdateSubscriptionRequest = await request.json();
@@ -55,7 +55,7 @@ export async function PATCH(
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !currentSub) {
@@ -131,7 +131,7 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { searchParams } = new URL(request.url);
@@ -141,7 +141,7 @@ export async function DELETE(
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !currentSub) {

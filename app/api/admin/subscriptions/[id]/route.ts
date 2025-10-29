@@ -13,13 +13,13 @@ const supabase = createClient(
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify admin authentication
     await requireAdmin();
 
-    const subscriptionId = params.id;
+    const { id } = await params;
 
     // Fetch subscription with customer and payment method joins
     const { data: subscription, error } = await supabase

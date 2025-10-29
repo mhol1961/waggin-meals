@@ -13,14 +13,14 @@ const supabase = createClient(
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Get current subscription
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !currentSub) {

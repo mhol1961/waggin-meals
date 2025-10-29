@@ -13,14 +13,14 @@ const supabase = createClient(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Get payment method
     const { data: paymentMethod, error: fetchError } = await supabase
       .from('payment_methods')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !paymentMethod) {
@@ -87,7 +87,7 @@ export async function DELETE(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const body = await request.json();
@@ -96,7 +96,7 @@ export async function PATCH(
     const { data: paymentMethod, error: fetchError } = await supabase
       .from('payment_methods')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !paymentMethod) {

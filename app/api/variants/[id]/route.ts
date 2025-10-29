@@ -13,10 +13,10 @@ const supabase = createClient(
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const variantId = params.id;
+    const { id } = await params;
 
     const { data: variant, error } = await supabase
       .from('product_variants')
@@ -47,10 +47,10 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const variantId = params.id;
+    const { id } = await params;
     const body: UpdateVariantRequest = await request.json();
 
     // Check if variant exists
@@ -145,10 +145,10 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const variantId = params.id;
+    const { id } = await params;
 
     // Get variant to check product_id
     const { data: variant } = await supabase

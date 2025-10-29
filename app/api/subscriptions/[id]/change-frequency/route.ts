@@ -15,7 +15,7 @@ const VALID_FREQUENCIES = ['weekly', 'biweekly', 'monthly', '4-weeks', '6-weeks'
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const body = await request.json();
@@ -36,7 +36,7 @@ export async function POST(
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !currentSub) {

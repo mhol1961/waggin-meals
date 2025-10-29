@@ -14,7 +14,7 @@ const supabase = createClient(
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const body: PauseSubscriptionRequest = await request.json();
@@ -23,7 +23,7 @@ export async function POST(
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !currentSub) {
