@@ -19,6 +19,8 @@ export async function GET(
     // Verify admin authentication
     await requireAdmin();
 
+    const { id } = await params;
+
     const { data, error } = await supabase
       .from('subscription_invoices')
       .select('*')
