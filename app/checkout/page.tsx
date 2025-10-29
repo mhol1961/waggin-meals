@@ -37,7 +37,7 @@ type CheckoutStep = 'shipping' | 'payment' | 'review';
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
-  const { user, session } = useAuth();
+  const { user } = useAuth();
 
   const [currentStep, setCurrentStep] = useState<CheckoutStep>('shipping');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -97,10 +97,10 @@ export default function CheckoutPage() {
 
   // Load saved payment methods for authenticated users
   useEffect(() => {
-    if (user && session) {
+    if (user) {
       fetchPaymentMethods();
     }
-  }, [user, session]);
+  }, [user]);
 
   // Initialize subscription frequencies
   useEffect(() => {
