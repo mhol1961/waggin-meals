@@ -16,6 +16,8 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     // Get payment method
     const { data: paymentMethod, error: fetchError } = await supabase
       .from('payment_methods')
@@ -34,7 +36,7 @@ export async function DELETE(
     const { data: activeSubscriptions } = await supabase
       .from('subscriptions')
       .select('id')
-      .eq('payment_method_id', params.id)
+      .eq('payment_method_id', id)
       .in('status', ['active', 'past_due']);
 
     if (activeSubscriptions && activeSubscriptions.length > 0) {
@@ -61,7 +63,7 @@ export async function DELETE(
     const { error: updateError } = await supabase
       .from('payment_methods')
       .update({ is_active: false })
-      .eq('id', params.id);
+      .eq('id', id);
 
     if (updateError) {
       console.error('Error deleting payment method:', updateError);
@@ -90,6 +92,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
 
     // Get payment method
@@ -118,7 +121,7 @@ export async function PATCH(
     const { data: updated, error: updateError } = await supabase
       .from('payment_methods')
       .update(body)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
