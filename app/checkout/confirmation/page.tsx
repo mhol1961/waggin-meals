@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 export default function OrderConfirmationPage() {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get('order');
