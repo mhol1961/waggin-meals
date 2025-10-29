@@ -86,8 +86,8 @@ export default function CheckoutPage() {
   const [subscriptionFrequencies, setSubscriptionFrequencies] = useState<SubscriptionFrequency>({});
 
   // Separate items into one-time and subscription
-  const oneTimeItems = items.filter(item => !item.tags?.includes('subscription'));
-  const subscriptionItems = items.filter(item => item.tags?.includes('subscription'));
+  const oneTimeItems = items.filter(item => !item.bundleDetails?.isSubscription);
+  const subscriptionItems = items.filter(item => item.bundleDetails?.isSubscription);
 
   // Calculate totals
   const subtotal = totalPrice;
