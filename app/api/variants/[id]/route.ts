@@ -21,7 +21,7 @@ export async function GET(
     const { data: variant, error } = await supabase
       .from('product_variants')
       .select('*')
-      .eq('id', variantId)
+      .eq('id', id)
       .single();
 
     if (error || !variant) {
@@ -57,7 +57,7 @@ export async function PATCH(
     const { data: existing } = await supabase
       .from('product_variants')
       .select('id, sku')
-      .eq('id', variantId)
+      .eq('id', id)
       .single();
 
     if (!existing) {
@@ -117,7 +117,7 @@ export async function PATCH(
     const { data: variant, error } = await supabase
       .from('product_variants')
       .update(updates)
-      .eq('id', variantId)
+      .eq('id', id)
       .select()
       .single();
 
@@ -154,7 +154,7 @@ export async function DELETE(
     const { data: variant } = await supabase
       .from('product_variants')
       .select('product_id')
-      .eq('id', variantId)
+      .eq('id', id)
       .single();
 
     if (!variant) {
@@ -168,7 +168,7 @@ export async function DELETE(
     const { error } = await supabase
       .from('product_variants')
       .delete()
-      .eq('id', variantId);
+      .eq('id', id);
 
     if (error) {
       console.error('Error deleting variant:', error);
