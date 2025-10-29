@@ -984,7 +984,7 @@ export default function CheckoutPage() {
                               {item.variant_title && (
                                 <p className="text-sm text-gray-500">{item.variant_title}</p>
                               )}
-                              {item.tags?.includes('subscription') && (
+                              {item.bundleDetails?.isSubscription && (
                                 <p className="text-sm text-[#a5b5eb] font-medium">
                                   Subscription - {subscriptionFrequencies[item.cart_key] || 'monthly'}
                                 </p>
