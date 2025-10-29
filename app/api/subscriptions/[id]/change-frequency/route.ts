@@ -18,6 +18,7 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { frequency, reason } = body;
 
@@ -83,7 +84,7 @@ export async function POST(
         },
         updated_at: new Date().toISOString(),
       })
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -98,7 +99,7 @@ export async function POST(
     // Log history
     await supabase.from('subscription_history').insert([
       {
-        subscription_id: params.id,
+        subscription_id: id,
         action: 'frequency_changed',
         old_status: currentSub.status,
         new_status: currentSub.status,
