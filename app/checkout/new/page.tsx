@@ -43,7 +43,7 @@ type CheckoutStep = 'contact' | 'shipping' | 'payment';
 export default function NewCheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
-  const { user, session } = useAuth();
+  const { user } = useAuth();
 
   const [currentStep, setCurrentStep] = useState<CheckoutStep>('contact');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -174,10 +174,10 @@ export default function NewCheckoutPage() {
 
   // Load saved payment methods
   useEffect(() => {
-    if (user && session && currentStep === 'payment') {
+    if (user && currentStep === 'payment') {
       fetchPaymentMethods();
     }
-  }, [user, session, currentStep]);
+  }, [user, currentStep]);
 
   async function fetchPaymentMethods() {
     if (!user) return;
