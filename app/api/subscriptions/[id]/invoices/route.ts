@@ -18,6 +18,8 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     // Require authentication
     const user = await requireAuth();
 
@@ -47,7 +49,7 @@ export async function GET(
     const { data: invoices, error } = await supabase
       .from('subscription_invoices')
       .select('*')
-      .eq('subscription_id', params.id)
+      .eq('subscription_id', id)
       .order('created_at', { ascending: false });
 
     if (error) {

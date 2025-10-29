@@ -16,6 +16,8 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     // Get current subscription
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
@@ -55,7 +57,7 @@ export async function POST(
         },
         updated_at: new Date().toISOString(),
       })
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -70,7 +72,7 @@ export async function POST(
     // Log history
     await supabase.from('subscription_history').insert([
       {
-        subscription_id: params.id,
+        subscription_id: id,
         action: 'resumed',
         old_status: 'paused',
         new_status: 'active',
