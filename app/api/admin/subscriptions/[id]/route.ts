@@ -42,7 +42,7 @@ export async function GET(
           billing_address
         )
       `)
-      .eq('id', subscriptionId)
+      .eq('id', id)
       .single();
 
     if (error || !subscription) {
