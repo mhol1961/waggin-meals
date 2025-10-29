@@ -38,7 +38,7 @@ export async function POST(
 
     // Call the database function to adjust inventory
     const { data, error } = await supabase.rpc('adjust_variant_inventory', {
-      p_variant_id: variantId,
+      p_variant_id: id,
       p_quantity_change: body.quantity_change,
       p_reason: body.reason,
       p_notes: body.notes || null,
