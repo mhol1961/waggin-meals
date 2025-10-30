@@ -329,11 +329,20 @@ export default function UltimateHomepage() {
         <div className="mx-auto max-w-6xl relative z-10 grid lg:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
           {/* Left Column: Copy & CTA */}
           <div>
-            <div className="inline-flex items-center gap-2 bg-white border border-[#ded2bf] rounded-full px-4 py-2 mb-6 shadow-sm">
-              <Award className="w-4 h-4 text-[#bc2c2c]" />
-              <span className="text-xs font-semibold text-[#2f4b38] uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Certified Nutrition Specialists
-              </span>
+            <div className="flex flex-wrap gap-3 mb-6">
+              <div className="inline-flex items-center gap-2 bg-white border border-[#ded2bf] rounded-full px-4 py-2 shadow-sm">
+                <Award className="w-4 h-4 text-[#bc2c2c]" />
+                <span className="text-xs font-semibold text-[#2f4b38] uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Certified Nutrition Specialists
+                </span>
+              </div>
+
+              <div className="inline-flex items-center gap-2 bg-[#bc2c2c] text-white border border-[#bc2c2c] rounded-full px-4 py-2 shadow-md">
+                <UtensilsCrossed className="w-4 h-4" />
+                <span className="text-xs font-semibold uppercase tracking-wide" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  As Served at Twisted Laurel Restaurant
+                </span>
+              </div>
             </div>
 
             <h1 className="text-[58px] leading-[1.1] text-[#1f1a16] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
@@ -842,8 +851,46 @@ export default function UltimateHomepage() {
         </div>
       )}
 
+      {/* Disclaimer Section */}
+      <section className="bg-[#f5f1ea] border-t border-[#ded2bf] py-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl border-2 border-[#2f4b38] p-8 shadow-lg">
+            <div className="text-center mb-6">
+              <ShieldCheck className="w-12 h-12 text-[#2f4b38] mx-auto mb-3" />
+              <h3 className="text-2xl font-bold text-[#2f4b38] mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                Our Promise
+              </h3>
+            </div>
+
+            <p className="text-base text-[#1f1a16] leading-relaxed mb-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              At Waggin Meals, we believe your dog deserves real food made with love. Our Gently Cooked Human Grade Food for Dogs is approved through the FDA Pet Feed Program and scientifically formulated by an Animal Nutritionist to meet AAFCO standards for dog(s) of all ages.
+            </p>
+
+            <div className="border-t border-[#ded2bf] pt-6">
+              <h4 className="text-lg font-semibold text-[#2f4b38] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Important Info
+              </h4>
+              <p className="text-sm text-[#4a443b] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Please note: Our meals are specially formulated for dogs and are not intended for human consumption. Content on this site is for educational purposes only and not a substitute for veterinary advice. Always consult your vet for any health-related decisions about your dog.
+              </p>
+            </div>
+
+            <div className="mt-6 text-center">
+              <a
+                href="mailto:wagginmeals@gmail.com?subject=Schedule%20Free%2015-Minute%20Consultation"
+                className="inline-flex items-center gap-2 bg-[#bc2c2c] text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#90211b] transition-colors shadow-md"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                <CalendarDays className="w-4 h-4" />
+                Schedule Your Free 15-Minute Consultation
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#2f4b38] to-[#1f3324] text-white mt-16">
+      <footer className="bg-gradient-to-br from-[#2f4b38] to-[#1f3324] text-white mt-0">
         {/* Main Footer Content */}
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
