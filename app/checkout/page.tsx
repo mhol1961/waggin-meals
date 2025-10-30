@@ -6,6 +6,8 @@ import { useAuth } from '@/contexts/auth-context';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import PaymentForm from '@/components/payment-form';
+import type { PaymentToken, BillingAddress } from '@/types/payment';
 
 interface ShippingAddress {
   first_name: string;
@@ -61,26 +63,8 @@ export default function CheckoutPage() {
   const [savedPaymentMethods, setSavedPaymentMethods] = useState<PaymentMethod[]>([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>(''); // 'new' or payment method id
   const [loadingPaymentMethods, setLoadingPaymentMethods] = useState(false);
-
-  // New card info
-  const [newCard, setNewCard] = useState({
-    card_number: '',
-    expiration_month: '',
-    expiration_year: '',
-    cvv: '',
-    card_type: '',
-    billing_same_as_shipping: true,
-    billing_address: {
-      first_name: '',
-      last_name: '',
-      address: '',
-      address2: '',
-      city: '',
-      state: '',
-      zip: '',
-      country: 'US',
-    },
-  });
+  const [paymentToken, setPaymentToken] = useState<PaymentToken | null>(null);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   // Subscription frequencies for each subscription item
   const [subscriptionFrequencies, setSubscriptionFrequencies] = useState<SubscriptionFrequency>({});
@@ -158,54 +142,27 @@ export default function CheckoutPage() {
     }
 
     if (selectedPaymentMethod === 'new') {
-      // Validate new card fields
-      const requiredCardFields = ['card_number', 'expiration_month', 'expiration_year', 'cvv'];
-      const missing = requiredCardFields.filter(field => !newCard[field as keyof typeof newCard]);
-
-      if (missing.length > 0) {
-        setError('Please fill in all card information');
+      // For new cards, payment token will be generated when clicking "Review Order"
+      // Validation happens in the PaymentForm component
+      if (!paymentToken) {
+        setError('Please complete your payment information');
         return false;
-      }
-
-      // Validate card number (basic check)
-      const cardNumber = newCard.card_number.replace(/\s/g, '');
-      if (cardNumber.length < 13 || cardNumber.length > 19) {
-        setError('Invalid card number');
-        return false;
-      }
-
-      // Validate expiration
-      const currentYear = new Date().getFullYear();
-      const currentMonth = new Date().getMonth() + 1;
-      const expYear = parseInt(newCard.expiration_year);
-      const expMonth = parseInt(newCard.expiration_month);
-
-      if (expYear < currentYear || (expYear === currentYear && expMonth < currentMonth)) {
-        setError('Card has expired');
-        return false;
-      }
-
-      // Validate CVV
-      if (newCard.cvv.length < 3 || newCard.cvv.length > 4) {
-        setError('Invalid CVV');
-        return false;
-      }
-
-      // Validate billing address if not same as shipping
-      if (!newCard.billing_same_as_shipping) {
-        const billingRequired = ['first_name', 'last_name', 'address', 'city', 'state', 'zip'];
-        const billingMissing = billingRequired.filter(field =>
-          !newCard.billing_address[field as keyof typeof newCard.billing_address]
-        );
-
-        if (billingMissing.length > 0) {
-          setError(`Please fill in billing address: ${billingMissing.join(', ')}`);
-          return false;
-        }
       }
     }
 
     return true;
+  }
+
+  function handlePaymentSuccess(token: PaymentToken) {
+    setPaymentToken(token);
+    setPaymentError(null);
+    // Automatically move to review step after successful tokenization
+    setCurrentStep('review');
+  }
+
+  function handlePaymentError(error: string) {
+    setPaymentError(error);
+    setPaymentToken(null);
   }
 
   function handleNextStep() {
@@ -216,9 +173,12 @@ export default function CheckoutPage() {
         setCurrentStep('payment');
       }
     } else if (currentStep === 'payment') {
-      if (validatePayment()) {
+      // For saved payment methods, proceed directly to review
+      if (selectedPaymentMethod !== 'new') {
         setCurrentStep('review');
       }
+      // For new cards, the PaymentForm component handles the transition to review
+      // via handlePaymentSuccess callback after tokenization
     }
   }
 
@@ -237,7 +197,9 @@ export default function CheckoutPage() {
     setError(null);
 
     try {
-      // Process one-time order if there are one-time items
+      let orderId: string | null = null;
+
+      // Step 1: Create order with 'pending_payment' status
       if (oneTimeItems.length > 0) {
         const orderResponse = await fetch('/api/checkout/create-order', {
           method: 'POST',
@@ -246,11 +208,6 @@ export default function CheckoutPage() {
             customer_id: user?.id,
             email: email,
             shipping_address: shippingAddress,
-            payment_method_id: selectedPaymentMethod === 'new' ? null : selectedPaymentMethod,
-            new_card: selectedPaymentMethod === 'new' ? {
-              ...newCard,
-              billing_address: newCard.billing_same_as_shipping ? shippingAddress : newCard.billing_address,
-            } : null,
             items: oneTimeItems.map(item => ({
               product_id: item.id,
               variant_id: item.variant_id,
@@ -263,6 +220,7 @@ export default function CheckoutPage() {
             shipping: shipping,
             tax: tax,
             total: oneTimeItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + shipping + tax,
+            status: 'pending_payment', // Important: Don't complete order until payment succeeds
           }),
         });
 
@@ -270,9 +228,57 @@ export default function CheckoutPage() {
           const errorData = await orderResponse.json();
           throw new Error(errorData.error || 'Failed to create order');
         }
+
+        const orderData = await orderResponse.json();
+        orderId = orderData.order.id;
       }
 
-      // Process subscriptions if there are subscription items
+      // Step 2: Process payment through Authorize.net
+      if (orderId && paymentToken) {
+        const paymentResponse = await fetch('/api/payments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId: orderId,
+            amount: total,
+            paymentToken: paymentToken,
+            customerId: user?.id,
+            customerEmail: email,
+            billingAddress: {
+              firstName: shippingAddress.first_name,
+              lastName: shippingAddress.last_name,
+              address: shippingAddress.address,
+              city: shippingAddress.city,
+              state: shippingAddress.state,
+              zip: shippingAddress.zip,
+              country: shippingAddress.country,
+            },
+            shippingAddress: {
+              firstName: shippingAddress.first_name,
+              lastName: shippingAddress.last_name,
+              address: shippingAddress.address,
+              city: shippingAddress.city,
+              state: shippingAddress.state,
+              zip: shippingAddress.zip,
+              country: shippingAddress.country,
+            },
+            taxAmount: tax,
+            shippingAmount: shipping,
+          }),
+        });
+
+        if (!paymentResponse.ok) {
+          const paymentError = await paymentResponse.json();
+          throw new Error(paymentError.error || 'Payment declined. Please check your card details and try again.');
+        }
+
+        const paymentData = await paymentResponse.json();
+        if (!paymentData.success) {
+          throw new Error(paymentData.error || 'Payment failed');
+        }
+      }
+
+      // Step 3: Process subscriptions if there are subscription items
       if (subscriptionItems.length > 0) {
         for (const item of subscriptionItems) {
           const subscriptionResponse = await fetch('/api/checkout/create-subscription', {
@@ -283,10 +289,7 @@ export default function CheckoutPage() {
               email: email,
               shipping_address: shippingAddress,
               payment_method_id: selectedPaymentMethod === 'new' ? null : selectedPaymentMethod,
-              new_card: selectedPaymentMethod === 'new' ? {
-                ...newCard,
-                billing_address: newCard.billing_same_as_shipping ? shippingAddress : newCard.billing_address,
-              } : null,
+              payment_token: selectedPaymentMethod === 'new' ? paymentToken : null,
               product_id: item.id,
               variant_id: item.variant_id,
               quantity: item.quantity,
@@ -304,9 +307,9 @@ export default function CheckoutPage() {
         }
       }
 
-      // Success! Clear cart and redirect
+      // Success! Clear cart and redirect to confirmation
       clearCart();
-      router.push('/checkout/confirmation');
+      router.push(`/checkout/confirmation?orderId=${orderId}`);
     } catch (err: any) {
       console.error('Checkout error:', err);
       setError(err.message || 'Failed to process order. Please try again.');
@@ -673,174 +676,31 @@ export default function CheckoutPage() {
                     )}
                   </div>
 
-                  {/* New Card Form */}
+                  {/* Payment Form - PCI Compliant */}
                   {selectedPaymentMethod === 'new' && (
                     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                      <h3 className="text-lg font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                        Card Information
-                      </h3>
-                      <div className="space-y-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                            Card Number *
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            value={newCard.card_number}
-                            onChange={(e) => setNewCard({ ...newCard, card_number: e.target.value })}
-                            placeholder="1234 5678 9012 3456"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                            style={{ fontFamily: "'Poppins', sans-serif" }}
-                          />
+                      <PaymentForm
+                        amount={total}
+                        onSuccess={handlePaymentSuccess}
+                        onError={handlePaymentError}
+                        billingAddress={{
+                          firstName: shippingAddress.first_name,
+                          lastName: shippingAddress.last_name,
+                          address: shippingAddress.address,
+                          city: shippingAddress.city,
+                          state: shippingAddress.state,
+                          zip: shippingAddress.zip,
+                          country: shippingAddress.country,
+                        }}
+                        loading={isProcessing}
+                      />
+                      {paymentError && (
+                        <div className="mt-4 bg-red-50 border border-red-200 rounded-md p-3">
+                          <p className="text-sm text-red-800" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                            {paymentError}
+                          </p>
                         </div>
-
-                        <div className="grid grid-cols-3 gap-4">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                              Month *
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              value={newCard.expiration_month}
-                              onChange={(e) => setNewCard({ ...newCard, expiration_month: e.target.value })}
-                              placeholder="MM"
-                              maxLength={2}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                              style={{ fontFamily: "'Poppins', sans-serif" }}
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                              Year *
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              value={newCard.expiration_year}
-                              onChange={(e) => setNewCard({ ...newCard, expiration_year: e.target.value })}
-                              placeholder="YYYY"
-                              maxLength={4}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                              style={{ fontFamily: "'Poppins', sans-serif" }}
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                              CVV *
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              value={newCard.cvv}
-                              onChange={(e) => setNewCard({ ...newCard, cvv: e.target.value })}
-                              placeholder="123"
-                              maxLength={4}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                              style={{ fontFamily: "'Poppins', sans-serif" }}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="pt-4 border-t border-gray-200">
-                          <label className="flex items-center gap-2 cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={newCard.billing_same_as_shipping}
-                              onChange={(e) => setNewCard({ ...newCard, billing_same_as_shipping: e.target.checked })}
-                              className="w-4 h-4 text-[#a5b5eb] rounded"
-                            />
-                            <span className="text-sm text-gray-700" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                              Billing address same as shipping
-                            </span>
-                          </label>
-                        </div>
-
-                        {!newCard.billing_same_as_shipping && (
-                          <div className="space-y-4 pt-4 border-t border-gray-200">
-                            <h4 className="text-sm font-semibold text-gray-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                              Billing Address
-                            </h4>
-                            <div className="grid grid-cols-2 gap-4">
-                              <input
-                                type="text"
-                                required
-                                value={newCard.billing_address.first_name}
-                                onChange={(e) => setNewCard({
-                                  ...newCard,
-                                  billing_address: { ...newCard.billing_address, first_name: e.target.value }
-                                })}
-                                placeholder="First name"
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                                style={{ fontFamily: "'Poppins', sans-serif" }}
-                              />
-                              <input
-                                type="text"
-                                required
-                                value={newCard.billing_address.last_name}
-                                onChange={(e) => setNewCard({
-                                  ...newCard,
-                                  billing_address: { ...newCard.billing_address, last_name: e.target.value }
-                                })}
-                                placeholder="Last name"
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                                style={{ fontFamily: "'Poppins', sans-serif" }}
-                              />
-                            </div>
-                            <input
-                              type="text"
-                              required
-                              value={newCard.billing_address.address}
-                              onChange={(e) => setNewCard({
-                                ...newCard,
-                                billing_address: { ...newCard.billing_address, address: e.target.value }
-                              })}
-                              placeholder="Street address"
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                              style={{ fontFamily: "'Poppins', sans-serif" }}
-                            />
-                            <div className="grid grid-cols-3 gap-4">
-                              <input
-                                type="text"
-                                required
-                                value={newCard.billing_address.city}
-                                onChange={(e) => setNewCard({
-                                  ...newCard,
-                                  billing_address: { ...newCard.billing_address, city: e.target.value }
-                                })}
-                                placeholder="City"
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                                style={{ fontFamily: "'Poppins', sans-serif" }}
-                              />
-                              <input
-                                type="text"
-                                required
-                                value={newCard.billing_address.state}
-                                onChange={(e) => setNewCard({
-                                  ...newCard,
-                                  billing_address: { ...newCard.billing_address, state: e.target.value }
-                                })}
-                                placeholder="State"
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                                style={{ fontFamily: "'Poppins', sans-serif" }}
-                              />
-                              <input
-                                type="text"
-                                required
-                                value={newCard.billing_address.zip}
-                                onChange={(e) => setNewCard({
-                                  ...newCard,
-                                  billing_address: { ...newCard.billing_address, zip: e.target.value }
-                                })}
-                                placeholder="ZIP"
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
-                                style={{ fontFamily: "'Poppins', sans-serif" }}
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </div>
+                      )}
                     </div>
                   )}
 
@@ -880,6 +740,8 @@ export default function CheckoutPage() {
                     </div>
                   )}
 
+                  {/* Navigation Buttons - Only show "Review Order" for saved payment methods */}
+                  {/* For new cards, the PaymentForm component has its own "Pay $XX.XX" button */}
                   <div className="flex justify-between">
                     <button
                       onClick={handlePrevStep}
@@ -888,13 +750,15 @@ export default function CheckoutPage() {
                     >
                       Back to Shipping
                     </button>
-                    <button
-                      onClick={handleNextStep}
-                      className="bg-[#a5b5eb] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
-                      style={{ fontFamily: "'Poppins', sans-serif" }}
-                    >
-                      Review Order
-                    </button>
+                    {selectedPaymentMethod !== 'new' && (
+                      <button
+                        onClick={handleNextStep}
+                        className="bg-[#a5b5eb] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                        style={{ fontFamily: "'Poppins', sans-serif" }}
+                      >
+                        Review Order
+                      </button>
+                    )}
                   </div>
                 </>
               )}
@@ -949,7 +813,10 @@ export default function CheckoutPage() {
                       </div>
                       <div className="text-sm text-gray-600" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         {selectedPaymentMethod === 'new' ? (
-                          <p>New card ending in {newCard.card_number.slice(-4)}</p>
+                          <div>
+                            <p className="font-medium text-green-700">✓ Payment information verified</p>
+                            <p className="text-xs text-gray-500 mt-1">Your card will be charged ${total.toFixed(2)} when you place your order</p>
+                          </div>
                         ) : (
                           <p>
                             {savedPaymentMethods.find(pm => pm.id === selectedPaymentMethod)?.card_type} ••••{' '}
