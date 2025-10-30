@@ -1,301 +1,118 @@
 /**
- * Authorize.net CIM (Customer Information Manager) Service
- *
- * This service handles payment tokenization and recurring billing via Authorize.net
- *
- * Required environment variables:
- * - AUTHORIZENET_API_LOGIN_ID
- * - AUTHORIZENET_TRANSACTION_KEY
- * - AUTHORIZENET_ENVIRONMENT ('sandbox' or 'production')
+ * Authorize.net Payment Processing Service
+ * Handles credit card transactions, refunds, and CIM integration
  */
 
 import type {
-  AuthorizeNetCustomerProfile,
-  AuthorizeNetTransactionResponse,
-  BillingAddress,
-} from '@/types/subscription';
+  TransactionRequest,
+  TransactionResponse,
+  RefundRequest,
+  CardValidation,
+  CardType,
+  PaymentValidationError,
+  AuthorizeNetConfig,
+} from '@/types/payment';
 
-const API_LOGIN_ID = process.env.AUTHORIZENET_API_LOGIN_ID;
-const TRANSACTION_KEY = process.env.AUTHORIZENET_TRANSACTION_KEY;
-const ENVIRONMENT = process.env.AUTHORIZENET_ENVIRONMENT || 'sandbox';
-
-const API_ENDPOINT =
-  ENVIRONMENT === 'production'
-    ? 'https://api.authorize.net/xml/v1/request.api'
-    : 'https://apitest.authorize.net/xml/v1/request.api';
-
-interface AuthorizeNetRequest {
-  [key: string]: any;
-}
+// API endpoints
+const SANDBOX_URL = 'https://apitest.authorize.net/xml/v1/request.api';
+const PRODUCTION_URL = 'https://api.authorize.net/xml/v1/request.api';
 
 /**
- * Make API request to Authorize.net
+ * Get Authorize.net configuration from environment
  */
-async function makeRequest(requestType: string, requestData: AuthorizeNetRequest) {
-  if (!API_LOGIN_ID || !TRANSACTION_KEY) {
-    throw new Error('Authorize.net credentials not configured. Please add AUTHORIZENET_API_LOGIN_ID and AUTHORIZENET_TRANSACTION_KEY to environment variables.');
-  }
-
-  const request = {
-    [requestType]: {
-      merchantAuthentication: {
-        name: API_LOGIN_ID,
-        transactionKey: TRANSACTION_KEY,
-      },
-      ...requestData,
-    },
+export function getAuthorizeNetConfig(): AuthorizeNetConfig {
+  const config = {
+    apiLoginId: process.env.AUTHORIZE_NET_API_LOGIN_ID || '',
+    transactionKey: process.env.AUTHORIZE_NET_TRANSACTION_KEY || '',
+    clientKey: process.env.AUTHORIZE_NET_CLIENT_KEY || '',
+    environment: (process.env.AUTHORIZE_NET_ENVIRONMENT || 'sandbox') as 'sandbox' | 'production',
   };
 
-  const response = await fetch(API_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(request),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Authorize.net API error: ${response.statusText}`);
+  if (!config.apiLoginId || !config.transactionKey) {
+    throw new Error('Authorize.net credentials not configured. Check environment variables.');
   }
 
-  const data = await response.json();
-  return data;
+  return config;
 }
 
 /**
- * Create a customer profile in Authorize.net CIM
+ * Get API endpoint based on environment
  */
-export async function createCustomerProfile(
-  customerId: string,
-  email: string,
-  cardNumber: string,
-  expirationDate: string, // Format: YYYY-MM
-  cvv: string,
-  billingAddress: BillingAddress
-): Promise<AuthorizeNetCustomerProfile> {
-  const response = await makeRequest('createCustomerProfileRequest', {
-    profile: {
-      merchantCustomerId: customerId,
-      email: email,
-      paymentProfiles: {
-        customerType: 'individual',
-        payment: {
-          creditCard: {
-            cardNumber: cardNumber,
-            expirationDate: expirationDate,
-            cardCode: cvv,
-          },
-        },
-        billTo: {
-          firstName: billingAddress.first_name,
-          lastName: billingAddress.last_name,
-          address: billingAddress.address,
-          city: billingAddress.city,
-          state: billingAddress.state,
-          zip: billingAddress.zip,
-          country: billingAddress.country || 'US',
-        },
-      },
-    },
-  });
+function getApiUrl(): string {
+  const config = getAuthorizeNetConfig();
+  return config.environment === 'production' ? PRODUCTION_URL : SANDBOX_URL;
+}
 
-  if (response.messages.resultCode !== 'Ok') {
-    throw new Error(
-      `Failed to create customer profile: ${response.messages.message[0].text}`
-    );
-  }
-
+/**
+ * Create merchant authentication object
+ */
+function getMerchantAuthentication() {
+  const config = getAuthorizeNetConfig();
   return {
-    customerProfileId: response.customerProfileId,
-    paymentProfileId: response.customerPaymentProfileIdList[0],
-    customerEmail: email,
+    name: config.apiLoginId,
+    transactionKey: config.transactionKey,
   };
 }
 
 /**
- * Add a payment profile to an existing customer
+ * Validate credit card number using Luhn algorithm
  */
-export async function addPaymentProfile(
-  customerProfileId: string,
-  cardNumber: string,
-  expirationDate: string,
-  cvv: string,
-  billingAddress: BillingAddress
-): Promise<string> {
-  const response = await makeRequest('createCustomerPaymentProfileRequest', {
-    customerProfileId: customerProfileId,
-    paymentProfile: {
-      customerType: 'individual',
-      payment: {
-        creditCard: {
-          cardNumber: cardNumber,
-          expirationDate: expirationDate,
-          cardCode: cvv,
-        },
-      },
-      billTo: {
-        firstName: billingAddress.first_name,
-        lastName: billingAddress.last_name,
-        address: billingAddress.address,
-        city: billingAddress.city,
-        state: billingAddress.state,
-        zip: billingAddress.zip,
-        country: billingAddress.country || 'US',
-      },
-    },
-  });
+export function validateCardNumber(cardNumber: string): boolean {
+  // Remove spaces and non-digits
+  const cleaned = cardNumber.replace(/\D/g, '');
 
-  if (response.messages.resultCode !== 'Ok') {
-    throw new Error(
-      `Failed to add payment profile: ${response.messages.message[0].text}`
-    );
+  if (cleaned.length < 13 || cleaned.length > 19) {
+    return false;
   }
 
-  return response.customerPaymentProfileId;
-}
+  let sum = 0;
+  let isEven = false;
 
-/**
- * Charge a customer's payment profile
- */
-export async function chargeCustomerProfile(
-  customerProfileId: string,
-  paymentProfileId: string,
-  amount: number,
-  invoiceNumber?: string,
-  description?: string
-): Promise<AuthorizeNetTransactionResponse> {
-  const response = await makeRequest('createTransactionRequest', {
-    transactionRequest: {
-      transactionType: 'authCaptureTransaction',
-      amount: amount.toFixed(2),
-      profile: {
-        customerProfileId: customerProfileId,
-        paymentProfile: {
-          paymentProfileId: paymentProfileId,
-        },
-      },
-      order: invoiceNumber
-        ? {
-            invoiceNumber: invoiceNumber,
-            description: description || 'Subscription payment',
-          }
-        : undefined,
-    },
-  });
+  for (let i = cleaned.length - 1; i >= 0; i--) {
+    let digit = parseInt(cleaned[i], 10);
 
-  if (response.messages.resultCode !== 'Ok') {
-    const errorMessage =
-      response.transactionResponse?.errors?.[0]?.errorText ||
-      response.messages.message[0].text;
-    throw new Error(`Payment failed: ${errorMessage}`);
+    if (isEven) {
+      digit *= 2;
+      if (digit > 9) {
+        digit -= 9;
+      }
+    }
+
+    sum += digit;
+    isEven = !isEven;
   }
 
-  return {
-    transactionId: response.transactionResponse.transId,
-    responseCode: response.transactionResponse.responseCode,
-    authCode: response.transactionResponse.authCode,
-    avsResultCode: response.transactionResponse.avsResultCode,
-    cvvResultCode: response.transactionResponse.cvvResultCode,
-    accountNumber: response.transactionResponse.accountNumber,
-    accountType: response.transactionResponse.accountType,
-  };
+  return sum % 10 === 0;
 }
 
 /**
- * Get customer profile
+ * Detect card type from card number
  */
-export async function getCustomerProfile(customerProfileId: string) {
-  const response = await makeRequest('getCustomerProfileRequest', {
-    customerProfileId: customerProfileId,
-  });
+export function detectCardType(cardNumber: string): CardType {
+  const cleaned = cardNumber.replace(/\D/g, '');
 
-  if (response.messages.resultCode !== 'Ok') {
-    throw new Error(
-      `Failed to get customer profile: ${response.messages.message[0].text}`
-    );
+  // Visa: starts with 4
+  if (/^4/.test(cleaned)) {
+    return 'visa';
   }
 
-  return response.profile;
-}
-
-/**
- * Delete a payment profile
- */
-export async function deletePaymentProfile(
-  customerProfileId: string,
-  paymentProfileId: string
-): Promise<void> {
-  const response = await makeRequest('deleteCustomerPaymentProfileRequest', {
-    customerProfileId: customerProfileId,
-    customerPaymentProfileId: paymentProfileId,
-  });
-
-  if (response.messages.resultCode !== 'Ok') {
-    throw new Error(
-      `Failed to delete payment profile: ${response.messages.message[0].text}`
-    );
-  }
-}
-
-/**
- * Refund a transaction
- */
-export async function refundTransaction(
-  transactionId: string,
-  amount: number,
-  last4: string
-): Promise<string> {
-  const response = await makeRequest('createTransactionRequest', {
-    transactionRequest: {
-      transactionType: 'refundTransaction',
-      amount: amount.toFixed(2),
-      payment: {
-        creditCard: {
-          cardNumber: last4,
-          expirationDate: 'XXXX',
-        },
-      },
-      refTransId: transactionId,
-    },
-  });
-
-  if (response.messages.resultCode !== 'Ok') {
-    throw new Error(
-      `Refund failed: ${response.messages.message[0].text}`
-    );
+  // Mastercard: starts with 51-55 or 2221-2720
+  if (/^5[1-5]/.test(cleaned) || /^(222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)/.test(cleaned)) {
+    return 'mastercard';
   }
 
-  return response.transactionResponse.transId;
+  // Amex: starts with 34 or 37
+  if (/^3[47]/.test(cleaned)) {
+    return 'amex';
+  }
+
+  // Discover: starts with 6011, 622126-622925, 644-649, or 65
+  if (/^(6011|622(12[6-9]|1[3-9][0-9]|[2-8][0-9]{2}|9[0-2][0-9]|92[0-5])|64[4-9]|65)/.test(cleaned)) {
+    return 'discover';
+  }
+
+  return 'other';
 }
 
-/**
- * Helper: Format expiration date for Authorize.net (YYYY-MM)
- */
-export function formatExpirationDate(month: number, year: number): string {
-  const paddedMonth = month.toString().padStart(2, '0');
-  return `${year}-${paddedMonth}`;
-}
-
-/**
- * Helper: Parse card type from account number
- */
-export function parseCardType(accountNumber?: string): string | undefined {
-  if (!accountNumber) return undefined;
-
-  const firstDigit = accountNumber[0];
-  const firstTwoDigits = accountNumber.substring(0, 2);
-
-  if (firstDigit === '4') return 'Visa';
-  if (['51', '52', '53', '54', '55'].includes(firstTwoDigits)) return 'Mastercard';
-  if (['34', '37'].includes(firstTwoDigits)) return 'Amex';
-  if (firstTwoDigits === '60' || accountNumber.startsWith('65')) return 'Discover';
-
-  return undefined;
-}
-
-/**
- * Helper: Check if Authorize.net is configured
- */
-export function isConfigured(): boolean {
-  return !!(API_LOGIN_ID && TRANSACTION_KEY);
-}
+// Export type for convenience
+export type { TransactionRequest, TransactionResponse, RefundRequest, CardValidation };
