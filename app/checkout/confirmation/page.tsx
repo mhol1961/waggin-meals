@@ -2,25 +2,96 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
 export const dynamic = 'force-dynamic';
 
+interface Payment {
+  id: string;
+  amount: number;
+  status: string;
+  transaction_id: string;
+  last_four: string;
+  card_type?: string;
+  created_at: string;
+}
+
+interface Order {
+  id: string;
+  order_number: string;
+  total: number;
+  status: string;
+  created_at: string;
+}
+
 function ConfirmationContent() {
   const searchParams = useSearchParams();
-  const orderNumber = searchParams.get('order');
+  const orderId = searchParams.get('orderId');
   const subscriptionId = searchParams.get('subscription');
+
+  const [order, setOrder] = useState<Order | null>(null);
+  const [payment, setPayment] = useState<Payment | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchOrderDetails() {
+      if (!orderId) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        // Fetch payment details
+        const paymentResponse = await fetch(`/api/payments?orderId=${orderId}`);
+        if (paymentResponse.ok) {
+          const paymentData = await paymentResponse.json();
+          if (paymentData.payments && paymentData.payments.length > 0) {
+            setPayment(paymentData.payments[0]);
+          }
+        }
+
+        // For now, create a mock order object from the payment
+        // In production, you'd fetch the actual order from /api/orders
+        if (payment) {
+          setOrder({
+            id: orderId,
+            order_number: orderId.slice(0, 8).toUpperCase(),
+            total: payment.amount,
+            status: 'processing',
+            created_at: payment.created_at,
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching order details:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchOrderDetails();
+  }, [orderId]);
 
   useEffect(() => {
     // Track conversion in analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
+    if (typeof window !== 'undefined' && (window as any).gtag && payment) {
       (window as any).gtag('event', 'purchase', {
-        transaction_id: orderNumber || subscriptionId,
-        value: searchParams.get('amount') || 0,
+        transaction_id: payment.transaction_id,
+        value: payment.amount,
         currency: 'USD',
       });
     }
-  }, [orderNumber, subscriptionId]);
+  }, [payment]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#a5b5eb] border-r-transparent"></div>
+          <p className="mt-4 text-gray-600" style={{ fontFamily: "'Poppins', sans-serif" }}>Loading order details...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="bg-white min-h-screen">
@@ -48,7 +119,7 @@ function ConfirmationContent() {
             className="text-5xl font-normal text-white mb-4"
             style={{ fontFamily: "'Abril Fatface', serif" }}
           >
-            Order Confirmed!
+            {payment ? 'Payment Successful!' : 'Order Confirmed!'}
           </h1>
           <p
             className="text-xl text-white mb-2"
@@ -56,16 +127,58 @@ function ConfirmationContent() {
           >
             Thank you for your order
           </p>
-          {orderNumber && (
+          {order?.order_number && (
             <p
               className="text-lg text-white/90"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
-              Order Number: <span className="font-semibold">{orderNumber}</span>
+              Order Number: <span className="font-semibold">{order.order_number}</span>
             </p>
           )}
         </div>
       </section>
+
+      {/* Payment Confirmation */}
+      {payment && (
+        <section className="px-4 py-8 bg-green-50 border-b border-green-100">
+          <div className="mx-auto max-w-3xl">
+            <div className="bg-white rounded-xl shadow-sm border border-green-200 p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                </svg>
+                <h2 className="text-xl font-semibold text-gray-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Payment Confirmed
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-gray-500" style={{ fontFamily: "'Poppins', sans-serif" }}>Amount Charged</p>
+                  <p className="text-lg font-bold text-gray-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    ${payment.amount.toFixed(2)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-500" style={{ fontFamily: "'Poppins', sans-serif" }}>Payment Method</p>
+                  <p className="font-medium text-gray-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    {payment.card_type || 'Card'} •••• {payment.last_four}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-500" style={{ fontFamily: "'Poppins', sans-serif" }}>Transaction ID</p>
+                  <p className="font-mono text-xs text-gray-600">{payment.transaction_id}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500" style={{ fontFamily: "'Poppins', sans-serif" }}>Status</p>
+                  <p className="font-medium text-green-700" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    ✓ {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Confirmation Details */}
       <section className="px-4 py-16">
