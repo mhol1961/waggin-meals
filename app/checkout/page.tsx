@@ -301,7 +301,8 @@ export default function CheckoutPage() {
             billingAddress: {
               firstName: shippingAddress.first_name,
               lastName: shippingAddress.last_name,
-              address: shippingAddress.address,
+              address1: shippingAddress.address,
+              address2: shippingAddress.address2,
               city: shippingAddress.city,
               state: shippingAddress.state,
               zip: shippingAddress.zip,
@@ -310,7 +311,8 @@ export default function CheckoutPage() {
             shippingAddress: {
               firstName: shippingAddress.first_name,
               lastName: shippingAddress.last_name,
-              address: shippingAddress.address,
+              address1: shippingAddress.address,
+              address2: shippingAddress.address2,
               city: shippingAddress.city,
               state: shippingAddress.state,
               zip: shippingAddress.zip,
@@ -740,7 +742,8 @@ export default function CheckoutPage() {
                         billingAddress={{
                           firstName: shippingAddress.first_name,
                           lastName: shippingAddress.last_name,
-                          address: shippingAddress.address,
+                          address1: shippingAddress.address,
+                          address2: shippingAddress.address2,
                           city: shippingAddress.city,
                           state: shippingAddress.state,
                           zip: shippingAddress.zip,
