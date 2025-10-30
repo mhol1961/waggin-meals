@@ -92,6 +92,7 @@ const navItems = [
     label: 'Pet Nutrition Services',
     dropdown: [
       { label: 'Nutrition Consultation ($395)', href: '/nutrition-services' },
+      { label: 'Schedule Free 15-Min Consultation', href: 'mailto:wagginmeals@gmail.com?subject=Free%2015-Minute%20Consultation%20Request' },
       { label: 'Food Sensitivity Testing', href: '/food-sensitivities' },
       { label: 'Supplementation Guide', href: '/supplementation' },
     ]
@@ -319,11 +320,11 @@ export default function UltimateHomepage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative px-4 py-16 overflow-hidden">
+      <section className="relative px-4 py-16 overflow-hidden bg-gradient-to-br from-[#9b8bb3] via-[#8b7ba8] to-[#7b6b98]">
         {/* Subtle background gradients */}
-        <div className="absolute inset-0 pointer-events-none opacity-40">
-          <div className="absolute -top-40 -left-24 w-96 h-96 bg-[#bc2c2c]/8 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-[#2f4b38]/8 rounded-full blur-3xl" />
+        <div className="absolute inset-0 pointer-events-none opacity-30">
+          <div className="absolute -top-40 -left-24 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-indigo-300/20 rounded-full blur-3xl" />
         </div>
 
         <div className="mx-auto max-w-6xl relative z-10 grid lg:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
@@ -345,13 +346,13 @@ export default function UltimateHomepage() {
               </div>
             </div>
 
-            <h1 className="text-[58px] leading-[1.1] text-[#1f1a16] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+            <h1 className="text-[58px] leading-[1.1] text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
               When veterinarians can't find answers,
               <br />
-              <span className="text-[#bc2c2c]">we dig deeper.</span>
+              <span className="text-[#ffd700]">we dig deeper.</span>
             </h1>
 
-            <p className="text-lg text-[#4a443b] mb-8 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-lg text-white/90 mb-8 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Combine cutting-edge microbiome testing, custom fresh-food plans, and expert guidance to transform your dog's health—starting with their gut.
             </p>
 
@@ -384,8 +385,8 @@ export default function UltimateHomepage() {
             {/* Bullets */}
             <div className="space-y-3 mb-8">
               {heroBullets.map((bullet) => (
-                <div key={bullet} className="flex items-start gap-3 text-[#2f4b38]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  <CheckCircle2 className="w-5 h-5 text-[#bc2c2c] mt-0.5 flex-shrink-0" />
+                <div key={bullet} className="flex items-start gap-3 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <CheckCircle2 className="w-5 h-5 text-[#ffd700] mt-0.5 flex-shrink-0" />
                   <span>{bullet}</span>
                 </div>
               ))}
@@ -410,13 +411,13 @@ export default function UltimateHomepage() {
             </div>
 
             {/* Stats */}
-            <div className="flex gap-10 pt-6 border-t border-[#ded2bf]">
+            <div className="flex gap-10 pt-6 border-t border-white/30">
               {stats.map((stat) => (
                 <div key={stat.label}>
-                  <p className="text-4xl text-[#2f4b38] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  <p className="text-4xl text-white font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
                     {stat.value}
                   </p>
-                  <p className="text-xs uppercase tracking-wide text-[#5c5549] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <p className="text-xs uppercase tracking-wide text-white/80 mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     {stat.label}
                   </p>
                 </div>
@@ -950,7 +951,7 @@ export default function UltimateHomepage() {
                 </li>
                 <li>
                   <Link href="/nutrition-services" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">
-                    Nutrition Services
+                    Pet Nutrition Services
                   </Link>
                 </li>
                 <li>

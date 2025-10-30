@@ -13,7 +13,7 @@ export default function Home() {
             Waggin Meals Pet Nutrition Co.
           </h1>
           <h5 className="mb-2 text-[15px] font-semibold leading-relaxed text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            <strong>Human-Grade &amp; Gently Cooked Dog food &gt; Small Batch Kitchen &gt; Canine Nutrition Services</strong>
+            <strong>Human-Grade &amp; Gently Cooked Dog food &gt; Small Batch Kitchen &gt; Pet Nutrition Services</strong>
           </h5>
           <h5 className="mb-6 text-[15px] font-semibold leading-relaxed text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             <strong>Scientifically Formulated</strong> by an Integrative Animal Nutritionist
@@ -85,7 +85,7 @@ export default function Home() {
                   Nutritionist-Formulated, Handcrafted
                 </h4>
                 <p className="text-[15px] italic leading-relaxed text-[#3c3a47] sm:text-[14px]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Created by an <strong>Animal Nutritionist</strong> and prepared in our commercial farm kitchen using advanced animal science. <a href="/nutrition-services" className="text-[#3c3a47] no-underline hover:text-[#a5b5eb]" title="Nutrition Services"><strong>We also offer Canine Nutrition Clinics and Consultations.</strong></a>
+                  Created by an <strong>Animal Nutritionist</strong> and prepared in our commercial farm kitchen using advanced animal science. <a href="/nutrition-services" className="text-[#3c3a47] no-underline hover:text-[#a5b5eb]" title="Pet Nutrition Services"><strong>We also offer Pet Nutrition Clinics and Consultations.</strong></a>
                 </p>
               </div>
 
@@ -106,12 +106,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Canine Nutrition Services Image */}
+      {/* Pet Nutrition Services Image */}
       <section className="bg-white px-4 py-8">
         <div className="mx-auto max-w-[1080px]">
           <Image
             src="/images/2025/09/Canine-Nutrtion-Services.webp"
-            alt="Asheville NC Canine Nutrition Services"
+            alt="Asheville NC Pet Nutrition Services"
             width={1200}
             height={650}
             className="mx-auto h-auto w-[87%] max-w-[83%]"
@@ -359,8 +359,30 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Important Disclaimer */}
+      <section className="bg-gradient-to-br from-[#f5f1ea] to-[#e8e3dc] px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl border-2 border-[#2f4b38] p-8 md:p-10 shadow-lg">
+            <h2 className="text-2xl md:text-3xl font-normal text-[#2f4b38] mb-6 text-center" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              Our Promise
+            </h2>
+            <p className="text-base text-[#1f1a16] leading-relaxed mb-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              At Waggin Meals, we believe your dog deserves real food made with love. Our <strong>Gently Cooked Human Grade Food for Dogs</strong> is approved through the <strong>FDA Pet Feed Program</strong> and scientifically formulated by an Animal Nutritionist to meet <strong>AAFCO standards</strong> for dog(s) of all ages.
+            </p>
+            <div className="bg-[#f5f1ea] rounded-xl p-6 border-l-4 border-[#bc2c2c]">
+              <h3 className="text-lg font-semibold text-[#2f4b38] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Important Info
+              </h3>
+              <p className="text-sm text-[#1f1a16] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Please note: Our meals are specially formulated for dogs and are not intended for human consumption. Content on this site is for educational purposes only and not a substitute for veterinary advice. Always consult your vet for any health-related decisions about your dog.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#2f4b38] to-[#1f3324] text-white mt-16">
+      <footer className="bg-gradient-to-br from-[#2f4b38] to-[#1f3324] text-white mt-0">
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             {/* About Section */}
@@ -409,7 +431,7 @@ export default function Home() {
               <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 <li><Link href="/" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Home</Link></li>
                 <li><Link href="/shop" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Shop</Link></li>
-                <li><Link href="/nutrition-services" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Nutrition Services</Link></li>
+                <li><Link href="/nutrition-services" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Pet Nutrition Services</Link></li>
                 <li><Link href="/case-studies" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Success Stories</Link></li>
                 <li><Link href="/blog" className="opacity-90 hover:text-[#f6a723] hover:opacity-100 transition-all">Pet Nutrition Insights</Link></li>
               </ul>

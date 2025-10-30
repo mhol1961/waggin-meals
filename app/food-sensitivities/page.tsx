@@ -135,6 +135,27 @@ export default function FoodSensitivitiesPage() {
                 <p className="text-white mt-6 text-center text-[14px]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Scan with your phone camera to order
                 </p>
+                <div className="mt-8 w-full">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center mb-4">
+                    <p className="text-white text-sm mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Use Discount Code:
+                    </p>
+                    <div className="bg-white rounded-lg py-3 px-6 inline-block">
+                      <span className="text-2xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Courier New', monospace" }}>
+                        Wagginmeals
+                      </span>
+                    </div>
+                  </div>
+                  <a
+                    href="http://www.5strands.com/#Wagginmeals"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-center bg-white text-[#a5b5eb] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                  >
+                    Order 5Strands Test →
+                  </a>
+                </div>
               </div>
 
               {/* Right Side - Benefits */}

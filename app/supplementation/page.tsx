@@ -95,12 +95,23 @@ export default function SupplementationPage() {
               </p>
               <div className="bg-white rounded-lg py-4 px-8 inline-block">
                 <span className="text-3xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Courier New', monospace" }}>
-                  WAGGIN10
+                  WAGGINMEALS
                 </span>
               </div>
               <p className="text-white mt-4 text-[13px]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                10% off your PicoPets order
+                Special discount on your PicoPets order
               </p>
+              <div className="mt-6">
+                <a
+                  href="https://picopets.com/#Wagginmeals"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-white text-[#a5b5eb] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+                  style={{ fontFamily: "'Poppins', sans-serif" }}
+                >
+                  Shop PicoPets →
+                </a>
+              </div>
             </div>
           </div>
         </div>

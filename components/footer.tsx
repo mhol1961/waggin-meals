@@ -99,14 +99,13 @@ export function Footer() {
                   href="/nutrition-services"
                   className="text-[#3c3a47] hover:text-[#a5b5eb] transition-colors"
                 >
-                  Nutrition Services
+                  Pet Nutrition Services
                 </Link>
               </li>
               <li className="border-l-2 border-[#a5b5eb] pl-3">
                 <Link
-                  href="https://shopify.com/75736613077/account"
+                  href="/account"
                   className="text-[#3c3a47] hover:text-[#a5b5eb] transition-colors"
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   My Account
