@@ -1076,6 +1076,21 @@ export default function UltimateHomepage() {
             </p>
           </div>
 
+          {/* Twisted Laurel Restaurant Badge */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 shadow-lg">
+              <UtensilsCrossed className="w-5 h-5 text-[#f6a723]" />
+              <div className="text-left">
+                <p className="text-sm font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  As Served At
+                </p>
+                <p className="text-xs opacity-90" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Twisted Laurel Restaurant · Asheville, NC
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Copyright */}
           <div className="text-center text-sm opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
             <p className="mb-2">
