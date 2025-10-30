@@ -6,6 +6,7 @@ import {
   createPaymentProfile,
   isConfigured as isAuthorizeNetConfigured
 } from '@/lib/authorizenet-service';
+import { checkCartAvailability, decrementInventory } from '@/lib/inventory';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -73,6 +74,45 @@ export async function POST(request: NextRequest) {
     if (!payment_method_id && !new_card) {
       return NextResponse.json(
         { error: 'Payment method required' },
+        { status: 400 }
+      );
+    }
+
+    // ====================================
+    // INVENTORY CHECK (before payment)
+    // ====================================
+    // Check inventory availability for all items
+    const inventoryChecks = await checkCartAvailability(
+      items.map((item: OrderItem) => ({
+        productId: item.product_id,
+        variantId: item.variant_id || null,
+        quantity: item.quantity,
+      }))
+    );
+
+    // Find any unavailable items
+    const unavailableItems = inventoryChecks.filter(check => !check.available);
+
+    if (unavailableItems.length > 0) {
+      const itemDetails = unavailableItems.map(check => {
+        const item = items.find((i: OrderItem) =>
+          i.product_id === check.productId &&
+          (i.variant_id || null) === (check.variantId || null)
+        );
+        return {
+          title: item?.title || 'Unknown',
+          variant_title: item?.variant_title,
+          requested: check.requested_quantity,
+          available: check.current_quantity,
+          reason: check.reason,
+        };
+      });
+
+      return NextResponse.json(
+        {
+          error: 'Some items are out of stock',
+          unavailable_items: itemDetails,
+        },
         { status: 400 }
       );
     }
@@ -345,6 +385,29 @@ export async function POST(request: NextRequest) {
     if (itemsError) {
       console.error('Error creating order items:', itemsError);
       // Order is already created, so just log the error
+    }
+
+    // ====================================
+    // DECREMENT INVENTORY (after successful payment)
+    // ====================================
+    if (paymentStatus === 'paid') {
+      // Decrement inventory for each item
+      for (const item of items) {
+        try {
+          await decrementInventory(
+            item.product_id,
+            item.variant_id || null,
+            item.quantity,
+            order.id,
+            null,
+            'system'
+          );
+          console.log(`[Inventory] Decremented ${item.quantity}x ${item.title} for order ${orderNumber}`);
+        } catch (inventoryError) {
+          console.error(`[Inventory] Failed to decrement inventory for ${item.title}:`, inventoryError);
+          // Don't fail the order - log error for manual review
+        }
+      }
     }
 
     // Send order confirmation email

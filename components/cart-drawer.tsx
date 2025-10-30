@@ -1,11 +1,14 @@
 'use client';
 
 import { useCart } from '@/contexts/cart-context';
+import { useCartInventoryCheck } from '@/hooks/use-cart-inventory-check';
 import Image from 'next/image';
 import Link from 'next/link';
+import { AlertCircle } from 'lucide-react';
 
 export default function CartDrawer() {
   const { items, removeItem, updateQuantity, totalPrice, isOpen, closeCart } = useCart();
+  const { isValid, issues, isChecking } = useCartInventoryCheck();
 
   if (!isOpen) return null;
 
@@ -162,6 +165,35 @@ export default function CartDrawer() {
         {/* Footer */}
         {items.length > 0 && (
           <div className="border-t border-gray-200 px-6 py-4">
+            {/* Inventory Issues Warning */}
+            {issues.length > 0 && (
+              <div className="mb-4 bg-red-50 border border-red-200 rounded-lg p-4">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-red-900 text-sm mb-2">
+                      {issues.length} item{issues.length !== 1 ? 's' : ''} unavailable
+                    </h4>
+                    <ul className="space-y-1 text-xs text-red-800">
+                      {issues.map((issue) => (
+                        <li key={issue.cart_key}>
+                          <strong>{issue.title}</strong>
+                          {issue.variant_title && ` (${issue.variant_title})`}
+                          {' - '}
+                          {issue.available > 0
+                            ? `Only ${issue.available} available (requested ${issue.requested})`
+                            : 'Out of stock'}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-xs text-red-700 mt-2">
+                      Please remove or reduce quantities to proceed.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="flex items-center justify-between mb-4">
               <span
                 className="text-lg font-semibold text-[#3c3a47]"
@@ -176,14 +208,25 @@ export default function CartDrawer() {
                 ${totalPrice.toFixed(2)}
               </span>
             </div>
-            <Link
-              href="/checkout"
-              onClick={closeCart}
-              className="block w-full bg-[#a5b5eb] text-white text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
-            >
-              Proceed to Checkout
-            </Link>
+
+            {isValid ? (
+              <Link
+                href="/checkout"
+                onClick={closeCart}
+                className="block w-full bg-[#a5b5eb] text-white text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                Proceed to Checkout
+              </Link>
+            ) : (
+              <button
+                disabled
+                className="block w-full bg-gray-300 text-gray-500 text-center px-6 py-4 rounded-lg text-lg font-semibold cursor-not-allowed"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                Cannot Checkout - Items Unavailable
+              </button>
+            )}
             <button
               onClick={closeCart}
               className="block w-full mt-3 bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] text-center px-6 py-3 rounded-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors"

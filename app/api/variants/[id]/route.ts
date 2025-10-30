@@ -1,3 +1,10 @@
+/**
+ * Single Variant API Routes
+ * /api/variants/[id]
+ *
+ * Handles GET, PUT, and DELETE operations for individual variants
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import type { UpdateVariantRequest } from '@/types/product-variant';
@@ -16,127 +23,159 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
+    const { id: variantId } = await params;
 
-    const { data: variant, error } = await supabase
+    if (!variantId) {
+      return NextResponse.json(
+        { error: 'Variant ID is required' },
+        { status: 400 }
+      );
+    }
+
+    // Fetch variant with product info
+    const { data: variant, error: variantError } = await supabase
       .from('product_variants')
-      .select('*')
-      .eq('id', id)
+      .select(
+        `
+        *,
+        products:product_id (
+          id,
+          title,
+          handle,
+          category
+        )
+      `
+      )
+      .eq('id', variantId)
       .single();
 
-    if (error || !variant) {
+    if (variantError) {
+      if (variantError.code === 'PGRST116') {
+        return NextResponse.json(
+          { error: 'Variant not found' },
+          { status: 404 }
+        );
+      }
+      console.error('Error fetching variant:', variantError);
       return NextResponse.json(
-        { error: 'Variant not found' },
-        { status: 404 }
+        { error: 'Failed to fetch variant' },
+        { status: 500 }
       );
     }
 
     return NextResponse.json({ variant });
   } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Internal server error';
     console.error('Error in GET /api/variants/[id]:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
 /**
- * PATCH /api/variants/[id]
+ * PUT /api/variants/[id]
  * Update a variant
  */
-export async function PATCH(
+export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
-    const body: UpdateVariantRequest = await request.json();
+    const { id: variantId } = await params;
 
-    // Check if variant exists
-    const { data: existing } = await supabase
-      .from('product_variants')
-      .select('id, sku')
-      .eq('id', id)
-      .single();
-
-    if (!existing) {
+    if (!variantId) {
       return NextResponse.json(
-        { error: 'Variant not found' },
-        { status: 404 }
+        { error: 'Variant ID is required' },
+        { status: 400 }
       );
     }
 
-    // If updating SKU, check for duplicates
-    if (body.sku && body.sku !== existing.sku) {
-      const { data: duplicate } = await supabase
+    // Verify variant exists
+    const { data: existingVariant, error: findError } = await supabase
+      .from('product_variants')
+      .select('id, sku, product_id')
+      .eq('id', variantId)
+      .single();
+
+    if (findError) {
+      if (findError.code === 'PGRST116') {
+        return NextResponse.json(
+          { error: 'Variant not found' },
+          { status: 404 }
+        );
+      }
+      console.error('Error finding variant:', findError);
+      return NextResponse.json(
+        { error: 'Failed to find variant' },
+        { status: 500 }
+      );
+    }
+
+    // Parse request body
+    const body: UpdateVariantRequest = await request.json();
+
+    // Validate price if provided
+    if (body.price !== undefined && body.price <= 0) {
+      return NextResponse.json(
+        { error: 'Price must be greater than 0' },
+        { status: 400 }
+      );
+    }
+
+    // Check if SKU already exists (if updating SKU)
+    if (body.sku && body.sku !== existingVariant.sku) {
+      const { data: duplicateSku } = await supabase
         .from('product_variants')
         .select('id')
         .eq('sku', body.sku)
+        .neq('id', variantId)
         .single();
 
-      if (duplicate) {
+      if (duplicateSku) {
         return NextResponse.json(
-          { error: 'SKU already exists' },
+          { error: `SKU "${body.sku}" already exists` },
           { status: 409 }
         );
       }
     }
 
-    // Build update object (only include fields that were provided)
-    const updates: any = {};
-    if (body.title !== undefined) updates.title = body.title;
-    if (body.sku !== undefined) updates.sku = body.sku;
-    if (body.price !== undefined) updates.price = body.price;
-    if (body.compare_at_price !== undefined) updates.compare_at_price = body.compare_at_price;
-    if (body.cost_per_unit !== undefined) updates.cost_per_unit = body.cost_per_unit;
-    if (body.weight !== undefined) updates.weight = body.weight;
-    if (body.weight_unit !== undefined) updates.weight_unit = body.weight_unit;
-    if (body.dimensions_length !== undefined) updates.dimensions_length = body.dimensions_length;
-    if (body.dimensions_width !== undefined) updates.dimensions_width = body.dimensions_width;
-    if (body.dimensions_height !== undefined) updates.dimensions_height = body.dimensions_height;
-    if (body.dimensions_unit !== undefined) updates.dimensions_unit = body.dimensions_unit;
-    if (body.option1_name !== undefined) updates.option1_name = body.option1_name;
-    if (body.option1_value !== undefined) updates.option1_value = body.option1_value;
-    if (body.option2_name !== undefined) updates.option2_name = body.option2_name;
-    if (body.option2_value !== undefined) updates.option2_value = body.option2_value;
-    if (body.option3_name !== undefined) updates.option3_name = body.option3_name;
-    if (body.option3_value !== undefined) updates.option3_value = body.option3_value;
-    if (body.inventory_quantity !== undefined) updates.inventory_quantity = body.inventory_quantity;
-    if (body.inventory_policy !== undefined) updates.inventory_policy = body.inventory_policy;
-    if (body.track_inventory !== undefined) updates.track_inventory = body.track_inventory;
-    if (body.is_available !== undefined) updates.is_available = body.is_available;
-    if (body.requires_shipping !== undefined) updates.requires_shipping = body.requires_shipping;
-    if (body.taxable !== undefined) updates.taxable = body.taxable;
-    if (body.image_url !== undefined) updates.image_url = body.image_url;
-    if (body.position !== undefined) updates.position = body.position;
-    if (body.barcode !== undefined) updates.barcode = body.barcode;
-    if (body.notes !== undefined) updates.notes = body.notes;
-
     // Update variant
-    const { data: variant, error } = await supabase
+    const { data: variant, error: updateError } = await supabase
       .from('product_variants')
-      .update(updates)
-      .eq('id', id)
+      .update(body)
+      .eq('id', variantId)
       .select()
       .single();
 
-    if (error) {
-      console.error('Error updating variant:', error);
+    if (updateError) {
+      console.error('Error updating variant:', updateError);
       return NextResponse.json(
         { error: 'Failed to update variant' },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ variant, message: 'Variant updated successfully' });
+    return NextResponse.json({
+      message: 'Variant updated successfully',
+      variant,
+    });
   } catch (error) {
-    console.error('Error in PATCH /api/variants/[id]:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    const errorMessage =
+      error instanceof Error ? error.message : 'Internal server error';
+    console.error('Error in PUT /api/variants/[id]:', error);
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
+}
+
+/**
+ * PATCH /api/variants/[id]
+ * Partially update a variant (alias for PUT)
+ */
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  return PUT(request, { params });
 }
 
 /**
@@ -148,57 +187,89 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
+    const { id: variantId } = await params;
 
-    // Get variant to check product_id
-    const { data: variant } = await supabase
-      .from('product_variants')
-      .select('product_id')
-      .eq('id', id)
-      .single();
-
-    if (!variant) {
+    if (!variantId) {
       return NextResponse.json(
-        { error: 'Variant not found' },
-        { status: 404 }
+        { error: 'Variant ID is required' },
+        { status: 400 }
       );
     }
 
-    // Delete variant
-    const { error } = await supabase
+    // Get variant to check product_id
+    const { data: variant, error: findError } = await supabase
+      .from('product_variants')
+      .select('id, product_id, title')
+      .eq('id', variantId)
+      .single();
+
+    if (findError) {
+      if (findError.code === 'PGRST116') {
+        return NextResponse.json(
+          { error: 'Variant not found' },
+          { status: 404 }
+        );
+      }
+      console.error('Error finding variant:', findError);
+      return NextResponse.json(
+        { error: 'Failed to find variant' },
+        { status: 500 }
+      );
+    }
+
+    const productId = variant.product_id;
+
+    // Check if this is the last variant
+    const { data: otherVariants, error: countError } = await supabase
+      .from('product_variants')
+      .select('id')
+      .eq('product_id', productId)
+      .neq('id', variantId);
+
+    if (countError) {
+      console.error('Error counting variants:', countError);
+      return NextResponse.json(
+        { error: 'Failed to count variants' },
+        { status: 500 }
+      );
+    }
+
+    const isLastVariant = !otherVariants || otherVariants.length === 0;
+
+    // Delete the variant
+    const { error: deleteError } = await supabase
       .from('product_variants')
       .delete()
-      .eq('id', id);
+      .eq('id', variantId);
 
-    if (error) {
-      console.error('Error deleting variant:', error);
+    if (deleteError) {
+      console.error('Error deleting variant:', deleteError);
       return NextResponse.json(
         { error: 'Failed to delete variant' },
         { status: 500 }
       );
     }
 
-    // Check if product has any remaining variants
-    const { data: remainingVariants } = await supabase
-      .from('product_variants')
-      .select('id')
-      .eq('product_id', variant.product_id)
-      .limit(1);
-
-    // Update product has_variants flag if no variants remain
-    if (!remainingVariants || remainingVariants.length === 0) {
+    // Update product has_variants flag if this was the last variant
+    if (isLastVariant) {
       await supabase
         .from('products')
         .update({ has_variants: false })
-        .eq('id', variant.product_id);
+        .eq('id', productId);
     }
 
-    return NextResponse.json({ message: 'Variant deleted successfully' });
+    return NextResponse.json({
+      message: 'Variant deleted successfully',
+      deleted_variant: {
+        id: variantId,
+        title: variant.title,
+      },
+      is_last_variant: isLastVariant,
+    });
   } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Internal server error';
     console.error('Error in DELETE /api/variants/[id]:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

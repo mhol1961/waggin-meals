@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 import { getProductByHandle, getProductsByCollection } from '@/data/products';
 import AddToCartButton from '@/components/add-to-cart-button';
 import VariantSelector from '@/components/variant-selector';
+import StockStatusBadge from '@/components/stock-status-badge';
 import type { ProductVariant } from '@/types/product-variant';
 
 export default function ProductPage() {
@@ -193,54 +194,23 @@ export default function ProductPage() {
               {/* Stock Status */}
               <div className="mb-8">
                 {selectedVariant ? (
-                  // Show variant stock
-                  selectedVariant.track_inventory ? (
-                    selectedVariant.inventory_quantity > 0 ? (
-                      <div className="flex items-center text-green-600">
-                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                        </svg>
-                        <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                          In Stock
-                          {selectedVariant.inventory_quantity < 10 && ` - Only ${selectedVariant.inventory_quantity} left!`}
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center text-red-600">
-                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
-                        </svg>
-                        <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Out of Stock</span>
-                      </div>
-                    )
-                  ) : (
-                    <div className="flex items-center text-green-600">
-                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                      </svg>
-                      <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>In Stock</span>
-                    </div>
-                  )
+                  <StockStatusBadge
+                    quantity={selectedVariant.inventory_quantity}
+                    lowStockThreshold={selectedVariant.low_stock_threshold || 5}
+                    trackInventory={selectedVariant.track_inventory}
+                    allowBackorder={selectedVariant.allow_backorder || false}
+                    showQuantity={true}
+                    size="md"
+                  />
                 ) : (
-                  // Show product-level stock
-                  product.inStock ? (
-                    <div className="flex items-center text-green-600">
-                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                      </svg>
-                      <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                        In Stock
-                        {product.stockQty && product.stockQty < 50 && ` - Only ${product.stockQty} left!`}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center text-red-600">
-                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
-                      </svg>
-                      <span className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Out of Stock</span>
-                    </div>
-                  )
+                  <StockStatusBadge
+                    quantity={product.stockQty || 0}
+                    lowStockThreshold={5}
+                    trackInventory={true}
+                    allowBackorder={false}
+                    showQuantity={true}
+                    size="md"
+                  />
                 )}
               </div>
 
