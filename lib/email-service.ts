@@ -127,7 +127,7 @@ export async function sendEmail({ to, subject, html, text, firstName, lastName, 
         contactId,
         subject,
         html,
-        emailFrom: process.env.EMAIL_FROM || 'orders@wagginmeals.com',
+        emailFrom: process.env.EMAIL_FROM || 'wagginmeals@gmail.com',
       }),
     });
 
