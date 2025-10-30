@@ -425,7 +425,7 @@ export default function Home() {
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-sm font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Quick Links
               </h3>
               <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -439,7 +439,7 @@ export default function Home() {
 
             {/* Resources */}
             <div>
-              <h3 className="text-sm font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Resources
               </h3>
               <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -453,7 +453,7 @@ export default function Home() {
 
             {/* Legal */}
             <div>
-              <h3 className="text-sm font-bold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Legal
               </h3>
               <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
