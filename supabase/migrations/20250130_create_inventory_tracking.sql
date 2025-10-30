@@ -212,9 +212,9 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 -- Function: Adjust inventory (product or variant)
 CREATE OR REPLACE FUNCTION adjust_inventory(
   p_product_id UUID,
-  p_variant_id UUID DEFAULT NULL,
   p_quantity_change INTEGER,
   p_transaction_type inventory_transaction_type,
+  p_variant_id UUID DEFAULT NULL,
   p_reason TEXT DEFAULT NULL,
   p_notes TEXT DEFAULT NULL,
   p_order_id UUID DEFAULT NULL,
