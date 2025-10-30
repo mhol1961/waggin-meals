@@ -1,0 +1,61 @@
+
+> waggin-meals@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.6
+   - Local:        http://localhost:3000
+   - Network:      http://10.255.255.254:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 96.4s
+ ○ Compiling / ...
+Request timed out after 3000ms
+
+Retrying 1/3...
+Request timed out after 3000ms
+
+Retrying 1/3...
+Request timed out after 3000ms
+
+Retrying 1/3...
+ ✓ Compiled / in 19.8s (707 modules)
+ ✓ Compiled in 3.9s (269 modules)
+ GET / 200 in 25140ms
+ GET / 200 in 396ms
+ ○ Compiling /shop ...
+ ✓ Compiled /shop in 787ms (684 modules)
+ GET /shop 200 in 1351ms
+ ○ Compiling /checkout ...
+ ✓ Compiled /checkout in 715ms (693 modules)
+ GET /checkout 200 in 1380ms
+ ○ Compiling /testimonials ...
+ ✓ Compiled /testimonials in 877ms (700 modules)
+ GET /testimonials 200 in 1397ms
+ ○ Compiling /api/case-studies ...
+ ⚠ ./app/api/case-studies/route.ts
+Attempted import error: 'createClient' is not exported from '@/lib/supabase/server' (imported as 'createClient').
+
+Import trace for requested module:
+./app/api/case-studies/route.ts
+Error in GET /api/case-studies: TypeError: (0 , _lib_supabase_server__WEBPACK_IMPORTED_MODULE_1__.createClient) is not a function
+    at GET (app/api/case-studies/route.ts:7:34)
+   5 | export async function GET(request: NextRequest) {
+   6 |   try {
+>  7 |     const supabase = createClient();
+     |                                  ^
+   8 |
+   9 |     // Get query parameters
+  10 |     const { searchParams } = new URL(request.url);
+ GET /api/case-studies 500 in 3265ms
+Error in GET /api/case-studies: TypeError: (0 , _lib_supabase_server__WEBPACK_IMPORTED_MODULE_1__.createClient) is not a function
+    at GET (app/api/case-studies/route.ts:7:34)
+   5 | export async function GET(request: NextRequest) {
+   6 |   try {
+>  7 |     const supabase = createClient();
+     |                                  ^
+   8 |
+   9 |     // Get query parameters
+  10 |     const { searchParams } = new URL(request.url);
+ GET /api/case-studies 500 in 341ms
+[?25h

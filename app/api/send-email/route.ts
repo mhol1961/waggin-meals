@@ -59,6 +59,9 @@ export async function POST(request: NextRequest) {
       subject: emailContent.subject,
       html: emailContent.html,
       text: emailContent.text,
+      firstName: data.customer_first_name || data.shipping_address?.first_name,
+      lastName: data.customer_last_name || data.shipping_address?.last_name,
+      phone: data.shipping_address?.phone,
     });
 
     if (!success) {

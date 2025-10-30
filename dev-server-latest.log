@@ -1,0 +1,40 @@
+
+> waggin-meals@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.6
+   - Local:        http://localhost:3000
+   - Network:      http://10.255.255.254:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ⚠ Duplicate page detected. app/robots.ts and app/robots.txt/route.ts resolve to /robots.txt
+ ⚠ Duplicate page detected. app/robots.ts and app/robots.txt/route.ts resolve to /robots.txt
+ ✓ Ready in 46.1s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 606ms (199 modules)
+ ○ Compiling /hero-variations/ultimate-homepage ...
+ ✓ Compiled /hero-variations/ultimate-homepage in 35.5s (914 modules)
+ GET /hero-variations/ultimate-homepage 200 in 40814ms
+ ✓ Compiled in 5.5s (374 modules)
+ GET /hero-variations/ultimate-homepage 200 in 5707ms
+ ○ Compiling /bundles ...
+ ✓ Compiled /bundles in 3.1s (905 modules)
+ GET /bundles 200 in 4992ms
+ ○ Compiling /icon.png ...
+ ✓ Compiled /icon.png in 854ms (552 modules)
+ GET /icon.png?ee7b68787765054d 200 in 2367ms
+ ○ Compiling /hero-variations ...
+ ✓ Compiled /hero-variations in 825ms (928 modules)
+ GET /hero-variations 200 in 2152ms
+ ○ Compiling /hero-variations/lavender-luxe-homepage ...
+ ✓ Compiled /hero-variations/lavender-luxe-homepage in 743ms (954 modules)
+ GET /hero-variations/lavender-luxe-homepage 200 in 1592ms
+ GET /hero-variations/lavender-luxe-homepage 200 in 2192ms
+ GET /icon.png?ee7b68787765054d 200 in 1118ms
+ ○ Compiling /auth/login ...
+ ✓ Compiled /auth/login in 1544ms (961 modules)
+ GET /auth/login?redirect=%2Faccount 200 in 2635ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1678ms (971 modules)
+ GET / 200 in 2476ms

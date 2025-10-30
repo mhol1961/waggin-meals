@@ -1,47 +1,147 @@
-import { generateOrderConfirmationEmail, generateOrderShippedEmail } from './email-templates';
+import {
+  generateOrderConfirmationEmail,
+  generateOrderShippedEmail,
+  generateOrderProcessingEmail,
+  generateOrderOutForDeliveryEmail,
+  generateOrderDeliveredEmail
+} from './email-templates';
+
+const GHL_API_BASE = 'https://services.leadconnectorhq.com';
 
 interface SendEmailParams {
   to: string;
   subject: string;
   html: string;
   text: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
 }
 
-export async function sendEmail({ to, subject, html, text }: SendEmailParams): Promise<boolean> {
-  // Check if Resend API key is configured
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('RESEND_API_KEY not configured. Email not sent.');
-    console.log('Email details:', { to, subject });
+/**
+ * Get or create a contact in GHL and return contact ID
+ */
+async function getOrCreateGHLContact(email: string, firstName?: string, lastName?: string, phone?: string): Promise<string | null> {
+  const apiKey = process.env.GHL_API_KEY;
+  const locationId = process.env.GHL_LOCATION_ID;
+
+  if (!email || email.trim() === '') {
+    console.error('[GHL] Cannot create contact without valid email');
+    return null;
+  }
+
+  if (!apiKey || !locationId) {
+    console.warn('[GHL] GHL_API_KEY or GHL_LOCATION_ID not configured. Skipping email.');
+    console.log('[GHL] Email would be sent to:', email);
+    return null;
+  }
+
+  try {
+    // Search for existing contact
+    const searchResponse = await fetch(
+      `${GHL_API_BASE}/contacts/?locationId=${locationId}&email=${encodeURIComponent(email)}`,
+      {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Version': '2021-07-28',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (searchResponse.ok) {
+      const searchData = await searchResponse.json();
+      if (searchData.contacts && searchData.contacts.length > 0) {
+        console.log(`[GHL] Found existing contact: ${searchData.contacts[0].id}`);
+        return searchData.contacts[0].id;
+      }
+    }
+
+    // Create new contact
+    const createResponse = await fetch(`${GHL_API_BASE}/contacts/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Version': '2021-07-28',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        locationId,
+        email,
+        firstName: firstName || '',
+        lastName: lastName || '',
+        phone: phone || '',
+        tags: ['customer'],
+      }),
+    });
+
+    if (!createResponse.ok) {
+      const error = await createResponse.text();
+      console.error('[GHL] Failed to create contact:', error);
+      return null;
+    }
+
+    const createData = await createResponse.json();
+    console.log(`[GHL] Created new contact: ${createData.contact.id}`);
+    return createData.contact.id;
+
+  } catch (error) {
+    console.error('[GHL] Error getting/creating contact:', error);
+    return null;
+  }
+}
+
+/**
+ * Send email via GHL Conversations API
+ */
+export async function sendEmail({ to, subject, html, text, firstName, lastName, phone }: SendEmailParams): Promise<boolean> {
+  const apiKey = process.env.GHL_API_KEY;
+  const locationId = process.env.GHL_LOCATION_ID;
+
+  if (!apiKey || !locationId) {
+    console.warn('[GHL] GHL_API_KEY or GHL_LOCATION_ID not configured. Email not sent.');
+    console.log('[GHL] Email details:', { to, subject });
     return false;
   }
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
+    // Get or create contact
+    const contactId = await getOrCreateGHLContact(to, firstName, lastName, phone);
+
+    if (!contactId) {
+      console.error('[GHL] Failed to get/create contact for email');
+      return false;
+    }
+
+    // Send email via GHL
+    const response = await fetch(`${GHL_API_BASE}/conversations/messages/email`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
+        'Version': '2021-07-28',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: process.env.EMAIL_FROM || 'Waggin Meals <orders@wagginmeals.com>',
-        to: [to],
+        locationId,
+        contactId,
         subject,
         html,
-        text,
+        emailFrom: process.env.EMAIL_FROM || 'orders@wagginmeals.com',
       }),
     });
 
     if (!response.ok) {
       const error = await response.text();
-      console.error('Failed to send email:', error);
+      console.error('[GHL] Failed to send email:', error);
       return false;
     }
 
-    const data = await response.json();
-    console.log('Email sent successfully:', data.id);
+    console.log(`[GHL] Email sent successfully: ${subject} to ${to}`);
     return true;
+
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('[GHL] Error sending email:', error);
     return false;
   }
 }
@@ -54,6 +154,9 @@ export async function sendOrderConfirmationEmail(orderData: any): Promise<boolea
     subject,
     html,
     text,
+    firstName: orderData.customer_first_name || orderData.shipping_address?.first_name,
+    lastName: orderData.customer_last_name || orderData.shipping_address?.last_name,
+    phone: orderData.shipping_address?.phone,
   });
 }
 
@@ -65,6 +168,8 @@ export async function sendOrderShippedEmail(orderData: any): Promise<boolean> {
     subject,
     html,
     text,
+    firstName: orderData.customer_first_name,
+    lastName: orderData.customer_last_name,
   });
 }
 

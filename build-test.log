@@ -1,0 +1,20 @@
+
+> waggin-meals@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.6
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+Failed to compile.
+
+./components/admin/image-upload.tsx
+Module not found: Can't resolve 'react-dropzone'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./components/admin/event-form.tsx
+
+
+> Build failed because of webpack errors
