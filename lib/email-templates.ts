@@ -406,3 +406,199 @@ https://wagginmeals.com
 
   return { subject, html, text };
 }
+
+export function generateOrderProcessingEmail(order: OrderEmailData): { subject: string; html: string; text: string } {
+  const subject = `Your Order #${order.order_number} is Being Processed 📦`;
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Processing</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 0; background-color: #f5f5f5; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+    .header { background-color: #a5b5eb; padding: 30px 20px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 28px; }
+    .content { padding: 40px 30px; }
+    .status-box { background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107; }
+    .footer { background-color: #333333; color: #ffffff; padding: 30px; text-align: center; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header"><h1>🐾 Order in Progress</h1></div>
+    <div class="content">
+      <h2>Hi ${order.customer_first_name}!</h2>
+      <p>Great news! Your order #${order.order_number} is currently being processed by our team.</p>
+      <div class="status-box">
+        <div style="font-weight: bold; margin-bottom: 10px;">⏳ Current Status: Processing</div>
+        <div>We're carefully preparing your pup's premium nutrition. You'll receive a shipping confirmation with tracking information once your order is on its way!</div>
+      </div>
+      <p><strong>What's next?</strong><br>• Our team is packing your order with care<br>• You'll receive tracking information within 1-2 business days<br>• Estimated delivery: 3-5 business days after shipment</p>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="https://wagginmeals.com/contact" style="display: inline-block; padding: 15px 30px; background-color: #a5b5eb; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: bold;">Questions? Contact Us</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p><strong>Waggin' Meals</strong><br>Premium Dog Nutrition<br><a href="https://wagginmeals.com" style="color: #a5b5eb; text-decoration: none;">wagginmeals.com</a></p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+
+  const text = `Your Order is Being Processed 📦
+
+Hi ${order.customer_first_name}!
+Great news! Your order #${order.order_number} is currently being processed by our team.
+
+CURRENT STATUS: Processing
+⏳ We're carefully preparing your pup's premium nutrition.
+
+WHAT'S NEXT?
+• Our team is packing your order with care
+• You'll receive tracking information within 1-2 business days
+• Estimated delivery: 3-5 business days after shipment
+
+Questions? Visit https://wagginmeals.com/contact`;
+
+  return { subject, html, text };
+}
+
+export function generateOrderOutForDeliveryEmail(order: OrderEmailData & { tracking_number?: string; carrier?: string }): { subject: string; html: string; text: string } {
+  const subject = `Your Order #${order.order_number} is Out for Delivery Today! 🚚`;
+  const trackingInfo = order.tracking_number ? `<div class="tracking-box"><div style="font-weight: bold; margin-bottom: 10px;">Tracking Information</div><div>Carrier: ${order.carrier || 'USPS'}</div><div>Tracking Number: <strong>${order.tracking_number}</strong></div></div>` : '';
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Out for Delivery</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 0; background-color: #f5f5f5; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+    .header { background-color: #28a745; padding: 30px 20px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 28px; }
+    .content { padding: 40px 30px; }
+    .tracking-box { background-color: #d4edda; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745; }
+    .footer { background-color: #333333; color: #ffffff; padding: 30px; text-align: center; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header"><h1>🐾 Out for Delivery!</h1></div>
+    <div class="content">
+      <h2>Your order arrives today, ${order.customer_first_name}!</h2>
+      <p>Exciting news! Your order #${order.order_number} is out for delivery and should arrive at your door today.</p>
+      ${trackingInfo}
+      <p><strong>What to expect:</strong><br>• Your package will be delivered today during normal business hours<br>• No signature required (unless specified)<br>• Someone should be available to receive the package</p>
+      <p><strong>Storage tip:</strong> Once delivered, refrigerate or freeze your pup's fresh meals immediately to maintain peak freshness!</p>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="https://wagginmeals.com/contact" style="display: inline-block; padding: 15px 30px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: bold;">Need Help?</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p><strong>Waggin' Meals</strong><br>Premium Dog Nutrition<br><a href="https://wagginmeals.com" style="color: #a5b5eb; text-decoration: none;">wagginmeals.com</a></p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+
+  const text = `Your Order is Out for Delivery Today! 🚚
+
+Your order arrives today, ${order.customer_first_name}!
+Exciting news! Your order #${order.order_number} is out for delivery and should arrive at your door today.
+
+${order.tracking_number ? `TRACKING: ${order.carrier || 'USPS'} - ${order.tracking_number}` : ''}
+
+WHAT TO EXPECT:
+• Delivery today during normal business hours
+• No signature required (unless specified)
+• Storage tip: Refrigerate or freeze immediately upon delivery!
+
+Questions? Visit https://wagginmeals.com/contact`;
+
+  return { subject, html, text };
+}
+
+export function generateOrderDeliveredEmail(order: OrderEmailData): { subject: string; html: string; text: string } {
+  const subject = `Your Order #${order.order_number} Has Been Delivered! 🎉`;
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Delivered</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 0; background-color: #f5f5f5; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+    .header { background-color: #28a745; padding: 30px 20px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 28px; }
+    .content { padding: 40px 30px; }
+    .success-box { background-color: #d4edda; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745; text-align: center; }
+    .button { display: inline-block; padding: 15px 30px; background-color: #a5b5eb; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 10px 5px; }
+    .footer { background-color: #333333; color: #ffffff; padding: 30px; text-align: center; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header"><h1>🐾 Delivered Successfully!</h1></div>
+    <div class="content">
+      <h2>Great news, ${order.customer_first_name}!</h2>
+      <p>Your order #${order.order_number} has been successfully delivered! We hope your pup is already wagging with excitement.</p>
+      <div class="success-box">
+        <div style="font-size: 48px; margin-bottom: 10px;">✅</div>
+        <div style="font-weight: bold; font-size: 18px;">Delivery Confirmed</div>
+      </div>
+      <p><strong>Important Reminders:</strong><br>• Store fresh meals in the refrigerator or freezer immediately<br>• Follow feeding guidelines on the package<br>• Introduce new foods gradually over 7-10 days<br>• Fresh meals can be refrigerated for up to 5 days or frozen for up to 6 months</p>
+      <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h3 style="margin-top: 0; color: #a5b5eb;">How's your experience?</h3>
+        <p>We'd love to hear how your pup enjoys their premium nutrition! Your feedback helps us serve you better.</p>
+        <div style="text-align: center;">
+          <a href="https://wagginmeals.com/testimonials" class="button">Share Your Story</a>
+          <a href="https://wagginmeals.com/shop" class="button" style="background-color: #28a745;">Reorder Now</a>
+        </div>
+      </div>
+      <p style="text-align: center; color: #666666; font-size: 14px;">Questions or concerns? We're here to help!</p>
+      <div style="text-align: center;">
+        <a href="https://wagginmeals.com/contact" class="button">Contact Support</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p><strong>Waggin' Meals</strong><br>Premium Dog Nutrition<br><a href="https://wagginmeals.com" style="color: #a5b5eb; text-decoration: none;">wagginmeals.com</a></p>
+      <p style="margin-top: 20px; font-size: 12px; color: #999999;">Thank you for trusting us with your pup's nutrition! 🐕❤️</p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+
+  const text = `Your Order Has Been Delivered! 🎉
+
+Great news, ${order.customer_first_name}!
+Your order #${order.order_number} has been successfully delivered!
+
+✅ DELIVERY CONFIRMED
+
+IMPORTANT REMINDERS:
+• Store fresh meals in refrigerator/freezer immediately
+• Follow feeding guidelines on the package
+• Introduce new foods gradually over 7-10 days
+• Refrigerate up to 5 days or freeze up to 6 months
+
+Share your story: https://wagginmeals.com/testimonials
+Reorder now: https://wagginmeals.com/shop
+Contact us: https://wagginmeals.com/contact
+
+Thank you for trusting us with your pup's nutrition! 🐕❤️`;
+
+  return { subject, html, text };
+}

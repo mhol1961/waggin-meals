@@ -87,6 +87,7 @@ export interface AuthContextType {
   loading: boolean;
   signUp: (credentials: SignupCredentials) => Promise<void>;
   signIn: (credentials: LoginCredentials) => Promise<void>;
+  signInWithGoogle: () => Promise<any>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   updatePassword: (password: string) => Promise<void>;
