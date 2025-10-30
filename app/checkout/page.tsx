@@ -73,10 +73,15 @@ export default function CheckoutPage() {
   const oneTimeItems = items.filter(item => !item.bundleDetails?.isSubscription);
   const subscriptionItems = items.filter(item => item.bundleDetails?.isSubscription);
 
+  // Tax calculation state
+  const [calculatedTax, setCalculatedTax] = useState<number>(0);
+  const [taxRate, setTaxRate] = useState<number>(0);
+  const [taxCalculating, setTaxCalculating] = useState(false);
+
   // Calculate totals
   const subtotal = totalPrice;
   const shipping = subtotal > 50 ? 0 : 12.99;
-  const tax = subtotal * 0.08; // 8% tax placeholder
+  const tax = calculatedTax; // Use calculated tax from API
   const total = subtotal + shipping + tax;
 
   // Load saved payment methods for authenticated users
@@ -94,6 +99,55 @@ export default function CheckoutPage() {
     });
     setSubscriptionFrequencies(initialFrequencies);
   }, [subscriptionItems.length]);
+
+  // Calculate tax when shipping address changes
+  useEffect(() => {
+    async function updateTax() {
+      // Only calculate tax if we have state and ZIP
+      if (shippingAddress.state && shippingAddress.zip && subtotal > 0) {
+        setTaxCalculating(true);
+        try {
+          const response = await fetch('/api/tax/calculate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              amount: subtotal,
+              shippingAddress: {
+                address: shippingAddress.address,
+                address2: shippingAddress.address2,
+                city: shippingAddress.city,
+                state: shippingAddress.state,
+                zip: shippingAddress.zip,
+                country: shippingAddress.country,
+              },
+            }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setCalculatedTax(data.tax_amount || 0);
+            setTaxRate(data.tax_rate || 0);
+          } else {
+            console.error('Failed to calculate tax');
+            setCalculatedTax(0);
+            setTaxRate(0);
+          }
+        } catch (error) {
+          console.error('Tax calculation error:', error);
+          setCalculatedTax(0);
+          setTaxRate(0);
+        } finally {
+          setTaxCalculating(false);
+        }
+      } else {
+        // Reset tax if address is incomplete
+        setCalculatedTax(0);
+        setTaxRate(0);
+      }
+    }
+
+    updateTax();
+  }, [shippingAddress.state, shippingAddress.zip, subtotal]);
 
   async function fetchPaymentMethods() {
     if (!user) return;
@@ -942,7 +996,12 @@ export default function CheckoutPage() {
                     </span>
                   </div>
                   <div className="flex justify-between text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    <span className="text-[#666666]">Tax (estimated)</span>
+                    <span className="text-[#666666]">
+                      Tax {taxRate > 0 ? `(${(taxRate * 100).toFixed(2)}%)` : '(estimated)'}
+                      {taxCalculating && (
+                        <span className="ml-2 text-xs text-gray-400">Calculating...</span>
+                      )}
+                    </span>
                     <span className="font-medium text-[#3c3a47]">${tax.toFixed(2)}</span>
                   </div>
                 </div>
