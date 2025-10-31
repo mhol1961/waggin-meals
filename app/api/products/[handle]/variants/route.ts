@@ -23,11 +23,11 @@ export async function GET(
   { params }: { params: Promise<{ handle: string }> }
 ) {
   try {
-    const { handle: productId } = await params;
+    const { handle: productHandle } = await params;
 
-    if (!productId) {
+    if (!productHandle) {
       return NextResponse.json(
-        { error: 'Product ID is required' },
+        { error: 'Product handle is required' },
         { status: 400 }
       );
     }
@@ -36,7 +36,7 @@ export async function GET(
     const { data: product, error: productError } = await supabase
       .from('products')
       .select('id, title, has_variants')
-      .eq('id', productId)
+      .eq('handle', productHandle)
       .single();
 
     if (productError) {
@@ -57,7 +57,7 @@ export async function GET(
     const { data: variants, error: variantsError } = await supabase
       .from('product_variants')
       .select('*')
-      .eq('product_id', productId)
+      .eq('product_id', product.id)
       .order('position', { ascending: true });
 
     if (variantsError) {
@@ -94,11 +94,11 @@ export async function POST(
   { params }: { params: Promise<{ handle: string }> }
 ) {
   try {
-    const { handle: productId } = await params;
+    const { handle: productHandle } = await params;
 
-    if (!productId) {
+    if (!productHandle) {
       return NextResponse.json(
-        { error: 'Product ID is required' },
+        { error: 'Product handle is required' },
         { status: 400 }
       );
     }
@@ -107,7 +107,7 @@ export async function POST(
     const { data: product, error: productError } = await supabase
       .from('products')
       .select('id, title')
-      .eq('id', productId)
+      .eq('handle', productHandle)
       .single();
 
     if (productError) {
@@ -158,12 +158,12 @@ export async function POST(
       }
     } else {
       // Auto-generate SKU
-      body.sku = await generateUniqueSKU(productId, body.title);
+      body.sku = await generateUniqueSKU(product.id, body.title);
     }
 
     // Set defaults
     const variantData = {
-      product_id: productId,
+      product_id: product.id,
       title: body.title,
       sku: body.sku,
       price: body.price,
@@ -212,7 +212,7 @@ export async function POST(
     await supabase
       .from('products')
       .update({ has_variants: true })
-      .eq('id', productId);
+      .eq('id', product.id);
 
     return NextResponse.json(
       {

@@ -221,7 +221,7 @@ export default function LavenderLuxeHomepage() {
   };
 
   return (
-    <main className="bg-[#f9f5ff] min-h-screen">
+    <main className="bg-[#ede1ff] min-h-screen">
       {/* Announcement Bar */}
       <div className="bg-[#5E3B76] text-white text-center text-xs py-2.5 px-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
         Free insulated tote on local delivery · Weekly Nutrition Workshops · Complimentary vet-ready reports
@@ -276,7 +276,7 @@ export default function LavenderLuxeHomepage() {
                             <Link
                               key={dropdownItem.href}
                               href={dropdownItem.href}
-                              className="block px-4 py-2 text-sm text-[#5E3B76] hover:bg-[#f9f5ff] transition-colors"
+                              className="block px-4 py-2 text-sm text-[#5E3B76] hover:bg-[#ede1ff] transition-colors"
                               style={{ fontFamily: "'Poppins', sans-serif" }}
                             >
                               {dropdownItem.label}
@@ -307,7 +307,7 @@ export default function LavenderLuxeHomepage() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-[#5E3B76] hover:bg-[#f9f5ff] rounded-md"
+              className="lg:hidden p-2 text-[#5E3B76] hover:bg-[#ede1ff] rounded-md"
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -322,7 +322,7 @@ export default function LavenderLuxeHomepage() {
                     <>
                       <button
                         onClick={() => setActiveDropdown(activeDropdown === item.label ? null : item.label)}
-                        className="w-full flex items-center justify-between text-sm font-semibold text-[#5E3B76] px-3 py-2 hover:bg-[#f9f5ff] rounded-md"
+                        className="w-full flex items-center justify-between text-sm font-semibold text-[#5E3B76] px-3 py-2 hover:bg-[#ede1ff] rounded-md"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                         suppressHydrationWarning
                       >
@@ -335,7 +335,7 @@ export default function LavenderLuxeHomepage() {
                             <Link
                               key={dropdownItem.href}
                               href={dropdownItem.href}
-                              className="block px-4 py-2 text-sm text-[#8a7ba8] hover:bg-[#f9f5ff] rounded-md"
+                              className="block px-4 py-2 text-sm text-[#8a7ba8] hover:bg-[#ede1ff] rounded-md"
                               style={{ fontFamily: "'Poppins', sans-serif" }}
                               onClick={() => setMobileMenuOpen(false)}
                             >
@@ -348,7 +348,7 @@ export default function LavenderLuxeHomepage() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="block text-sm font-semibold text-[#5E3B76] px-3 py-2 hover:bg-[#f9f5ff] rounded-md"
+                      className="block text-sm font-semibold text-[#5E3B76] px-3 py-2 hover:bg-[#ede1ff] rounded-md"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                       onClick={() => setMobileMenuOpen(false)}
                     >
@@ -525,7 +525,7 @@ export default function LavenderLuxeHomepage() {
         {chatWidgetOpen ? (
           <div className="absolute bottom-6 right-6 z-50 w-96 bg-white border border-[#e8ddff] rounded-3xl shadow-2xl overflow-hidden">
             {/* Header with close button */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#e8ddff] bg-gradient-to-r from-[#f9f5ff] to-white">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[#e8ddff] bg-gradient-to-r from-[#ede1ff] to-white">
               <div className="flex items-center gap-2">
                 <MessageCircle className="w-5 h-5 text-[#5E3B76]" />
                 <span className="text-sm font-semibold text-[#5E3B76]">How can we help?</span>
@@ -617,7 +617,7 @@ export default function LavenderLuxeHomepage() {
       </section>
 
       {/* Stunning Quiz + Calculator Section */}
-      <section id="calculator" className="px-4 py-16 bg-gradient-to-br from-white to-[#f9f5ff]">
+      <section id="calculator" className="px-4 py-16 bg-gradient-to-br from-white to-[#ede1ff]">
         <div className="mx-auto max-w-5xl">
           <div className="text-center mb-10">
             <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -638,7 +638,7 @@ export default function LavenderLuxeHomepage() {
                 onClick={() => setShowQuiz(true)}
                 className={`flex-1 py-4 text-sm font-semibold transition-colors ${
                   showQuiz
-                    ? 'border-b-2 border-[#5E3B76] text-[#5E3B76] bg-[#f9f5ff]'
+                    ? 'border-b-2 border-[#5E3B76] text-[#5E3B76] bg-[#ede1ff]'
                     : 'text-[#888] hover:text-[#5E3B76]'
                 }`}
                 style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -650,7 +650,7 @@ export default function LavenderLuxeHomepage() {
                 onClick={() => setShowQuiz(false)}
                 className={`flex-1 py-4 text-sm font-semibold transition-colors ${
                   !showQuiz
-                    ? 'border-b-2 border-[#5E3B76] text-[#5E3B76] bg-[#f9f5ff]'
+                    ? 'border-b-2 border-[#5E3B76] text-[#5E3B76] bg-[#ede1ff]'
                     : 'text-[#888] hover:text-[#5E3B76]'
                 }`}
                 style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -690,7 +690,7 @@ export default function LavenderLuxeHomepage() {
                       <button
                         key={option}
                         onClick={() => handleQuizAnswer(quickAssessmentQuestions[quizStep].id, option)}
-                        className="border-2 border-[#ead9ff] rounded-xl p-4 text-left hover:border-[#5E3B76] hover:bg-[#f9f5ff] transition-all text-sm font-medium"
+                        className="border-2 border-[#ead9ff] rounded-xl p-4 text-left hover:border-[#5E3B76] hover:bg-[#ede1ff] transition-all text-sm font-medium"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       >
                         {option}
@@ -796,7 +796,7 @@ export default function LavenderLuxeHomepage() {
 
                       <Link
                         href="/contact-expert"
-                        className="mt-6 w-full bg-white text-[#5E3B76] py-3 rounded-xl text-base font-semibold hover:bg-[#f9f5ff] transition-colors inline-flex items-center justify-center gap-2"
+                        className="mt-6 w-full bg-white text-[#5E3B76] py-3 rounded-xl text-base font-semibold hover:bg-[#ede1ff] transition-colors inline-flex items-center justify-center gap-2"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       >
                         Get Personalized Plan
@@ -892,7 +892,7 @@ export default function LavenderLuxeHomepage() {
       </section>
 
       {/* Christie's Credentials Section */}
-      <section className="px-4 py-16 bg-gradient-to-br from-[#f9f5ff] to-[#f0e7ff]">
+      <section className="px-4 py-16 bg-gradient-to-br from-[#ede1ff] to-[#f0e7ff]">
         <div className="mx-auto max-w-4xl">
           <div className="bg-white rounded-3xl border-2 border-[#ead9ff] shadow-2xl p-8 md:p-10">
             <div className="flex flex-col md:flex-row gap-6 items-center">
@@ -932,7 +932,7 @@ export default function LavenderLuxeHomepage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="px-4 py-16 bg-gradient-to-b from-white to-[#f9f5ff]">
+      <section className="px-4 py-16 bg-gradient-to-b from-white to-[#ede1ff]">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -1005,7 +1005,7 @@ export default function LavenderLuxeHomepage() {
                 alt="Waggin Meals logo"
                 width={120}
                 height={120}
-                className="rounded-full border-2 border-[#ead9ff] shadow-lg bg-[#f9f5ff]"
+                className="rounded-full border-2 border-[#ead9ff] shadow-lg bg-[#ede1ff]"
               />
               <div className="flex-1">
                 <p className="text-sm font-semibold text-[#9657EE] uppercase tracking-[0.3em] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>

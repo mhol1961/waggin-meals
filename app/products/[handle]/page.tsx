@@ -32,7 +32,13 @@ export default function ProductPage() {
         if (!response.ok) throw new Error('Product not found');
 
         const data = await response.json();
-        setProduct(data.product);
+        // Transform snake_case database columns to camelCase for TypeScript types
+        const transformedProduct = {
+          ...data.product,
+          inStock: data.product.in_stock,
+          compareAtPrice: data.product.compare_at_price,
+        };
+        setProduct(transformedProduct);
       } catch (error) {
         console.error('Error fetching product:', error);
         setProduct(null);

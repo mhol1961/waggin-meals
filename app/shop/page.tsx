@@ -11,7 +11,7 @@ export default async function ShopPage() {
   const supabase = await createClient();
 
   // Fetch all published products from Supabase
-  const { data: products, error } = await supabase
+  const { data: productsData, error } = await supabase
     .from('products')
     .select('*')
     .eq('is_published', true)
@@ -20,6 +20,13 @@ export default async function ShopPage() {
   if (error) {
     console.error('Error fetching products:', error);
   }
+
+  // Transform snake_case database columns to camelCase for TypeScript types
+  const products = productsData?.map(p => ({
+    ...p,
+    inStock: p.in_stock,
+    compareAtPrice: p.compare_at_price,
+  }));
 
   // Group products by category
   const collections = products ? [
@@ -145,7 +152,7 @@ export default async function ShopPage() {
                         No Image
                       </div>
                     )}
-                    {!product.in_stock && (
+                    {!product.inStock && (
                       <div className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
                         Out of Stock
                       </div>
@@ -174,9 +181,9 @@ export default async function ShopPage() {
                         <span className="text-2xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           ${product.price.toFixed(2)}
                         </span>
-                        {product.compare_at_price && (
+                        {product.compareAtPrice && (
                           <span className="text-sm text-[#999999] line-through ml-2">
-                            ${product.compare_at_price.toFixed(2)}
+                            ${product.compareAtPrice.toFixed(2)}
                           </span>
                         )}
                       </div>
@@ -202,7 +209,7 @@ export default async function ShopPage() {
                     )}
 
                     {/* Add to Cart Button */}
-                    {product.in_stock ? (
+                    {product.inStock ? (
                       <AddToCartButton
                         product={{
                           id: product.id,
