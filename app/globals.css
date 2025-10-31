@@ -3,22 +3,17 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --font-open-sans: 'Open Sans', Arial, sans-serif;
-  }
-
   * {
     @apply border-border-light;
   }
 
   body {
-    @apply bg-white text-text-body leading-relaxed;
-    font-family: var(--font-open-sans);
+    @apply bg-white text-text-body leading-relaxed font-sans;
     font-weight: 500;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply text-text-heading font-bold;
+    @apply text-text-heading font-bold font-serif;
   }
 }
 

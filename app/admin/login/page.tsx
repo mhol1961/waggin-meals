@@ -51,7 +51,7 @@ export default function AdminLoginPage() {
         <div className="text-center mb-8">
           <div className="inline-block bg-white p-4 rounded-full shadow-lg mb-4">
             <Image
-              src="/logo-waggin-meals.png"
+              src="/images/logo-waggin-meals.png"
               alt="Waggin Meals"
               width={80}
               height={80}

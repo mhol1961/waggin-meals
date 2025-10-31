@@ -54,6 +54,7 @@ export async function POST(request: NextRequest) {
       customer_id,
       email,
       shipping_address,
+      shipping_method, // NEW: shipping method selection
       payment_method_id,
       new_card,
       items,
@@ -276,6 +277,7 @@ export async function POST(request: NextRequest) {
           shipping_zip: shipping_address.zip,
           shipping_country: shipping_address.country,
           shipping_phone: shipping_address.phone,
+          shipping_method: shipping_method || 'standard', // Store selected shipping method
 
           // Totals
           subtotal: subtotal,

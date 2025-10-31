@@ -5,7 +5,14 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/api/', '/customer/'],
+      disallow: [
+        '/admin/',
+        '/api/',
+        '/customer/',
+        '/checkout/confirmation',
+        '/test',
+        '/hero-variations',
+      ],
     },
     sitemap: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://wagginmeals.com'}/sitemap.xml`,
   }

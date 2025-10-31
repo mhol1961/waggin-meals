@@ -38,3 +38,6 @@ next-env.d.ts
 # WordPress backup files
 *.wpress
 /wordpress-files/
+
+# Claude Code local settings
+.claude/settings.local.json

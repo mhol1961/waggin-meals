@@ -27,6 +27,15 @@ export function createServerClient() {
       persistSession: false,
       autoRefreshToken: false,
     },
+    global: {
+      fetch: (url, options = {}) => {
+        return fetch(url, {
+          ...options,
+          // Set a reasonable timeout (10 seconds)
+          signal: AbortSignal.timeout(10000),
+        });
+      },
+    },
   });
 }
 

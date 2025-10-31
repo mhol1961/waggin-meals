@@ -33,27 +33,50 @@ export default async function ShopPage() {
     compareAtPrice: p.compare_at_price,
   }));
 
-  // Group products by category
-  const collections = products ? [
-    {
-      id: 'fresh-meals',
-      name: 'Fresh Farm Meals',
-      description: 'Premium fresh meals made with human-grade ingredients',
-      products: products.filter(p => ['chicken', 'beef', 'turkey'].includes(p.category)),
-    },
-    {
-      id: 'supplements',
-      name: 'Meal Toppers & Supplements',
-      description: 'Enhance your dog\'s nutrition with our premium toppers',
-      products: products.filter(p => ['mixed', 'other'].includes(p.category)),
-    },
-    {
-      id: 'special-diets',
-      name: 'Special Diet Foods',
-      description: 'Specialized nutrition for dogs with specific health needs',
-      products: products.filter(p => ['salmon', 'fish', 'lamb'].includes(p.category)),
-    },
-  ].filter(collection => collection.products.length > 0) : [];
+  // Define category display information
+  const categoryInfo: Record<string, { name: string; description: string; order: number }> = {
+    chicken: { name: 'Chicken Meals', description: 'Fresh chicken meals perfect for dogs with sensitive stomachs', order: 1 },
+    beef: { name: 'Beef Meals', description: 'Rich beef protein for active dogs', order: 2 },
+    turkey: { name: 'Turkey Meals', description: 'Lean turkey protein with superfoods', order: 3 },
+    salmon: { name: 'Salmon & Fish', description: 'Rich in Omega-3s for skin and coat health', order: 4 },
+    lamb: { name: 'Lamb Products', description: 'Novel protein for sensitive dogs', order: 5 },
+    treats: { name: 'Dog Treats', description: 'Healthy, delicious treats for training and rewards', order: 6 },
+    broth: { name: 'Bone Broth', description: 'Nutrient-rich broths for hydration and joint health', order: 7 },
+    stew: { name: 'Stews & Toppers', description: 'Meal toppers and hearty stews', order: 8 },
+    mixed: { name: 'Mixed Proteins', description: 'Variety protein meals', order: 9 },
+    pork: { name: 'Pork Products', description: 'Premium pork-based meals', order: 10 },
+    test: { name: 'Test Products', description: 'Products for checkout testing', order: 99 },
+  };
+
+  // Group products by category dynamically
+  type ProductType = NonNullable<typeof products>[number];
+  type Collection = {
+    id: string;
+    name: string;
+    description: string;
+    order: number;
+    products: ProductType[];
+  };
+
+  const collections: Collection[] = products ?
+    (Object.entries(
+      products.reduce((acc, product) => {
+        if (!acc[product.category]) {
+          acc[product.category] = [];
+        }
+        acc[product.category].push(product);
+        return acc;
+      }, {} as Record<string, ProductType[]>)
+    ) as [string, ProductType[]][])
+    .map(([category, categoryProducts]): Collection => ({
+      id: category,
+      name: categoryInfo[category]?.name || category.charAt(0).toUpperCase() + category.slice(1),
+      description: categoryInfo[category]?.description || `Premium ${category} products`,
+      order: categoryInfo[category]?.order || 50,
+      products: categoryProducts,
+    }))
+    .sort((a, b) => a.order - b.order)
+    : [];
 
   return (
     <main className="bg-white min-h-screen">
