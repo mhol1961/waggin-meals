@@ -1,9 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { generateMetadata as genMeta, PageMetadataPresets } from '@/lib/metadata';
+import { generateMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = genMeta(PageMetadataPresets.about);
+export const metadata: Metadata = generateMetadata({
+  title: 'About Us',
+  description: 'Learn about Waggin Meals - from our farm shop in Western North Carolina to your dog\'s bowl. Premium fresh dog food and expert canine nutrition services.',
+  keywords: ['about waggin meals', 'dog food company', 'North Carolina', 'fresh dog food', 'farm to bowl'],
+  url: '/about',
+});
 
 export default function About() {
   return (

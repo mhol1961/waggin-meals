@@ -1,39 +1,39 @@
-import { MetadataRoute } from 'next'
+/**
+ * Robots.txt Route Handler
+ * Tells search engine crawlers which pages can be crawled
+ */
 
-export const dynamic = 'force-static'
+import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const robotsTxt = `# Waggin Meals Pet Nutrition - Robots.txt
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wagginmeals.com';
+  
+  const robotsTxt = `# Waggin' Meals - Robots.txt
 # Allow all search engines to crawl the site
 
 User-agent: *
 Allow: /
 
-# Disallow admin and API routes
-Disallow: /admin/
+# Disallow admin areas
+Disallow: /admin
 Disallow: /api/
+Disallow: /checkout/confirmation
 
-# Disallow checkout pages (no need to index)
-Disallow: /checkout/
-
-# Disallow hero variations (test pages)
-Disallow: /hero-variations/
-
-# Allow important pages
-Allow: /shop
-Allow: /products
-Allow: /blog
-Allow: /case-studies
-Allow: /nutrition-services
-Allow: /about
+# Disallow test and development pages
+Disallow: /test
+Disallow: /hero-variations
 
 # Sitemap location
-Sitemap: ${process.env.NEXT_PUBLIC_SITE_URL || 'https://wagginmeals.com'}/sitemap.xml
-`
+Sitemap: ${siteUrl}/sitemap.xml
 
-  return new Response(robotsTxt, {
+# Crawl-delay (optional - helps prevent server overload)
+Crawl-delay: 1
+`;
+
+  return new NextResponse(robotsTxt, {
     headers: {
       'Content-Type': 'text/plain',
+      'Cache-Control': 'public, max-age=86400, s-maxage=86400', // Cache for 24 hours
     },
-  })
+  });
 }

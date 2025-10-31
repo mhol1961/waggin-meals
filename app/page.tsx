@@ -1,6 +1,49 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ShieldCheck, Stethoscope, Leaf, Mail, Phone } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Waggin' Meals - Fresh Dog Food & Expert Canine Nutrition Services",
+  description: "Premium human-grade, gently cooked dog food crafted by board-certified nutritionist Christie Naquin. Custom meal plans, fresh ingredients, free shipping over $165. Transform your dog's health today.",
+  keywords: [
+    'fresh dog food',
+    'human-grade dog food',
+    'gently cooked dog food',
+    'canine nutritionist',
+    'custom dog meal plans',
+    'board-certified pet nutritionist',
+    'fresh pet food delivery',
+    'dog nutrition services',
+    'Christie Naquin',
+    'integrative animal nutrition',
+  ],
+  openGraph: {
+    title: "Waggin' Meals - Premium Fresh Dog Food & Nutrition Services",
+    description: "Human-grade, gently cooked dog food scientifically formulated by board-certified nutritionist Christie Naquin. Fresh ingredients, custom meal plans, expert nutrition guidance.",
+    url: 'https://wagginmeals.com',
+    siteName: "Waggin' Meals",
+    images: [
+      {
+        url: 'https://wagginmeals.com/images/logo-waggin-meals.png',
+        width: 1200,
+        height: 630,
+        alt: "Waggin' Meals - Fresh Dog Food",
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Waggin' Meals - Fresh Dog Food & Expert Nutrition",
+    description: "Premium human-grade, gently cooked dog food by board-certified nutritionist Christie Naquin. Fresh ingredients, custom plans.",
+    images: ['https://wagginmeals.com/images/logo-waggin-meals.png'],
+  },
+  alternates: {
+    canonical: 'https://wagginmeals.com',
+  },
+};
 
 export default function Home() {
   return (

@@ -1,294 +1,322 @@
-import { MetadataRoute } from 'next'
-import { createClient } from '@supabase/supabase-js'
+/**
+ * Sitemap for Waggin' Meals
+ * Generates XML sitemap for search engines
+ */
+
+import { MetadataRoute } from 'next';
+import { createClient } from '@supabase/supabase-js';
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wagginmeals.com';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wagginmeals.com'
-
-  // Static pages
+  // Static pages with priorities and change frequencies
   const staticPages: MetadataRoute.Sitemap = [
+    // Homepage - Highest priority
     {
-      url: baseUrl,
+      url: siteUrl,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1.0,
     },
-    // About & Info
+
+    // Main service pages - Very high priority
     {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contact-expert`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/faq`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/shipping`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
-    // Services
-    {
-      url: `${baseUrl}/nutrition-services`,
+      url: `${siteUrl}/nutrition-services`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/diagnostic`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/feeding-calculator`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    // Shop & Products
-    {
-      url: `${baseUrl}/shop`,
+      url: `${siteUrl}/shop`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
     },
+
+    // Important content pages - High priority
     {
-      url: `${baseUrl}/bundles`,
+      url: `${siteUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/smart-bundles`,
+      url: `${siteUrl}/case-studies`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/meal-toppers`,
+      url: `${siteUrl}/testimonials`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+
+    // Product categories and collections
+    {
+      url: `${siteUrl}/collections`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/monthly-wag-box`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/recommended-products`,
+      url: `${siteUrl}/meal-toppers`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/collections`,
+      url: `${siteUrl}/bundles`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
-    // Content
     {
-      url: `${baseUrl}/blog`,
+      url: `${siteUrl}/smart-bundles`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.7,
     },
     {
-      url: `${baseUrl}/case-studies`,
+      url: `${siteUrl}/recommended-products`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.7,
     },
+
+    // Health condition pages
     {
-      url: `${baseUrl}/case-studies/zeppelin`,
+      url: `${siteUrl}/digestive-health`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/resources`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/testimonials`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/events`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    },
-    // Health Topics
-    {
-      url: `${baseUrl}/digestive-health`,
+      url: `${siteUrl}/food-sensitivities`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/kidney-health`,
+      url: `${siteUrl}/kidney-health`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/weight-management`,
+      url: `${siteUrl}/weight-management`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+
+    // Resource pages
     {
-      url: `${baseUrl}/food-sensitivities`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/boost-nutrition`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/supplementation`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/puppies`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    // Guides
-    {
-      url: `${baseUrl}/feeding-made-simple`,
+      url: `${siteUrl}/resources`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
-      url: `${baseUrl}/guides/fresh-food-guide`,
+      url: `${siteUrl}/faq`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
-      url: `${baseUrl}/ingredient-sourcing`,
+      url: `${siteUrl}/feeding-calculator`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
-      url: `${baseUrl}/market-brochure`,
+      url: `${siteUrl}/guides/fresh-food-guide`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+
+    // About and company pages
+    {
+      url: `${siteUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.5,
+    },
+    {
+      url: `${siteUrl}/contact-expert`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.5,
+    },
+    {
+      url: `${siteUrl}/ingredient-sourcing`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.5,
+    },
+    {
+      url: `${siteUrl}/feeding-made-simple`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.5,
+    },
+
+    // Special programs
+    {
+      url: `${siteUrl}/monthly-wag-box`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${siteUrl}/diagnostic`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${siteUrl}/puppies`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${siteUrl}/supplementation`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${siteUrl}/boost-nutrition`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+
+    // Partnership and events
+    {
+      url: `${siteUrl}/partnerships/twisted-laurel`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.4,
+    },
+    {
+      url: `${siteUrl}/events`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
     },
-  ]
+    {
+      url: `${siteUrl}/market-brochure`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.4,
+    },
 
-  // Fetch dynamic product pages
-  let productPages: MetadataRoute.Sitemap = []
-  try {
-    const { data: products } = await supabase
-      .from('products')
-      .select('handle, updated_at')
-      .eq('published', true)
+    // Legal pages - Low priority but necessary
+    {
+      url: `${siteUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${siteUrl}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${siteUrl}/shipping`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
 
-    if (products) {
-      productPages = products.map((product) => ({
-        url: `${baseUrl}/products/${product.handle}`,
-        lastModified: product.updated_at ? new Date(product.updated_at) : new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.9,
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching products for sitemap:', error)
-  }
+    // Auth pages - Low priority
+    {
+      url: `${siteUrl}/auth/login`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.2,
+    },
+    {
+      url: `${siteUrl}/auth/signup`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.2,
+    },
+  ];
 
   // Fetch dynamic blog posts
-  let blogPages: MetadataRoute.Sitemap = []
-  try {
-    const { data: blogPosts } = await supabase
-      .from('blog_posts')
-      .select('slug, updated_at')
-      .eq('published', true)
+  const { data: blogPosts } = await supabase
+    .from('blog_posts')
+    .select('slug, updated_at')
+    .eq('status', 'published')
+    .order('updated_at', { ascending: false });
 
-    if (blogPosts) {
-      blogPages = blogPosts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: post.updated_at ? new Date(post.updated_at) : new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.7,
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching blog posts for sitemap:', error)
-  }
+  const blogPages: MetadataRoute.Sitemap = (blogPosts || []).map((post) => ({
+    url: `${siteUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.updated_at),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  // Fetch dynamic products
+  const { data: products } = await supabase
+    .from('products')
+    .select('handle, updated_at')
+    .eq('is_published', true)
+    .order('updated_at', { ascending: false });
+
+  const productPages: MetadataRoute.Sitemap = (products || []).map((product) => ({
+    url: `${siteUrl}/products/${product.handle}`,
+    lastModified: new Date(product.updated_at),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
 
   // Fetch dynamic case studies
-  let caseStudyPages: MetadataRoute.Sitemap = []
-  try {
-    const { data: caseStudies } = await supabase
-      .from('case_studies')
-      .select('slug, updated_at')
-      .eq('published', true)
+  const { data: caseStudies } = await supabase
+    .from('case_studies')
+    .select('slug, updated_at')
+    .eq('is_published', true)
+    .order('updated_at', { ascending: false});
 
-    if (caseStudies) {
-      caseStudyPages = caseStudies.map((study) => ({
-        url: `${baseUrl}/case-studies/${study.slug}`,
-        lastModified: study.updated_at ? new Date(study.updated_at) : new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
-      }))
-    }
-  } catch (error) {
-    console.error('Error fetching case studies for sitemap:', error)
-  }
+  const caseStudyPages: MetadataRoute.Sitemap = (caseStudies || []).map((study) => ({
+    url: `${siteUrl}/case-studies/${study.slug}`,
+    lastModified: new Date(study.updated_at),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  // Fetch dynamic collections
+  const { data: collections } = await supabase
+    .from('collections')
+    .select('slug, updated_at')
+    .eq('is_published', true)
+    .order('updated_at', { ascending: false });
+
+  const collectionPages: MetadataRoute.Sitemap = (collections || []).map((collection) => ({
+    url: `${siteUrl}/collections/${collection.slug}`,
+    lastModified: new Date(collection.updated_at),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
 
   // Combine all pages
-  return [...staticPages, ...productPages, ...blogPages, ...caseStudyPages]
+  return [
+    ...staticPages,
+    ...blogPages,
+    ...productPages,
+    ...caseStudyPages,
+    ...collectionPages,
+  ];
 }

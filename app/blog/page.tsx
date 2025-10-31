@@ -2,14 +2,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
 import NewsletterSignupForm from '@/components/newsletter-signup-form';
-import { generateMetadata as genMeta, PageMetadataPresets } from '@/lib/metadata';
+import { generateMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 
 // Force dynamic rendering to always fetch fresh data
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata: Metadata = genMeta(PageMetadataPresets.blog);
+export const metadata: Metadata = generateMetadata({
+  title: 'Blog - Dog Nutrition Tips & Advice',
+  description: 'Expert canine nutrition advice, tips, and insights from board-certified nutritionist Christie Naquin. Learn about fresh dog food, gut health, and natural pet care.',
+  keywords: ['dog nutrition blog', 'pet health tips', 'canine wellness', 'fresh dog food advice', 'dog gut health'],
+  url: '/blog',
+});
 
 async function getBlogPosts() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;

@@ -36,7 +36,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-open-sans)', 'Open Sans', 'Arial', 'sans-serif'],
+        sans: ['var(--font-poppins)', 'Poppins', 'Arial', 'sans-serif'],
+        serif: ['var(--font-abril-fatface)', 'Abril Fatface', 'Georgia', 'serif'],
       },
       fontSize: {
         xs: '12px',

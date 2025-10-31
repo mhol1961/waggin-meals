@@ -1,11 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import AddToCartButton from '@/components/add-to-cart-button';
-import { generateMetadata as genMeta, PageMetadataPresets } from '@/lib/metadata';
+import { generateMetadata } from '@/lib/metadata';
 import type { Metadata } from 'next';
 import { createClient } from '@/lib/supabase/server';
 
-export const metadata: Metadata = genMeta(PageMetadataPresets.shop);
+export const metadata: Metadata = generateMetadata({
+  title: 'Shop Fresh Dog Food & Nutrition Products',
+  description: 'Browse premium fresh dog food, meal toppers, and supplements. All products formulated by board-certified canine nutritionist Christie Naquin.',
+  keywords: ['buy fresh dog food', 'premium dog food online', 'dog meal toppers', 'canine supplements', 'healthy dog products'],
+  url: '/shop',
+});
 
 export default async function ShopPage() {
   const supabase = await createClient();

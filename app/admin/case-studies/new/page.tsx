@@ -514,7 +514,7 @@ export default function NewCaseStudyPage() {
                         onImageUpload={async (file) => {
                           // TODO: Implement image upload
                           console.log('Upload image:', file.name);
-                          return '/images/placeholder.jpg';
+                          return '/images/logo-waggin-meals.png';
                         }}
                       />
                     </div>

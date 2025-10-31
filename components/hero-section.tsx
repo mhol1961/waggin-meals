@@ -4,8 +4,7 @@ import Link from 'next/link';
 export function HeroSection() {
   return (
     <section className="relative h-[500px] w-full bg-gradient-to-br from-bg-light-blue to-white md:h-[600px]">
-      {/* Background image will be added later when we get the actual assets */}
-      <div className="absolute inset-0 bg-[url('/images/hero-background.jpg')] bg-cover bg-center opacity-30" />
+      {/* Background image removed during optimization - placeholder not needed */}
 
       {/* Content */}
       <div className="relative z-10 flex h-full items-center justify-center px-4">
