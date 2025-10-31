@@ -94,6 +94,10 @@ export default function TaxManagementPage() {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  // Global tax collection toggle
+  const [taxCollectionEnabled, setTaxCollectionEnabled] = useState(false);
+  const [toggleLoading, setToggleLoading] = useState(false);
+
   // Filters
   const [searchState, setSearchState] = useState('');
   const [filterActive, setFilterActive] = useState<'all' | 'active' | 'inactive'>('active');
@@ -113,11 +117,24 @@ export default function TaxManagementPage() {
 
   useEffect(() => {
     fetchTaxRates();
+    fetchTaxSettings();
   }, []);
 
   useEffect(() => {
     applyFilters();
   }, [taxRates, searchState, filterActive]);
+
+  async function fetchTaxSettings() {
+    try {
+      const response = await fetch('/api/settings/site');
+      if (response.ok) {
+        const data = await response.json();
+        setTaxCollectionEnabled(data.settings?.tax_collection_enabled || false);
+      }
+    } catch (err) {
+      console.error('Error fetching tax settings:', err);
+    }
+  }
 
   async function fetchTaxRates() {
     setLoading(true);
@@ -134,6 +151,37 @@ export default function TaxManagementPage() {
       setError('Failed to load tax rates');
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function toggleTaxCollection() {
+    setToggleLoading(true);
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      const response = await fetch('/api/settings/site', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tax_collection_enabled: !taxCollectionEnabled,
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to update tax collection setting');
+
+      const data = await response.json();
+      setTaxCollectionEnabled(data.settings.tax_collection_enabled);
+      setSuccessMessage(
+        data.settings.tax_collection_enabled
+          ? 'Tax collection enabled successfully'
+          : 'Tax collection disabled successfully'
+      );
+    } catch (err) {
+      console.error('Error toggling tax collection:', err);
+      setError('Failed to update tax collection setting');
+    } finally {
+      setToggleLoading(false);
     }
   }
 
@@ -326,6 +374,46 @@ export default function TaxManagementPage() {
           </div>
         </div>
       )}
+
+      {/* Global Tax Collection Toggle */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div className="bg-white rounded-lg shadow-sm border-2 border-gray-200 p-6">
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                Tax Collection
+              </h3>
+              <p className="text-sm text-gray-600">
+                Master switch to enable or disable tax collection site-wide. When disabled, all
+                orders will have $0.00 tax regardless of location.
+              </p>
+              <p className="text-xs text-gray-500 mt-2">
+                Current status:{' '}
+                <span
+                  className={`font-semibold ${
+                    taxCollectionEnabled ? 'text-green-600' : 'text-red-600'
+                  }`}
+                >
+                  {taxCollectionEnabled ? 'ENABLED' : 'DISABLED'}
+                </span>
+              </p>
+            </div>
+            <button
+              onClick={toggleTaxCollection}
+              disabled={toggleLoading}
+              className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                taxCollectionEnabled ? 'bg-green-600' : 'bg-gray-300'
+              } ${toggleLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <span
+                className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
+                  taxCollectionEnabled ? 'translate-x-7' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Filters */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">

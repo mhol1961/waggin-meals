@@ -1,13 +1,47 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { collections } from '@/data/products';
 import AddToCartButton from '@/components/add-to-cart-button';
 import { generateMetadata as genMeta, PageMetadataPresets } from '@/lib/metadata';
 import type { Metadata } from 'next';
+import { createClient } from '@/lib/supabase/server';
 
 export const metadata: Metadata = genMeta(PageMetadataPresets.shop);
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  const supabase = await createClient();
+
+  // Fetch all published products from Supabase
+  const { data: products, error } = await supabase
+    .from('products')
+    .select('*')
+    .eq('is_published', true)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching products:', error);
+  }
+
+  // Group products by category
+  const collections = products ? [
+    {
+      id: 'fresh-meals',
+      name: 'Fresh Farm Meals',
+      description: 'Premium fresh meals made with human-grade ingredients',
+      products: products.filter(p => ['chicken', 'beef', 'turkey'].includes(p.category)),
+    },
+    {
+      id: 'supplements',
+      name: 'Meal Toppers & Supplements',
+      description: 'Enhance your dog\'s nutrition with our premium toppers',
+      products: products.filter(p => ['mixed', 'other'].includes(p.category)),
+    },
+    {
+      id: 'special-diets',
+      name: 'Special Diet Foods',
+      description: 'Specialized nutrition for dogs with specific health needs',
+      products: products.filter(p => ['salmon', 'fish', 'lamb'].includes(p.category)),
+    },
+  ].filter(collection => collection.products.length > 0) : [];
 
   return (
     <main className="bg-white min-h-screen">
@@ -99,18 +133,24 @@ export default function ShopPage() {
                 >
                   {/* Product Image */}
                   <div className="relative h-56 bg-[#f8f9fa] overflow-hidden">
-                    <Image
-                      src={product.images[0]}
-                      alt={product.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    {!product.inStock && (
+                    {product.images && product.images.length > 0 ? (
+                      <Image
+                        src={product.images[0]}
+                        alt={product.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-400">
+                        No Image
+                      </div>
+                    )}
+                    {!product.in_stock && (
                       <div className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
                         Out of Stock
                       </div>
                     )}
-                    {product.tags.includes('bestseller') && (
+                    {product.tags && product.tags.includes('bestseller') && (
                       <div className="absolute top-2 left-2 bg-[#ffc107] text-[#856404] px-3 py-1 rounded-full text-xs font-semibold">
                         Best Seller
                       </div>
@@ -134,9 +174,9 @@ export default function ShopPage() {
                         <span className="text-2xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           ${product.price.toFixed(2)}
                         </span>
-                        {product.compareAtPrice && (
+                        {product.compare_at_price && (
                           <span className="text-sm text-[#999999] line-through ml-2">
-                            ${product.compareAtPrice.toFixed(2)}
+                            ${product.compare_at_price.toFixed(2)}
                           </span>
                         )}
                       </div>
@@ -147,20 +187,22 @@ export default function ShopPage() {
                     </p>
 
                     {/* Tags */}
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {product.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs bg-[#e8f4fb] text-[#0c5460] px-2 py-1 rounded"
-                          style={{ fontFamily: "'Poppins', sans-serif" }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    {product.tags && product.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {product.tags.slice(0, 3).map((tag: string) => (
+                          <span
+                            key={tag}
+                            className="text-xs bg-[#e8f4fb] text-[#0c5460] px-2 py-1 rounded"
+                            style={{ fontFamily: "'Poppins', sans-serif" }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
                     {/* Add to Cart Button */}
-                    {product.inStock ? (
+                    {product.in_stock ? (
                       <AddToCartButton
                         product={{
                           id: product.id,

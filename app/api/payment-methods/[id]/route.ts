@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import * as AuthorizeNet from '@/lib/authorize-net';
+import { deletePaymentProfile, isConfigured } from '@/lib/authorizenet-service';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -47,11 +47,11 @@ export async function DELETE(
     }
 
     // Delete from Authorize.net if configured
-    if (AuthorizeNet.isConfigured() && paymentMethod.customer_profile_id && paymentMethod.payment_profile_id) {
+    if (isConfigured() && paymentMethod.authorize_net_profile_id && paymentMethod.authorize_net_payment_profile_id) {
       try {
-        await AuthorizeNet.deletePaymentProfile(
-          paymentMethod.customer_profile_id,
-          paymentMethod.payment_profile_id
+        await deletePaymentProfile(
+          paymentMethod.authorize_net_profile_id,
+          paymentMethod.authorize_net_payment_profile_id
         );
       } catch (error) {
         console.error('Error deleting from Authorize.net:', error);

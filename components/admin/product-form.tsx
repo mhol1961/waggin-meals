@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Product } from '@/lib/supabase/client';
 
@@ -9,9 +9,26 @@ interface ProductFormProps {
   isEdit?: boolean;
 }
 
+// Standardized food type categories
+const FOOD_TYPES = [
+  { value: 'chicken', label: 'Chicken' },
+  { value: 'beef', label: 'Beef' },
+  { value: 'turkey', label: 'Turkey' },
+  { value: 'salmon', label: 'Salmon' },
+  { value: 'lamb', label: 'Lamb' },
+  { value: 'pork', label: 'Pork' },
+  { value: 'duck', label: 'Duck' },
+  { value: 'venison', label: 'Venison' },
+  { value: 'fish', label: 'Fish (General)' },
+  { value: 'mixed', label: 'Mixed Protein' },
+  { value: 'other', label: 'Other' },
+];
+
 export default function ProductForm({ product, isEdit = false }: ProductFormProps) {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
 
   const [formData, setFormData] = useState({
@@ -105,6 +122,41 @@ export default function ProductForm({ product, isEdit = false }: ProductFormProp
         err instanceof Error ? err.message : 'An error occurred';
       setError(errorMessage);
       setIsLoading(false);
+    }
+  };
+
+  const handleImageUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+
+    setIsUploading(true);
+    setError('');
+
+    try {
+      const formData = new FormData();
+      formData.append('image', files[0]);
+
+      const response = await fetch('/api/admin/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Upload failed');
+      }
+
+      const { url } = await response.json();
+
+      // Add the uploaded image URL to the images list
+      setFormData(prev => ({
+        ...prev,
+        images: prev.images ? `${prev.images}\n${url}` : url
+      }));
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to upload image';
+      setError(errorMessage);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -281,17 +333,72 @@ export default function ProductForm({ product, isEdit = false }: ProductFormProp
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Image URLs (one per line)
+              Product Images
             </label>
-            <textarea
-              value={formData.images}
-              onChange={(e) =>
-                setFormData({ ...formData, images: e.target.value })
-              }
-              rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent font-mono text-sm"
-              placeholder="https://...&#10;https://..."
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageUpload(e.target.files)}
+              className="hidden"
             />
+
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploading || isLoading}
+              className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-orange-500 transition text-gray-600 hover:text-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isUploading ? 'Uploading...' : '📤 Click to upload image'}
+            </button>
+
+            {formData.images && (
+              <div className="mt-4">
+                <p className="text-sm font-medium text-gray-700 mb-3">
+                  {formData.images.split('\n').filter(url => url.trim()).length} image(s) uploaded
+                </p>
+                <div className="grid grid-cols-3 gap-3">
+                  {formData.images.split('\n').filter(url => url.trim()).map((url, idx) => (
+                    <div key={idx} className="relative group">
+                      <img
+                        src={url}
+                        alt={`Product ${idx + 1}`}
+                        className="w-full h-32 object-cover rounded-lg border-2 border-gray-200"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all rounded-lg flex items-center justify-center">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const urls = formData.images.split('\n').filter(u => u.trim());
+                            urls.splice(idx, 1);
+                            setFormData({ ...formData, images: urls.join('\n') });
+                          }}
+                          className="opacity-0 group-hover:opacity-100 bg-red-600 text-white px-3 py-1 rounded text-sm"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <details className="mt-3">
+              <summary className="text-xs text-gray-500 cursor-pointer hover:text-gray-700">
+                Advanced: Manually edit image URLs
+              </summary>
+              <textarea
+                value={formData.images}
+                onChange={(e) =>
+                  setFormData({ ...formData, images: e.target.value })
+                }
+                rows={3}
+                className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent font-mono text-xs"
+                placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
+              />
+            </details>
           </div>
         </div>
 
@@ -330,17 +437,26 @@ export default function ProductForm({ product, isEdit = false }: ProductFormProp
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Category *
+              Food Type / Category *
             </label>
-            <input
-              type="text"
+            <select
               value={formData.category}
               onChange={(e) =>
                 setFormData({ ...formData, category: e.target.value })
               }
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
               required
-            />
+            >
+              <option value="">Select food type...</option>
+              {FOOD_TYPES.map(type => (
+                <option key={type.value} value={type.value}>
+                  {type.label}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-gray-500 mt-2">
+              Standardized categories for better tracking and filtering
+            </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">

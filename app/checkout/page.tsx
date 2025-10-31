@@ -344,8 +344,12 @@ export default function CheckoutPage() {
               customer_id: user?.id,
               email: email,
               shipping_address: shippingAddress,
+              billing_address: shippingAddress, // Use shipping address as billing address
               payment_method_id: selectedPaymentMethod === 'new' ? null : selectedPaymentMethod,
-              payment_token: selectedPaymentMethod === 'new' ? paymentToken : null,
+              payment_token: selectedPaymentMethod === 'new' && paymentToken ? {
+                dataDescriptor: paymentToken.opaqueData.dataDescriptor,
+                dataValue: paymentToken.opaqueData.dataValue
+              } : null,
               product_id: item.id,
               variant_id: item.variant_id,
               quantity: item.quantity,

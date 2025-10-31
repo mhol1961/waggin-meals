@@ -1,90 +1,96 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { uploadImage, validateImageFile, type StorageBucket } from '@/lib/supabase/storage';
-import { isAdminAuthenticated } from '@/lib/admin-auth';
-
 /**
- * POST /api/admin/upload-image
- *
- * Handles image uploads for the admin panel
- * Uploads to appropriate Supabase Storage bucket
- *
- * Request body (multipart/form-data):
- * - file: The image file
- * - bucket: The storage bucket name
- * - fileName: Optional custom file name
+ * Image Upload API for Admin
+ * POST /api/admin/upload-image - Upload product image to Supabase Storage
  */
+
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+import { getAdminSession } from '@/lib/admin-auth';
+
+export const dynamic = 'force-dynamic';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
 export async function POST(request: NextRequest) {
   try {
-    // CRITICAL SECURITY: Check authentication before allowing uploads
-    const authenticated = await isAdminAuthenticated();
-    if (!authenticated) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    // Verify admin session
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Admin access required' },
+        { status: 401 }
+      );
     }
 
-    // Parse form data
     const formData = await request.formData();
-    const file = formData.get('file') as File;
-    const bucket = formData.get('bucket') as StorageBucket;
-    const fileName = formData.get('fileName') as string | undefined;
+    const image = formData.get('image') as File;
 
-    // Validate required fields
-    if (!file) {
+    if (!image) {
       return NextResponse.json(
-        { error: 'No file provided' },
+        { error: 'No image file provided' },
         { status: 400 }
       );
     }
 
-    if (!bucket) {
+    // Validate file type
+    if (!image.type.startsWith('image/')) {
       return NextResponse.json(
-        { error: 'No bucket specified' },
+        { error: 'File must be an image' },
         { status: 400 }
       );
     }
 
-    // Validate bucket name
-    const validBuckets: StorageBucket[] = [
-      'blog-images',
-      'video-thumbnails',
-      'testimonial-images',
-      'event-images',
-      'product-images',
-      'resource-thumbnails',
-    ];
-
-    if (!validBuckets.includes(bucket)) {
+    // Validate file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (image.size > maxSize) {
       return NextResponse.json(
-        { error: 'Invalid bucket name' },
+        { error: 'Image must be less than 5MB' },
         { status: 400 }
       );
     }
 
-    // Validate file
-    const validation = validateImageFile(file, 5);
-    if (!validation.valid) {
-      return NextResponse.json(
-        { error: validation.error },
-        { status: 400 }
-      );
-    }
+    // Generate unique filename
+    const timestamp = Date.now();
+    const randomStr = Math.random().toString(36).substring(7);
+    const fileExt = image.name.split('.').pop();
+    const fileName = `product-${timestamp}-${randomStr}.${fileExt}`;
+
+    // Convert File to Buffer
+    const arrayBuffer = await image.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
     // Upload to Supabase Storage
-    const result = await uploadImage(bucket, file, fileName);
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .upload(fileName, buffer, {
+        contentType: image.type,
+        cacheControl: '3600',
+        upsert: false,
+      });
 
-    if (!result) {
+    if (error) {
+      console.error('Supabase upload error:', error);
       return NextResponse.json(
-        { error: 'Failed to upload image' },
+        { error: 'Failed to upload image to storage' },
         { status: 500 }
       );
     }
 
+    // Get public URL
+    const { data: urlData } = supabase.storage
+      .from('product-images')
+      .getPublicUrl(fileName);
+
     return NextResponse.json({
       success: true,
-      url: result.url,
-      path: result.path,
+      url: urlData.publicUrl,
+      fileName: fileName,
     });
   } catch (error) {
-    console.error('Error in upload-image API:', error);
+    console.error('Image upload error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

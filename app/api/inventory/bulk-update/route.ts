@@ -11,11 +11,8 @@ export async function POST(request: NextRequest) {
   try {
     // Verify admin authentication
     const adminAuth = await verifyAdminAuth(request);
-    if (!adminAuth.isAdmin) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Admin access required' },
-        { status: 401 }
-      );
+    if (!adminAuth.authenticated) {
+      return adminAuth.response;
     }
 
     const body = await request.json();
@@ -38,7 +35,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const result = await bulkUpdateInventory(updates, adminAuth.email || 'admin');
+    const result = await bulkUpdateInventory(updates, adminAuth.session.username || 'admin');
 
     return NextResponse.json(result);
   } catch (error) {

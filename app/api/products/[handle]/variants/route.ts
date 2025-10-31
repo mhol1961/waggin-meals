@@ -1,6 +1,6 @@
 /**
  * Product Variants API Routes
- * /api/products/[id]/variants
+ * /api/products/[handle]/variants
  *
  * Handles listing and creating variants for a specific product
  */
@@ -15,15 +15,15 @@ const supabase = createClient(
 );
 
 /**
- * GET /api/products/[id]/variants
+ * GET /api/products/[handle]/variants
  * Get all variants for a product
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ handle: string }> }
 ) {
   try {
-    const { id: productId } = await params;
+    const { handle: productId } = await params;
 
     if (!productId) {
       return NextResponse.json(
@@ -86,15 +86,15 @@ export async function GET(
 }
 
 /**
- * POST /api/products/[id]/variants
+ * POST /api/products/[handle]/variants
  * Create a new variant for a product
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ handle: string }> }
 ) {
   try {
-    const { id: productId } = await params;
+    const { handle: productId } = await params;
 
     if (!productId) {
       return NextResponse.json(

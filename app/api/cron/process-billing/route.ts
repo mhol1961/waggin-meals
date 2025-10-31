@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import * as AuthorizeNet from '@/lib/authorize-net';
+import { chargeStoredPaymentMethod, isConfigured as isAuthorizeNetConfigured } from '@/lib/authorizenet-service';
 import * as GHL from '@/lib/ghl-service';
 import type { Subscription, SubscriptionInvoice } from '@/types/subscription';
 
@@ -262,19 +262,28 @@ async function processSubscriptionBilling(subscription: Subscription) {
     console.log(`Created first invoice ${invoiceNumber} for subscription ${subscription.id} billing period ${subscription.next_billing_date}`);
   }
 
+  // Get customer data for transaction and notifications (before try block so it's in scope for catch)
+  const { data: customer } = await supabase
+    .from('customers')
+    .select('email, first_name, last_name, phone')
+    .eq('id', subscription.customer_id)
+    .single();
+
   try {
     // Charge the payment method via Authorize.net
-    if (!AuthorizeNet.isConfigured()) {
+    if (!isAuthorizeNetConfigured()) {
       throw new Error('Payment processor not configured');
     }
 
-    const transactionResponse = await AuthorizeNet.chargeCustomerProfile(
-      paymentMethod.customer_profile_id!,
-      paymentMethod.payment_profile_id!,
-      subscription.amount,
-      invoiceNumber,
-      `Subscription payment - ${subscription.type}`
-    );
+    const transactionResponse = await chargeStoredPaymentMethod({
+      amount: subscription.amount,
+      customerProfileId: paymentMethod.authorize_net_profile_id!,
+      customerPaymentProfileId: paymentMethod.authorize_net_payment_profile_id!,
+      invoiceNumber: invoiceNumber,
+      description: `Subscription payment - ${subscription.type}`,
+      customerId: subscription.customer_id,
+      customerEmail: customer?.email || '',
+    });
 
     // Create order record
     const { data: order } = await supabase
@@ -332,12 +341,6 @@ async function processSubscriptionBilling(subscription: Subscription) {
     ]);
 
     // Send success notification to GoHighLevel
-    const { data: customer } = await supabase
-      .from('customers')
-      .select('email, first_name, last_name, phone')
-      .eq('id', subscription.customer_id)
-      .single();
-
     if (customer) {
       await GHL.notifySubscriptionPaymentSuccess({
         customer_email: customer.email,
@@ -399,12 +402,6 @@ async function processSubscriptionBilling(subscription: Subscription) {
     ]);
 
     // Send failed payment notification to GoHighLevel
-    const { data: customer } = await supabase
-      .from('customers')
-      .select('email, first_name, last_name, phone')
-      .eq('id', subscription.customer_id)
-      .single();
-
     if (customer) {
       await GHL.notifySubscriptionPaymentFailed({
         customer_email: customer.email,

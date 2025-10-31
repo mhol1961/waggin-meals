@@ -38,52 +38,10 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Protect /admin/* routes and /api/admin/* routes
+  // Admin routes use separate cookie-based authentication
+  // Let admin pages/APIs handle their own auth checks via getAdminSession()
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
-    if (!user) {
-      if (pathname.startsWith('/api/')) {
-        return NextResponse.json(
-          { error: 'Unauthorized - Authentication required' },
-          { status: 401 }
-        );
-      }
-
-      const redirectUrl = new URL('/auth/login', request.url);
-      redirectUrl.searchParams.set('redirect', pathname);
-      return NextResponse.redirect(redirectUrl);
-    }
-
-    // Check if user has admin role
-    try {
-      const { data: roleData, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id)
-        .single();
-
-      if (error || !roleData || roleData.role !== 'admin') {
-        if (pathname.startsWith('/api/')) {
-          return NextResponse.json(
-            { error: 'Forbidden - Admin access required' },
-            { status: 403 }
-          );
-        }
-
-        // Not an admin - redirect to home
-        return NextResponse.redirect(new URL('/', request.url));
-      }
-    } catch (error) {
-      console.error('Error checking admin role:', error);
-
-      if (pathname.startsWith('/api/')) {
-        return NextResponse.json(
-          { error: 'Internal server error' },
-          { status: 500 }
-        );
-      }
-
-      return NextResponse.redirect(new URL('/', request.url));
-    }
+    return response;
   }
 
   return response;

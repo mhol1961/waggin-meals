@@ -5,8 +5,15 @@ import {
   generateOrderOutForDeliveryEmail,
   generateOrderDeliveredEmail
 } from './email-templates';
+import { Resend } from 'resend';
 
 const GHL_API_BASE = 'https://services.leadconnectorhq.com';
+
+// Initialize Resend client (will be null if RESEND_API_KEY not configured)
+let resendClient: Resend | null = null;
+if (process.env.RESEND_API_KEY) {
+  resendClient = new Resend(process.env.RESEND_API_KEY);
+}
 
 interface SendEmailParams {
   to: string;
@@ -93,57 +100,81 @@ async function getOrCreateGHLContact(email: string, firstName?: string, lastName
 }
 
 /**
- * Send email via GHL Conversations API
+ * Send email via Resend (fallback) or GHL
  */
 export async function sendEmail({ to, subject, html, text, firstName, lastName, phone }: SendEmailParams): Promise<boolean> {
-  const apiKey = process.env.GHL_API_KEY;
-  const locationId = process.env.GHL_LOCATION_ID;
+  const ghlApiKey = process.env.GHL_API_KEY;
+  const ghlLocationId = process.env.GHL_LOCATION_ID;
+  const fromEmail = process.env.EMAIL_FROM || 'orders@wagginmeals.com';
+  const fromName = 'Waggin Meals';
 
-  if (!apiKey || !locationId) {
-    console.warn('[GHL] GHL_API_KEY or GHL_LOCATION_ID not configured. Email not sent.');
-    console.log('[GHL] Email details:', { to, subject });
-    return false;
+  // Try GoHighLevel first if configured
+  if (ghlApiKey && ghlLocationId) {
+    try {
+      // Get or create contact
+      const contactId = await getOrCreateGHLContact(to, firstName, lastName, phone);
+
+      if (contactId) {
+        // Send email via GHL
+        const response = await fetch(`${GHL_API_BASE}/conversations/messages/email`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${ghlApiKey}`,
+            'Version': '2021-07-28',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            locationId: ghlLocationId,
+            contactId,
+            subject,
+            html,
+            emailFrom: fromEmail,
+          }),
+        });
+
+        if (response.ok) {
+          console.log(`[GHL] Email sent successfully: ${subject} to ${to}`);
+          return true;
+        } else {
+          const error = await response.text();
+          console.error('[GHL] Failed to send email:', error);
+          // Fall through to Resend
+        }
+      }
+    } catch (error) {
+      console.error('[GHL] Error sending email:', error);
+      // Fall through to Resend
+    }
   }
 
-  try {
-    // Get or create contact
-    const contactId = await getOrCreateGHLContact(to, firstName, lastName, phone);
-
-    if (!contactId) {
-      console.error('[GHL] Failed to get/create contact for email');
-      return false;
-    }
-
-    // Send email via GHL
-    const response = await fetch(`${GHL_API_BASE}/conversations/messages/email`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Version': '2021-07-28',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        locationId,
-        contactId,
+  // Fallback to Resend if GHL failed or not configured
+  if (resendClient) {
+    try {
+      const result = await resendClient.emails.send({
+        from: `${fromName} <${fromEmail}>`,
+        to: [to],
         subject,
         html,
-        emailFrom: process.env.EMAIL_FROM || 'wagginmeals@gmail.com',
-      }),
-    });
+        text,
+      });
 
-    if (!response.ok) {
-      const error = await response.text();
-      console.error('[GHL] Failed to send email:', error);
+      if (result.error) {
+        console.error('[Resend] Failed to send email:', result.error);
+        return false;
+      }
+
+      console.log(`[Resend] Email sent successfully: ${subject} to ${to} (ID: ${result.data?.id})`);
+      return true;
+    } catch (error) {
+      console.error('[Resend] Error sending email:', error);
       return false;
     }
-
-    console.log(`[GHL] Email sent successfully: ${subject} to ${to}`);
-    return true;
-
-  } catch (error) {
-    console.error('[GHL] Error sending email:', error);
-    return false;
   }
+
+  // No email service configured
+  console.error('[Email] No email service configured. Set GHL_API_KEY/GHL_LOCATION_ID or RESEND_API_KEY.');
+  console.log('[Email] Would send:', { to, subject });
+  return false;
 }
 
 export async function sendOrderConfirmationEmail(orderData: any): Promise<boolean> {

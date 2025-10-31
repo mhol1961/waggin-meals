@@ -61,6 +61,7 @@ export async function POST(request: NextRequest) {
       shipping,
       tax,
       total,
+      status, // NEW: support pending_payment status
     } = body;
 
     // Validate required fields
@@ -71,7 +72,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!payment_method_id && !new_card) {
+    // Only require payment if NOT creating a pending order
+    // Pending orders will be completed by separate payment endpoint
+    const isPendingOrder = status === 'pending_payment';
+
+    if (!isPendingOrder && !payment_method_id && !new_card) {
       return NextResponse.json(
         { error: 'Payment method required' },
         { status: 400 }
@@ -176,16 +181,22 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Process payment
+    // Process payment (skip for pending orders)
     let transactionId: string | null = null;
     let paymentStatus: 'pending' | 'paid' | 'failed' = 'pending';
     let paymentError: string | null = null;
 
-    // Check if Authorize.net is configured
-    if (!isAuthorizeNetConfigured()) {
-      console.warn('[Order] Authorize.net not configured - simulating payment success');
-      transactionId = `TEMP-${Date.now()}`;
-      paymentStatus = 'paid';
+    // Skip payment processing if this is a pending order
+    // Pending orders will be completed via separate /api/payments endpoint
+    if (isPendingOrder) {
+      console.log('[Order] Creating pending order - payment will be processed separately');
+      paymentStatus = 'pending';
+    } else if (!isAuthorizeNetConfigured()) {
+      // ⚠️ REMOVED: Fake payment success simulation
+      // Never mark orders as paid without actually charging
+      console.error('[Order] Authorize.net not configured - cannot process payment');
+      paymentStatus = 'failed';
+      paymentError = 'Payment gateway not configured';
     } else {
       try {
         if (payment_method_id) {
@@ -221,90 +232,11 @@ export async function POST(request: NextRequest) {
           } else {
             throw new Error(authResponse.error || 'Payment failed');
           }
-        } else if (new_card) {
-          // Process new card payment
-          // Step 1: Get or create Authorize.net customer profile
-          let authorizeNetProfileId = customer.authorize_net_profile_id;
-
-          if (!authorizeNetProfileId) {
-            const profileResponse = await createCustomerProfile({
-              customerId: customerId,
-              email: email,
-              description: `${shipping_address.first_name} ${shipping_address.last_name}`,
-            });
-
-            if (!profileResponse.success || !profileResponse.profileId) {
-              throw new Error(profileResponse.error || 'Failed to create customer profile');
-            }
-
-            authorizeNetProfileId = profileResponse.profileId;
-
-            // Save profile ID to customer record
-            await supabase
-              .from('customers')
-              .update({ authorize_net_profile_id: authorizeNetProfileId })
-              .eq('id', customerId);
-          }
-
-          // Step 2: Create payment profile (save card)
-          const expirationDate = `${new_card.expiration_year}-${new_card.expiration_month.padStart(2, '0')}`;
-
-          const paymentProfileResponse = await createPaymentProfile({
-            customerProfileId: authorizeNetProfileId,
-            cardNumber: new_card.card_number,
-            expirationDate: expirationDate,
-            cvv: new_card.cvv,
-            billingAddress: {
-              firstName: new_card.billing_address.first_name,
-              lastName: new_card.billing_address.last_name,
-              address: new_card.billing_address.address,
-              city: new_card.billing_address.city,
-              state: new_card.billing_address.state,
-              zip: new_card.billing_address.zip,
-              country: new_card.billing_address.country || 'US',
-            },
-          });
-
-          if (!paymentProfileResponse.success || !paymentProfileResponse.paymentProfileId) {
-            throw new Error(paymentProfileResponse.error || 'Failed to save payment method');
-          }
-
-          const authorizeNetPaymentProfileId = paymentProfileResponse.paymentProfileId;
-
-          // Step 3: Charge the payment profile
-          const invoiceNumber = `WM${Date.now().toString().slice(-8)}`;
-          const authResponse = await chargeStoredPaymentMethod({
-            amount: total,
-            customerProfileId: authorizeNetProfileId,
-            customerPaymentProfileId: authorizeNetPaymentProfileId,
-            invoiceNumber: invoiceNumber,
-            description: `Order - ${items.length} item(s)`,
-            customerId: customerId,
-            customerEmail: email,
-          });
-
-          if (authResponse.success && authResponse.transactionId) {
-            transactionId = authResponse.transactionId;
-            paymentStatus = 'paid';
-
-            // Step 4: Save payment method to database if customer is logged in
-            if (customer_id) {
-              const last4 = new_card.card_number.slice(-4);
-              await supabase.from('payment_methods').insert({
-                customer_id: customerId,
-                type: new_card.card_type || 'card',
-                last4: last4,
-                brand: new_card.card_type,
-                exp_month: parseInt(new_card.expiration_month),
-                exp_year: parseInt(new_card.expiration_year),
-                is_default: false,
-                authorize_net_profile_id: authorizeNetProfileId,
-                authorize_net_payment_profile_id: authorizeNetPaymentProfileId,
-              });
-            }
-          } else {
-            throw new Error(authResponse.error || 'Payment failed');
-          }
+        } else {
+          // ⚠️ REMOVED: Raw card data handling (PCI violation)
+          // Payment processing should ONLY use Accept.js tokens via /api/payments endpoint
+          // This path should never execute in normal flow
+          throw new Error('Direct card processing not supported. Use /api/payments endpoint with Accept.js tokens.');
         }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Payment failed';
@@ -324,9 +256,9 @@ export async function POST(request: NextRequest) {
         {
           customer_id: customerId,
           order_number: orderNumber,
-          status: paymentStatus === 'paid' ? 'pending' : 'payment_failed',
+          status: isPendingOrder ? 'pending_payment' : (paymentStatus === 'paid' ? 'pending' : 'payment_failed'),
           payment_status: paymentStatus,
-          payment_method: payment_method_id ? 'saved_card' : 'new_card',
+          payment_method: payment_method_id ? 'saved_card' : (isPendingOrder ? null : 'new_card'),
           transaction_id: transactionId,
 
           // Customer info

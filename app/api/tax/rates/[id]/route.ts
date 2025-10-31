@@ -21,10 +21,11 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const taxRate = await getTaxRateById(params.id);
+    const { id } = await params;
+    const taxRate = await getTaxRateById(id);
 
     if (!taxRate) {
       return NextResponse.json(
@@ -52,7 +53,7 @@ export async function GET(
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify admin authentication
@@ -74,7 +75,8 @@ export async function PUT(
       );
     }
 
-    const result = await updateTaxRate(params.id, body);
+    const { id } = await params;
+    const result = await updateTaxRate(id, body);
 
     if (!result.success) {
       return NextResponse.json(
@@ -104,7 +106,7 @@ export async function PUT(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify admin authentication
@@ -119,7 +121,8 @@ export async function DELETE(
     const { searchParams } = new URL(request.url);
     const hardDelete = searchParams.get('hard') === 'true';
 
-    const result = await deleteTaxRate(params.id, hardDelete);
+    const { id } = await params;
+    const result = await deleteTaxRate(id, hardDelete);
 
     if (!result.success) {
       return NextResponse.json(

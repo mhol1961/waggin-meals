@@ -167,12 +167,13 @@ function LoginForm() {
                 Continue with Google
               </button>
 
-              <Link
-                href="/"
+              <button
+                type="button"
+                onClick={() => router.push('/')}
                 className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
                 Continue as guest
-              </Link>
+              </button>
             </div>
           </div>
         </div>

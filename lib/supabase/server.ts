@@ -30,6 +30,9 @@ export function createServerClient() {
   });
 }
 
+// Alias for compatibility
+export { createServerClient as createClient };
+
 /**
  * Helper Functions for Common CMS Operations
  */

@@ -52,3 +52,73 @@ Retrying 1/3...
 Retrying 1/3...
  ✓ Compiled in 16.9s (1202 modules)
 <w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (118kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+[Error: You cannot use different slug names for the same dynamic path ('handle' !== 'id').]
+ ⨯ unhandledRejection: [Error: You cannot use different slug names for the same dynamic path ('handle' !== 'id').]
+ ⨯ unhandledRejection:  [Error: You cannot use different slug names for the same dynamic path ('handle' !== 'id').]
+ ○ Compiling /api/products ...
+ ✓ Compiled /api/products in 8.6s (1068 modules)
+Error fetching products: {
+  code: 'PGRST205',
+  details: null,
+  hint: "Perhaps you meant the table 'public.products_with_variant_count'",
+  message: "Could not find the table 'public.products_with_collections' in the schema cache"
+}
+ GET /api/products 500 in 12967ms
+ ○ Compiling /shop ...
+ ✓ Compiled /shop in 1061ms (1078 modules)
+ GET /shop 200 in 2447ms
+ GET / 200 in 4259ms
+ ○ Compiling /icon.png ...
+ ✓ Compiled /icon.png in 1199ms (608 modules)
+ GET /icon.png?ee7b68787765054d 200 in 1901ms
+ GET / 200 in 1401ms
+ GET /icon.png?ee7b68787765054d 200 in 444ms
+ GET / 200 in 659ms
+ GET /icon.png?ee7b68787765054d 200 in 447ms
+ GET /auth/login?redirect=%2Fadmin 200 in 679ms
+ GET /auth/login?redirect=%2Fadmin 200 in 619ms
+ GET /icon.png?ee7b68787765054d 200 in 377ms
+ GET /auth/login?redirect=%2Fadmin 200 in 732ms
+ ✓ Compiled in 2.3s (199 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (118kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled in 395ms (199 modules)
+ GET /auth/login?redirect=%2Fadmin 200 in 726ms
+ GET /icon.png?ee7b68787765054d 200 in 428ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.1s (995 modules)
+ GET /auth 404 in 3109ms
+ GET /auth: 404 in 157ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 3.3s (1155 modules)
+ HEAD /admin 307 in 5827ms
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in 1164ms (1162 modules)
+ HEAD /admin/login 200 in 2169ms
+ GET /auth: 404 in 246ms
+ ○ Compiling /icon.png ...
+ ✓ Compiled /icon.png in 784ms (609 modules)
+ GET /icon.png?ee7b68787765054d 200 in 1746ms
+ GET /auth: 404 in 463ms
+ GET /icon.png?ee7b68787765054d 200 in 339ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 697ms (774 modules)
+ GET /admin 307 in 2314ms
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in -141ms (779 modules)
+ GET /admin/login 200 in 413ms
+ GET /logo-waggin-meals.png 404 in 239ms
+ ⨯ The requested resource isn't a valid image for /logo-waggin-meals.png received null
+ GET /icon.png?ee7b68787765054d 200 in 510ms
+ ○ Compiling /api/admin/login ...
+ ✓ Compiled /api/admin/login in 1577ms (1155 modules)
+ POST /api/admin/login 200 in 2388ms
+ GET /admin 200 in 1584ms
+ GET /admin 200 in 2231ms
+ ○ Compiling /admin/products/new ...
+ ✓ Compiled /admin/products/new in 2.2s (1150 modules)
+ GET /admin/products/new 200 in 4224ms
+ GET /admin/products/new 200 in 4520ms
+ ○ Compiling /icon.png ...
+ ✓ Compiled /icon.png in 5.4s (744 modules)
+ GET /icon.png?ee7b68787765054d 200 in 7200ms
+[?25h

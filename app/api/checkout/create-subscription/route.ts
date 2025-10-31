@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import {
   chargeStoredPaymentMethod,
-  createCustomerProfile,
-  createPaymentProfile,
+  createCustomerProfileWithPayment,
   isConfigured as isAuthorizeNetConfigured
 } from '@/lib/authorizenet-service';
 
@@ -24,18 +23,30 @@ interface ShippingAddress {
   phone: string;
 }
 
-interface NewCard {
-  card_number: string;
-  expiration_month: string;
-  expiration_year: string;
-  cvv: string;
-  card_type?: string;
-  billing_address: ShippingAddress;
+interface OpaqueData {
+  dataDescriptor: string;
+  dataValue: string;
 }
 
 /**
  * POST /api/checkout/create-subscription
- * Create a recurring subscription with payment method tokenization
+ * Create a recurring subscription with Accept.js tokenization (PCI-compliant)
+ *
+ * Expected request body:
+ * {
+ *   customer_id?: string,
+ *   email: string,
+ *   shipping_address: ShippingAddress,
+ *   payment_token: OpaqueData (Accept.js opaque data),
+ *   billing_address: ShippingAddress,
+ *   product_id: string,
+ *   variant_id?: string,
+ *   quantity: number,
+ *   price: number,
+ *   frequency: 'weekly' | 'bi-weekly' | 'monthly',
+ *   title: string,
+ *   variant_title?: string
+ * }
  */
 export async function POST(request: NextRequest) {
   try {
@@ -44,8 +55,9 @@ export async function POST(request: NextRequest) {
       customer_id,
       email,
       shipping_address,
-      payment_method_id,
-      new_card,
+      payment_token, // Accept.js opaque data
+      payment_method_id, // ID of existing payment method (optional)
+      billing_address,
       product_id,
       variant_id,
       quantity,
@@ -58,15 +70,35 @@ export async function POST(request: NextRequest) {
     // Validate required fields
     if (!email || !shipping_address || !product_id || !quantity || !price || !frequency) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Missing required fields: email, shipping_address, product_id, quantity, price, frequency' },
         { status: 400 }
       );
     }
 
-    if (!payment_method_id && !new_card) {
+    // Validate payment method
+    if (!payment_method_id && !payment_token) {
       return NextResponse.json(
-        { error: 'Payment method required for subscriptions' },
+        { error: 'Payment method required. Provide either payment_method_id or payment_token.' },
         { status: 400 }
+      );
+    }
+
+    // If using new payment token, validate format
+    if (payment_token && (!payment_token.dataDescriptor || !payment_token.dataValue)) {
+      return NextResponse.json(
+        { error: 'Invalid payment token format. Must include dataDescriptor and dataValue from Accept.js.' },
+        { status: 400 }
+      );
+    }
+
+    // Use billing address or fall back to shipping address
+    const finalBillingAddress = billing_address || shipping_address;
+
+    // Check if Authorize.net is configured
+    if (!isAuthorizeNetConfigured()) {
+      return NextResponse.json(
+        { error: 'Payment processor not configured. Please contact support.' },
+        { status: 503 }
       );
     }
 
@@ -83,7 +115,7 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (customerError) {
-        console.error('Error fetching customer:', customerError);
+        console.error('[Subscription] Error fetching customer:', customerError);
         return NextResponse.json(
           { error: 'Customer not found' },
           { status: 404 }
@@ -117,7 +149,7 @@ export async function POST(request: NextRequest) {
           .single();
 
         if (createError) {
-          console.error('Error creating customer:', createError);
+          console.error('[Subscription] Error creating customer:', createError);
           return NextResponse.json(
             { error: 'Failed to create customer' },
             { status: 500 }
@@ -129,108 +161,75 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Handle payment method
-    let finalPaymentMethodId = payment_method_id;
+    console.log(`[Subscription] Creating subscription for customer ${customerId}`);
 
-    if (new_card && !payment_method_id) {
-      // Check if Authorize.net is configured
-      if (!isAuthorizeNetConfigured()) {
-        return NextResponse.json(
-          { error: 'Payment processing not configured. Subscriptions require Authorize.net.' },
-          { status: 503 }
-        );
-      }
+    // Determine payment method ID
+    let paymentMethodId: string;
 
-      // Step 1: Get or create Authorize.net customer profile
-      let authorizeNetProfileId = customer.authorize_net_profile_id;
+    if (payment_method_id) {
+      // Using existing payment method
+      console.log(`[Subscription] Using existing payment method: ${payment_method_id}`);
+      paymentMethodId = payment_method_id;
+    } else {
+      // Create Authorize.net CIM profile with payment using Accept.js token (PCI-compliant)
+      console.log(`[Subscription] Creating new payment method with Accept.js token`);
 
-      if (!authorizeNetProfileId) {
-        const profileResponse = await createCustomerProfile({
-          customerId: customerId,
-          email: email,
-          description: `${shipping_address.first_name} ${shipping_address.last_name}`,
-        });
-
-        if (!profileResponse.success || !profileResponse.profileId) {
-          return NextResponse.json(
-            { error: profileResponse.error || 'Failed to create customer profile' },
-            { status: 500 }
-          );
-        }
-
-        authorizeNetProfileId = profileResponse.profileId;
-
-        // Save profile ID to customer record
-        await supabase
-          .from('customers')
-          .update({ authorize_net_profile_id: authorizeNetProfileId })
-          .eq('id', customerId);
-      }
-
-      // Step 2: Create payment profile (save card to Authorize.net CIM)
-      const expirationDate = `${new_card.expiration_year}-${new_card.expiration_month.padStart(2, '0')}`;
-
-      const paymentProfileResponse = await createPaymentProfile({
-        customerProfileId: authorizeNetProfileId,
-        cardNumber: new_card.card_number,
-        expirationDate: expirationDate,
-        cvv: new_card.cvv,
+      const authResponse = await createCustomerProfileWithPayment({
+        customerId: customerId,
+        email: email,
+        opaqueData: {
+          dataDescriptor: payment_token!.dataDescriptor,
+          dataValue: payment_token!.dataValue,
+        },
         billingAddress: {
-          firstName: new_card.billing_address.first_name,
-          lastName: new_card.billing_address.last_name,
-          address: new_card.billing_address.address,
-          city: new_card.billing_address.city,
-          state: new_card.billing_address.state,
-          zip: new_card.billing_address.zip,
-          country: new_card.billing_address.country || 'US',
+          firstName: finalBillingAddress.first_name,
+          lastName: finalBillingAddress.last_name,
+          address: finalBillingAddress.address,
+          city: finalBillingAddress.city,
+          state: finalBillingAddress.state,
+          zip: finalBillingAddress.zip,
+          country: finalBillingAddress.country || 'US',
         },
       });
 
-      if (!paymentProfileResponse.success || !paymentProfileResponse.paymentProfileId) {
+      if (!authResponse.success || !authResponse.profileId || !authResponse.paymentProfileId) {
+        console.error('[Subscription] Failed to create Authorize.net profile:', authResponse.error);
         return NextResponse.json(
-          { error: paymentProfileResponse.error || 'Failed to save payment method' },
-          { status: 500 }
+          { error: authResponse.error || 'Failed to create payment profile' },
+          { status: 402 }
         );
       }
 
-      const authorizeNetPaymentProfileId = paymentProfileResponse.paymentProfileId;
+      console.log(`[Subscription] Authorize.net profile created: ${authResponse.profileId}, Payment: ${authResponse.paymentProfileId}`);
 
-      // Step 3: Save payment method to database
-      const last4 = new_card.card_number.slice(-4);
+      // Save payment method to database
       const { data: paymentMethod, error: pmError } = await supabase
         .from('payment_methods')
         .insert([
           {
             customer_id: customerId,
-            type: new_card.card_type || 'card',
-            last4: last4,
-            brand: new_card.card_type || detectCardType(new_card.card_number),
-            exp_month: parseInt(new_card.expiration_month),
-            exp_year: parseInt(new_card.expiration_year),
-            is_default: true, // Make first card default
-            authorize_net_profile_id: authorizeNetProfileId,
-            authorize_net_payment_profile_id: authorizeNetPaymentProfileId,
+            authorize_net_profile_id: authResponse.profileId,
+            authorize_net_payment_profile_id: authResponse.paymentProfileId,
+            card_type: 'Card', // We don't have card type from Accept.js
+            last_four: '****', // We don't have last 4 from Accept.js
+            billing_address: finalBillingAddress,
+            is_default: true,
+            is_active: true,
           },
         ])
         .select()
         .single();
 
       if (pmError) {
-        console.error('Error creating payment method:', pmError);
+        console.error('[Subscription] Error saving payment method:', pmError);
         return NextResponse.json(
           { error: 'Failed to save payment method' },
           { status: 500 }
         );
       }
 
-      finalPaymentMethodId = paymentMethod.id;
-    }
-
-    if (!finalPaymentMethodId) {
-      return NextResponse.json(
-        { error: 'Payment method required' },
-        { status: 400 }
-      );
+      paymentMethodId = paymentMethod.id;
+      console.log(`[Subscription] Payment method saved: ${paymentMethodId}`);
     }
 
     // Calculate billing dates
@@ -245,7 +244,7 @@ export async function POST(request: NextRequest) {
           customer_id: customerId,
           product_id: product_id,
           variant_id: variant_id,
-          payment_method_id: finalPaymentMethodId,
+          payment_method_id: paymentMethodId,
           status: 'active',
           frequency: frequency,
           quantity: quantity,
@@ -277,12 +276,14 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (subError) {
-      console.error('Error creating subscription:', subError);
+      console.error('[Subscription] Error creating subscription:', subError);
       return NextResponse.json(
         { error: 'Failed to create subscription' },
         { status: 500 }
       );
     }
+
+    console.log(`[Subscription] Subscription created: ${subscription.id}`);
 
     // Create subscription history entry
     await supabase.from('subscription_history').insert([
@@ -296,40 +297,39 @@ export async function POST(request: NextRequest) {
 
     // Process initial payment
     try {
-      let transactionId: string | null = null;
+      const invoiceNumber = `SUB-${subscription.id.substring(0, 8)}`;
+      console.log(`[Subscription] Charging initial payment for invoice ${invoiceNumber}`);
 
-      // Fetch the payment method to get Authorize.net IDs
-      const { data: paymentMethod, error: pmError } = await supabase
+      // Get payment method details for charging
+      const { data: paymentMethodData, error: pmFetchError } = await supabase
         .from('payment_methods')
-        .select('*')
-        .eq('id', finalPaymentMethodId)
+        .select('authorize_net_profile_id, authorize_net_payment_profile_id')
+        .eq('id', paymentMethodId)
         .single();
 
-      if (pmError || !paymentMethod) {
+      if (pmFetchError || !paymentMethodData) {
         throw new Error('Payment method not found');
       }
 
-      if (!paymentMethod.authorize_net_profile_id || !paymentMethod.authorize_net_payment_profile_id) {
-        throw new Error('Payment method not configured for Authorize.net');
+      if (!paymentMethodData.authorize_net_profile_id || !paymentMethodData.authorize_net_payment_profile_id) {
+        throw new Error('Payment method missing Authorize.net profile IDs');
       }
 
-      // Charge the payment method via Authorize.net
-      const invoiceNumber = `SUB-${subscription.id.substring(0, 8)}`;
-      const authResponse = await chargeStoredPaymentMethod({
+      const chargeResponse = await chargeStoredPaymentMethod({
         amount: price * quantity,
-        customerProfileId: paymentMethod.authorize_net_profile_id,
-        customerPaymentProfileId: paymentMethod.authorize_net_payment_profile_id,
+        customerProfileId: paymentMethodData.authorize_net_profile_id,
+        customerPaymentProfileId: paymentMethodData.authorize_net_payment_profile_id,
         invoiceNumber: invoiceNumber,
         description: `Subscription - ${title}${variant_title ? ' - ' + variant_title : ''}`,
         customerId: customerId,
         customerEmail: email,
       });
 
-      if (!authResponse.success || !authResponse.transactionId) {
-        throw new Error(authResponse.error || 'Payment failed');
+      if (!chargeResponse.success || !chargeResponse.transactionId) {
+        throw new Error(chargeResponse.error || 'Payment failed');
       }
 
-      transactionId = authResponse.transactionId;
+      console.log(`[Subscription] Initial payment successful: ${chargeResponse.transactionId}`);
 
       // Create initial invoice
       await supabase.from('subscription_invoices').insert([
@@ -338,7 +338,7 @@ export async function POST(request: NextRequest) {
           amount: price * quantity,
           status: 'paid',
           billing_date: today.toISOString().split('T')[0],
-          transaction_id: transactionId,
+          transaction_id: chargeResponse.transactionId,
         },
       ]);
 
@@ -363,7 +363,8 @@ export async function POST(request: NextRequest) {
           }),
         });
       } catch (emailError) {
-        console.error('Error sending subscription email:', emailError);
+        console.error('[Subscription] Error sending subscription email:', emailError);
+        // Don't fail the subscription for email errors
       }
 
       // Add to GoHighLevel with subscription tag
@@ -385,11 +386,23 @@ export async function POST(request: NextRequest) {
           }),
         });
       } catch (ghlError) {
-        console.error('Error adding to GHL:', ghlError);
+        console.error('[Subscription] Error adding to GHL:', ghlError);
+        // Don't fail the subscription for GHL errors
       }
+
+      return NextResponse.json({
+        success: true,
+        subscription: {
+          id: subscription.id,
+          status: subscription.status,
+          frequency: frequency,
+          next_billing_date: nextBillingDate.toISOString().split('T')[0],
+          amount: price * quantity,
+        },
+      });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to process initial payment';
-      console.error('Error processing initial payment:', error);
+      console.error('[Subscription] Error processing initial payment:', error);
 
       // Update subscription to payment_failed status
       await supabase
@@ -402,20 +415,9 @@ export async function POST(request: NextRequest) {
         { status: 402 }
       );
     }
-
-    return NextResponse.json({
-      success: true,
-      subscription: {
-        id: subscription.id,
-        status: subscription.status,
-        frequency: frequency,
-        next_billing_date: nextBillingDate.toISOString().split('T')[0],
-        amount: price * quantity,
-      },
-    });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Internal server error';
-    console.error('Error in POST /api/checkout/create-subscription:', error);
+    console.error('[Subscription] Error in POST /api/checkout/create-subscription:', error);
     return NextResponse.json(
       { error: errorMessage },
       { status: 500 }
@@ -444,18 +446,4 @@ function calculateNextBillingDate(startDate: Date, frequency: string): Date {
   }
 
   return next;
-}
-
-/**
- * Detect card type from card number
- */
-function detectCardType(cardNumber: string): string {
-  const cleaned = cardNumber.replace(/\s/g, '');
-
-  if (/^4/.test(cleaned)) return 'Visa';
-  if (/^5[1-5]/.test(cleaned)) return 'Mastercard';
-  if (/^3[47]/.test(cleaned)) return 'American Express';
-  if (/^6(?:011|5)/.test(cleaned)) return 'Discover';
-
-  return 'Unknown';
 }

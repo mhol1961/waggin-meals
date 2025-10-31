@@ -397,3 +397,269 @@ export function isConfigured(): boolean {
     process.env.AUTHORIZENET_TRANSACTION_KEY
   );
 }
+
+/**
+ * Delete a payment profile from Authorize.net CIM
+ *
+ * @param customerProfileId - Customer Profile ID
+ * @param paymentProfileId - Payment Profile ID to delete
+ * @returns Success status
+ */
+export async function deletePaymentProfile(
+  customerProfileId: string,
+  paymentProfileId: string
+): Promise<AuthorizeNetResponse> {
+  try {
+    const config = getConfig();
+    const endpoint = getApiEndpoint(config.environment);
+
+    const payload = {
+      deleteCustomerPaymentProfileRequest: {
+        merchantAuthentication: {
+          name: config.apiLoginId,
+          transactionKey: config.transactionKey,
+        },
+        customerProfileId,
+        customerPaymentProfileId: paymentProfileId,
+      },
+    };
+
+    console.log(`[Authorize.net] Deleting payment profile ${paymentProfileId} for customer ${customerProfileId}`);
+
+    const response = await makeApiRequest(endpoint, payload);
+
+    if (response.messages?.resultCode === 'Ok') {
+      console.log(`[Authorize.net] Payment profile deleted: ${paymentProfileId}`);
+
+      return {
+        success: true,
+      };
+    } else {
+      const errorMessage = response.messages?.message?.[0]?.text || 'Unknown error';
+      console.error(`[Authorize.net] Failed to delete payment profile: ${errorMessage}`);
+
+      return {
+        success: false,
+        error: errorMessage,
+        code: response.messages?.message?.[0]?.code,
+      };
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to delete payment profile';
+    console.error('[Authorize.net] Delete payment profile failed:', error);
+    return {
+      success: false,
+      error: errorMessage,
+    };
+  }
+}
+
+/**
+ * Create a payment profile using Accept.js opaque data (PCI-compliant)
+ * This is the SECURE way to add payment methods - no raw card data touches the server
+ *
+ * @param customerProfileId - Authorize.net customer profile ID
+ * @param opaqueData - Accept.js payment nonce
+ * @param billingAddress - Billing address
+ * @returns Payment Profile ID
+ */
+export async function createPaymentProfileFromAcceptJs(params: {
+  customerProfileId: string;
+  opaqueData: {
+    dataDescriptor: string;
+    dataValue: string;
+  };
+  billingAddress: {
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    country?: string;
+  };
+}): Promise<AuthorizeNetResponse> {
+  try {
+    const config = getConfig();
+    const endpoint = getApiEndpoint(config.environment);
+
+    const payload = {
+      createCustomerPaymentProfileRequest: {
+        merchantAuthentication: {
+          name: config.apiLoginId,
+          transactionKey: config.transactionKey,
+        },
+        customerProfileId: params.customerProfileId,
+        paymentProfile: {
+          billTo: {
+            firstName: params.billingAddress.firstName,
+            lastName: params.billingAddress.lastName,
+            address: params.billingAddress.address,
+            city: params.billingAddress.city,
+            state: params.billingAddress.state,
+            zip: params.billingAddress.zip,
+            country: params.billingAddress.country || 'US',
+          },
+          payment: {
+            opaqueData: {
+              dataDescriptor: params.opaqueData.dataDescriptor,
+              dataValue: params.opaqueData.dataValue,
+            },
+          },
+        },
+        validationMode: config.environment === 'production' ? 'liveMode' : 'testMode',
+      },
+    };
+
+    console.log(`[Authorize.net] Creating payment profile from Accept.js token for customer ${params.customerProfileId}`);
+
+    const response = await makeApiRequest(endpoint, payload);
+
+    if (response.messages?.resultCode === 'Ok') {
+      const paymentProfileId = response.customerPaymentProfileId;
+      console.log(`[Authorize.net] Payment profile created from Accept.js: ${paymentProfileId}`);
+
+      return {
+        success: true,
+        paymentProfileId,
+      };
+    } else {
+      const errorMessage = response.messages?.message?.[0]?.text || 'Unknown error';
+      console.error(`[Authorize.net] Failed to create payment profile from Accept.js: ${errorMessage}`);
+
+      return {
+        success: false,
+        error: errorMessage,
+        code: response.messages?.message?.[0]?.code,
+      };
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create payment profile from Accept.js';
+    console.error('[Authorize.net] Create payment profile from Accept.js failed:', error);
+    return {
+      success: false,
+      error: errorMessage,
+    };
+  }
+}
+
+/**
+ * Create customer profile AND payment profile from Accept.js opaque data in one step
+ * This is the SECURE way to create subscriptions - no raw card data touches the server
+ *
+ * @param customerId - Internal customer ID
+ * @param email - Customer email
+ * @param opaqueData - Accept.js payment nonce
+ * @param billingAddress - Billing address
+ * @returns Customer Profile ID and Payment Profile ID
+ */
+export async function createCustomerProfileWithPayment(params: {
+  customerId: string;
+  email: string;
+  opaqueData: {
+    dataDescriptor: string;
+    dataValue: string;
+  };
+  billingAddress: {
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    country?: string;
+  };
+}): Promise<AuthorizeNetResponse> {
+  try {
+    const config = getConfig();
+    const endpoint = getApiEndpoint(config.environment);
+
+    const payload = {
+      createCustomerProfileRequest: {
+        merchantAuthentication: {
+          name: config.apiLoginId,
+          transactionKey: config.transactionKey,
+        },
+        profile: {
+          merchantCustomerId: params.customerId,
+          email: params.email,
+          description: `Customer ${params.customerId}`,
+          paymentProfiles: [
+            {
+              billTo: {
+                firstName: params.billingAddress.firstName,
+                lastName: params.billingAddress.lastName,
+                address: params.billingAddress.address,
+                city: params.billingAddress.city,
+                state: params.billingAddress.state,
+                zip: params.billingAddress.zip,
+                country: params.billingAddress.country || 'US',
+              },
+              payment: {
+                opaqueData: {
+                  dataDescriptor: params.opaqueData.dataDescriptor,
+                  dataValue: params.opaqueData.dataValue,
+                },
+              },
+            },
+          ],
+        },
+        validationMode: config.environment === 'production' ? 'liveMode' : 'testMode',
+      },
+    };
+
+    console.log(`[Authorize.net] Creating customer profile with payment from Accept.js for ${params.email}`);
+
+    const response = await makeApiRequest(endpoint, payload);
+
+    if (response.messages?.resultCode === 'Ok') {
+      const profileId = response.customerProfileId;
+      // When creating profile with payment, the payment profile IDs are in a different location
+      const paymentProfileId = response.customerPaymentProfileId ||
+        (response as any).customerPaymentProfileIdList?.[0];
+
+      console.log(`[Authorize.net] Customer profile created with payment: Profile ${profileId}, Payment ${paymentProfileId}`);
+
+      return {
+        success: true,
+        profileId,
+        paymentProfileId,
+      };
+    } else {
+      // Check if profile already exists
+      if (response.messages?.message?.[0]?.code === 'E00039') {
+        // Duplicate profile - extract existing profile ID from error message
+        const errorText = response.messages.message[0].text;
+        const match = errorText.match(/ID (\d+)/);
+        const profileId = match ? match[1] : null;
+
+        if (profileId) {
+          console.log(`[Authorize.net] Customer profile already exists: ${profileId}. Creating payment profile separately.`);
+
+          // Create payment profile for existing customer
+          return await createPaymentProfileFromAcceptJs({
+            customerProfileId: profileId,
+            opaqueData: params.opaqueData,
+            billingAddress: params.billingAddress,
+          });
+        }
+      }
+
+      const errorMessage = response.messages?.message?.[0]?.text || 'Unknown error';
+      console.error(`[Authorize.net] Failed to create customer profile with payment: ${errorMessage}`);
+
+      return {
+        success: false,
+        error: errorMessage,
+        code: response.messages?.message?.[0]?.code,
+      };
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create customer profile with payment';
+    console.error('[Authorize.net] Create customer profile with payment failed:', error);
+    return {
+      success: false,
+      error: errorMessage,
+    };
+  }
+}

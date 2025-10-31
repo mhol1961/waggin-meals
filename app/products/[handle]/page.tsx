@@ -4,21 +4,45 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { getProductByHandle, getProductsByCollection } from '@/data/products';
 import AddToCartButton from '@/components/add-to-cart-button';
 import VariantSelector from '@/components/variant-selector';
 import StockStatusBadge from '@/components/stock-status-badge';
+import type { Product } from '@/types/product';
 import type { ProductVariant } from '@/types/product-variant';
 
 export default function ProductPage() {
   const params = useParams();
   const handle = params.handle as string;
-  const product = getProductByHandle(handle);
 
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [variants, setVariants] = useState<ProductVariant[]>([]);
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [loadingVariants, setLoadingVariants] = useState(false);
+
+  // Fetch product data
+  useEffect(() => {
+    async function fetchProduct() {
+      if (!handle) return;
+
+      setLoading(true);
+      try {
+        const response = await fetch(`/api/products/by-handle/${handle}`);
+        if (!response.ok) throw new Error('Product not found');
+
+        const data = await response.json();
+        setProduct(data.product);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProduct();
+  }, [handle]);
 
   // Fetch variants if product has them
   useEffect(() => {
@@ -44,6 +68,21 @@ export default function ProductPage() {
     }
   }, [product]);
 
+  if (loading) {
+    return (
+      <main className="bg-white min-h-screen">
+        <section className="px-4 py-16">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="animate-pulse">
+              <div className="h-12 bg-gray-200 rounded w-3/4 mx-auto mb-4"></div>
+              <div className="h-6 bg-gray-200 rounded w-1/2 mx-auto"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   if (!product) {
     return (
       <main className="bg-white min-h-screen">
@@ -68,10 +107,8 @@ export default function ProductPage() {
     );
   }
 
-  // Get related products from the same collection
-  const relatedProducts = getProductsByCollection(product.collection)
-    .filter(p => p.handle !== product.handle && p.inStock)
-    .slice(0, 3);
+  // Related products will be removed for now - can add later with proper Supabase query
+  const relatedProducts: any[] = [];
 
   return (
     <main className="bg-white min-h-screen">
@@ -107,7 +144,7 @@ export default function ProductPage() {
                     Out of Stock
                   </div>
                 )}
-                {product.tags.includes('bestseller') && (
+                {product.tags?.includes('bestseller') && (
                   <div className="absolute top-4 left-4 bg-[#ffc107] text-[#856404] px-4 py-2 rounded-full text-sm font-semibold">
                     Best Seller
                   </div>
@@ -196,9 +233,9 @@ export default function ProductPage() {
                 {selectedVariant ? (
                   <StockStatusBadge
                     quantity={selectedVariant.inventory_quantity}
-                    lowStockThreshold={selectedVariant.low_stock_threshold || 5}
+                    lowStockThreshold={5}
                     trackInventory={selectedVariant.track_inventory}
-                    allowBackorder={selectedVariant.allow_backorder || false}
+                    allowBackorder={selectedVariant.inventory_policy === 'continue'}
                     showQuantity={true}
                     size="md"
                   />

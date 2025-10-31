@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { calculateTax, getTaxBreakdown } from '@/lib/tax-calculator';
 import type { ShippingAddress, CartItem } from '@/lib/tax-calculator';
+import { createClient } from '@supabase/supabase-js';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,6 +36,27 @@ export async function POST(request: NextRequest) {
         { error: 'State is required in shipping address' },
         { status: 400 }
       );
+    }
+
+    // Check if tax collection is enabled globally
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
+    const { data: settings } = await supabase
+      .from('site_settings')
+      .select('tax_collection_enabled')
+      .single();
+
+    if (!settings?.tax_collection_enabled) {
+      return NextResponse.json({
+        success: true,
+        tax_amount: 0,
+        tax_rate: 0,
+        tax_rate_percentage: '0.00%',
+        message: 'Tax collection is currently disabled',
+      });
     }
 
     // Calculate tax based on request type

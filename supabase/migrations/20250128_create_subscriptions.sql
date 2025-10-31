@@ -1,4 +1,38 @@
--- Create subscriptions table
+-- =============================================
+-- Subscription System Tables
+-- Created: January 28, 2025
+-- Updated: January 30, 2025 - Fixed column names and table order
+-- =============================================
+
+-- Create payment_methods table FIRST (no dependencies)
+CREATE TABLE IF NOT EXISTS payment_methods (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  customer_id UUID NOT NULL,
+
+  -- Authorize.net CIM details
+  authorize_net_profile_id TEXT, -- Authorize.net customer profile ID
+  authorize_net_payment_profile_id TEXT, -- Authorize.net payment profile ID
+
+  -- Card details (last 4 digits only for display)
+  -- These fields are optional because Accept.js doesn't provide them
+  card_type TEXT, -- 'Visa', 'Mastercard', 'Amex', 'Discover'
+  last_four TEXT, -- Made optional - Accept.js doesn't provide
+  expiration_month INTEGER, -- Made optional - Accept.js doesn't provide
+  expiration_year INTEGER, -- Made optional - Accept.js doesn't provide
+
+  -- Billing address
+  billing_address JSONB, -- {first_name, last_name, address, city, state, zip, country}
+
+  -- Status
+  is_default BOOLEAN DEFAULT FALSE,
+  is_active BOOLEAN DEFAULT TRUE,
+
+  -- Timestamps
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create subscriptions table (references payment_methods)
 CREATE TABLE IF NOT EXISTS subscriptions (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   customer_id UUID NOT NULL,
@@ -31,33 +65,6 @@ CREATE TABLE IF NOT EXISTS subscriptions (
   -- Metadata
   notes TEXT,
   metadata JSONB DEFAULT '{}'::jsonb,
-
-  -- Timestamps
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Create payment_methods table (for Authorize.net CIM)
-CREATE TABLE IF NOT EXISTS payment_methods (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  customer_id UUID NOT NULL,
-
-  -- Authorize.net CIM details
-  customer_profile_id TEXT, -- Authorize.net customer profile ID
-  payment_profile_id TEXT, -- Authorize.net payment profile ID
-
-  -- Card details (last 4 digits only for display)
-  card_type TEXT, -- 'Visa', 'Mastercard', 'Amex', 'Discover'
-  last_four TEXT NOT NULL,
-  expiration_month INTEGER NOT NULL,
-  expiration_year INTEGER NOT NULL,
-
-  -- Billing address
-  billing_address JSONB, -- {first_name, last_name, address, city, state, zip, country}
-
-  -- Status
-  is_default BOOLEAN DEFAULT FALSE,
-  is_active BOOLEAN DEFAULT TRUE,
 
   -- Timestamps
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -126,13 +133,13 @@ CREATE TABLE IF NOT EXISTS subscription_history (
 );
 
 -- Create indexes for performance
+CREATE INDEX IF NOT EXISTS idx_payment_methods_customer ON payment_methods(customer_id);
+CREATE INDEX IF NOT EXISTS idx_payment_methods_default ON payment_methods(customer_id, is_default);
+
 CREATE INDEX IF NOT EXISTS idx_subscriptions_customer ON subscriptions(customer_id);
 CREATE INDEX IF NOT EXISTS idx_subscriptions_status ON subscriptions(status);
 CREATE INDEX IF NOT EXISTS idx_subscriptions_next_billing ON subscriptions(next_billing_date);
 CREATE INDEX IF NOT EXISTS idx_subscriptions_payment_method ON subscriptions(payment_method_id);
-
-CREATE INDEX IF NOT EXISTS idx_payment_methods_customer ON payment_methods(customer_id);
-CREATE INDEX IF NOT EXISTS idx_payment_methods_default ON payment_methods(customer_id, is_default);
 
 CREATE INDEX IF NOT EXISTS idx_subscription_invoices_subscription ON subscription_invoices(subscription_id);
 CREATE INDEX IF NOT EXISTS idx_subscription_invoices_status ON subscription_invoices(status);
@@ -143,8 +150,8 @@ CREATE INDEX IF NOT EXISTS idx_subscription_history_subscription ON subscription
 CREATE INDEX IF NOT EXISTS idx_subscription_history_created ON subscription_history(created_at);
 
 -- Add comments
-COMMENT ON TABLE subscriptions IS 'Customer subscription records with billing schedule and payment info';
 COMMENT ON TABLE payment_methods IS 'Tokenized payment methods via Authorize.net CIM';
+COMMENT ON TABLE subscriptions IS 'Customer subscription records with billing schedule and payment info';
 COMMENT ON TABLE subscription_invoices IS 'Individual billing attempts for subscriptions';
 COMMENT ON TABLE subscription_history IS 'Audit trail of all subscription changes';
 
@@ -158,10 +165,10 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Create triggers for updated_at
-CREATE TRIGGER update_subscriptions_updated_at BEFORE UPDATE ON subscriptions
+CREATE TRIGGER update_payment_methods_updated_at BEFORE UPDATE ON payment_methods
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_payment_methods_updated_at BEFORE UPDATE ON payment_methods
+CREATE TRIGGER update_subscriptions_updated_at BEFORE UPDATE ON subscriptions
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_subscription_invoices_updated_at BEFORE UPDATE ON subscription_invoices

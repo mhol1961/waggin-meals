@@ -131,7 +131,10 @@ INSERT INTO tax_rates (state_code, state_name, tax_rate, notes) VALUES
   ('DE', 'Delaware', 0.0000, 'No sales tax'),
   ('MT', 'Montana', 0.0000, 'No state sales tax; some resort areas may have local tax'),
   ('NH', 'New Hampshire', 0.0000, 'No sales tax'),
-  ('OR', 'Oregon', 0.0000, 'No sales tax')
+  ('OR', 'Oregon', 0.0000, 'No sales tax'),
+
+  -- District of Columbia
+  ('DC', 'District of Columbia', 0.0600, 'District sales tax')
 ON CONFLICT DO NOTHING;
 
 -- =============================================

@@ -66,14 +66,15 @@ export interface PaymentMethod {
   customer_id: string;
 
   // Authorize.net CIM
-  customer_profile_id?: string;
-  payment_profile_id?: string;
+  authorize_net_profile_id?: string;
+  authorize_net_payment_profile_id?: string;
 
   // Card details (masked)
+  // These fields are optional because Accept.js doesn't provide them
   card_type?: CardType;
-  last_four: string;
-  expiration_month: number;
-  expiration_year: number;
+  last_four?: string;
+  expiration_month?: number;
+  expiration_year?: number;
 
   // Billing address
   billing_address?: BillingAddress;
