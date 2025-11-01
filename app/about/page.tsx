@@ -147,33 +147,67 @@ export default function About() {
   return (
     <main className="bg-white">
       {/* 1. HERO SECTION */}
-      <section className="relative px-4 py-20 md:py-28 overflow-hidden">
-        {/* Purple gradient background with pattern overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#9657EE] via-[#7e43c4] to-[#5E3B76]" />
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute -top-40 -left-24 w-96 h-96 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-white rounded-full blur-3xl" />
+      <section className="relative px-6 py-24 md:py-32 lg:py-40 overflow-hidden bg-gradient-to-br from-[#5E3B76] via-[#7e43c4] to-[#9657EE]">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
+          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.15)_0%,transparent_50%)]" />
         </div>
 
-        <div className="mx-auto max-w-4xl text-center relative z-10">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white mb-6 leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>
-            From Our Family Farm
-            <br />
-            to Your Dog's Bowl
-          </h1>
-          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Handcrafted nutrition rooted in science, driven by love, and inspired by loss turned to purpose
-          </p>
+        {/* Pattern overlay */}
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }} />
 
-          {/* Scroll indicator */}
-          <div className="mt-12 animate-bounce">
-            <ChevronDown className="w-8 h-8 text-white mx-auto" />
+        <div className="mx-auto max-w-7xl px-4 relative z-10">
+          <div className="mx-auto max-w-4xl text-center">
+            {/* Eyebrow text */}
+            <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
+              <HeartPulse className="w-4 h-4 text-white" />
+              <span className="text-sm font-semibold text-white uppercase tracking-wider" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Our Story
+              </span>
+            </div>
+
+            {/* Main heading */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal text-white mb-8 leading-[1.1]" style={{ fontFamily: "'Abril Fatface', serif", letterSpacing: '-0.02em' }}>
+              From Our Family Farm
+              <br />
+              <span className="text-[#d8c6ff]">to Your Dog's Bowl</span>
+            </h1>
+
+            {/* Subheading */}
+            <p className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed font-medium" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              Handcrafted nutrition rooted in <span className="text-[#d8c6ff] font-semibold">science</span>, driven by <span className="text-[#d8c6ff] font-semibold">love</span>, and inspired by <span className="text-[#d8c6ff] font-semibold">loss turned to purpose</span>
+            </p>
+
+            {/* CTA buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+              <Link
+                href="#story"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#5E3B76] rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                Read Christie's Story
+                <ChevronDown className="w-5 h-5 rotate-[-90deg]" />
+              </Link>
+              <Link
+                href="#team"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 rounded-full font-semibold text-lg hover:bg-white/20 transition-all duration-300"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                Meet Our Team
+              </Link>
+            </div>
+
+            {/* Scroll indicator */}
+            <div className="animate-bounce">
+              <ChevronDown className="w-6 h-6 text-white/60 mx-auto" />
+            </div>
           </div>
         </div>
       </section>
 
       {/* 2. FOUNDER'S STORY SECTION */}
-      <section className="bg-white px-4 py-20">
+      <section id="story" className="bg-white px-4 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             {/* Left - Christie's Image */}
@@ -287,7 +321,7 @@ export default function About() {
       </section>
 
       {/* 4. MEET OUR TEAM */}
-      <section className="bg-white px-4 py-20">
+      <section id="team" className="bg-white px-4 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
