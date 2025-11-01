@@ -88,39 +88,44 @@ export async function POST(request: NextRequest) {
     // INVENTORY CHECK (before payment)
     // ====================================
     // Check inventory availability for all items
-    const inventoryChecks = await checkCartAvailability(
-      items.map((item: OrderItem) => ({
-        productId: item.product_id,
-        variantId: item.variant_id || null,
-        quantity: item.quantity,
-      }))
-    );
-
-    // Find any unavailable items
-    const unavailableItems = inventoryChecks.filter(check => !check.available);
-
-    if (unavailableItems.length > 0) {
-      const itemDetails = unavailableItems.map(check => {
-        const item = items.find((i: OrderItem) =>
-          i.product_id === check.productId &&
-          (i.variant_id || null) === (check.variantId || null)
-        );
-        return {
-          title: item?.title || 'Unknown',
-          variant_title: item?.variant_title,
-          requested: check.requested_quantity,
-          available: check.current_quantity,
-          reason: check.reason,
-        };
-      });
-
-      return NextResponse.json(
-        {
-          error: 'Some items are out of stock',
-          unavailable_items: itemDetails,
-        },
-        { status: 400 }
+    try {
+      const inventoryChecks = await checkCartAvailability(
+        items.map((item: OrderItem) => ({
+          productId: item.product_id,
+          variantId: item.variant_id || null,
+          quantity: item.quantity,
+        }))
       );
+
+      // Find any unavailable items
+      const unavailableItems = inventoryChecks.filter(check => !check.available);
+
+      if (unavailableItems.length > 0) {
+        const itemDetails = unavailableItems.map(check => {
+          const item = items.find((i: OrderItem) =>
+            i.product_id === check.productId &&
+            (i.variant_id || null) === (check.variantId || null)
+          );
+          return {
+            title: item?.title || 'Unknown',
+            variant_title: item?.variant_title,
+            requested: check.requested_quantity,
+            available: check.current_quantity,
+            reason: check.reason,
+          };
+        });
+
+        return NextResponse.json(
+          {
+            error: 'Some items are out of stock',
+            unavailable_items: itemDetails,
+          },
+          { status: 400 }
+        );
+      }
+    } catch (inventoryError) {
+      // Log inventory check failure but don't block order
+      console.error('[Order] Inventory check failed, proceeding anyway:', inventoryError);
     }
 
     // Get or create customer
