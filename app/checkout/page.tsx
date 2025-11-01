@@ -209,7 +209,11 @@ export default function CheckoutPage() {
 
       if (!orderResponse.ok) {
         const errorData = await orderResponse.json();
-        throw new Error(errorData.error || 'Failed to create order');
+        const fullError = errorData.details
+          ? `${errorData.error}: ${errorData.details}`
+          : errorData.error || 'Failed to create order';
+        console.error('Order creation failed:', errorData);
+        throw new Error(fullError);
       }
 
       const orderData = await orderResponse.json();
