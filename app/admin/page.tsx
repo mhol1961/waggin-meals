@@ -1,94 +1,182 @@
-import { redirect } from 'next/navigation';
-import { getAdminSession } from '@/lib/admin-auth';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
-  getAllBlogPosts,
-  getAllVideos,
-  getAllTestimonials,
-  getAllEvents,
-  getAllResources,
-  getAllProducts,
-} from '@/lib/supabase/server';
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
-export default async function AdminDashboard() {
-  // Check authentication
-  const session = await getAdminSession();
+interface DashboardStats {
+  revenue: {
+    today: number;
+    week: number;
+    month: number;
+    year: number;
+    allTime: number;
+    monthTrend: number;
+  };
+  orders: {
+    total: number;
+    byStatus: {
+      processing: number;
+      shipped: number;
+      out_for_delivery: number;
+      delivered: number;
+      canceled: number;
+    };
+  };
+  subscriptions: {
+    active: number;
+    paused: number;
+    canceled: number;
+    newThisMonth: number;
+    total: number;
+  };
+  customers: {
+    total: number;
+    newThisMonth: number;
+  };
+  newsletter: {
+    total: number;
+  };
+  charts: {
+    revenueChart: Array<{ date: string; revenue: number }>;
+  };
+  recentOrders: Array<{
+    id: string;
+    order_number: string;
+    customer_email: string;
+    total: number;
+    status: string;
+    fulfillment_status: string;
+    created_at: string;
+  }>;
+}
 
-  if (!session) {
-    redirect('/admin/login');
+export default function AdminDashboard() {
+  const router = useRouter();
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const response = await fetch('/api/admin/dashboard/stats');
+        if (response.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+        if (!response.ok) {
+          throw new Error('Failed to fetch stats');
+        }
+        const data = await response.json();
+        setStats(data);
+      } catch (err) {
+        setError('Failed to load dashboard data');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchStats();
+  }, [router]);
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount);
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
   }
 
-  // Fetch content statistics
-  const [blogPosts, videos, testimonials, events, resources, products] =
-    await Promise.all([
-      getAllBlogPosts(false), // Get all, not just published
-      getAllVideos(false),
-      getAllTestimonials(false),
-      getAllEvents(false),
-      getAllResources(false),
-      getAllProducts(false),
-    ]);
+  if (error || !stats) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600">{error || 'Failed to load dashboard'}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-  const stats = [
-    {
-      name: 'Blog Posts',
-      total: blogPosts.length,
-      published: blogPosts.filter((p) => p.is_published).length,
-      icon: '📝',
-      href: '/admin/blog',
-    },
-    {
-      name: 'Videos',
-      total: videos.length,
-      published: videos.filter((v) => v.is_published).length,
-      icon: '🎥',
-      href: '/admin/videos',
-    },
-    {
-      name: 'Testimonials',
-      total: testimonials.length,
-      published: testimonials.filter((t) => t.is_published).length,
-      icon: '⭐',
-      href: '/admin/testimonials',
-    },
-    {
-      name: 'Events',
-      total: events.length,
-      published: events.filter((e) => e.is_published).length,
-      icon: '📅',
-      href: '/admin/events',
-    },
-    {
-      name: 'Resources',
-      total: resources.length,
-      published: resources.filter((r) => r.is_published).length,
-      icon: '📄',
-      href: '/admin/resources',
-    },
-    {
-      name: 'Products',
-      total: products.length,
-      published: products.filter((p) => p.is_published).length,
-      icon: '🛍️',
-      href: '/admin/products',
-    },
+  // Prepare data for charts
+  const orderStatusData = [
+    { name: 'Processing', value: stats.orders.byStatus.processing, color: '#f59e0b' },
+    { name: 'Shipped', value: stats.orders.byStatus.shipped, color: '#3b82f6' },
+    { name: 'Out for Delivery', value: stats.orders.byStatus.out_for_delivery, color: '#8b5cf6' },
+    { name: 'Delivered', value: stats.orders.byStatus.delivered, color: '#10b981' },
+    { name: 'Canceled', value: stats.orders.byStatus.canceled, color: '#ef4444' },
+  ];
+
+  const subscriptionData = [
+    { name: 'Active', value: stats.subscriptions.active, color: '#10b981' },
+    { name: 'Paused', value: stats.subscriptions.paused, color: '#f59e0b' },
+    { name: 'Canceled', value: stats.subscriptions.canceled, color: '#ef4444' },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-serif font-bold text-gray-900">
-              Waggin Meals CMS
+              Financial Dashboard
             </h1>
             <p className="text-sm text-gray-600">
-              Welcome back, {session.username}
+              Comprehensive business analytics
             </p>
           </div>
 
           <div className="flex items-center gap-4">
+            <Link
+              href="/admin/blog"
+              className="text-sm text-gray-600 hover:text-gray-900 transition"
+            >
+              CMS
+            </Link>
             <Link
               href="/"
               className="text-sm text-gray-600 hover:text-gray-900 transition"
@@ -110,170 +198,325 @@ export default async function AdminDashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Message */}
-        <div className="mb-8">
-          <h2 className="text-3xl font-serif font-bold text-gray-900 mb-2">
-            Dashboard
-          </h2>
-          <p className="text-gray-600">
-            Manage all your website content in one place
-          </p>
+        {/* Revenue Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium opacity-90">Monthly Revenue</h3>
+              <span className="text-2xl">💰</span>
+            </div>
+            <div className="text-3xl font-bold mb-1">
+              {formatCurrency(stats.revenue.month)}
+            </div>
+            <div className="flex items-center text-sm">
+              {stats.revenue.monthTrend >= 0 ? (
+                <span className="text-green-200">↑ {stats.revenue.monthTrend}%</span>
+              ) : (
+                <span className="text-red-200">↓ {Math.abs(stats.revenue.monthTrend)}%</span>
+              )}
+              <span className="opacity-75 ml-1">vs last month</span>
+            </div>
+          </div>
+
+          <Link
+            href="/admin/orders"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium text-gray-600">Total Orders</h3>
+              <span className="text-2xl">📦</span>
+            </div>
+            <div className="text-3xl font-bold text-gray-900 mb-1">
+              {stats.orders.total}
+            </div>
+            <div className="text-sm text-purple-600 group-hover:text-purple-700">
+              View all orders →
+            </div>
+          </Link>
+
+          <Link
+            href="/admin/subscriptions"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium text-gray-600">Active Subscriptions</h3>
+              <span className="text-2xl">🔄</span>
+            </div>
+            <div className="text-3xl font-bold text-gray-900 mb-1">
+              {stats.subscriptions.active}
+            </div>
+            <div className="text-sm text-green-600">
+              {stats.subscriptions.newThisMonth} new this month
+            </div>
+          </Link>
+
+          <Link
+            href="/admin/customers"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium text-gray-600">Total Customers</h3>
+              <span className="text-2xl">👥</span>
+            </div>
+            <div className="text-3xl font-bold text-gray-900 mb-1">
+              {stats.customers.total}
+            </div>
+            <div className="text-sm text-green-600">
+              {stats.customers.newThisMonth} new this month
+            </div>
+          </Link>
         </div>
 
-        {/* Quick Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {stats.map((stat) => (
-            <Link
-              key={stat.name}
-              href={stat.href}
-              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="text-4xl">{stat.icon}</div>
-                <div className="text-right">
-                  <div className="text-3xl font-bold text-gray-900">
-                    {stat.total}
-                  </div>
-                  <div className="text-sm text-gray-500">Total</div>
-                </div>
-              </div>
-
-              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition">
-                {stat.name}
-              </h3>
-
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">Published:</span>
-                <span className="font-semibold text-green-600">
-                  {stat.published}
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between text-sm mt-1">
-                <span className="text-gray-600">Drafts:</span>
-                <span className="font-semibold text-gray-600">
-                  {stat.total - stat.published}
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Quick Actions */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        {/* Revenue Chart */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Quick Actions
+            Revenue Trend (Last 30 Days)
           </h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={stats.charts.revenueChart}>
+              <defs>
+                <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis tickFormatter={(value) => `$${value}`} />
+              <Tooltip
+                formatter={(value: number) => formatCurrency(value)}
+                contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }}
+              />
+              <Area
+                type="monotone"
+                dataKey="revenue"
+                stroke="#8b5cf6"
+                fillOpacity={1}
+                fill="url(#colorRevenue)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Link
-              href="/admin/blog/new"
-              className="flex items-center gap-3 p-4 bg-orange-50 hover:bg-orange-100 rounded-lg transition group"
-            >
-              <div className="text-2xl">✍️</div>
-              <div>
-                <div className="font-semibold text-gray-900 group-hover:text-orange-600">
-                  New Blog Post
-                </div>
-                <div className="text-sm text-gray-600">
-                  Write a new article
-                </div>
-              </div>
-            </Link>
+        {/* Charts Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Order Status Breakdown */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Order Status Breakdown
+            </h3>
+            <div className="flex items-center justify-center">
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={orderStatusData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    paddingAngle={5}
+                    dataKey="value"
+                    label={({ name, value }) => `${name}: ${value}`}
+                  >
+                    {orderStatusData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-2 gap-2 mt-4">
+              {orderStatusData.map((status) => (
+                <Link
+                  key={status.name}
+                  href={`/admin/orders?status=${status.name.toLowerCase().replace(' ', '_')}`}
+                  className="flex items-center gap-2 text-sm hover:bg-gray-50 p-2 rounded transition"
+                >
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: status.color }}
+                  ></div>
+                  <span className="text-gray-700">{status.name}:</span>
+                  <span className="font-semibold">{status.value}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
 
-            <Link
-              href="/admin/videos/new"
-              className="flex items-center gap-3 p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition group"
-            >
-              <div className="text-2xl">🎬</div>
-              <div>
-                <div className="font-semibold text-gray-900 group-hover:text-blue-600">
-                  Add Video
-                </div>
-                <div className="text-sm text-gray-600">
-                  Upload a new video
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/admin/testimonials/new"
-              className="flex items-center gap-3 p-4 bg-green-50 hover:bg-green-100 rounded-lg transition group"
-            >
-              <div className="text-2xl">💬</div>
-              <div>
-                <div className="font-semibold text-gray-900 group-hover:text-green-600">
-                  Add Testimonial
-                </div>
-                <div className="text-sm text-gray-600">
-                  Share success story
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/admin/events/new"
-              className="flex items-center gap-3 p-4 bg-purple-50 hover:bg-purple-100 rounded-lg transition group"
-            >
-              <div className="text-2xl">🎪</div>
-              <div>
-                <div className="font-semibold text-gray-900 group-hover:text-purple-600">
-                  Create Event
-                </div>
-                <div className="text-sm text-gray-600">
-                  Schedule workshop
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/admin/resources/new"
-              className="flex items-center gap-3 p-4 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition group"
-            >
-              <div className="text-2xl">📚</div>
-              <div>
-                <div className="font-semibold text-gray-900 group-hover:text-yellow-600">
-                  Upload Resource
-                </div>
-                <div className="text-sm text-gray-600">
-                  Add PDF guide
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/admin/products/new"
-              className="flex items-center gap-3 p-4 bg-pink-50 hover:bg-pink-100 rounded-lg transition group"
-            >
-              <div className="text-2xl">🛒</div>
-              <div>
-                <div className="font-semibold text-gray-900 group-hover:text-pink-600">
-                  Add Product
-                </div>
-                <div className="text-sm text-gray-600">
-                  List for sale
-                </div>
-              </div>
-            </Link>
+          {/* Subscription Breakdown */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Subscription Status
+            </h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={subscriptionData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="value" radius={[8, 8, 0, 0]}>
+                  {subscriptionData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+            <div className="grid grid-cols-3 gap-2 mt-4">
+              {subscriptionData.map((status) => (
+                <Link
+                  key={status.name}
+                  href={`/admin/subscriptions?status=${status.name.toLowerCase()}`}
+                  className="flex flex-col items-center gap-1 text-sm hover:bg-gray-50 p-2 rounded transition"
+                >
+                  <div
+                    className="w-full h-2 rounded-full"
+                    style={{ backgroundColor: status.color }}
+                  ></div>
+                  <span className="text-gray-700">{status.name}</span>
+                  <span className="font-bold text-lg">{status.value}</span>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Help Section */}
-        <div className="mt-8 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl p-6 border border-orange-200">
+        {/* Additional Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h4 className="text-sm font-medium text-gray-600 mb-2">Today's Revenue</h4>
+            <div className="text-2xl font-bold text-gray-900">
+              {formatCurrency(stats.revenue.today)}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h4 className="text-sm font-medium text-gray-600 mb-2">This Week</h4>
+            <div className="text-2xl font-bold text-gray-900">
+              {formatCurrency(stats.revenue.week)}
+            </div>
+          </div>
+
+          <Link
+            href="/admin/newsletter"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
+          >
+            <h4 className="text-sm font-medium text-gray-600 mb-2">Newsletter Subscribers</h4>
+            <div className="text-2xl font-bold text-gray-900">
+              {stats.newsletter.total}
+            </div>
+          </Link>
+        </div>
+
+        {/* Recent Orders Table */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">Recent Orders</h3>
+            <Link
+              href="/admin/orders"
+              className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+            >
+              View all →
+            </Link>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Order #
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Customer
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Total
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {stats.recentOrders.map((order) => (
+                  <tr key={order.id} className="hover:bg-gray-50">
+                    <td className="px-4 py-3">
+                      <Link
+                        href={`/admin/orders/${order.id}`}
+                        className="text-purple-600 hover:text-purple-700 font-medium"
+                      >
+                        {order.order_number}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-700">
+                      {order.customer_email}
+                    </td>
+                    <td className="px-4 py-3 text-sm font-semibold text-gray-900">
+                      {formatCurrency(order.total)}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          order.fulfillment_status === 'delivered'
+                            ? 'bg-green-100 text-green-800'
+                            : order.fulfillment_status === 'shipped'
+                            ? 'bg-blue-100 text-blue-800'
+                            : order.fulfillment_status === 'processing'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-gray-100 text-gray-800'
+                        }`}
+                      >
+                        {order.fulfillment_status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-600">
+                      {formatDate(order.created_at)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Tax Documents Section */}
+        <div className="mt-8 bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Need Help?
+            Tax & Accounting Reports
           </h3>
           <p className="text-gray-700 mb-4">
-            Check out the documentation or contact support for assistance with the CMS.
+            Generate comprehensive financial reports for your CPA or tax preparation.
           </p>
-          <div className="flex gap-4">
-            <a
-              href="/supabase/README.md"
-              className="text-sm bg-white hover:bg-gray-50 px-4 py-2 rounded-lg transition font-medium"
-              target="_blank"
-            >
-              View Documentation
-            </a>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-white rounded-lg p-4 text-center">
+              <div className="text-xl font-bold text-purple-600">
+                {formatCurrency(stats.revenue.year)}
+              </div>
+              <div className="text-sm text-gray-600 mt-1">Year to Date</div>
+            </div>
+            <div className="bg-white rounded-lg p-4 text-center">
+              <div className="text-xl font-bold text-purple-600">
+                {formatCurrency(stats.revenue.allTime)}
+              </div>
+              <div className="text-sm text-gray-600 mt-1">All Time</div>
+            </div>
+            <div className="bg-white rounded-lg p-4 text-center">
+              <div className="text-xl font-bold text-purple-600">
+                {stats.orders.total}
+              </div>
+              <div className="text-sm text-gray-600 mt-1">Total Orders</div>
+            </div>
+            <div className="bg-white rounded-lg p-4 text-center">
+              <div className="text-xl font-bold text-purple-600">
+                {stats.subscriptions.total}
+              </div>
+              <div className="text-sm text-gray-600 mt-1">Total Subscriptions</div>
+            </div>
           </div>
         </div>
       </main>
