@@ -387,7 +387,7 @@ export default function About3() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <h3 className="text-4xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  <h3 className="text-4xl font-bold mb-2 text-white" style={{ fontFamily: 'Playfair Display, serif', color: 'white' }}>
                     Farm to Bowl
                   </h3>
                   <p className="text-white/90 text-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -397,7 +397,7 @@ export default function About3() {
               </div>
 
               {/* Science-Based Card */}
-              <div className="bg-gradient-to-br from-purple-600 to-pink-600 p-8 rounded-3xl flex flex-col justify-center items-center text-center shadow-xl hover:shadow-2xl transition-all duration-300">
+              <div className="bg-purple-500 p-8 rounded-3xl flex flex-col justify-center items-center text-center shadow-xl hover:shadow-2xl transition-all duration-300">
                 <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center mb-6">
                   <FlaskConical className="w-10 h-10 text-white" />
                 </div>
