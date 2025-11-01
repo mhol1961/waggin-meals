@@ -257,7 +257,10 @@ export default function CheckoutPage() {
 
         if (!paymentResponse.ok) {
           const paymentError = await paymentResponse.json();
-          throw new Error(paymentError.error || 'Payment declined. Please check your card details.');
+          console.error('Payment API error:', paymentError);
+          const errorMsg = paymentError.error || 'Payment declined. Please check your card details.';
+          const errorDetails = paymentError.errors ? ` (${JSON.stringify(paymentError.errors)})` : '';
+          throw new Error(errorMsg + errorDetails);
         }
 
         const paymentData = await paymentResponse.json();

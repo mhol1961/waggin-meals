@@ -243,16 +243,12 @@ export async function POST(request: NextRequest) {
         {
           customer_id: customerId,
           product_id: product_id,
-          variant_id: variant_id,
           payment_method_id: paymentMethodId,
           status: 'active',
           frequency: frequency,
           quantity: quantity,
-          price: price,
-          amount: price, // Schema uses 'amount' not 'price'
+          amount: price,
           next_billing_date: nextBillingDate.toISOString().split('T')[0],
-
-          // Product info (schema has product_title but API tries to use variant_title)
           product_title: title,
         },
       ])
