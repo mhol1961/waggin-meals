@@ -367,12 +367,111 @@ export default function About3() {
           </div>
         </section>
 
+        {/* WHAT SETS US APART - BENTO GRID */}
+        <section className="py-24 md:py-32 bg-white">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" style={{ fontFamily: 'Playfair Display, serif' }}>
+                What Sets Us Apart
+              </h2>
+            </div>
+
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Large Featured Item - Farm to Bowl */}
+              <div className="md:col-span-2 md:row-span-2 relative group rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 h-96 md:h-auto">
+                <Image
+                  src="/images/2025/07/Beef-and-Sweet-Potato-Bowl-scaled.jpg"
+                  alt="Farm to Bowl"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 text-white">
+                  <h3 className="text-4xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    Farm to Bowl
+                  </h3>
+                  <p className="text-white/90 text-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    Every ingredient hand-selected from local Blue Ridge Mountain farms
+                  </p>
+                </div>
+              </div>
+
+              {/* Science-Based Card */}
+              <div className="bg-gradient-to-br from-purple-600 to-pink-600 p-8 rounded-3xl flex flex-col justify-center items-center text-center shadow-xl hover:shadow-2xl transition-all duration-300">
+                <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center mb-6">
+                  <FlaskConical className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  Science-Based
+                </h3>
+                <p className="text-white/90" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Formulated by credentialed nutritionists with advanced degrees
+                </p>
+              </div>
+
+              {/* Personalized Card */}
+              <div className="bg-purple-50 p-8 rounded-3xl flex flex-col justify-center shadow-xl hover:shadow-2xl transition-all duration-300">
+                <HeartPulse className="w-12 h-12 text-purple-600 mb-4" />
+                <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  Personalized
+                </h3>
+                <p className="text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Custom meal plans for your dog's unique needs
+                </p>
+              </div>
+
+              {/* Compassionate Card */}
+              <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-8 rounded-3xl flex flex-col justify-center shadow-xl hover:shadow-2xl transition-all duration-300">
+                <Gift className="w-12 h-12 text-purple-600 mb-4" />
+                <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  Compassionate
+                </h3>
+                <p className="text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Giving back through God's Paws and #4Jack Fund
+                </p>
+              </div>
+
+              {/* 520+ Dogs Transformed - Wide Featured */}
+              <div className="md:col-span-2 relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 h-64">
+                <Image
+                  src="/images/2025/07/Chicken-Superfood-Cake-Board-scaled.jpg"
+                  alt="Quality Meals"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent" />
+                <div className="absolute inset-0 p-8 flex flex-col justify-center">
+                  <h3 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    520+ Dogs Transformed
+                  </h3>
+                  <p className="text-white/90 text-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    Real results from real nutrition
+                  </p>
+                </div>
+              </div>
+
+              {/* 100% Real Ingredients */}
+              <div className="bg-purple-600 p-8 rounded-3xl flex flex-col justify-center items-center text-center shadow-xl hover:shadow-2xl transition-all duration-300">
+                <div className="text-5xl font-bold text-white mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  100%
+                </div>
+                <p className="text-white/90 font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  REAL INGREDIENTS
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* VALUES */}
         <section className="py-20 md:py-32 bg-gradient-to-br from-purple-50 to-pink-50">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 What We Stand For
+              </p>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
+                Our Core Values
               </h2>
             </div>
 
@@ -594,23 +693,173 @@ export default function About3() {
           </div>
         </section>
 
+        {/* WHY CHOOSE US - COMPARISON */}
+        <section className="py-20 md:py-32 bg-gradient-to-br from-purple-50 to-pink-50">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Why Choose Us
+              </p>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
+                The Waggin Meals Difference
+              </h2>
+            </div>
+
+            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-2">
+                {/* Traditional Pet Food */}
+                <div className="p-8 bg-gray-50">
+                  <h3 className="text-2xl font-semibold text-gray-600 mb-8 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Traditional Pet Food
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      'Mass produced in factories',
+                      'Unknown ingredient sourcing',
+                      'One-size-fits-all formulas',
+                      'Processed "feed" with fillers',
+                      'Corporate distance from customers'
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <XIcon className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
+                        <p className="text-sm text-gray-600" style={{ fontFamily: "'Poppins', sans-serif" }}>{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Waggin Meals */}
+                <div className="p-8 bg-gradient-to-br from-[#d8c6ff] to-[#e9dcff]">
+                  <h3 className="text-2xl font-semibold text-[#5E3B76] mb-8 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Waggin Meals
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      'Small batch crafted with care',
+                      'Local farm partners we know personally',
+                      'Personalized nutrition plans',
+                      'Real, whole foods your dog will love',
+                      'Direct nutritionist access & support'
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-[#5E3B76] flex-shrink-0 mt-1" />
+                        <p className="text-sm text-[#2b1d3b] font-medium" style={{ fontFamily: "'Poppins', sans-serif" }}>{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* VISIT US - FARM SHOP */}
+        <section className="py-20 md:py-32 bg-white">
+          <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
+              {/* Left - Image */}
+              <div className="relative h-96 lg:h-full min-h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+                <Image
+                  src="/images/2025/09/Canine-Nutrtion-Services.webp"
+                  alt="Waggin Meals Farm Shop"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              {/* Right - Location Details */}
+              <div>
+                <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Visit Us
+                </p>
+                <h2 className="text-4xl font-bold text-[#2b1d3b] mb-8" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  Find Our Farm Shop
+                </h2>
+
+                <div className="space-y-6">
+                  {/* Hours */}
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 shadow-lg">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5E3B76] to-[#9657EE] flex items-center justify-center text-white flex-shrink-0">
+                        <Clock className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-[#2b1d3b] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Farm Shop Hours
+                        </h3>
+                        <p className="text-sm text-[#6e5c8f]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          <strong>Monday - Friday:</strong> 9:00 AM - 5:00 PM<br />
+                          <strong>Saturday:</strong> 10:00 AM - 3:00 PM<br />
+                          <strong>Sunday:</strong> Closed
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Address */}
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 shadow-lg">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5E3B76] to-[#9657EE] flex items-center justify-center text-white flex-shrink-0">
+                        <MapPin className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-[#2b1d3b] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Our Location
+                        </h3>
+                        <p className="text-sm text-[#6e5c8f] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          <strong>768 Alexander Road</strong><br />
+                          Alexander, NC 28701
+                        </p>
+                        <p className="text-xs text-[#8a7ba8] italic" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          By appointment recommended
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Service Area */}
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 shadow-lg">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5E3B76] to-[#9657EE] flex items-center justify-center text-white flex-shrink-0">
+                        <Truck className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-[#2b1d3b] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          We Deliver
+                        </h3>
+                        <p className="text-sm text-[#6e5c8f]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          Shipping nationwide with fresh meals delivered right to your door
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA */}
-        <section className="relative py-32 md:py-40 bg-gradient-to-br from-purple-900 via-purple-700 to-pink-600 overflow-hidden">
+        <section className="relative py-32 md:py-40 bg-gradient-to-br from-teal-600 via-emerald-600 to-green-700 overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+          </div>
+
           <div className="container mx-auto px-6 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Playfair Display, serif' }}>
                 Your Dog's Health<br />
-                <span className="text-yellow-300">Transformation Starts Today</span>
+                <span className="text-emerald-100">Transformation Starts Today</span>
               </h2>
 
-              <p className="text-xl md:text-2xl text-white/90 mb-12" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-xl md:text-2xl text-white mb-12" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Join hundreds of pet parents who've discovered the power of real nutrition
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Link
                   href="/nutrition-services"
-                  className="group px-10 py-5 bg-white text-purple-900 rounded-full font-bold text-lg shadow-2xl hover:scale-105 transition-all flex items-center gap-3"
+                  className="group px-10 py-5 bg-white text-teal-700 rounded-full font-bold text-lg shadow-2xl hover:scale-105 transition-all flex items-center gap-3"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <span>Book Consultation</span>
@@ -619,7 +868,7 @@ export default function About3() {
 
                 <Link
                   href="/shop"
-                  className="px-10 py-5 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 rounded-full font-bold text-lg hover:bg-white/20 transition-all flex items-center gap-3"
+                  className="px-10 py-5 bg-white/10 backdrop-blur-sm text-white border-2 border-white/40 rounded-full font-bold text-lg hover:bg-white/20 transition-all flex items-center gap-3"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <span>Explore Meals</span>
@@ -648,65 +897,142 @@ export default function About3() {
         </section>
 
         {/* FOOTER - VARIATION K STYLE */}
-        <footer className="bg-gradient-to-b from-purple-100 to-purple-200 pt-16 pb-8">
-          <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-              <div className="col-span-1 md:col-span-2">
-                <Image
-                  src="/images/logo-waggin-meals.png"
-                  alt="Waggin Meals"
-                  width={180}
-                  height={60}
-                  className="h-12 w-auto mb-4"
-                />
-                <p className="text-gray-700 mb-6 max-w-md" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  Handcrafted nutrition rooted in science, driven by love. From our family farm in Western North Carolina to your dog's bowl.
+        <footer className="bg-gradient-to-br from-[#5E3B76] to-[#452a6d] text-white mt-16">
+          <div className="max-w-6xl mx-auto px-4 py-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+              {/* About Section */}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <Image
+                    src="/images/logo-waggin-meals.png"
+                    alt="Waggin Meals"
+                    width={50}
+                    height={50}
+                    className="rounded-full border border-[#ead9ff]"
+                  />
+                  <div>
+                    <p className="text-sm font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                      Waggin Meals
+                    </p>
+                    <p className="text-xs opacity-90" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Healthy Gut = Clean Butt
+                    </p>
+                  </div>
+                </div>
+                <p className="text-xs leading-relaxed opacity-90 mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Specialized nutrition tailored to your dog's unique needs. Every meal scientifically formulated by Christie Webb, M.S. Animal Nutrition & M.A. Food Science.
                 </p>
-                <div className="flex gap-4">
-                  <a href="https://facebook.com/wagginmeals" target="_blank" rel="noopener noreferrer" className="bg-white p-3 rounded-full hover:bg-purple-100 transition-colors">
-                    <Facebook className="w-5 h-5 text-purple-600" />
-                  </a>
-                  <a href="https://instagram.com/wagginmeals" target="_blank" rel="noopener noreferrer" className="bg-white p-3 rounded-full hover:bg-purple-100 transition-colors">
-                    <Instagram className="w-5 h-5 text-purple-600" />
-                  </a>
+                <div className="space-y-2 text-xs">
+                  <div className="flex items-center gap-2 opacity-90">
+                    <Mail className="w-4 h-4" />
+                    <a href="mailto:info@wagginmeals.com" className="hover:text-[#e6b4ff] transition-colors">
+                      info@wagginmeals.com
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-2 opacity-90">
+                    <Phone className="w-4 h-4" />
+                    <a href="tel:+1234567890" className="hover:text-[#e6b4ff] transition-colors">
+                      Contact Us
+                    </a>
+                  </div>
                 </div>
               </div>
 
+              {/* Quick Links */}
               <div>
-                <h4 className="font-bold text-gray-900 mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>Quick Links</h4>
-                <ul className="space-y-2" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  <li><Link href="/shop" className="text-gray-700 hover:text-purple-600 transition-colors">Shop Meals</Link></li>
-                  <li><Link href="/nutrition-services" className="text-gray-700 hover:text-purple-600 transition-colors">Book Consultation</Link></li>
-                  <li><Link href="/about" className="text-gray-700 hover:text-purple-600 transition-colors">Our Story</Link></li>
-                  <li><Link href="/contact" className="text-gray-700 hover:text-purple-600 transition-colors">Contact</Link></li>
-                  <li><Link href="/blog" className="text-gray-700 hover:text-purple-600 transition-colors">Blog</Link></li>
+                <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Quick Links
+                </h3>
+                <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <li><Link href="/" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Home</Link></li>
+                  <li><Link href="/shop" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Shop</Link></li>
+                  <li><Link href="/nutrition-services" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Nutrition Services</Link></li>
+                  <li><Link href="/case-studies" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Success Stories</Link></li>
+                  <li><Link href="/blog" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Pet Nutrition Insights</Link></li>
                 </ul>
               </div>
 
+              {/* Resources */}
               <div>
-                <h4 className="font-bold text-gray-900 mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>Visit Our Farm Shop</h4>
-                <address className="text-gray-700 not-italic text-sm mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  768 Alexander Road<br />
-                  Alexander, NC 28701<br />
-                  <a href="tel:828-774-5150" className="hover:text-purple-600 transition-colors">(828) 774-5150</a>
-                </address>
-                <p className="text-sm text-gray-600 mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  <strong>Hours:</strong><br />
-                  Mon-Fri: 9AM - 5PM<br />
-                  Sat: 10AM - 3PM<br />
-                  Sun: Closed
-                </p>
-                <p className="text-xs text-gray-500 italic" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  By appointment recommended
-                </p>
+                <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Resources
+                </h3>
+                <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <li><Link href="/feeding-calculator" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Feeding Calculator</Link></li>
+                  <li><Link href="/guides/fresh-food-guide" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Fresh Food Guide</Link></li>
+                  <li><Link href="/resources" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Free PDF Guides</Link></li>
+                  <li><Link href="/faq" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">FAQs</Link></li>
+                  <li><Link href="/contact" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Contact Us</Link></li>
+                </ul>
+              </div>
+
+              {/* Legal */}
+              <div>
+                <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Legal
+                </h3>
+                <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <li><Link href="/shipping" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Shipping & Delivery</Link></li>
+                  <li><Link href="/privacy" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Privacy Policy</Link></li>
+                  <li><Link href="/terms" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Terms of Service</Link></li>
+                </ul>
               </div>
             </div>
 
-            <div className="border-t border-purple-300 pt-8">
-              <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>
-                <p>© 2025 Waggin Meals Pet Nutrition Co. All rights reserved.</p>
-                <p className="mt-2 md:mt-0">Made with ❤️ in the Blue Ridge Mountains</p>
+            {/* Compliance & Certifications */}
+            <div className="border-t border-white/20 pt-8 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="flex items-start gap-3">
+                  <ShieldCheck className="w-5 h-5 text-[#e6b4ff] flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      FDA Pet Feed Program
+                    </p>
+                    <p className="text-xs opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Licensed human-grade kitchen with documented batch tracking.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Award className="w-5 h-5 text-[#e6b4ff] flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Christie Formulated
+                    </p>
+                    <p className="text-xs opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Oversight from a dual master's-degreed canine integrative animal nutritionist.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Leaf className="w-5 h-5 text-[#e6b4ff] flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      AAFCO Complete
+                    </p>
+                    <p className="text-xs opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Balanced for dogs of every life stage with whole-food ingredients.
+                    </p>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            {/* Important Disclaimer */}
+            <div className="bg-white/10 rounded-2xl p-6 mb-8 backdrop-blur-sm border border-white/20">
+              <p className="text-xs text-center opacity-90 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <strong>Important Information:</strong> At Waggin Meals, we believe your dog deserves real food made with love. Our <strong>Gently Cooked Human Grade Food for Dogs</strong> is approved through the <strong>FDA Pet Feed Program</strong> and scientifically formulated by an animal nutritionist to meet <strong>AAFCO standards for dogs of all ages</strong>. Our meals are formulated exclusively for dogs and are not intended for human consumption. Content on this site is for educational purposes only and not a substitute for veterinary advice. Always consult your veterinarian for health decisions about your dog.
+              </p>
+            </div>
+
+            {/* Copyright */}
+            <div className="text-center text-xs opacity-80" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <p className="mb-2">
+                © {new Date().getFullYear()} Waggin Meals Pet Nutrition Co. All rights reserved.
+              </p>
+              <p className="text-xs">
+                Formulated by Christie A. Willett, M.A., M.S., Canine Integrative Animal Nutritionist
+              </p>
             </div>
           </div>
         </footer>
