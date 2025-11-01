@@ -5,7 +5,8 @@ import {
   generateOrderShippedEmail,
   generateOrderProcessingEmail,
   generateOrderOutForDeliveryEmail,
-  generateOrderDeliveredEmail
+  generateOrderDeliveredEmail,
+  generateSubscriptionCreatedEmail
 } from '@/lib/email-templates';
 
 /**
@@ -45,6 +46,10 @@ export async function POST(request: NextRequest) {
 
       case 'order_delivered':
         emailContent = generateOrderDeliveredEmail(data);
+        break;
+
+      case 'subscription_created':
+        emailContent = generateSubscriptionCreatedEmail(data);
         break;
 
       default:

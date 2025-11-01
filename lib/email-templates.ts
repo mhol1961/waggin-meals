@@ -602,3 +602,173 @@ Thank you for trusting us with your pup's nutrition! 🐕❤️`;
 
   return { subject, html, text };
 }
+
+export function generateSubscriptionCreatedEmail(subscription: {
+  subscription_id: string;
+  customer_name: string;
+  product_title: string;
+  variant_title?: string;
+  quantity: number;
+  price: number;
+  frequency: string;
+  next_billing_date: string;
+}): { subject: string; html: string; text: string } {
+  const subject = `Subscription Confirmed - Waggin' Meals`;
+
+  const frequencyDisplay = subscription.frequency === 'bi-weekly' ? 'Every 2 Weeks' :
+    subscription.frequency === 'weekly' ? 'Weekly' : 'Monthly';
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription Confirmed</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 0; background-color: #f5f5f5; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+    .header { background-color: #a5b5eb; padding: 30px 20px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 28px; }
+    .content { padding: 40px 30px; }
+    .subscription-box { background-color: #f0f4ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #a5b5eb; }
+    .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e0e0e0; }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-label { color: #666666; }
+    .detail-value { font-weight: bold; color: #333333; }
+    .highlight-box { background-color: #d4edda; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745; }
+    .button { display: inline-block; padding: 15px 30px; background-color: #a5b5eb; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 10px 5px; }
+    .footer { background-color: #333333; color: #ffffff; padding: 30px; text-align: center; font-size: 14px; }
+    .footer a { color: #a5b5eb; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🐾 Subscription Activated!</h1>
+    </div>
+
+    <div class="content">
+      <h2>Welcome to your subscription, ${subscription.customer_name}!</h2>
+      <p>
+        Your recurring delivery is all set up! Your pup will never run out of their premium nutrition.
+      </p>
+
+      <div class="subscription-box">
+        <h3 style="margin-top: 0; color: #a5b5eb;">Subscription Details</h3>
+
+        <div class="detail-row">
+          <span class="detail-label">Product:</span>
+          <span class="detail-value">${subscription.product_title}${subscription.variant_title ? ` - ${subscription.variant_title}` : ''}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Quantity:</span>
+          <span class="detail-value">${subscription.quantity}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Frequency:</span>
+          <span class="detail-value">${frequencyDisplay}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Price per Delivery:</span>
+          <span class="detail-value">$${(subscription.price * subscription.quantity).toFixed(2)}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Next Billing Date:</span>
+          <span class="detail-value">${subscription.next_billing_date}</span>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <div style="font-weight: bold; margin-bottom: 10px;">✓ Your First Order is Processing</div>
+        <div>Your initial subscription order has been charged and will ship within 1-2 business days. Future orders will be automatically charged and shipped on your billing schedule.</div>
+      </div>
+
+      <h3 style="color: #a5b5eb;">Manage Your Subscription</h3>
+      <p>
+        You have complete control! You can pause, skip, modify, or cancel your subscription anytime from your account dashboard.
+      </p>
+
+      <ul style="line-height: 2;">
+        <li>Pause deliveries when you have extra food</li>
+        <li>Skip a delivery if you're traveling</li>
+        <li>Update delivery frequency</li>
+        <li>Change products or quantities</li>
+        <li>Cancel anytime - no commitments</li>
+      </ul>
+
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="https://wagginmeals.com/account/subscriptions" class="button">Manage Subscription</a>
+        <a href="https://wagginmeals.com/shop" class="button" style="background-color: #28a745;">Shop More Products</a>
+      </div>
+
+      <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 30px;">
+        <h3 style="margin-top: 0; color: #a5b5eb;">Need Help?</h3>
+        <p style="margin-bottom: 10px;">Our team is here to help with any questions about your subscription.</p>
+        <p>
+          <strong>Email:</strong> <a href="mailto:support@wagginmeals.com" style="color: #a5b5eb;">support@wagginmeals.com</a><br>
+          <strong>Visit:</strong> <a href="https://wagginmeals.com/contact" style="color: #a5b5eb;">Contact Support</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        <strong>Waggin' Meals</strong><br>
+        Premium Dog Nutrition<br>
+        <a href="https://wagginmeals.com">wagginmeals.com</a>
+      </p>
+      <p style="margin-top: 20px; font-size: 12px; color: #999999;">
+        This is an automated email. Please do not reply directly to this message.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+
+  const text = `
+Subscription Confirmed - Waggin' Meals
+
+Welcome to your subscription, ${subscription.customer_name}!
+
+Your recurring delivery is all set up! Your pup will never run out of their premium nutrition.
+
+SUBSCRIPTION DETAILS
+--------------------
+Product: ${subscription.product_title}${subscription.variant_title ? ` - ${subscription.variant_title}` : ''}
+Quantity: ${subscription.quantity}
+Frequency: ${frequencyDisplay}
+Price per Delivery: $${(subscription.price * subscription.quantity).toFixed(2)}
+Next Billing Date: ${subscription.next_billing_date}
+
+✓ YOUR FIRST ORDER IS PROCESSING
+Your initial subscription order has been charged and will ship within 1-2 business days. Future orders will be automatically charged and shipped on your billing schedule.
+
+MANAGE YOUR SUBSCRIPTION
+You have complete control! You can pause, skip, modify, or cancel your subscription anytime from your account dashboard.
+
+• Pause deliveries when you have extra food
+• Skip a delivery if you're traveling
+• Update delivery frequency
+• Change products or quantities
+• Cancel anytime - no commitments
+
+Manage your subscription: https://wagginmeals.com/account/subscriptions
+Shop more products: https://wagginmeals.com/shop
+
+NEED HELP?
+Email: support@wagginmeals.com
+Visit: https://wagginmeals.com/contact
+
+---
+Waggin' Meals - Premium Dog Nutrition
+https://wagginmeals.com
+  `;
+
+  return { subject, html, text };
+}
