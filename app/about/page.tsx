@@ -14,7 +14,7 @@ export default function About() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-20">
+      <section className="bg-gradient-to-r from-[#5E3B76] to-[#452a6d] px-4 py-20">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6 leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>
             From our Farm Shop in Western North Carolina to your dogs bowl!
@@ -56,11 +56,11 @@ export default function About() {
 
             {/* Right - Content */}
             <div>
-              <h2 className="text-4xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              <h2 className="text-4xl font-normal text-[#2b1d3b] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Christie Willett, Founder of Waggin Meals and M.A., M.S. in Agriculture
               </h2>
 
-              <div className="space-y-4 text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <div className="space-y-4 text-[15px] text-[#2b1d3b] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 <p>
                   <strong>Christie Willett</strong> is the heart and soul behind <strong>Waggin Meals Pet Nutrition Co.</strong> With a deep-rooted passion for animal well-being and nutrition science, Christie has dedicated her career to transforming the way we nourish our four-legged family members.
                 </p>
@@ -85,7 +85,7 @@ export default function About() {
                   Christie's mission is simple yet powerful: <em>to nourish every bowl with science, compassion, and a genuine love for dogs.</em> She continues to innovate and expand Waggin Meals' offerings, always with the goal of giving pets the nutrition they deserve—and helping them thrive from the inside out.
                 </p>
 
-                <p className="text-[#a5b5eb] font-semibold">
+                <p className="text-[#9657EE] font-semibold">
                   When she's not in the kitchen or consulting with clients, you'll find Christie on the farm with her own pack, testing recipes and enjoying the simple joys of life in the mountains.
                 </p>
               </div>
@@ -95,16 +95,16 @@ export default function About() {
       </section>
 
       {/* Ryan Agnello Section */}
-      <section className="bg-[#f8f9fa] px-4 py-16">
+      <section className="bg-gradient-to-br from-[#d8c6ff] to-[#e9dcff] px-4 py-16">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-2 items-start">
             {/* Left - Content */}
             <div>
-              <h2 className="text-4xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              <h2 className="text-4xl font-normal text-[#2b1d3b] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Ryan Agnello, AKA CJ-Director of Office & Director of Operations
               </h2>
 
-              <div className="space-y-4 text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <div className="space-y-4 text-[15px] text-[#2b1d3b] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 <p>
                   <strong>Ryan Agnello</strong>, affectionately known as <strong>CJ</strong>, is the operational backbone of Waggin Meals Pet Nutrition Co. As <strong>Director of Office and Director of Operations</strong>, Ryan ensures that every aspect of the business runs smoothly—from production logistics to customer service excellence.
                 </p>
@@ -121,7 +121,7 @@ export default function About() {
                   When customers reach out with questions or concerns, they often hear from Ryan first. His friendly demeanor and problem-solving skills make him a favorite among Waggin Meals' loyal customer base.
                 </p>
 
-                <p className="text-[#a5b5eb] font-semibold">
+                <p className="text-[#9657EE] font-semibold">
                   Outside of work, Ryan enjoys spending time outdoors, exploring the beautiful Western North Carolina mountains, and of course, spending time with the Waggin Meals pack of dogs!
                 </p>
               </div>
@@ -160,15 +160,15 @@ export default function About() {
 
             {/* Right - Content */}
             <div>
-              <h2 className="text-4xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              <h2 className="text-4xl font-normal text-[#2b1d3b] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Kristen Peterson — The Heart Behind the Scenes
               </h2>
 
-              <h3 className="text-2xl font-semibold text-[#a5b5eb] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-2xl font-semibold text-[#9657EE] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Executive Operations Coordinator
               </h3>
 
-              <div className="space-y-4 text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <div className="space-y-4 text-[15px] text-[#2b1d3b] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 <p>
                   Waggin Meals is proud to introduce <strong>Kristen Peterson</strong>, our Executive Operations Coordinator and the right-hand to Christie Willett, Founder of Waggin Meals. In just three short months, Kristen has become an essential part of the Waggin Meals family, bringing warmth, dedication, and a true love for animals to everything she does.
                 </p>
@@ -181,12 +181,12 @@ export default function About() {
                   When she's not hard at work, Kristen can be found on her farm in Madison County caring for her lively crew of dogs, a cat, horses, ducks, chickens, and geese. Her hands-on experience and lifelong devotion to animals shine through in every interaction with our customers and team.
                 </p>
 
-                <p className="border-l-4 border-[#a5b5eb] pl-4 italic">
+                <p className="border-l-4 border-[#9657EE] pl-4 italic">
                   "Kristen has quickly become an irreplaceable part of Waggin Meals. She's not only my right hand—she's the calm, capable heart that keeps everything moving. Kristen is loyal and dependable. We're so lucky to have her."
                   <span className="block text-sm font-semibold mt-2 not-italic">— Christie Willett, Founder</span>
                 </p>
 
-                <p className="text-[#a5b5eb] font-semibold">
+                <p className="text-[#9657EE] font-semibold">
                   Kristen's blend of passion, professionalism, and genuine care embodies what Waggin Meals is all about: community, compassion, and better health for our four-legged friends.
                 </p>
               </div>
@@ -196,7 +196,7 @@ export default function About() {
       </section>
 
       {/* Where to Find It Section */}
-      <section className="bg-[#f8f9fa] px-4 py-16">
+      <section className="bg-white px-4 py-16">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-2 items-start">
             {/* Left - Image */}
@@ -214,13 +214,13 @@ export default function About() {
 
             {/* Right - Content */}
             <div>
-              <h2 className="text-4xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              <h2 className="text-4xl font-normal text-[#2b1d3b] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Where to Find It
               </h2>
 
-              <div className="space-y-6 text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <div className="space-y-6 text-[15px] text-[#2b1d3b] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 <div>
-                  <h3 className="text-xl font-semibold text-[#a5b5eb] mb-3">Farm Shop Hours</h3>
+                  <h3 className="text-xl font-semibold text-[#9657EE] mb-3">Farm Shop Hours</h3>
                   <p>
                     <strong>Monday - Friday:</strong> 9:00 AM - 5:00 PM<br />
                     <strong>Saturday:</strong> 10:00 AM - 3:00 PM<br />
@@ -229,7 +229,7 @@ export default function About() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-[#a5b5eb] mb-3">Visit Us</h3>
+                  <h3 className="text-xl font-semibold text-[#9657EE] mb-3">Visit Us</h3>
                   <p>
                     Our farm shop is located in beautiful Western North Carolina, where you can pick up fresh meals, meet our team, and learn more about our nutrition services.
                   </p>
@@ -242,7 +242,7 @@ export default function About() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-[#a5b5eb] mb-3">Delivery & Shipping</h3>
+                  <h3 className="text-xl font-semibold text-[#9657EE] mb-3">Delivery & Shipping</h3>
                   <p>
                     We offer <strong>local delivery</strong> throughout Western North Carolina and <strong>nationwide shipping</strong> for our fresh, frozen meals. Free shipping on orders over $165!
                   </p>
@@ -251,7 +251,7 @@ export default function About() {
                 <div className="pt-4">
                   <Link
                     href="/contact"
-                    className="inline-block bg-[#a5b5eb] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#8a9fd9] transition-colors"
+                    className="inline-block bg-[#9657EE] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#7e43c4] transition-colors"
                   >
                     Get in Touch
                   </Link>
@@ -263,13 +263,13 @@ export default function About() {
       </section>
 
       {/* Meet Dawg Mark Section */}
-      <section className="bg-[#f8f9fa] px-4 py-16">
+      <section className="bg-gradient-to-br from-[#d8c6ff] to-[#e9dcff] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-4xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+          <h2 className="text-4xl font-normal text-[#2b1d3b] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Meet Dawg Mark
           </h2>
 
-          <div className="space-y-4 text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <div className="space-y-4 text-[15px] text-[#2b1d3b] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
             <p>
               <strong>Dawg Mark</strong> is more than just a mascot—he's part of the Waggin Meals family and the official taste-tester for all our recipes! This lovable pup has been with Christie since the beginning, helping ensure every meal meets the highest standards of deliciousness.
             </p>
@@ -284,7 +284,7 @@ export default function About() {
       {/* A Glimpse Into Our Kitchen & Farm Shop */}
       <section className="bg-white px-4 py-16">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-4xl font-normal text-[#3c3a47] mb-12 text-center" style={{ fontFamily: "'Abril Fatface', serif" }}>
+          <h2 className="text-4xl font-normal text-[#2b1d3b] mb-12 text-center" style={{ fontFamily: "'Abril Fatface', serif" }}>
             A Glimpse Into Our Kitchen & Farm Shop
           </h2>
 
@@ -304,7 +304,7 @@ export default function About() {
       </section>
 
       {/* Contact CTA Section */}
-      <section className="bg-gradient-to-r from-[#5a6fa8] to-[#7a8fc5] px-4 py-16">
+      <section className="bg-gradient-to-r from-[#5E3B76] to-[#9657EE] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Let's Chat!
@@ -317,7 +317,7 @@ export default function About() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/nutrition-services"
-              className="inline-block bg-white text-[#a5b5eb] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors"
+              className="inline-block bg-white text-[#9657EE] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Book a Consultation
@@ -326,7 +326,7 @@ export default function About() {
               href="https://wagginmeals.myshopify.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#8a9fd9] transition-colors"
+              className="inline-block bg-[#9657EE] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#7e43c4] transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Shop Now
