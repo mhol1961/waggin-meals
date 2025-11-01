@@ -141,8 +141,62 @@ export default function About() {
         </div>
       </section>
 
-      {/* Where to Find It Section */}
+      {/* Kristen Peterson Section */}
       <section className="bg-white px-4 py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-12 lg:grid-cols-2 items-start">
+            {/* Left - Images */}
+            <div className="space-y-6">
+              <div className="relative rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src="/images/executive-operations-coordinator.png"
+                  alt="Kristen Peterson - Executive Operations Coordinator"
+                  width={600}
+                  height={800}
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+
+            {/* Right - Content */}
+            <div>
+              <h2 className="text-4xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                Kristen Peterson — The Heart Behind the Scenes
+              </h2>
+
+              <h3 className="text-2xl font-semibold text-[#a5b5eb] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Executive Operations Coordinator
+              </h3>
+
+              <div className="space-y-4 text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p>
+                  Waggin Meals is proud to introduce <strong>Kristen Peterson</strong>, our Executive Operations Coordinator and the right-hand to Christie Willett, Founder of Waggin Meals. In just three short months, Kristen has become an essential part of the Waggin Meals family, bringing warmth, dedication, and a true love for animals to everything she does.
+                </p>
+
+                <p>
+                  Born and raised in the heart of <strong>Western North Carolina</strong>, Kristen's connection to animals runs deep. She manages customer accounts, supports daily operations, and keeps the team running smoothly—all while studying to become a <strong>veterinary technician</strong>. Her growing knowledge of animal health and nutrition aligns perfectly with Waggin Meals' mission of bringing whole, natural food to dogs everywhere.
+                </p>
+
+                <p>
+                  When she's not hard at work, Kristen can be found on her farm in Madison County caring for her lively crew of dogs, a cat, horses, ducks, chickens, and geese. Her hands-on experience and lifelong devotion to animals shine through in every interaction with our customers and team.
+                </p>
+
+                <p className="border-l-4 border-[#a5b5eb] pl-4 italic">
+                  "Kristen has quickly become an irreplaceable part of Waggin Meals. She's not only my right hand—she's the calm, capable heart that keeps everything moving. Kristen is loyal and dependable. We're so lucky to have her."
+                  <span className="block text-sm font-semibold mt-2 not-italic">— Christie Willett, Founder</span>
+                </p>
+
+                <p className="text-[#a5b5eb] font-semibold">
+                  Kristen's blend of passion, professionalism, and genuine care embodies what Waggin Meals is all about: community, compassion, and better health for our four-legged friends.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Where to Find It Section */}
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-2 items-start">
             {/* Left - Image */}
