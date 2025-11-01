@@ -374,9 +374,9 @@ export default function About() {
               return (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 group"
+                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 group animate-fadeInUp"
                   style={{
-                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                    animationDelay: `${index * 0.1}s`
                   }}
                 >
                   <div
@@ -396,19 +396,6 @@ export default function About() {
             })}
           </div>
         </div>
-
-        <style jsx>{`
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-        `}</style>
       </section>
 
       {/* 6. FARM-TO-BOWL PROCESS */}

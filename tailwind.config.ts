@@ -79,6 +79,21 @@ const config: Config = {
       boxShadow: {
         card: '0 2px 8px rgba(0,0,0,0.08)',
       },
+      keyframes: {
+        fadeInUp: {
+          from: {
+            opacity: '0',
+            transform: 'translateY(20px)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+      },
+      animation: {
+        fadeInUp: 'fadeInUp 0.6s ease-out both',
+      },
     },
   },
   plugins: [],
