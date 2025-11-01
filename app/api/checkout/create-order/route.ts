@@ -252,9 +252,6 @@ export async function POST(request: NextRequest) {
           shipping_cost: shipping,
           tax: tax,
           total: total,
-
-          // Metadata
-          notes: paymentError,
         },
       ])
       .select()
