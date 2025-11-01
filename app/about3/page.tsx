@@ -840,26 +840,26 @@ export default function About3() {
         </section>
 
         {/* CTA */}
-        <section className="relative py-32 md:py-40 bg-gradient-to-br from-teal-600 via-emerald-600 to-green-700 overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+        <section className="relative py-32 md:py-40 bg-gradient-to-br from-purple-100 via-lavender-200 to-purple-200 overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(139,92,246,0.3) 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
           </div>
 
           <div className="container mx-auto px-6 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight" style={{ fontFamily: 'Playfair Display, serif' }}>
                 Your Dog's Health<br />
-                <span className="text-emerald-100">Transformation Starts Today</span>
+                <span className="text-purple-600">Transformation Starts Today</span>
               </h2>
 
-              <p className="text-xl md:text-2xl text-white mb-12" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-xl md:text-2xl text-gray-800 mb-12" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Join hundreds of pet parents who've discovered the power of real nutrition
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Link
                   href="/nutrition-services"
-                  className="group px-10 py-5 bg-white text-teal-700 rounded-full font-bold text-lg shadow-2xl hover:scale-105 transition-all flex items-center gap-3"
+                  className="group px-10 py-5 bg-purple-600 text-white rounded-full font-bold text-lg shadow-2xl hover:scale-105 hover:bg-purple-700 transition-all flex items-center gap-3"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <span>Book Consultation</span>
@@ -868,7 +868,7 @@ export default function About3() {
 
                 <Link
                   href="/shop"
-                  className="px-10 py-5 bg-white/10 backdrop-blur-sm text-white border-2 border-white/40 rounded-full font-bold text-lg hover:bg-white/20 transition-all flex items-center gap-3"
+                  className="px-10 py-5 bg-white text-purple-600 border-2 border-purple-300 rounded-full font-bold text-lg hover:bg-purple-50 transition-all flex items-center gap-3"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <span>Explore Meals</span>
@@ -876,14 +876,14 @@ export default function About3() {
                 </Link>
               </div>
 
-              <div className="mt-16 flex flex-wrap justify-center gap-8 text-white/70 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <div className="mt-16 flex flex-wrap justify-center gap-8 text-gray-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4" />
                   <span>Personal Support</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  <a href="mailto:wagginmeals@gmail.com" className="hover:text-white transition-colors">
+                  <a href="mailto:wagginmeals@gmail.com" className="hover:text-purple-600 transition-colors">
                     wagginmeals@gmail.com
                   </a>
                 </div>
