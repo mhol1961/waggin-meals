@@ -130,99 +130,13 @@ export default function About3() {
 
   return (
     <>
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-        * {
-          scroll-behavior: smooth;
-        }
-
-        .hero-background {
-          transform: scale(${heroScale});
-          transition: transform 0.1s ease-out;
-        }
-
-        .hero-content-wrapper {
-          transform: translateY(${-heroParallax}px);
-          opacity: ${heroOpacity};
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .split-text-line {
-          display: block;
-          animation: fadeInUp 1s ease-out backwards;
-        }
-
-        .split-text-line:nth-child(1) {
-          animation-delay: 0.2s;
-          font-weight: 300;
-        }
-
-        .split-text-line:nth-child(2) {
-          animation-delay: 0.4s;
-          font-weight: 400;
-        }
-
-        .split-text-line:nth-child(3) {
-          animation-delay: 0.6s;
-          font-weight: 700;
-          background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .hero-paragraph {
-          animation: fadeInUp 1s ease-out 0.8s backwards;
-        }
-
-        .scroll-indicator {
-          animation: fadeInUp 1s ease-out 1s backwards, bounce 2s ease-in-out 2s infinite;
-        }
-
-        @keyframes bounce {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-
-        .team-card {
-          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .team-card:hover {
-          transform: translateY(-8px);
-        }
-
-        .drop-cap::first-letter {
-          font-family: 'Playfair Display', serif;
-          font-size: 4rem;
-          font-weight: 700;
-          float: left;
-          line-height: 0.8;
-          margin: 0.1em 0.1em 0 0;
-          color: #9657EE;
-        }
-      `}</style>
-
-      <main className="bg-white">
+      <main className="bg-white scroll-smooth">
         {/* CINEMATIC HERO */}
         <section ref={heroRef} className="relative h-screen overflow-hidden">
-          <div className="hero-background absolute inset-0">
+          <div
+            className="absolute inset-0 transition-transform duration-100"
+            style={{ transform: `scale(${heroScale})` }}
+          >
             <Image
               src="/images/2025/09/Canine-Nutrtion-Services.webp"
               alt="Blue Ridge Mountains"
@@ -235,7 +149,13 @@ export default function About3() {
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/60" />
 
-          <div className="hero-content-wrapper absolute inset-0 flex items-center justify-center">
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              transform: `translateY(${-heroParallax}px)`,
+              opacity: heroOpacity
+            }}
+          >
             <div className="container mx-auto px-6">
               <div className="max-w-5xl mx-auto text-center">
                 <div className="mb-8">
@@ -245,12 +165,12 @@ export default function About3() {
                 </div>
 
                 <h1 className="mb-10" style={{ fontFamily: 'Playfair Display, serif' }}>
-                  <span className="split-text-line text-5xl md:text-6xl lg:text-8xl text-white">When Grief</span>
-                  <span className="split-text-line text-5xl md:text-6xl lg:text-8xl text-white">Became Our</span>
-                  <span className="split-text-line text-5xl md:text-6xl lg:text-8xl">Greatest Teacher</span>
+                  <span className="block text-5xl md:text-6xl lg:text-8xl text-white font-light">When Grief</span>
+                  <span className="block text-5xl md:text-6xl lg:text-8xl text-white font-normal">Became Our</span>
+                  <span className="block text-5xl md:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Greatest Teacher</span>
                 </h1>
 
-                <div className="hero-paragraph max-w-2xl mx-auto mb-12 space-y-4">
+                <div className="max-w-2xl mx-auto mb-12 space-y-4">
                   <p className="text-lg md:text-xl lg:text-2xl text-white font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Christie Willett lost her mother and beloved dog Jack to the same disease.
                   </p>
@@ -259,7 +179,7 @@ export default function About3() {
                   </p>
                 </div>
 
-                <div className="scroll-indicator flex flex-col items-center gap-3 text-white/60">
+                <div className="flex flex-col items-center gap-3 text-white/60 animate-bounce">
                   <span className="text-sm uppercase tracking-wider" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Discover Our Journey
                   </span>
@@ -303,7 +223,7 @@ export default function About3() {
                   </h3>
 
                   <div className="space-y-4 text-gray-700 leading-relaxed mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    <p className="drop-cap">
+                    <p className="first-letter:text-6xl first-letter:font-bold first-letter:text-purple-600 first-letter:float-left first-letter:mr-2 first-letter:leading-[0.8]" style={{ fontFamily: 'Playfair Display, serif' }}>
                       When I lost both my mother and my beloved dachshund Jack to the same liver disease, I knew there had to be a better way. That devastating loss became my purpose: creating real, wholesome nutrition that treats dogs as the family members they are.
                     </p>
 
@@ -401,7 +321,7 @@ export default function About3() {
               {Object.entries(teamData).map(([key, member]) => (
                 <div
                   key={key}
-                  className="team-card bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer"
+                  className="bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
                   onClick={() => setActiveModal(key)}
                 >
                   <div className="relative h-80 overflow-hidden">
