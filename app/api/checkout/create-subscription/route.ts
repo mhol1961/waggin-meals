@@ -249,27 +249,11 @@ export async function POST(request: NextRequest) {
           frequency: frequency,
           quantity: quantity,
           price: price,
+          amount: price, // Schema uses 'amount' not 'price'
           next_billing_date: nextBillingDate.toISOString().split('T')[0],
 
-          // Customer info
-          customer_email: email,
-          customer_first_name: shipping_address.first_name,
-          customer_last_name: shipping_address.last_name,
-
-          // Shipping address
-          shipping_first_name: shipping_address.first_name,
-          shipping_last_name: shipping_address.last_name,
-          shipping_address: shipping_address.address,
-          shipping_address2: shipping_address.address2,
-          shipping_city: shipping_address.city,
-          shipping_state: shipping_address.state,
-          shipping_zip: shipping_address.zip,
-          shipping_country: shipping_address.country,
-          shipping_phone: shipping_address.phone,
-
-          // Product info
+          // Product info (schema has product_title but API tries to use variant_title)
           product_title: title,
-          variant_title: variant_title,
         },
       ])
       .select()

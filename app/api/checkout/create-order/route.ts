@@ -228,24 +228,26 @@ export async function POST(request: NextRequest) {
           status: isPendingOrder ? 'pending_payment' : (paymentStatus === 'paid' ? 'pending' : 'payment_failed'),
           payment_status: paymentStatus,
           payment_method: payment_method_id ? 'saved_card' : (isPendingOrder ? null : 'new_card'),
-          transaction_id: transactionId,
+          payment_id: transactionId,
 
           // Customer info
           customer_email: email,
           customer_first_name: shipping_address.first_name,
           customer_last_name: shipping_address.last_name,
 
-          // Shipping address
-          shipping_first_name: shipping_address.first_name,
-          shipping_last_name: shipping_address.last_name,
-          shipping_address: shipping_address.address,
-          shipping_address2: shipping_address.address2,
+          // Shipping address (matching Supabase schema)
+          shipping_address_line1: shipping_address.address,
+          shipping_address_line2: shipping_address.address2,
           shipping_city: shipping_address.city,
           shipping_state: shipping_address.state,
           shipping_zip: shipping_address.zip,
-          shipping_country: shipping_address.country,
           shipping_phone: shipping_address.phone,
-          shipping_method: shipping_method || 'standard', // Store selected shipping method
+
+          // Store full address as JSONB including method and country
+          shipping_address: {
+            ...shipping_address,
+            shipping_method: shipping_method || 'standard'
+          },
 
           // Totals
           subtotal: subtotal,
