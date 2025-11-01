@@ -408,9 +408,14 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Internal server error';
+    const errorStack = error instanceof Error ? error.stack : '';
     console.error('Error in POST /api/checkout/create-order:', error);
+    console.error('Error stack:', errorStack);
     return NextResponse.json(
-      { error: errorMessage },
+      {
+        error: errorMessage,
+        details: errorStack?.split('\n').slice(0, 3).join('\n') // First 3 lines of stack
+      },
       { status: 500 }
     );
   }
