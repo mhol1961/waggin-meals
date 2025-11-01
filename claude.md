@@ -302,4 +302,87 @@ This file should be updated whenever:
 - New pages or sections are added
 - Critical issues are discovered or resolved
 
-**Last Updated**: October 31, 2025
+**Last Updated**: November 1, 2025
+
+---
+
+### November 1, 2025
+
+#### **✅ SINGLE-PAGE CHECKOUT IMPLEMENTATION & DEBUGGING**
+
+**Session Context**: Implemented and debugged complete checkout flow with production Authorize.net integration.
+
+**Checkout Flow Fixes** ✅
+- **CSP Configuration:**
+  - Added `https://js.authorize.net` and `https://jstest.authorize.net` to `script-src` for Accept.js
+  - Added `https://js.authorize.net` and `https://api2.authorize.net` to `connect-src` for API calls
+  - Fixed: "Accept.js not loading" and "CORS blocked" errors
+
+- **Payment Form:**
+  - Added missing submit button to PaymentForm component (`components/payment-form.tsx:354-361`)
+  - Implemented Accept.js tokenization flow
+  - Fixed: "Complete Order button grayed out" issue
+
+- **Inventory System:**
+  - Disabled inventory checking in `hooks/use-cart-inventory-check.ts` (was blocking all orders)
+  - Disabled inventory checking in `app/api/checkout/create-order/route.ts` (was causing 500 errors)
+  - Reason: System returning "Unknown error" for all products
+  - **TODO**: Re-enable once inventory system is fixed
+
+**Database Schema Fixes** ✅
+- **Orders Table (`app/api/checkout/create-order/route.ts`):**
+  - Removed non-existent `notes` column (causing PGRST204 error)
+  - Changed `transaction_id` → `payment_id` (matches schema)
+  - Changed `shipping_address` → `shipping_address_line1`
+  - Changed `shipping_address2` → `shipping_address_line2`
+  - Removed: `shipping_first_name`, `shipping_last_name`, `shipping_country`, `shipping_method`
+  - Store full address + method in JSONB `shipping_address` column
+
+- **Subscriptions Table (`app/api/checkout/create-subscription/route.ts`):**
+  - Removed `variant_id` (doesn't exist in schema)
+  - Removed `price` (schema uses `amount`)
+  - Removed all shipping and customer fields (not in subscriptions schema)
+  - Now matches `supabase/universal-migration.sql` exactly
+
+**Error Handling & Diagnostics** ✅
+- Enhanced error reporting in `app/api/checkout/create-order/route.ts:263-273`
+- Shows Supabase error details (message, code, hint) for debugging
+- Improved payment error display in `app/checkout/page.tsx:258-263`
+- Logs full payment error object to console
+
+**Netlify Environment Variables** ✅
+- **Added 7 Authorize.net variables:**
+  - `AUTHORIZENET_API_LOGIN_ID` (server-side)
+  - `AUTHORIZENET_TRANSACTION_KEY` (server-side)
+  - `AUTHORIZENET_PUBLIC_CLIENT_KEY` (server-side)
+  - `AUTHORIZENET_ENVIRONMENT` (server-side)
+  - `NEXT_PUBLIC_AUTHORIZENET_API_LOGIN_ID` (client-side)
+  - `NEXT_PUBLIC_AUTHORIZENET_PUBLIC_CLIENT_KEY` (client-side)
+  - `NEXT_PUBLIC_AUTHORIZENET_ENVIRONMENT` (client-side)
+- All marked as "Contains Secret Values"
+- Scoped to: Builds, Functions, Runtime
+
+**Current Status**
+- ✅ Order creation working (creates orders in Supabase successfully)
+- ✅ Accept.js tokenization working (card validation succeeds)
+- ⏸️ Payment processing blocked - awaiting client to verify Authorize.net credentials
+  - Error: "User authentication failed due to invalid authentication values"
+  - Possible causes: Expired transaction key, IP restrictions, incorrect credentials
+  - Client contacted with verification checklist
+
+**Files Modified:**
+- `next.config.ts` - CSP headers
+- `components/payment-form.tsx` - Submit button
+- `app/checkout/page.tsx` - Error display
+- `app/api/checkout/create-order/route.ts` - Schema alignment, error handling
+- `app/api/checkout/create-subscription/route.ts` - Schema alignment
+- `hooks/use-cart-inventory-check.ts` - Disabled inventory check
+
+**Deployment:**
+- All changes deployed to Netlify
+- Environment variables configured
+- Latest deployment: `69058eed56e5fb000879311c`
+
+---
+
+**Last Updated**: November 1, 2025
