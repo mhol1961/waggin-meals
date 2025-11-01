@@ -329,7 +329,7 @@ export async function POST(request: NextRequest) {
               order_number: orderNumber,
               customer_first_name: shipping_address.first_name,
               customer_email: email,
-              items: items.map(item => ({
+              items: items.map((item: OrderItem) => ({
                 product_name: item.title,
                 variant_title: item.variant_title || null,
                 quantity: item.quantity,

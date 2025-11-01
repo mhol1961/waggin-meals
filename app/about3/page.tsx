@@ -32,6 +32,7 @@ const teamData = {
     name: 'Christie Willett, M.A., M.S.',
     role: 'Founder & Animal Nutritionist',
     image: '/images/Christy-holding-black-dog.webp',
+    initials: 'CW',
     shortBio: 'With dual master\'s degrees in Animal Science and pursuing her PhD in obesity, stress, and gerodietic nutrition in canines.',
     fullBio: `Christie A. Willett holds a Master's degree in Animal Science with a focus on nutrition from the University of Tennessee and is currently pursuing her PhD. Raised in the mountains of Western North Carolina, she grew up traveling with her minister father and gospel singer mother.
 
@@ -64,6 +65,7 @@ Beyond the numbers and logistics, Tres is passionate about building sustainable 
     name: 'Kristen Peterson',
     role: 'Executive Operations Coordinator',
     image: '/images/executive-operations-coordinator.png',
+    initials: 'KP',
     shortBio: 'Christie\'s right hand and the calm, capable heart that keeps everything moving. Manages customer accounts and supports daily operations.',
     fullBio: `Kristen Peterson is Christie's right hand and the calm, capable heart that keeps Waggin Meals running smoothly every single day. Born and raised in Western North Carolina, Kristen brings local knowledge and genuine care to every interaction.
 
@@ -957,13 +959,13 @@ export default function About3() {
                     ))}
                   </div>
 
-                  {teamData[activeModal as keyof typeof teamData].stats && (
+                  {(teamData[activeModal as keyof typeof teamData] as any).stats?.number && (
                     <div className="mt-8 p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl">
                       <p className="text-5xl font-bold text-purple-600 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
-                        {teamData[activeModal as keyof typeof teamData].stats?.number}
+                        {(teamData[activeModal as keyof typeof teamData] as any).stats?.number}
                       </p>
                       <p className="text-gray-700" style={{ fontFamily: 'Inter, sans-serif' }}>
-                        {teamData[activeModal as keyof typeof teamData].stats?.label}
+                        {(teamData[activeModal as keyof typeof teamData] as any).stats?.label}
                       </p>
                     </div>
                   )}
