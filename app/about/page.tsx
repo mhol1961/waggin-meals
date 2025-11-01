@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Leaf,
   FlaskConical,
@@ -143,11 +143,6 @@ const testimonials = [
 
 export default function About() {
   const [activeTimeline, setActiveTimeline] = useState<number | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   return (
     <main className="bg-white">
@@ -160,7 +155,7 @@ export default function About() {
           <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-white rounded-full blur-3xl" />
         </div>
 
-        <div className={`mx-auto max-w-4xl text-center relative z-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div className="mx-auto max-w-4xl text-center relative z-10">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white mb-6 leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>
             From Our Family Farm
             <br />
