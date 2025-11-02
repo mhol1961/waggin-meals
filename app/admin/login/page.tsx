@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
 
         {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" autoComplete="off">
             {/* Username */}
             <div>
               <label
@@ -78,6 +78,7 @@ export default function AdminLoginPage() {
               <input
                 type="text"
                 id="username"
+                name="username"
                 value={formData.username}
                 onChange={(e) =>
                   setFormData({ ...formData, username: e.target.value })
@@ -85,7 +86,7 @@ export default function AdminLoginPage() {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
                 placeholder="Enter your username"
                 required
-                autoComplete="username"
+                autoComplete="off"
               />
             </div>
 
@@ -100,6 +101,7 @@ export default function AdminLoginPage() {
               <input
                 type="password"
                 id="password"
+                name="password"
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
@@ -107,7 +109,7 @@ export default function AdminLoginPage() {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
                 placeholder="Enter your password"
                 required
-                autoComplete="current-password"
+                autoComplete="new-password"
               />
             </div>
 
