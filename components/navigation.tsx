@@ -9,7 +9,7 @@ import { useCart } from '@/contexts/cart-context';
 // Navigation structure with dropdowns - Updated
 const navItems = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
+  { label: 'About', href: '/about3' },
   {
     label: 'Pet Nutrition Services',
     dropdown: [

@@ -189,3 +189,23 @@ export async function verifyAdminAuth(
 > {
   return requireAdminAuth(request);
 }
+
+/**
+ * Check admin authentication for API routes (simpler version)
+ * Returns authentication status without requiring NextRequest
+ */
+export async function checkAdminAuth(): Promise<
+  | { authenticated: true; session: { username: string } }
+  | { authenticated: false }
+> {
+  const session = await getAdminSession();
+
+  if (!session) {
+    return { authenticated: false };
+  }
+
+  return {
+    authenticated: true,
+    session,
+  };
+}

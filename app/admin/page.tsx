@@ -318,7 +318,7 @@ export default function AdminDashboard() {
               <XAxis dataKey="date" />
               <YAxis tickFormatter={(value) => `$${value}`} />
               <Tooltip
-                formatter={(value: number) => formatCurrency(value)}
+                formatter={(value) => formatCurrency(Number(value))}
                 contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }}
               />
               <Area
