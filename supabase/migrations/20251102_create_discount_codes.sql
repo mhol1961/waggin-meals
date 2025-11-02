@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS discount_codes (
   description TEXT,
 
   -- Discount configuration
-  discount_type TEXT NOT NULL, -- 'percentage' or 'fixed_amount'
+  discount_type TEXT NOT NULL CHECK (discount_type IN ('percentage', 'fixed')),
   discount_value DECIMAL(10,2) NOT NULL,
 
   -- Usage limits
@@ -43,7 +43,7 @@ CREATE INDEX IF NOT EXISTS idx_discount_codes_expires ON discount_codes(expires_
 -- Add comments
 -- =============================================
 COMMENT ON TABLE discount_codes IS 'Promotional discount codes for orders';
-COMMENT ON COLUMN discount_codes.discount_type IS 'Type: percentage or fixed_amount';
+COMMENT ON COLUMN discount_codes.discount_type IS 'Type: percentage or fixed';
 COMMENT ON COLUMN discount_codes.usage_limit IS 'Maximum number of times code can be used (NULL = unlimited)';
 COMMENT ON COLUMN discount_codes.minimum_purchase IS 'Minimum order amount required to use code';
 
