@@ -14,7 +14,7 @@ const navItems = [
     label: 'Pet Nutrition Services',
     dropdown: [
       { label: 'Nutrition Consultation ($395)', href: '/nutrition-services' },
-      { label: 'Schedule Free 15-Min Consultation', href: 'mailto:wagginmeals@gmail.com?subject=Free%2015-Minute%20Consultation%20Request' },
+      { label: 'Schedule Free 15-Min Consultation', href: '/contact-expert' },
       { label: 'Food Sensitivity Testing', href: '/food-sensitivities' },
       { label: 'Supplementation Guide', href: '/supplementation' },
     ]

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendEmail } from '@/lib/email-service';
+import { createServerClient } from '@/lib/supabase/server';
 
 interface PetInfo {
   name: string;
@@ -36,6 +37,7 @@ interface ConsultationRequest {
 export async function POST(request: NextRequest) {
   try {
     const body: ConsultationRequest = await request.json();
+    const supabase = createServerClient();
 
     // Validate required fields
     if (!body.firstName || !body.lastName || !body.email || !body.phone) {
@@ -52,7 +54,195 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Build the email content
+    // =============================================
+    // STEP 1: Check if customer exists by email
+    // =============================================
+    const { data: existingCustomer } = await supabase
+      .from('customers')
+      .select('id')
+      .eq('email', body.email)
+      .single();
+
+    const customerId = existingCustomer?.id || null;
+
+    // =============================================
+    // STEP 2: Save pet profiles to database
+    // =============================================
+    const petProfileIds: string[] = [];
+
+    for (const pet of body.pets) {
+      const petData = {
+        customer_id: customerId,
+        name: pet.name || '',
+        breed: pet.breed || '',
+        weight: pet.weight || '',
+        body_condition: pet.bodyCondition || '',
+        recent_health_issues: pet.recentHealthIssues || '',
+        allergies: pet.allergies || '',
+        current_feeding: pet.currentFeeding || '',
+        activity_level: pet.activityLevel || '',
+        health_goals: pet.healthGoals || '',
+        supplements: pet.supplements || '',
+        behavioral_changes: pet.behavioralChanges || '',
+        protein_preferences: pet.proteinPreferences || '',
+        include_bone_broth: pet.includeBoneBroth || '',
+        meal_type: pet.mealType || '',
+      };
+
+      const { data: petProfile, error: petError } = await supabase
+        .from('pet_profiles')
+        .insert([petData])
+        .select('id')
+        .single();
+
+      if (petError) {
+        console.error('Error saving pet profile:', petError);
+        // Continue even if one pet fails - we'll still process the consultation
+      } else if (petProfile) {
+        petProfileIds.push(petProfile.id);
+      }
+    }
+
+    // =============================================
+    // STEP 3: Save consultation request to database
+    // =============================================
+    const consultationData = {
+      customer_id: customerId,
+      first_name: body.firstName,
+      last_name: body.lastName,
+      email: body.email,
+      phone: body.phone,
+      address: body.address || '',
+      city: body.city || '',
+      state: body.state || '',
+      zip_code: body.zipCode || '',
+      current_spending: body.currentSpending ? parseFloat(body.currentSpending) : null,
+      delivery_frequency: body.deliveryFrequency || '',
+      additional_notes: body.additionalNotes || '',
+      pet_profile_ids: petProfileIds,
+      status: 'pending',
+    };
+
+    const { data: consultationRequest, error: consultationError } = await supabase
+      .from('consultation_requests')
+      .insert([consultationData])
+      .select('id')
+      .single();
+
+    if (consultationError) {
+      console.error('Error saving consultation request:', consultationError);
+      return NextResponse.json(
+        { error: 'Failed to save consultation request', details: consultationError.message },
+        { status: 500 }
+      );
+    }
+
+    // =============================================
+    // STEP 4: Send to GoHighLevel CRM for automation
+    // =============================================
+    let ghlSyncStatus = 'not_configured';
+    let ghlSyncError = null;
+
+    if (process.env.GHL_API_KEY && process.env.GHL_LOCATION_ID) {
+      try {
+        // Build custom fields object (only if field IDs are configured)
+        const customField: Record<string, string> = {};
+        if (process.env.GHL_CUSTOM_FIELD_CONSULTATION_ID) {
+          customField[process.env.GHL_CUSTOM_FIELD_CONSULTATION_ID] = consultationRequest.id;
+        }
+        if (process.env.GHL_CUSTOM_FIELD_PET_COUNT) {
+          customField[process.env.GHL_CUSTOM_FIELD_PET_COUNT] = body.pets.length.toString();
+        }
+        if (process.env.GHL_CUSTOM_FIELD_SPENDING) {
+          customField[process.env.GHL_CUSTOM_FIELD_SPENDING] = body.currentSpending || '';
+        }
+        if (process.env.GHL_CUSTOM_FIELD_FREQUENCY) {
+          customField[process.env.GHL_CUSTOM_FIELD_FREQUENCY] = body.deliveryFrequency || '';
+        }
+
+        const ghlPayload = {
+          locationId: process.env.GHL_LOCATION_ID,
+          firstName: body.firstName,
+          lastName: body.lastName,
+          email: body.email,
+          phone: body.phone,
+          address1: body.address || '',
+          city: body.city || '',
+          state: body.state || '',
+          postalCode: body.zipCode || '',
+          tags: ['free-consultation', 'contact-expert-form'],
+          ...(Object.keys(customField).length > 0 && { customField }),
+        };
+
+        console.log('🔄 Syncing to GoHighLevel CRM...', { email: body.email, locationId: process.env.GHL_LOCATION_ID });
+
+        const ghlResponse = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.GHL_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(ghlPayload),
+        });
+
+        const ghlResponseText = await ghlResponse.text();
+
+        if (ghlResponse.ok) {
+          const ghlData = JSON.parse(ghlResponseText);
+
+          // Update consultation request with GHL contact ID and success status
+          await supabase
+            .from('consultation_requests')
+            .update({
+              ghl_contact_id: ghlData.contact?.id || ghlData.id,
+              ghl_synced_at: new Date().toISOString(),
+            })
+            .eq('id', consultationRequest.id);
+
+          ghlSyncStatus = 'success';
+          console.log('✅ Successfully synced to GoHighLevel CRM', { contactId: ghlData.contact?.id || ghlData.id });
+        } else {
+          ghlSyncStatus = 'failed';
+          ghlSyncError = `HTTP ${ghlResponse.status}: ${ghlResponseText}`;
+          console.error('❌ GoHighLevel API error:', {
+            status: ghlResponse.status,
+            statusText: ghlResponse.statusText,
+            response: ghlResponseText,
+          });
+
+          // Store error in database for admin visibility
+          await supabase
+            .from('consultation_requests')
+            .update({
+              admin_notes: `GHL Sync Failed: ${ghlSyncError}`,
+            })
+            .eq('id', consultationRequest.id);
+        }
+      } catch (ghlError) {
+        ghlSyncStatus = 'error';
+        ghlSyncError = ghlError instanceof Error ? ghlError.message : 'Unknown error';
+        console.error('❌ Error syncing to GoHighLevel:', ghlError);
+
+        // Store error in database
+        await supabase
+          .from('consultation_requests')
+          .update({
+            admin_notes: `GHL Sync Error: ${ghlSyncError}`,
+          })
+          .eq('id', consultationRequest.id);
+      }
+    } else {
+      const missingVars = [];
+      if (!process.env.GHL_API_KEY) missingVars.push('GHL_API_KEY');
+      if (!process.env.GHL_LOCATION_ID) missingVars.push('GHL_LOCATION_ID');
+      console.warn(`⚠️ GHL sync disabled - missing: ${missingVars.join(', ')}`);
+    }
+
+    // =============================================
+    // STEP 5: Send email notifications
+    // =============================================
+
+    // Build pet sections for email
     const petSections = body.pets.map((pet, index) => `
       <div style="background-color: #e8f4fb; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #a5b5eb;">
         <h3 style="color: #3c3a47; margin-top: 0;">🐾 Pet #${index + 1}: ${pet.name || 'Not provided'}</h3>
@@ -145,6 +335,15 @@ export async function POST(request: NextRequest) {
 
         <div style="background-color: #ffffff; padding: 30px;">
 
+          <!-- Consultation ID -->
+          <div style="background-color: #fff3cd; padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #ffc107;">
+            <p style="margin: 0; font-size: 14px; color: #856404;">
+              <strong>Consultation ID:</strong> ${consultationRequest.id}<br/>
+              <strong>Database:</strong> ✅ Saved to consultation_requests table<br/>
+              <strong>Pet Profiles:</strong> ✅ ${petProfileIds.length} pet(s) saved to pet_profiles table
+            </p>
+          </div>
+
           <!-- Contact Information -->
           <div style="background-color: #f8f9fa; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #a5b5eb;">
             <h2 style="color: #3c3a47; margin-top: 0;">Contact Information</h2>
@@ -205,6 +404,7 @@ export async function POST(request: NextRequest) {
               <li>Contact the client within 24-48 hours</li>
               <li>Schedule the free consultation</li>
               <li>Prepare personalized nutrition recommendations</li>
+              <li>View in admin dashboard: <a href="https://wagginmeals.com/admin/consultations">Admin Consultations</a></li>
             </ol>
           </div>
 
@@ -219,8 +419,12 @@ export async function POST(request: NextRequest) {
       </div>
     `;
 
-    // Plain-text version of email for Christie
+    // Plain-text version
     const emailText = `NEW FREE CONSULTATION REQUEST
+
+DATABASE SAVED ✅
+Consultation ID: ${consultationRequest.id}
+Pet Profiles: ${petProfileIds.length} pet(s) saved
 
 CONTACT INFORMATION
 Name: ${body.firstName} ${body.lastName}
@@ -231,17 +435,17 @@ Address: ${body.address}, ${body.city}, ${body.state} ${body.zipCode}
 PET INFORMATION (${body.pets.length} ${body.pets.length === 1 ? 'Pet' : 'Pets'})
 ${body.pets.map((pet: any, index: number) => `
 Pet ${index + 1}: ${pet.name}
-- Type: ${pet.type}
 - Breed: ${pet.breed}
-- Age: ${pet.age}
 - Weight: ${pet.weight}
-- Sex: ${pet.sex}
-- Neutered/Spayed: ${pet.neutered ? 'Yes' : 'No'}
-${pet.healthConcerns ? `- Health Concerns: ${pet.healthConcerns}` : ''}
+- Body Condition: ${pet.bodyCondition}
+- Activity Level: ${pet.activityLevel}
+- Meal Type: ${pet.mealType}
+${pet.recentHealthIssues ? `- Health Issues: ${pet.recentHealthIssues}` : ''}
+${pet.allergies ? `- Allergies: ${pet.allergies}` : ''}
 ${pet.currentFeeding ? `- Current Feeding: ${pet.currentFeeding}` : ''}
 ${pet.healthGoals ? `- Health Goals: ${pet.healthGoals}` : ''}
-${pet.supplements ? `- Supplements/Medications: ${pet.supplements}` : ''}
-${pet.behavioralChanges ? `- Behavioral/Appetite Changes: ${pet.behavioralChanges}` : ''}
+${pet.supplements ? `- Supplements: ${pet.supplements}` : ''}
+${pet.behavioralChanges ? `- Behavioral Changes: ${pet.behavioralChanges}` : ''}
 ${pet.proteinPreferences ? `- Protein Preferences: ${pet.proteinPreferences}` : ''}
 `).join('\n')}
 
@@ -319,7 +523,6 @@ info@wagginmeals.com`;
       </div>
     `;
 
-    // Plain-text version of confirmation email for customer
     const customerEmailText = `Thank You!
 
 Hi ${body.firstName},
@@ -353,7 +556,13 @@ wagginmeals.com`;
     });
 
     return NextResponse.json(
-      { message: 'Consultation request submitted successfully' },
+      {
+        message: 'Consultation request submitted successfully',
+        consultationId: consultationRequest.id,
+        petProfileCount: petProfileIds.length,
+        ghlSyncStatus,
+        ...(ghlSyncError && { ghlSyncError }),
+      },
       { status: 200 }
     );
 
