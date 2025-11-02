@@ -48,24 +48,37 @@ interface Order {
   shipped_at: string | null;
   created_at: string;
   updated_at: string;
+  order_type?: string;
 }
 
 const ORDER_STATUSES = [
   'pending',
   'processing',
   'shipped',
+  'out_for_delivery',
   'delivered',
-  'cancelled',
+  'canceled',
   'refunded'
 ];
 
 const STATUS_COLORS: Record<string, string> = {
   pending: 'bg-yellow-100 text-yellow-800',
   processing: 'bg-blue-100 text-blue-800',
-  shipped: 'bg-purple-100 text-purple-800',
+  shipped: 'bg-indigo-100 text-indigo-800',
+  out_for_delivery: 'bg-purple-100 text-purple-800',
   delivered: 'bg-green-100 text-green-800',
-  cancelled: 'bg-red-100 text-red-800',
+  canceled: 'bg-red-100 text-red-800',
   refunded: 'bg-gray-100 text-gray-800'
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  pending: 'Pending',
+  processing: 'Processing',
+  shipped: 'Shipped',
+  out_for_delivery: 'Out for Delivery',
+  delivered: 'Delivered',
+  canceled: 'Canceled',
+  refunded: 'Refunded'
 };
 
 export default function OrderDetailClient({ order: initialOrder }: { order: Order }) {
@@ -80,6 +93,8 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
   const [showPackingSlip, setShowPackingSlip] = useState(false);
   const [packingSlipAutoPrint, setPackingSlipAutoPrint] = useState(false);
   const [showPrintMenu, setShowPrintMenu] = useState(false);
+  const [orderType, setOrderType] = useState(order.order_type || 'standard');
+  const [showOrderTypeEdit, setShowOrderTypeEdit] = useState(false);
 
   const updateOrderStatus = async (newStatus: string) => {
     setIsUpdating(true);
@@ -121,6 +136,29 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
     } catch (error) {
       console.error('Error updating notes:', error);
       alert('Failed to update order notes');
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const updateOrderType = async () => {
+    setIsUpdating(true);
+    try {
+      const response = await fetch(`/api/admin/orders/${order.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_type: orderType })
+      });
+
+      if (!response.ok) throw new Error('Failed to update order type');
+
+      const updatedOrder = await response.json();
+      setOrder(updatedOrder);
+      setShowOrderTypeEdit(false);
+      router.refresh();
+    } catch (error) {
+      console.error('Error updating order type:', error);
+      alert('Failed to update order type');
     } finally {
       setIsUpdating(false);
     }
@@ -242,7 +280,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
               )}
             </div>
             <span className={`px-3 py-1 rounded-full text-sm font-medium ${STATUS_COLORS[order.status]}`}>
-              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+              {STATUS_LABELS[order.status] || order.status}
             </span>
           </div>
         </div>
@@ -264,7 +302,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 } disabled:opacity-50`}
               >
-                {status.charAt(0).toUpperCase() + status.slice(1)}
+                {STATUS_LABELS[status] || status}
               </button>
             ))}
           </div>
@@ -286,6 +324,89 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
             <p className="text-base text-gray-900">{order.customer_email}</p>
           </div>
         </div>
+      </div>
+
+      {/* Order Type */}
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">Order Type</h3>
+          <button
+            onClick={() => setShowOrderTypeEdit(!showOrderTypeEdit)}
+            className="text-sm text-[#a5b5eb] hover:text-[#8a9fd9] font-medium"
+          >
+            {showOrderTypeEdit ? 'Cancel' : 'Edit'}
+          </button>
+        </div>
+        {showOrderTypeEdit ? (
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <label className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input
+                  type="radio"
+                  value="standard"
+                  checked={orderType === 'standard'}
+                  onChange={(e) => setOrderType(e.target.value)}
+                  className="w-4 h-4 text-[#a5b5eb]"
+                />
+                <div>
+                  <div className="font-medium text-gray-900">Standard Shipping</div>
+                  <div className="text-sm text-gray-500">Regular mail delivery</div>
+                </div>
+              </label>
+              <label className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input
+                  type="radio"
+                  value="local_delivery"
+                  checked={orderType === 'local_delivery'}
+                  onChange={(e) => setOrderType(e.target.value)}
+                  className="w-4 h-4 text-[#a5b5eb]"
+                />
+                <div>
+                  <div className="font-medium text-gray-900">Local Delivery</div>
+                  <div className="text-sm text-gray-500">Hand-delivered to local customers</div>
+                </div>
+              </label>
+              <label className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input
+                  type="radio"
+                  value="pickup"
+                  checked={orderType === 'pickup'}
+                  onChange={(e) => setOrderType(e.target.value)}
+                  className="w-4 h-4 text-[#a5b5eb]"
+                />
+                <div>
+                  <div className="font-medium text-gray-900">Customer Pickup</div>
+                  <div className="text-sm text-gray-500">Customer will pick up order</div>
+                </div>
+              </label>
+            </div>
+            <button
+              onClick={updateOrderType}
+              disabled={isUpdating}
+              className="px-6 py-2 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors disabled:opacity-50"
+            >
+              {isUpdating ? 'Saving...' : 'Save Order Type'}
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            {orderType === 'local_delivery' && (
+              <span className="inline-flex px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                🚗 Local Delivery
+              </span>
+            )}
+            {orderType === 'pickup' && (
+              <span className="inline-flex px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                📦 Customer Pickup
+              </span>
+            )}
+            {orderType === 'standard' && (
+              <span className="inline-flex px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                📮 Standard Shipping
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Shipping Address */}
