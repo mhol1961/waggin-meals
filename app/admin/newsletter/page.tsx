@@ -41,6 +41,15 @@ export default async function NewsletterPage() {
     }).length,
   };
 
+  // Format subscriber data for CSV export (process in server component)
+  const csvData = subscribers.map(s => [
+    s.email,
+    s.first_name || '',
+    s.status,
+    s.source,
+    new Date(s.subscribed_at).toLocaleDateString()
+  ]);
+
   return (
     <AdminLayout title="Newsletter Subscribers" username={session.username}>
       {/* Statistics Cards */}
@@ -124,16 +133,9 @@ export default async function NewsletterPage() {
           All Subscribers
         </h2>
         <ExportCSVButton
-          data={subscribers}
+          data={csvData}
           filename="newsletter-subscribers"
           headers={['Email', 'First Name', 'Status', 'Source', 'Subscribed Date']}
-          mapRow={(s) => [
-            s.email,
-            s.first_name || '',
-            s.status,
-            s.source,
-            new Date(s.subscribed_at).toLocaleDateString()
-          ]}
         />
       </div>
 

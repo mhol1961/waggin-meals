@@ -1,17 +1,24 @@
 'use client';
 
 interface ExportCSVButtonProps {
-  data: any[];
+  data: string[][]; // Pre-formatted rows
   filename: string;
   headers: string[];
-  mapRow: (item: any) => string[];
 }
 
-export default function ExportCSVButton({ data, filename, headers, mapRow }: ExportCSVButtonProps) {
+export default function ExportCSVButton({ data, filename, headers }: ExportCSVButtonProps) {
   const handleExport = () => {
+    // Escape and quote CSV values properly
+    const escapeCSV = (value: string) => {
+      if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value;
+    };
+
     const csv = [
-      headers.join(','),
-      ...data.map(item => mapRow(item).join(','))
+      headers.map(escapeCSV).join(','),
+      ...data.map(row => row.map(escapeCSV).join(','))
     ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
