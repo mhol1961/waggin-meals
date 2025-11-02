@@ -63,6 +63,8 @@ interface DashboardStats {
     year: number;
     allTime: number;
     monthTrend: number;
+    averageOrderValue: number;
+    monthlyRecurringRevenue: number;
   };
   orders: {
     total: number;
@@ -84,6 +86,8 @@ interface DashboardStats {
   customers: {
     total: number;
     newThisMonth: number;
+    repeatCustomerRate: number;
+    lifetimeValue: number;
   };
   newsletter: {
     total: number;
@@ -99,6 +103,13 @@ interface DashboardStats {
     status: string;
     fulfillment_status: string;
     created_at: string;
+  }>;
+  bestSellers: Array<{
+    id: string;
+    title: string;
+    handle: string;
+    quantity: number;
+    revenue: number;
   }>;
 }
 
@@ -175,10 +186,10 @@ export default function AdminDashboard() {
     );
   }
 
-  // Prepare data for charts
+  // Prepare data for charts with brand colors
   const allOrderStatusData = [
     { name: 'Processing', value: stats.orders.byStatus.processing, color: '#f59e0b' },
-    { name: 'Shipped', value: stats.orders.byStatus.shipped, color: '#3b82f6' },
+    { name: 'Shipped', value: stats.orders.byStatus.shipped, color: '#6366f1' },
     { name: 'Out for Delivery', value: stats.orders.byStatus.out_for_delivery, color: '#8b5cf6' },
     { name: 'Delivered', value: stats.orders.byStatus.delivered, color: '#10b981' },
     { name: 'Canceled', value: stats.orders.byStatus.canceled, color: '#ef4444' },
@@ -191,7 +202,7 @@ export default function AdminDashboard() {
   const subscriptionData = [
     { name: 'Active', value: stats.subscriptions.active, color: '#10b981' },
     { name: 'Paused', value: stats.subscriptions.paused, color: '#f59e0b' },
-    { name: 'Canceled', value: stats.subscriptions.canceled, color: '#ef4444' },
+    { name: 'Canceled', value: stats.subscriptions.canceled, color: '#94a3b8' },
   ];
 
   return (
@@ -236,9 +247,10 @@ export default function AdminDashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Revenue Overview */}
+        {/* Key Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+          {/* Monthly Revenue */}
+          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium opacity-90">Monthly Revenue</h3>
               <span className="text-2xl">💰</span>
@@ -256,9 +268,54 @@ export default function AdminDashboard() {
             </div>
           </div>
 
+          {/* Average Order Value */}
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium opacity-90">Average Order Value</h3>
+              <span className="text-2xl">📊</span>
+            </div>
+            <div className="text-3xl font-bold mb-1">
+              {formatCurrency(stats.revenue.averageOrderValue)}
+            </div>
+            <div className="text-sm opacity-75">
+              Per order average
+            </div>
+          </div>
+
+          {/* Customer Lifetime Value */}
+          <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium opacity-90">Customer LTV</h3>
+              <span className="text-2xl">💎</span>
+            </div>
+            <div className="text-3xl font-bold mb-1">
+              {formatCurrency(stats.customers.lifetimeValue)}
+            </div>
+            <div className="text-sm opacity-75">
+              Lifetime value per customer
+            </div>
+          </div>
+
+          {/* Monthly Recurring Revenue */}
+          <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium opacity-90">Monthly Recurring</h3>
+              <span className="text-2xl">🔄</span>
+            </div>
+            <div className="text-3xl font-bold mb-1">
+              {formatCurrency(stats.revenue.monthlyRecurringRevenue)}
+            </div>
+            <div className="text-sm opacity-75">
+              From {stats.subscriptions.active} active subscriptions
+            </div>
+          </div>
+        </div>
+
+        {/* Secondary Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Link
             href="/admin/orders"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-purple-300 transition-all duration-200 group"
           >
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium text-gray-600">Total Orders</h3>
@@ -274,11 +331,11 @@ export default function AdminDashboard() {
 
           <Link
             href="/admin/subscriptions"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-green-300 transition-all duration-200 group"
           >
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium text-gray-600">Active Subscriptions</h3>
-              <span className="text-2xl">🔄</span>
+              <span className="text-2xl">✅</span>
             </div>
             <div className="text-3xl font-bold text-gray-900 mb-1">
               {stats.subscriptions.active}
@@ -290,7 +347,7 @@ export default function AdminDashboard() {
 
           <Link
             href="/admin/customers"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-blue-300 transition-all duration-200 group"
           >
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium text-gray-600">Total Customers</h3>
@@ -299,36 +356,74 @@ export default function AdminDashboard() {
             <div className="text-3xl font-bold text-gray-900 mb-1">
               {stats.customers.total}
             </div>
-            <div className="text-sm text-green-600">
+            <div className="text-sm text-blue-600">
               {stats.customers.newThisMonth} new this month
             </div>
           </Link>
+
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-orange-300 transition-all duration-200">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium text-gray-600">Repeat Customer Rate</h3>
+              <span className="text-2xl">🔁</span>
+            </div>
+            <div className="text-3xl font-bold text-gray-900 mb-1">
+              {stats.customers.repeatCustomerRate.toFixed(1)}%
+            </div>
+            <div className="text-sm text-orange-600">
+              Customer retention metric
+            </div>
+          </div>
         </div>
 
         {/* Revenue Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Revenue Trend (Last 30 Days)
-          </h3>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8 hover:shadow-md transition-shadow duration-200">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">
+                Revenue Trend (Last 30 Days)
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">Daily revenue tracking</p>
+            </div>
+            <div className="text-right">
+              <div className="text-sm text-gray-600">Total (30 days)</div>
+              <div className="text-lg font-bold text-purple-600">
+                {formatCurrency(stats.charts.revenueChart.reduce((sum, day) => sum + day.revenue, 0))}
+              </div>
+            </div>
+          </div>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={stats.charts.revenueChart}>
               <defs>
                 <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#c4b5fd" stopOpacity={0.1} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis tickFormatter={(value) => `$${value}`} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+              <XAxis
+                dataKey="date"
+                stroke="#94a3b8"
+                style={{ fontSize: '12px' }}
+              />
+              <YAxis
+                tickFormatter={(value) => `$${value}`}
+                stroke="#94a3b8"
+                style={{ fontSize: '12px' }}
+              />
               <Tooltip
                 formatter={(value) => formatCurrency(Number(value))}
-                contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }}
+                contentStyle={{
+                  backgroundColor: '#fff',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                }}
               />
               <Area
                 type="monotone"
                 dataKey="revenue"
                 stroke="#8b5cf6"
+                strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#colorRevenue)"
               />
@@ -432,16 +527,98 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        {/* Best Selling Products */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Best Selling Products</h3>
+              <p className="text-sm text-gray-600">Top 10 products by revenue</p>
+            </div>
+            <Link
+              href="/admin/products"
+              className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+            >
+              View all products →
+            </Link>
+          </div>
+
+          {stats.bestSellers && stats.bestSellers.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Rank
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Product
+                    </th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Units Sold
+                    </th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Revenue
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {stats.bestSellers.map((product, index) => (
+                    <tr key={product.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-4 py-3">
+                        <div className={`w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm ${
+                          index === 0 ? 'bg-yellow-100 text-yellow-700' :
+                          index === 1 ? 'bg-gray-100 text-gray-700' :
+                          index === 2 ? 'bg-orange-100 text-orange-700' :
+                          'bg-blue-50 text-blue-600'
+                        }`}>
+                          {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : index + 1}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <Link
+                          href={`/products/${product.handle}`}
+                          target="_blank"
+                          className="text-gray-900 hover:text-purple-600 font-medium transition-colors"
+                        >
+                          {product.title}
+                        </Link>
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <span className="text-sm font-semibold text-gray-700">
+                          {product.quantity}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <span className="text-sm font-bold text-gray-900">
+                          {formatCurrency(product.revenue)}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <svg className="w-16 h-16 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+              <h4 className="text-lg font-medium text-gray-900 mb-1">No Sales Data Yet</h4>
+              <p className="text-sm text-gray-500">Best sellers will appear here once orders are placed.</p>
+            </div>
+          )}
+        </div>
+
         {/* Additional Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200">
             <h4 className="text-sm font-medium text-gray-600 mb-2">Today's Revenue</h4>
             <div className="text-2xl font-bold text-gray-900">
               {formatCurrency(stats.revenue.today)}
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200">
             <h4 className="text-sm font-medium text-gray-600 mb-2">This Week</h4>
             <div className="text-2xl font-bold text-gray-900">
               {formatCurrency(stats.revenue.week)}
@@ -450,7 +627,7 @@ export default function AdminDashboard() {
 
           <Link
             href="/admin/newsletter"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition group"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-purple-300 transition-all duration-200 group"
           >
             <h4 className="text-sm font-medium text-gray-600 mb-2">Newsletter Subscribers</h4>
             <div className="text-2xl font-bold text-gray-900">

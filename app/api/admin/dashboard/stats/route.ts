@@ -113,6 +113,67 @@ export async function GET(request: NextRequest) {
       created_at: o.created_at,
     })) || [];
 
+    // Calculate Average Order Value
+    const averageOrderValue = orders && orders.length > 0
+      ? allTimeRevenue / orders.length
+      : 0;
+
+    // Calculate repeat customer rate
+    const uniqueCustomers = new Set(orders?.map(o => o.customer_email));
+    const ordersByCustomer = new Map();
+    orders?.forEach(o => {
+      const count = ordersByCustomer.get(o.customer_email) || 0;
+      ordersByCustomer.set(o.customer_email, count + 1);
+    });
+    const repeatCustomers = Array.from(ordersByCustomer.values()).filter(count => count > 1).length;
+    const repeatCustomerRate = uniqueCustomers.size > 0
+      ? (repeatCustomers / uniqueCustomers.size) * 100
+      : 0;
+
+    // Calculate Customer Lifetime Value (simple average)
+    const customerLifetimeValue = uniqueCustomers.size > 0
+      ? allTimeRevenue / uniqueCustomers.size
+      : 0;
+
+    // Fetch products and calculate best sellers
+    const { data: products } = await supabase
+      .from('products')
+      .select('id, title, handle');
+
+    // Fetch order items to calculate best sellers
+    const { data: orderItems } = await supabase
+      .from('order_items')
+      .select('product_id, quantity, price');
+
+    // Calculate best sellers
+    const productSales = new Map();
+    orderItems?.forEach(item => {
+      const existing = productSales.get(item.product_id) || { quantity: 0, revenue: 0 };
+      productSales.set(item.product_id, {
+        quantity: existing.quantity + (item.quantity || 0),
+        revenue: existing.revenue + ((item.price || 0) * (item.quantity || 0)),
+      });
+    });
+
+    const bestSellers = Array.from(productSales.entries())
+      .map(([productId, stats]) => {
+        const product = products?.find(p => p.id === productId);
+        return {
+          id: productId,
+          title: product?.title || 'Unknown Product',
+          handle: product?.handle || '',
+          quantity: stats.quantity,
+          revenue: stats.revenue,
+        };
+      })
+      .sort((a, b) => b.revenue - a.revenue)
+      .slice(0, 10);
+
+    // Monthly recurring revenue from active subscriptions
+    const monthlyRecurringRevenue = subscriptions
+      ?.filter(s => s.status === 'active')
+      .reduce((sum, s) => sum + (s.price || 0), 0) || 0;
+
     return NextResponse.json({
       revenue: {
         today: todayRevenue,
@@ -121,6 +182,8 @@ export async function GET(request: NextRequest) {
         year: yearRevenue,
         allTime: allTimeRevenue,
         monthTrend: parseFloat(monthTrend),
+        averageOrderValue,
+        monthlyRecurringRevenue,
       },
       orders: {
         total: orders?.length || 0,
@@ -136,6 +199,8 @@ export async function GET(request: NextRequest) {
       customers: {
         total: totalCustomers,
         newThisMonth: newCustomersThisMonth,
+        repeatCustomerRate,
+        lifetimeValue: customerLifetimeValue,
       },
       newsletter: {
         total: newsletterSubs?.length || 0,
@@ -144,6 +209,7 @@ export async function GET(request: NextRequest) {
         revenueChart: revenueChartData,
       },
       recentOrders,
+      bestSellers,
     });
   } catch (error) {
     console.error('Dashboard stats error:', error);
