@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import { getAdminSession } from '@/lib/admin-auth';
 import AdminLayout from '@/components/admin/admin-layout';
+import ExportCSVButton from '@/components/admin/export-csv-button';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -122,31 +123,18 @@ export default async function NewsletterPage() {
         <h2 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
           All Subscribers
         </h2>
-        <button
-          onClick={() => {
-            const csv = [
-              ['Email', 'First Name', 'Status', 'Source', 'Subscribed Date'].join(','),
-              ...subscribers.map(s => [
-                s.email,
-                s.first_name || '',
-                s.status,
-                s.source,
-                new Date(s.subscribed_at).toLocaleDateString()
-              ].join(','))
-            ].join('\n');
-
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `newsletter-subscribers-${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-          }}
-          className="bg-[#a5b5eb] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#8a9fd9] transition-colors"
-          style={{ fontFamily: "'Poppins', sans-serif" }}
-        >
-          Export to CSV
-        </button>
+        <ExportCSVButton
+          data={subscribers}
+          filename="newsletter-subscribers"
+          headers={['Email', 'First Name', 'Status', 'Source', 'Subscribed Date']}
+          mapRow={(s) => [
+            s.email,
+            s.first_name || '',
+            s.status,
+            s.source,
+            new Date(s.subscribed_at).toLocaleDateString()
+          ]}
+        />
       </div>
 
       {/* Subscribers Table */}

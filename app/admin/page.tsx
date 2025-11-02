@@ -176,13 +176,17 @@ export default function AdminDashboard() {
   }
 
   // Prepare data for charts
-  const orderStatusData = [
+  const allOrderStatusData = [
     { name: 'Processing', value: stats.orders.byStatus.processing, color: '#f59e0b' },
     { name: 'Shipped', value: stats.orders.byStatus.shipped, color: '#3b82f6' },
     { name: 'Out for Delivery', value: stats.orders.byStatus.out_for_delivery, color: '#8b5cf6' },
     { name: 'Delivered', value: stats.orders.byStatus.delivered, color: '#10b981' },
     { name: 'Canceled', value: stats.orders.byStatus.canceled, color: '#ef4444' },
   ];
+
+  // Filter out zero values for chart display
+  const orderStatusData = allOrderStatusData.filter(item => item.value > 0);
+  const hasOrderData = orderStatusData.length > 0;
 
   const subscriptionData = [
     { name: 'Active', value: stats.subscriptions.active, color: '#10b981' },
@@ -339,44 +343,56 @@ export default function AdminDashboard() {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Order Status Breakdown
             </h3>
-            <div className="flex items-center justify-center">
-              <ResponsiveContainer width="100%" height={250}>
-                <PieChart>
-                  <Pie
-                    data={orderStatusData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    paddingAngle={5}
-                    dataKey="value"
-                    label={({ name, value }) => `${name}: ${value}`}
-                  >
-                    {orderStatusData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="grid grid-cols-2 gap-2 mt-4">
-              {orderStatusData.map((status) => (
-                <Link
-                  key={status.name}
-                  href={`/admin/orders?status=${status.name.toLowerCase().replace(' ', '_')}`}
-                  className="flex items-center gap-2 text-sm hover:bg-gray-50 p-2 rounded transition"
-                >
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: status.color }}
-                  ></div>
-                  <span className="text-gray-700">{status.name}:</span>
-                  <span className="font-semibold">{status.value}</span>
-                </Link>
-              ))}
-            </div>
+            {hasOrderData ? (
+              <>
+                <div className="flex items-center justify-center">
+                  <ResponsiveContainer width="100%" height={250}>
+                    <PieChart>
+                      <Pie
+                        data={orderStatusData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={60}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        paddingAngle={5}
+                        dataKey="value"
+                        label={({ name, value }) => `${name}: ${value}`}
+                      >
+                        {orderStatusData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mt-4">
+                  {allOrderStatusData.map((status) => (
+                    <Link
+                      key={status.name}
+                      href={`/admin/orders?status=${status.name.toLowerCase().replace(' ', '_')}`}
+                      className="flex items-center gap-2 text-sm hover:bg-gray-50 p-2 rounded transition"
+                    >
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: status.color }}
+                      ></div>
+                      <span className="text-gray-700">{status.name}:</span>
+                      <span className="font-semibold">{status.value}</span>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <svg className="w-16 h-16 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <h4 className="text-lg font-medium text-gray-900 mb-1">No Orders Yet</h4>
+                <p className="text-sm text-gray-500">Orders will appear here once customers start purchasing.</p>
+              </div>
+            )}
           </div>
 
           {/* Subscription Breakdown */}
