@@ -50,6 +50,7 @@ COMMENT ON COLUMN discount_codes.minimum_purchase IS 'Minimum order amount requi
 -- =============================================
 -- Create trigger for updated_at
 -- =============================================
+DROP TRIGGER IF EXISTS update_discount_codes_updated_at ON discount_codes;
 CREATE TRIGGER update_discount_codes_updated_at BEFORE UPDATE ON discount_codes
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
