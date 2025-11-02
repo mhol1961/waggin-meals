@@ -13,7 +13,6 @@ interface Testimonial {
   rating: number;
   is_published: boolean;
   is_featured: boolean;
-  archived?: boolean;
 }
 
 interface TestimonialsListClientProps {
@@ -24,8 +23,8 @@ export default function TestimonialsListClient({ initialTestimonials }: Testimon
   const router = useRouter();
   const [testimonials, setTestimonials] = useState(initialTestimonials);
 
-  // Filter out archived testimonials
-  const activeTestimonials = testimonials.filter(testimonial => !testimonial.archived);
+  // Testimonials are already filtered on the server (archived ones are in archived_content table)
+  const activeTestimonials = testimonials;
 
   const handleArchiveComplete = (testimonialId: string) => {
     setTestimonials(prevTestimonials => prevTestimonials.filter(testimonial => testimonial.id !== testimonialId));
