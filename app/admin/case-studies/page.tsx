@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2, Eye, EyeOff } from 'lucide-react';
+import ArchiveButton from '@/components/admin/archive-button';
 
 interface CaseStudy {
   id: string;
@@ -235,6 +236,12 @@ export default function AdminCaseStudiesPage() {
                         >
                           <Edit className="w-4 h-4" />
                         </Link>
+                        <ArchiveButton
+                          contentType="case_study"
+                          contentId={caseStudy.id}
+                          contentTitle={caseStudy.title}
+                          onArchiveComplete={fetchCaseStudies}
+                        />
                         <button
                           onClick={() => handleDelete(caseStudy.id, caseStudy.dog_name)}
                           className="p-2 text-[#666666] hover:text-red-600 transition-colors"
