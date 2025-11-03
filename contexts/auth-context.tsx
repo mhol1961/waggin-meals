@@ -15,21 +15,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const supabase = getAuthClient();
 
-  // Fetch user role from database
+  // Fetch user role from API (uses service role to bypass RLS)
   async function fetchUserRole(userId: string): Promise<UserRole | null> {
     try {
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', userId)
-        .single();
-
-      if (error || !data) {
-        console.error('Error fetching user role:', error);
-        return 'customer'; // Default to customer
+      // Get current session to send auth token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.error('No session available');
+        return 'customer';
       }
 
-      return data.role as UserRole;
+      // Call API endpoint with auth token
+      const response = await fetch('/api/auth/get-role', {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (!response.ok) {
+        console.error('Error fetching user role:', response.status);
+        return 'customer';
+      }
+
+      const { role } = await response.json();
+      return role as UserRole;
     } catch (error) {
       console.error('Error fetching user role:', error);
       return 'customer';

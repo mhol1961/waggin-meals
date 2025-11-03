@@ -245,7 +245,7 @@ export async function POST(request: NextRequest) {
     // Build pet sections for email
     const petSections = body.pets.map((pet, index) => `
       <div style="background-color: #e8f4fb; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #a5b5eb;">
-        <h3 style="color: #3c3a47; margin-top: 0;">🐾 Pet #${index + 1}: ${pet.name || 'Not provided'}</h3>
+        <h3 style="color: #3c3a47; margin-top: 0;">Pet #${index + 1}: ${pet.name || 'Not provided'}</h3>
 
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
@@ -339,8 +339,8 @@ export async function POST(request: NextRequest) {
           <div style="background-color: #fff3cd; padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #ffc107;">
             <p style="margin: 0; font-size: 14px; color: #856404;">
               <strong>Consultation ID:</strong> ${consultationRequest.id}<br/>
-              <strong>Database:</strong> ✅ Saved to consultation_requests table<br/>
-              <strong>Pet Profiles:</strong> ✅ ${petProfileIds.length} pet(s) saved to pet_profiles table
+              <strong>Database:</strong> [SAVED] consultation_requests table<br/>
+              <strong>Pet Profiles:</strong> [SAVED] ${petProfileIds.length} pet(s) saved to pet_profiles table
             </p>
           </div>
 
@@ -422,7 +422,7 @@ export async function POST(request: NextRequest) {
     // Plain-text version
     const emailText = `NEW FREE CONSULTATION REQUEST
 
-DATABASE SAVED ✅
+DATABASE SAVED
 Consultation ID: ${consultationRequest.id}
 Pet Profiles: ${petProfileIds.length} pet(s) saved
 

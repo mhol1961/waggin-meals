@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/auth-context';
 import { User, Package, MapPin, Settings, LogOut } from 'lucide-react';
+import { NextBoxPreview } from '@/components/account/next-box-preview';
 
 export default function AccountPage() {
   const { user, loading, signOut, role } = useAuth();
@@ -37,6 +38,12 @@ export default function AccountPage() {
       description: 'Manage your recurring deliveries',
       href: '/account/subscriptions',
       icon: Package,
+    },
+    {
+      title: 'Consultations',
+      description: 'View your free and paid nutrition consultations',
+      href: '/account/consultations',
+      icon: User,
     },
     {
       title: 'Payment Methods',
@@ -101,6 +108,11 @@ export default function AccountPage() {
             <LogOut className="w-4 h-4" />
             Logout
           </button>
+        </div>
+
+        {/* Next Box Preview */}
+        <div className="mb-8">
+          <NextBoxPreview />
         </div>
 
         {/* Account Sections */}

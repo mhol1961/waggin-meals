@@ -63,6 +63,7 @@ export async function POST(request: NextRequest) {
       tax,
       total,
       status, // NEW: support pending_payment status
+      consultation_id, // NEW: For paid consultation orders
     } = body;
 
     // Validate required fields
@@ -357,6 +358,39 @@ export async function POST(request: NextRequest) {
       } catch (emailError) {
         console.error('Error sending confirmation email:', emailError);
         // Don't fail the order if email fails
+      }
+
+      // ====================================
+      // CONSULTATION PAYMENT COMPLETION
+      // ====================================
+      if (consultation_id) {
+        try {
+          console.log(`[Consultation] Completing payment for consultation ${consultation_id}`);
+
+          const consultationResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/consultations/complete-payment`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                consultationId: consultation_id,
+                orderId: order.id,
+                paymentId: transactionId,
+                customerId: customerId,
+              }),
+            }
+          );
+
+          if (consultationResponse.ok) {
+            console.log(`[Consultation] ✅ Payment completed for consultation ${consultation_id}`);
+          } else {
+            const errorData = await consultationResponse.json();
+            console.error('[Consultation] Failed to complete consultation payment:', errorData);
+          }
+        } catch (consultationError) {
+          console.error('[Consultation] Error completing consultation payment:', consultationError);
+          // Don't fail the order if consultation completion fails
+        }
       }
 
       // Add to GoHighLevel

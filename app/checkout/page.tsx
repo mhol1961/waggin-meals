@@ -5,7 +5,7 @@ import { useCart } from '@/contexts/cart-context';
 import { useAuth } from '@/contexts/auth-context';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import PaymentForm from '@/components/payment-form';
 import type { PaymentToken } from '@/types/payment';
 
@@ -62,11 +62,13 @@ const SHIPPING_METHODS: ShippingMethod[] = [
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, totalPrice, clearCart, updateQuantity, removeItem } = useCart();
+  const searchParams = useSearchParams();
+  const { items, totalPrice, clearCart, updateQuantity, removeItem, addItem } = useCart();
   const { user } = useAuth();
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [consultationId, setConsultationId] = useState<string | null>(null);
 
   // Shipping info
   const [email, setEmail] = useState(user?.email || '');
@@ -101,6 +103,41 @@ export default function CheckoutPage() {
   const shipping = selectedShipping?.price || 0;
   const tax = calculatedTax;
   const total = subtotal + shipping + tax;
+
+  // Handle consultation orders - auto-add consultation product to cart
+  useEffect(() => {
+    const consultationIdParam = searchParams?.get('consultation_id');
+
+    if (consultationIdParam && !consultationId) {
+      // Set consultation ID
+      setConsultationId(consultationIdParam);
+
+      // Auto-add consultation product to cart if not already there
+      const hasConsultationProduct = items.some(item =>
+        item.handle === 'nutrition-consultation-395'
+      );
+
+      if (!hasConsultationProduct) {
+        // Fetch and add consultation product
+        fetch('/api/products/by-handle/nutrition-consultation-395')
+          .then(res => res.json())
+          .then(data => {
+            if (data.product) {
+              addItem({
+                id: data.product.id,
+                cart_key: data.product.id,
+                title: data.product.title,
+                price: data.product.price,
+                image: data.product.images?.[0] || '',
+                handle: data.product.handle,
+              });
+              console.log('✅ Auto-added consultation product to cart');
+            }
+          })
+          .catch(err => console.error('Error loading consultation product:', err));
+      }
+    }
+  }, [searchParams, consultationId, items, addItem]);
 
   // Calculate tax when address or shipping changes
   useEffect(() => {
@@ -204,6 +241,7 @@ export default function CheckoutPage() {
           tax: tax,
           total: total,
           status: 'pending_payment',
+          consultation_id: consultationId, // For paid consultation orders
         }),
       });
 

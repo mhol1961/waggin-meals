@@ -1,5 +1,52 @@
 # 🚨🚨🚨 READ THIS FIRST - DO NOT FORGET 🚨🚨🚨
 
+## 🛑🛑🛑 CRITICAL GIT COMMIT RULES 🛑🛑🛑
+
+### ❌ NEVER COMMIT TO GIT WITHOUT EXPLICIT USER PERMISSION ❌
+
+**ABSOLUTE RULES:**
+1. **DO NOT run `git commit` unless the user explicitly tells you to commit**
+2. **DO NOT run `git push` unless the user explicitly tells you to push**
+3. **ALWAYS verify builds work locally BEFORE committing** (`npm run build` must succeed)
+4. **User is near Netlify build limit** - every commit triggers a build and costs money
+5. **Builds often fail first time** - must test locally to avoid wasting builds
+6. **WAIT for user approval** even if changes look perfect
+
+**CORRECT WORKFLOW:**
+1. Make code changes
+2. Run `npm run build` locally to verify
+3. Fix any errors
+4. Run `npm run build` again until it passes
+5. **WAIT for user to say "commit this"**
+6. Only then: `git add` and `git commit`
+7. **WAIT for user to say "push this"**
+8. Only then: `git push`
+
+**If you commit without permission, you waste Netlify builds and cost money.**
+
+---
+
+## 🚨🚨🚨 CRITICAL EMAIL SYSTEM RULES 🚨🚨🚨
+
+### ❌ NEVER USE RESEND - ONLY GOHIGHLEVEL ❌
+
+**ABSOLUTE RULES:**
+1. **CHRISTIE WILL NEVER EVER USE RESEND FOR EMAILS**
+2. **ALL EMAILS ARE SENT VIA GOHIGHLEVEL WORKFLOWS**
+3. **EMAIL TRIGGERS: GHL form submissions, webhooks, or automation workflows**
+4. **DO NOT create email sending code - use GHL webhooks instead**
+5. **DO NOT call /api/send-email - trigger GHL workflows instead**
+6. **Christie has GHL workflows set up - we just need to trigger them**
+
+**HOW EMAILS WORK:**
+- Form submission → GHL catches it → GHL sends emails via workflows
+- Or: API endpoint → Webhook to GHL → GHL automation triggers → Emails sent
+- Or: Database trigger → Webhook to GHL → Email workflow executes
+
+**NEVER suggest Resend, SendGrid, Mailgun, or any other email service. ONLY GoHighLevel.**
+
+---
+
 ## ⚠️⚠️⚠️ THIS IS A COMPLETE, STANDALONE E-COMMERCE WEBSITE ⚠️⚠️⚠️
 
 ### ABSOLUTE RULES - NEVER BREAK THESE:
