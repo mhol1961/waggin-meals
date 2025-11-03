@@ -26,6 +26,27 @@
 
 ---
 
+## 🚨🚨🚨 CRITICAL EMAIL SYSTEM RULES 🚨🚨🚨
+
+### ❌ NEVER USE RESEND - ONLY GOHIGHLEVEL ❌
+
+**ABSOLUTE RULES:**
+1. **CHRISTIE WILL NEVER EVER USE RESEND FOR EMAILS**
+2. **ALL EMAILS ARE SENT VIA GOHIGHLEVEL WORKFLOWS**
+3. **EMAIL TRIGGERS: GHL form submissions, webhooks, or automation workflows**
+4. **DO NOT create email sending code - use GHL webhooks instead**
+5. **DO NOT call /api/send-email - trigger GHL workflows instead**
+6. **Christie has GHL workflows set up - we just need to trigger them**
+
+**HOW EMAILS WORK:**
+- Form submission → GHL catches it → GHL sends emails via workflows
+- Or: API endpoint → Webhook to GHL → GHL automation triggers → Emails sent
+- Or: Database trigger → Webhook to GHL → Email workflow executes
+
+**NEVER suggest Resend, SendGrid, Mailgun, or any other email service. ONLY GoHighLevel.**
+
+---
+
 ## ⚠️⚠️⚠️ THIS IS A COMPLETE, STANDALONE E-COMMERCE WEBSITE ⚠️⚠️⚠️
 
 ### ABSOLUTE RULES - NEVER BREAK THESE:

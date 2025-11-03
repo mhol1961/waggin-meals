@@ -164,10 +164,70 @@ export default function NutritionServices() {
           alert(`Error: ${error.error || 'Failed to submit consultation request'}`);
         }
       } else {
-        // Paid consultation - will be implemented in paid consultation phase
-        alert('Paid consultations coming soon! For now, please use the contact form or call us directly.');
-        console.log('Paid consultation form data:', formData);
-        // TODO: Implement paid consultation flow
+        // Paid consultation ($395) - Save questionnaire and redirect to checkout
+        const [firstName, ...lastNameParts] = formData.ownerName.split(' ');
+        const lastName = lastNameParts.join(' ') || '';
+
+        const payload = {
+          firstName: firstName || formData.ownerName,
+          lastName: lastName,
+          email: formData.email,
+          phone: formData.phone,
+          city: formData.city,
+          state: formData.state,
+
+          // Dog information (supporting multiple dogs in future)
+          dogs: [{
+            name: formData.dogName,
+            breed: formData.breed,
+            age: formData.age,
+            weight: formData.weight,
+            gender: formData.gender,
+            spayedNeutered: formData.spayedNeutered,
+          }],
+
+          // Current diet information
+          currentDiet: {
+            currentFood: formData.currentFood,
+            durationOnDiet: formData.durationOnDiet,
+            portionSize: formData.portionSize,
+            feedingFrequency: formData.feedingFrequency,
+          },
+
+          // Health information
+          healthInfo: {
+            allergies: formData.allergies || '',
+            sensitivities: formData.sensitivities || '',
+            chronicConditions: formData.chronicConditions || '',
+            medications: formData.medications || '',
+            recentVetVisits: formData.recentVetVisits || '',
+          },
+
+          // Goals and preferences
+          goals: formData.goals,
+          preferredFormat: formData.preferredFormat,
+          specialRequests: formData.specialRequests || '',
+        };
+
+        // Save questionnaire to database
+        const response = await fetch('/api/consultations/questionnaire', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('✅ Questionnaire saved:', data.consultationId);
+
+          // Redirect to checkout with consultation ID
+          // The checkout will handle adding the consultation product and payment
+          window.location.href = `/checkout?consultation_id=${data.consultationId}`;
+        } else {
+          const error = await response.json();
+          alert(`Error: ${error.error || 'Failed to save questionnaire. Please try again.'}`);
+          console.error('Questionnaire error:', error);
+        }
       }
     } catch (error) {
       console.error('Error submitting consultation:', error);

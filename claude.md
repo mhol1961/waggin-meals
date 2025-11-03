@@ -453,4 +453,199 @@ This file should be updated whenever:
 
 ---
 
-**Last Updated**: November 1, 2025
+### November 2, 2025
+
+#### **✅ PREMIUM CUSTOMER PORTAL - SUBSCRIPTION MANAGEMENT**
+
+**Session Context**: Implemented comprehensive self-service subscription management and consultation history features to reduce support burden and prevent cancellations.
+
+**Problem Statement**:
+- Customers had to email Christie for every subscription change (skip delivery, change frequency, update address, modify contents)
+- No visibility into consultation history
+- Lack of self-service features causing cancellations when customers wanted to modify subscriptions
+- Estimated 70-80% of support emails were simple subscription requests
+
+**Phase 1: Core Portal Enhancements** ✅
+
+**Database Migration:**
+- Created idempotent migration: `supabase/migrations/20251102_create_free_consultation_system.sql`
+- Documents free consultation system schema (consultation_requests, pet_profiles)
+- Safe to run on existing database (uses CREATE IF NOT EXISTS pattern)
+- Ran successfully without affecting existing data
+
+**1. Skip Next Delivery** (`app/account/subscriptions/[id]/page.tsx`)
+- Added "Skip Next Delivery" button
+- Modal confirmation dialog
+- API integration: `POST /api/subscriptions/[id]/skip-next`
+- Advances next_billing_date by one billing cycle
+- Auto-refreshes subscription details after skip
+
+**2. Change Delivery Frequency** (`app/account/subscriptions/[id]/page.tsx`)
+- Added "Change Frequency" button and modal
+- 4 frequency options: weekly, every 2 weeks, every 3 weeks, monthly
+- Current frequency pre-selected
+- API integration: `POST /api/subscriptions/[id]/change-frequency`
+- Recalculates next_billing_date based on new frequency
+- GHL tag: `subscription-frequency-changed`
+
+**3. Update Shipping Address** (`app/account/subscriptions/[id]/page.tsx`)
+- Added "Update Address" button and modal
+- Form fields: address line 1, line 2, city, state, postal code
+- Form validation for required fields
+- API integration: `POST /api/subscriptions/[id]/update-address`
+- Updates JSONB shipping_address column
+- Future deliveries use new address
+
+**4. Consultation History Page** (`app/account/consultations/page.tsx`)
+- New route: `/account/consultations`
+- Displays all free consultation requests
+- Displays all paid consultations ($395)
+- Status badges (pending, contacted, completed, paid)
+- Shows pet names and submission dates
+- GHL sync status indicator
+- Stats cards showing counts
+- Added to account menu in `/app/account/page.tsx`
+
+**5. Next Box Preview Widget** (`components/account/next-box-preview.tsx`)
+- Dashboard widget showing upcoming delivery
+- Countdown timer (X days until delivery)
+- Box contents preview
+- Quick action buttons (Skip, Customize)
+- Shows subscription with nearest billing date
+- Placed on main account dashboard
+
+**Phase 2: Subscription Customization (THE PREMIUM FEATURE)** ✅
+
+**The Feature That Prevents Cancellations**:
+
+**6. Customize Box Modal** (`components/subscription/customize-box-modal.tsx`)
+- Full-featured modal for modifying subscription contents
+- **Current Items Display:**
+  - List all products in subscription
+  - Price per unit shown
+  - Quantity controls (+/- buttons)
+  - Subtotal calculation per item
+  - Remove item button (trash icon)
+- **Product Browser:**
+  - Browse all published products
+  - Real-time search filtering
+  - Product images and prices
+  - One-click add to subscription
+  - Smart duplicate detection (increments quantity if already in box)
+- **Live Price Calculation:**
+  - Current total vs. new total
+  - Price change indicator (+/- with color coding)
+  - Real-time updates as items change
+  - Preview before saving
+- **Save Functionality:**
+  - Validates minimum 1 item
+  - Saves to database
+  - Refreshes subscription automatically
+  - User-friendly error handling
+
+**7. Update Items API** (`app/api/subscriptions/[id]/update-items/route.ts`)
+- Endpoint: `POST /api/subscriptions/[id]/update-items`
+- Validates items array (non-empty, valid structure)
+- Validates amount (positive number)
+- Updates subscription items and amount in database
+- Updates updated_at timestamp
+- **GHL Integration:**
+  - Syncs to GoHighLevel CRM
+  - Adds tag: `subscription-customized`
+  - Triggers marketing workflows
+- Error handling with detailed error messages
+
+**8. Modal Integration** (`app/account/subscriptions/[id]/page.tsx`)
+- "Customize Box" button in Items section
+- Only shown for active subscriptions
+- Modal state management
+- Save handler with API call
+- Auto-refresh after save
+
+**GoHighLevel Integration Documentation** ✅
+
+**Created**: `docs/GHL-INTEGRATION-GUIDE.md` (414 lines)
+- Comprehensive guide for Christie to set up GHL workflows
+- Documents existing integrations (free & paid consultations)
+- Required environment variables and how to get them
+- **5 Detailed Workflow Blueprints:**
+  1. Free Consultation Follow-Up (7 steps)
+  2. Paid Consultation Onboarding (6 steps)
+  3. Subscription Lifecycle (3-part email series) - NOT YET BUILT
+  4. Failed Payment Recovery (7 steps) - NOT YET BUILT
+  5. Abandoned Cart (6 steps) - NOT YET BUILT
+- Custom field recommendations (8 fields)
+- Testing checklist
+- Troubleshooting guide
+
+**Build Verification** ✅
+- Build completed successfully (exit code 0)
+- 168 pages generated (163 static + dynamic routes)
+- Compiled in 5.8 minutes
+- Zero TypeScript errors
+- Zero build errors
+- All new routes compiled successfully:
+  - `/account/consultations` ✅
+  - `/account/subscriptions/[id]` (updated) ✅
+  - `/api/subscriptions/[id]/update-items` ✅
+
+**Testing Documentation Created** ✅
+
+**Created**: `docs/CUSTOMER-PORTAL-TESTING-GUIDE.md` (620+ lines)
+- Complete testing guide for all features
+- Step-by-step test procedures
+- Expected results for each test
+- Database verification queries
+- GHL integration checks
+- Troubleshooting section
+- Success criteria checklist
+- Business impact metrics to track
+- Production deployment checklist
+
+**Files Created:**
+1. `/supabase/migrations/20251102_create_free_consultation_system.sql` - Migration
+2. `/app/account/consultations/page.tsx` - Consultation history page
+3. `/components/account/next-box-preview.tsx` - Next delivery widget
+4. `/components/subscription/customize-box-modal.tsx` - Customization modal (350+ lines)
+5. `/app/api/subscriptions/[id]/update-items/route.ts` - Update API endpoint
+6. `/docs/GHL-INTEGRATION-GUIDE.md` - GHL setup guide
+7. `/docs/CUSTOMER-PORTAL-TESTING-GUIDE.md` - Testing documentation
+
+**Files Modified:**
+1. `/app/account/subscriptions/[id]/page.tsx` - Added 6 features
+2. `/app/account/page.tsx` - Added consultation link + next box widget
+
+**Business Impact** 🎯
+- **Support Reduction**: Estimated 70-80% reduction in subscription-related support emails
+- **Cancellation Prevention**: Customers can now modify subscriptions instead of cancelling
+- **Customer Satisfaction**: Self-service 24/7 without waiting for Christie
+- **Revenue Protection**: Retain subscriptions that would have been cancelled
+- **Upsell Opportunity**: Customers can add products to increase subscription value
+
+**Expected Metrics:**
+- Cancellation rate: Target 30-50% reduction
+- Average subscription value: Target 15-25% increase
+- Feature adoption: Target 40%+ customers use customize within 30 days
+- Support tickets: Target 70%+ reduction in subscription-related emails
+
+**Current Status:**
+- ✅ All Phase 1 features implemented and built
+- ✅ All Phase 2 features implemented and built
+- ✅ Build successful (168 pages, zero errors)
+- ✅ Testing guide created
+- ✅ GHL integration guide created
+- ⏸️ Ready for testing in development environment
+- ⏸️ Ready for production deployment after testing
+
+**Next Steps:**
+1. Test all features in development (use testing guide)
+2. Verify GHL integration with real API keys
+3. Test with real customer account
+4. Deploy to production (Netlify)
+5. Set up GHL workflows per integration guide
+6. Monitor metrics for 30 days
+7. Announce features to customers via email campaign
+
+---
+
+**Last Updated**: November 2, 2025

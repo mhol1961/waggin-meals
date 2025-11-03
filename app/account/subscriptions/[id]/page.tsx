@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Subscription } from '@/types/subscription';
+import { CustomizeBoxModal } from '@/components/subscription/customize-box-modal';
+import { supabase } from '@/lib/supabase/client';
 
 interface Invoice {
   id: string;
@@ -29,8 +31,19 @@ export default function SubscriptionDetailPage() {
   const [actionLoading, setActionLoading] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showPauseModal, setShowPauseModal] = useState(false);
+  const [showFrequencyModal, setShowFrequencyModal] = useState(false);
+  const [showAddressModal, setShowAddressModal] = useState(false);
+  const [showCustomizeModal, setShowCustomizeModal] = useState(false);
   const [cancelReason, setCancelReason] = useState('');
   const [pauseReason, setPauseReason] = useState('');
+  const [newFrequency, setNewFrequency] = useState('');
+  const [newAddress, setNewAddress] = useState({
+    line1: '',
+    line2: '',
+    city: '',
+    state: '',
+    postal_code: '',
+  });
 
   useEffect(() => {
     fetchSubscription();
@@ -149,6 +162,126 @@ export default function SubscriptionDetailPage() {
     } finally {
       setActionLoading(false);
     }
+  }
+
+  async function handleSkipNext() {
+    if (!subscription) return;
+
+    try {
+      setActionLoading(true);
+      const response = await fetch(`/api/subscriptions/${subscriptionId}/skip-next`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason: 'Customer requested skip' }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to skip delivery');
+      }
+
+      await fetchSubscription();
+      alert('Next delivery has been skipped!');
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setActionLoading(false);
+    }
+  }
+
+  async function handleChangeFrequency() {
+    if (!subscription || !newFrequency) return;
+
+    try {
+      setActionLoading(true);
+      const response = await fetch(`/api/subscriptions/${subscriptionId}/change-frequency`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ frequency: newFrequency }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to change frequency');
+      }
+
+      await fetchSubscription();
+      setShowFrequencyModal(false);
+      setNewFrequency('');
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setActionLoading(false);
+    }
+  }
+
+  async function handleUpdateAddress() {
+    if (!subscription) return;
+
+    if (!newAddress.line1 || !newAddress.city || !newAddress.state || !newAddress.postal_code) {
+      alert('Please fill in all required address fields');
+      return;
+    }
+
+    try {
+      setActionLoading(true);
+      const response = await fetch(`/api/subscriptions/${subscriptionId}/update-address`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          shipping_address: {
+            line1: newAddress.line1,
+            line2: newAddress.line2,
+            city: newAddress.city,
+            state: newAddress.state,
+            postal_code: newAddress.postal_code,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to update address');
+      }
+
+      await fetchSubscription();
+      setShowAddressModal(false);
+      setNewAddress({ line1: '', line2: '', city: '', state: '', postal_code: '' });
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setActionLoading(false);
+    }
+  }
+
+  async function handleSaveCustomization(newItems: any[], newAmount: number) {
+    if (!subscription) return;
+
+    // Get auth token for API request
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      throw new Error('Not authenticated');
+    }
+
+    const response = await fetch(`/api/subscriptions/${subscriptionId}/update-items`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({
+        items: newItems,
+        amount: newAmount, // Note: Server will recalculate this for security
+      }),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.error || 'Failed to update subscription');
+    }
+
+    // Refresh subscription data
+    await fetchSubscription();
   }
 
   function getStatusBadge(status: string) {
@@ -288,19 +421,33 @@ export default function SubscriptionDetailPage() {
 
         {/* Items */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Items</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">Box Contents</h2>
+            {subscription.status === 'active' && (
+              <button
+                onClick={() => setShowCustomizeModal(true)}
+                className="px-4 py-2 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-md text-sm font-medium hover:from-green-700 hover:to-blue-700 transition-all shadow-sm"
+              >
+                Customize Box
+              </button>
+            )}
+          </div>
           <ul className="divide-y divide-gray-200">
-            {subscription.items.map((item, idx) => (
-              <li key={idx} className="py-3 flex justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-gray-900">Qty: {item.quantity}</p>
-                  <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>
-                </div>
-              </li>
-            ))}
+            {subscription.items && subscription.items.length > 0 ? (
+              subscription.items.map((item, idx) => (
+                <li key={idx} className="py-3 flex justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">{item.name}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-gray-900">Qty: {item.quantity}</p>
+                    <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <li className="py-3 text-sm text-gray-500 italic">No items in subscription</li>
+            )}
           </ul>
         </div>
 
@@ -308,15 +455,26 @@ export default function SubscriptionDetailPage() {
         {subscription.status !== 'cancelled' && subscription.status !== 'expired' && (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Manage Subscription</h2>
-            <div className="space-y-3">
+
+            {/* Primary Actions */}
+            <div className="space-y-3 mb-6">
               {subscription.status === 'active' && (
-                <button
-                  onClick={() => setShowPauseModal(true)}
-                  disabled={actionLoading}
-                  className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-                >
-                  Pause Subscription
-                </button>
+                <>
+                  <button
+                    onClick={handleSkipNext}
+                    disabled={actionLoading}
+                    className="w-full sm:w-auto px-4 py-2 border border-blue-300 rounded-md shadow-sm text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 disabled:opacity-50"
+                  >
+                    Skip Next Delivery
+                  </button>
+                  <button
+                    onClick={() => setShowPauseModal(true)}
+                    disabled={actionLoading}
+                    className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 ml-0 sm:ml-3"
+                  >
+                    Pause Subscription
+                  </button>
+                </>
               )}
 
               {subscription.status === 'paused' && (
@@ -328,11 +486,35 @@ export default function SubscriptionDetailPage() {
                   {actionLoading ? 'Resuming...' : 'Resume Subscription'}
                 </button>
               )}
+            </div>
 
+            {/* Subscription Settings */}
+            <div className="border-t border-gray-200 pt-4 mb-4">
+              <h3 className="text-sm font-medium text-gray-700 mb-3">Subscription Settings</h3>
+              <div className="space-y-2">
+                <button
+                  onClick={() => setShowFrequencyModal(true)}
+                  disabled={actionLoading}
+                  className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                >
+                  Change Delivery Frequency
+                </button>
+                <button
+                  onClick={() => setShowAddressModal(true)}
+                  disabled={actionLoading}
+                  className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 ml-0 sm:ml-3"
+                >
+                  Update Shipping Address
+                </button>
+              </div>
+            </div>
+
+            {/* Cancel Action */}
+            <div className="border-t border-gray-200 pt-4">
               <button
                 onClick={() => setShowCancelModal(true)}
                 disabled={actionLoading}
-                className="w-full sm:w-auto px-4 py-2 border border-red-300 rounded-md shadow-sm text-sm font-medium text-red-700 bg-white hover:bg-red-50 disabled:opacity-50 ml-0 sm:ml-3"
+                className="w-full sm:w-auto px-4 py-2 border border-red-300 rounded-md shadow-sm text-sm font-medium text-red-700 bg-white hover:bg-red-50 disabled:opacity-50"
               >
                 Cancel Subscription
               </button>
@@ -492,6 +674,161 @@ export default function SubscriptionDetailPage() {
           </div>
         </div>
       )}
+
+      {/* Change Frequency Modal */}
+      {showFrequencyModal && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Change Delivery Frequency</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              Current frequency: <strong>{formatFrequency(subscription.frequency)}</strong>
+            </p>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                New Frequency
+              </label>
+              <select
+                value={newFrequency}
+                onChange={(e) => setNewFrequency(e.target.value)}
+                className="w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
+              >
+                <option value="">Select frequency...</option>
+                <option value="weekly">Weekly</option>
+                <option value="biweekly">Every 2 Weeks</option>
+                <option value="monthly">Monthly</option>
+                <option value="4-weeks">Every 4 Weeks</option>
+                <option value="6-weeks">Every 6 Weeks</option>
+                <option value="8-weeks">Every 8 Weeks</option>
+              </select>
+            </div>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => {
+                  setShowFrequencyModal(false);
+                  setNewFrequency('');
+                }}
+                disabled={actionLoading}
+                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleChangeFrequency}
+                disabled={actionLoading || !newFrequency}
+                className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 disabled:opacity-50"
+              >
+                {actionLoading ? 'Updating...' : 'Update Frequency'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Update Address Modal */}
+      {showAddressModal && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Update Shipping Address</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              This will update the shipping address for all future deliveries.
+            </p>
+            <div className="space-y-3 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Address Line 1 *
+                </label>
+                <input
+                  type="text"
+                  value={newAddress.line1}
+                  onChange={(e) => setNewAddress({ ...newAddress, line1: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
+                  placeholder="123 Main St"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Address Line 2
+                </label>
+                <input
+                  type="text"
+                  value={newAddress.line2}
+                  onChange={(e) => setNewAddress({ ...newAddress, line2: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
+                  placeholder="Apt 4B (optional)"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    City *
+                  </label>
+                  <input
+                    type="text"
+                    value={newAddress.city}
+                    onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    State *
+                  </label>
+                  <input
+                    type="text"
+                    value={newAddress.state}
+                    onChange={(e) => setNewAddress({ ...newAddress, state: e.target.value })}
+                    className="w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
+                    maxLength={2}
+                    placeholder="NC"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Zip Code *
+                </label>
+                <input
+                  type="text"
+                  value={newAddress.postal_code}
+                  onChange={(e) => setNewAddress({ ...newAddress, postal_code: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
+                  maxLength={10}
+                  placeholder="28801"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => {
+                  setShowAddressModal(false);
+                  setNewAddress({ line1: '', line2: '', city: '', state: '', postal_code: '' });
+                }}
+                disabled={actionLoading}
+                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUpdateAddress}
+                disabled={actionLoading}
+                className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 disabled:opacity-50"
+              >
+                {actionLoading ? 'Updating...' : 'Update Address'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Customize Box Modal */}
+      <CustomizeBoxModal
+        isOpen={showCustomizeModal}
+        onClose={() => setShowCustomizeModal(false)}
+        currentItems={subscription.items || []}
+        currentAmount={subscription.amount}
+        subscriptionId={subscriptionId}
+        onSave={handleSaveCustomization}
+      />
     </div>
   );
 }
