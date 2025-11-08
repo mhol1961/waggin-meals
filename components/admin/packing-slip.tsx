@@ -94,7 +94,7 @@ export default function PackingSlip({ order, onClose, autoPrint = false }: Packi
             <div className="flex gap-3">
               <button
                 onClick={handlePrint}
-                className="px-6 py-2 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors font-medium"
+                className="px-6 py-2 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors font-medium"
               >
                 Print Packing Slip
               </button>

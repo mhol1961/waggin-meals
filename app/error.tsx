@@ -16,7 +16,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-orange-50 flex items-center justify-center px-4">
       <div className="max-w-2xl w-full text-center">
         {/* Dog Icon */}
         <div className="mb-8">

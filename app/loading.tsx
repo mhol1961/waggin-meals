@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-orange-50 flex items-center justify-center px-4">
       <div className="text-center">
         {/* Animated Dog Logo */}
         <div className="mb-8 relative">

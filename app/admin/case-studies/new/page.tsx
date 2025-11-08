@@ -186,7 +186,7 @@ export default function NewCaseStudyPage() {
                   onClick={() => setMethod('upload')}
                   className={`flex-1 px-6 py-4 flex items-center justify-center gap-2 transition-colors ${
                     method === 'upload'
-                      ? 'bg-[#a5b5eb] text-white'
+                      ? 'bg-[#8FAE8F] text-white'
                       : 'bg-white text-[#666666] hover:bg-gray-50'
                   }`}
                   style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -198,7 +198,7 @@ export default function NewCaseStudyPage() {
                   onClick={() => setMethod('manual')}
                   className={`flex-1 px-6 py-4 flex items-center justify-center gap-2 transition-colors ${
                     method === 'manual'
-                      ? 'bg-[#a5b5eb] text-white'
+                      ? 'bg-[#8FAE8F] text-white'
                       : 'bg-white text-[#666666] hover:bg-gray-50'
                   }`}
                   style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -235,7 +235,7 @@ export default function NewCaseStudyPage() {
                             type="text"
                             value={dogName}
                             onChange={(e) => setDogName(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="Bella"
                             required
                           />
@@ -248,7 +248,7 @@ export default function NewCaseStudyPage() {
                             type="text"
                             value={breed}
                             onChange={(e) => setBreed(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="Labrador Retriever"
                             required
                           />
@@ -261,7 +261,7 @@ export default function NewCaseStudyPage() {
                             type="number"
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="6"
                             required
                           />
@@ -274,7 +274,7 @@ export default function NewCaseStudyPage() {
                             type="number"
                             value={weight}
                             onChange={(e) => setWeight(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="70"
                             required
                           />
@@ -286,7 +286,7 @@ export default function NewCaseStudyPage() {
                           <select
                             value={sex}
                             onChange={(e) => setSex(e.target.value as any)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             required
                           >
                             <option value="male">Male</option>
@@ -312,7 +312,7 @@ export default function NewCaseStudyPage() {
                             type="text"
                             value={ownerName}
                             onChange={(e) => setOwnerName(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="Sarah M."
                             required
                           />
@@ -325,7 +325,7 @@ export default function NewCaseStudyPage() {
                             type="text"
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="Austin, TX"
                             required
                           />
@@ -347,7 +347,7 @@ export default function NewCaseStudyPage() {
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="How Bella Lost 15 Pounds and Regained Her Energy"
                             required
                           />
@@ -360,7 +360,7 @@ export default function NewCaseStudyPage() {
                             value={summary}
                             onChange={(e) => setSummary(e.target.value)}
                             rows={2}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="Bella went from overweight and lethargic to healthy and playful in just 4 months..."
                             required
                           />
@@ -380,7 +380,7 @@ export default function NewCaseStudyPage() {
                               type="checkbox"
                               checked={healthIssues.includes(issue)}
                               onChange={() => handleHealthIssueToggle(issue)}
-                              className="w-4 h-4 text-[#a5b5eb] border-gray-300 rounded focus:ring-[#a5b5eb]"
+                              className="w-4 h-4 text-[#8FAE8F] border-gray-300 rounded focus:ring-[#8FAE8F]"
                             />
                             <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                               {issue}
@@ -404,7 +404,7 @@ export default function NewCaseStudyPage() {
                             type="text"
                             value={problemDuration}
                             onChange={(e) => setProblemDuration(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="2 years"
                           />
                         </div>
@@ -416,7 +416,7 @@ export default function NewCaseStudyPage() {
                             type="text"
                             value={timeToResults}
                             onChange={(e) => setTimeToResults(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="4 months"
                           />
                         </div>
@@ -437,7 +437,7 @@ export default function NewCaseStudyPage() {
                             value={productsUsed}
                             onChange={(e) => setProductsUsed(e.target.value)}
                             rows={3}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="Chicken & Sweet Potato Meal&#10;Joint Support Supplement"
                           />
                         </div>
@@ -449,7 +449,7 @@ export default function NewCaseStudyPage() {
                             value={servicesUsed}
                             onChange={(e) => setServicesUsed(e.target.value)}
                             rows={3}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="3-Month Custom Meal Plan&#10;Monthly Check-ins"
                           />
                         </div>
@@ -470,7 +470,7 @@ export default function NewCaseStudyPage() {
                             value={resultsAchieved}
                             onChange={(e) => setResultsAchieved(e.target.value)}
                             rows={4}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="Lost 15 pounds safely&#10;Energy levels tripled&#10;Playful like a puppy again"
                           />
                         </div>
@@ -483,7 +483,7 @@ export default function NewCaseStudyPage() {
                               type="number"
                               value={beforeWeight}
                               onChange={(e) => setBeforeWeight(e.target.value)}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                               placeholder="85"
                             />
                           </div>
@@ -495,7 +495,7 @@ export default function NewCaseStudyPage() {
                               type="number"
                               value={afterWeight}
                               onChange={(e) => setAfterWeight(e.target.value)}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                               placeholder="70"
                             />
                           </div>
@@ -533,7 +533,7 @@ export default function NewCaseStudyPage() {
                             value={ownerQuote}
                             onChange={(e) => setOwnerQuote(e.target.value)}
                             rows={4}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="I was skeptical about fresh food, but Christie's custom meal plan completely transformed Bella's life..."
                             required
                           />
@@ -546,7 +546,7 @@ export default function NewCaseStudyPage() {
                             value={christieNotes}
                             onChange={(e) => setChristieNotes(e.target.value)}
                             rows={4}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                             placeholder="Bella's case demonstrates how proper portion control combined with nutrient-dense fresh food can reverse obesity..."
                           />
                         </div>
@@ -587,7 +587,7 @@ export default function NewCaseStudyPage() {
                         type="checkbox"
                         checked={featured}
                         onChange={(e) => setFeatured(e.target.checked)}
-                        className="w-4 h-4 text-[#a5b5eb] border-gray-300 rounded"
+                        className="w-4 h-4 text-[#8FAE8F] border-gray-300 rounded"
                       />
                       <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         Feature this case study
@@ -673,7 +673,7 @@ export default function NewCaseStudyPage() {
                   <button
                     onClick={() => handleSave(false)}
                     disabled={saving || !dogName || !title}
-                    className="w-full flex items-center justify-center gap-2 bg-white border-2 border-[#a5b5eb] text-[#a5b5eb] px-6 py-3 rounded-lg font-medium hover:bg-[#a5b5eb]/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center gap-2 bg-white border-2 border-[#8FAE8F] text-[#8FAE8F] px-6 py-3 rounded-lg font-medium hover:bg-[#8FAE8F]/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     <Save className="w-4 h-4" />
@@ -682,7 +682,7 @@ export default function NewCaseStudyPage() {
                   <button
                     onClick={() => handleSave(true)}
                     disabled={saving || !dogName || !title || !ownerQuote}
-                    className="w-full flex items-center justify-center gap-2 bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#8fa3d9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center gap-2 bg-[#8FAE8F] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#8fa3d9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     <Save className="w-4 h-4" />

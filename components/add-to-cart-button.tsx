@@ -60,8 +60,8 @@ export default function AddToCartButton({ product, selectedVariant, disabled = f
 
   const baseClasses = "font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed";
   const variantClasses = variant === 'primary'
-    ? "bg-[#a5b5eb] text-white hover:bg-[#8a9fd9] shadow-lg"
-    : "bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] hover:bg-[#a5b5eb] hover:text-white";
+    ? "bg-[#8FAE8F] text-white hover:bg-[#6d8c6d] shadow-lg"
+    : "bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] hover:bg-[#8FAE8F] hover:text-white";
 
   return (
     <button

@@ -15,9 +15,19 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.CUSTOMER_JWT_SECRET || 'your-secret-key-change-in-production'
-);
+/**
+ * Get the JWT secret, validating it's configured
+ * This check happens at runtime to allow builds to succeed
+ */
+function getJWTSecret(): Uint8Array {
+  if (!process.env.CUSTOMER_JWT_SECRET) {
+    throw new Error(
+      '❌ CUSTOMER_JWT_SECRET is not configured. Please set it in your .env.local file.\n' +
+      'Generate a secure secret with: openssl rand -base64 32'
+    );
+  }
+  return new TextEncoder().encode(process.env.CUSTOMER_JWT_SECRET);
+}
 
 /**
  * Generate a magic link token for customer login
@@ -28,7 +38,7 @@ export async function generateMagicLinkToken(email: string): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('15m')
-    .sign(JWT_SECRET);
+    .sign(getJWTSecret());
 
   return token;
 }
@@ -38,7 +48,7 @@ export async function generateMagicLinkToken(email: string): Promise<string> {
  */
 export async function verifyMagicLinkToken(token: string): Promise<{ email: string } | null> {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
+    const { payload } = await jwtVerify(token, getJWTSecret());
 
     if (payload.type !== 'magic_link' || typeof payload.email !== 'string') {
       return null;
@@ -63,7 +73,7 @@ export async function createSessionToken(customerId: string, email: string): Pro
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('30d')
-    .sign(JWT_SECRET);
+    .sign(getJWTSecret());
 
   return token;
 }
@@ -73,7 +83,7 @@ export async function createSessionToken(customerId: string, email: string): Pro
  */
 export async function verifySessionToken(token: string): Promise<{ customerId: string; email: string } | null> {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
+    const { payload } = await jwtVerify(token, getJWTSecret());
 
     if (payload.type !== 'session' ||
         typeof payload.customerId !== 'string' ||

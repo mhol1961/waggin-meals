@@ -124,7 +124,7 @@ export function GHLCalendarWidget({
   return (
     <div className={`bg-white rounded-lg shadow-xl p-8 ${className}`}>
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 bg-[#a5b5eb] rounded-full flex items-center justify-center">
+        <div className="w-12 h-12 bg-[#8FAE8F] rounded-full flex items-center justify-center">
           <Calendar className="w-6 h-6 text-white" />
         </div>
         <div>
@@ -150,7 +150,7 @@ export function GHLCalendarWidget({
           </p>
           <button
             onClick={() => setBookingStatus('idle')}
-            className="bg-[#a5b5eb] text-white px-6 py-2 rounded-lg hover:bg-[#8a9fd9] transition-colors"
+            className="bg-[#8FAE8F] text-white px-6 py-2 rounded-lg hover:bg-[#6d8c6d] transition-colors"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Book Another Appointment
@@ -169,7 +169,7 @@ export function GHLCalendarWidget({
                 required
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               />
             </div>
@@ -182,7 +182,7 @@ export function GHLCalendarWidget({
                 required
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               />
             </div>
@@ -198,7 +198,7 @@ export function GHLCalendarWidget({
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               />
             </div>
@@ -210,7 +210,7 @@ export function GHLCalendarWidget({
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               />
             </div>
@@ -230,7 +230,7 @@ export function GHLCalendarWidget({
                 setSelectedDate(e.target.value);
                 setSelectedTime(''); // Reset time when date changes
               }}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             />
           </div>
@@ -254,8 +254,8 @@ export function GHLCalendarWidget({
                       onClick={() => setSelectedTime(slot)}
                       className={`px-4 py-2 rounded-lg border transition-colors ${
                         selectedTime === slot
-                          ? 'bg-[#a5b5eb] text-white border-[#a5b5eb]'
-                          : 'bg-white text-[#3c3a47] border-gray-300 hover:border-[#a5b5eb]'
+                          ? 'bg-[#8FAE8F] text-white border-[#8FAE8F]'
+                          : 'bg-white text-[#3c3a47] border-gray-300 hover:border-[#8FAE8F]'
                       }`}
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
@@ -280,7 +280,7 @@ export function GHLCalendarWidget({
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
               style={{ fontFamily: "'Poppins', sans-serif" }}
               placeholder="Tell us about your dog and what you'd like help with..."
             />
@@ -297,7 +297,7 @@ export function GHLCalendarWidget({
           <button
             type="submit"
             disabled={bookingStatus === 'loading' || !selectedDate || !selectedTime}
-            className="w-full bg-[#a5b5eb] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+            className="w-full bg-[#8FAE8F] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#6d8c6d] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             {bookingStatus === 'loading' ? 'Booking...' : `Book ${appointmentType}`}

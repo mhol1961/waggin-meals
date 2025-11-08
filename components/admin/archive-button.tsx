@@ -94,7 +94,7 @@ export default function ArchiveButton({
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
                 placeholder="Why are you archiving this content?"
               />

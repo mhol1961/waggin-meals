@@ -200,7 +200,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
               </Link>
               <Link
                 href="/customer/addresses"
-                className="block px-4 py-3 rounded-lg bg-[#a5b5eb] text-white font-medium"
+                className="block px-4 py-3 rounded-lg bg-[#8FAE8F] text-white font-medium"
               >
                 Addresses
               </Link>
@@ -221,7 +221,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                 <div>
                   <button
                     onClick={() => setShowForm(true)}
-                    className="px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors font-medium"
+                    className="px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors font-medium"
                   >
                     + Add New Address
                   </button>
@@ -329,7 +329,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                         required
                         value={formData.first_name}
                         onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                       />
                     </div>
 
@@ -342,7 +342,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                         required
                         value={formData.last_name}
                         onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                       />
                     </div>
                   </div>
@@ -357,7 +357,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                       value={formData.address_line1}
                       onChange={(e) => setFormData({ ...formData, address_line1: e.target.value })}
                       placeholder="Street address, P.O. box"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                     />
                   </div>
 
@@ -370,7 +370,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                       value={formData.address_line2}
                       onChange={(e) => setFormData({ ...formData, address_line2: e.target.value })}
                       placeholder="Apartment, suite, unit, etc."
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                     />
                   </div>
 
@@ -384,7 +384,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                         required
                         value={formData.city}
                         onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                       />
                     </div>
 
@@ -399,7 +399,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                         onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                         maxLength={2}
                         placeholder="NC"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                       />
                     </div>
 
@@ -413,7 +413,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                         value={formData.zip_code}
                         onChange={(e) => setFormData({ ...formData, zip_code: e.target.value })}
                         placeholder="28403"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                       />
                     </div>
                   </div>
@@ -427,7 +427,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="(555) 123-4567"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                     />
                   </div>
 
@@ -437,7 +437,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                       id="is_default"
                       checked={formData.is_default}
                       onChange={(e) => setFormData({ ...formData, is_default: e.target.checked })}
-                      className="w-4 h-4 text-[#a5b5eb] border-gray-300 rounded focus:ring-[#a5b5eb]"
+                      className="w-4 h-4 text-[#8FAE8F] border-gray-300 rounded focus:ring-[#8FAE8F]"
                     />
                     <label htmlFor="is_default" className="ml-2 text-sm text-gray-700">
                       Set as default address
@@ -448,7 +448,7 @@ export default function CustomerAddressesClient({ customer, addresses: initialAd
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors font-medium disabled:opacity-50"
+                      className="flex-1 px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors font-medium disabled:opacity-50"
                     >
                       {isSubmitting ? 'Saving...' : editingAddress ? 'Update Address' : 'Add Address'}
                     </button>

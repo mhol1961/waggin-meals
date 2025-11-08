@@ -117,7 +117,7 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value as DateRange)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               <option value="all">All Time</option>
@@ -138,7 +138,7 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               <option value="all">All Statuses</option>
@@ -163,7 +163,7 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
                   type="date"
                   value={customStartDate}
                   onChange={(e) => setCustomStartDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 />
               </div>
@@ -175,7 +175,7 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
                   type="date"
                   value={customEndDate}
                   onChange={(e) => setCustomEndDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 />
               </div>
@@ -186,7 +186,7 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
 
       {/* Enhanced Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-sm border border-blue-200 p-6">
+        <div className="bg-blue-50 rounded-xl shadow-sm border border-blue-200 p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-blue-600 mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -204,7 +204,7 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-sm border border-green-200 p-6">
+        <div className="bg-green-50 rounded-xl shadow-sm border border-green-200 p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-green-600 mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -222,25 +222,25 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl shadow-sm border border-purple-200 p-6">
+        <div className="bg-[#F8F5F0] rounded-xl shadow-sm border border-[#8FAE8F]/20 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-purple-600 mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <p className="text-sm font-medium text-[#5E8C8C] mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Avg Order Value
               </p>
-              <p className="text-3xl font-bold text-purple-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <p className="text-3xl font-bold text-[#5E8C8C]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 ${stats.averageOrderValue.toFixed(2)}
               </p>
             </div>
-            <div className="bg-purple-200 p-3 rounded-lg">
-              <svg className="h-8 w-8 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="bg-[#8FAE8F]/20 p-3 rounded-lg">
+              <svg className="h-8 w-8 text-[#6d8c6d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
             </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl shadow-sm border border-orange-200 p-6">
+        <div className="bg-orange-50 rounded-xl shadow-sm border border-orange-200 p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-orange-600 mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -274,13 +274,13 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
           <div className="text-xs text-gray-600 mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>Processing</div>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center">
-          <div className="text-2xl font-bold text-indigo-600" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <div className="text-2xl font-bold text-[#5E8C8C]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             {stats.shipped}
           </div>
           <div className="text-xs text-gray-600 mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>Shipped</div>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center">
-          <div className="text-2xl font-bold text-purple-600" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <div className="text-2xl font-bold text-[#5E8C8C]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             {stats.outForDelivery}
           </div>
           <div className="text-xs text-gray-600 mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>Out for Delivery</div>
@@ -386,7 +386,7 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {order.order_type && order.order_type !== 'standard' ? (
-                        <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-[#8FAE8F]/10 text-[#5E8C8C]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           {order.order_type === 'local_delivery' ? 'Local Delivery' : 'Pickup'}
                         </span>
                       ) : (
@@ -396,7 +396,7 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <Link
                         href={`/admin/orders/${order.id}`}
-                        className="text-[#a5b5eb] hover:text-[#8a9fd9] transition-colors font-medium"
+                        className="text-[#8FAE8F] hover:text-[#6d8c6d] transition-colors font-medium"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       >
                         View Details

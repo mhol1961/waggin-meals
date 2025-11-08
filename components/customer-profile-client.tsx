@@ -137,7 +137,7 @@ export default function CustomerProfileClient({ customer }: Props) {
               </Link>
               <Link
                 href="/customer/profile"
-                className="block px-4 py-3 rounded-lg bg-[#a5b5eb] text-white font-medium"
+                className="block px-4 py-3 rounded-lg bg-[#8FAE8F] text-white font-medium"
               >
                 Profile Settings
               </Link>
@@ -197,7 +197,7 @@ export default function CustomerProfileClient({ customer }: Props) {
                   <div className="pt-4">
                     <button
                       onClick={() => setIsEditing(true)}
-                      className="px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors font-medium"
+                      className="px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors font-medium"
                     >
                       Edit Profile
                     </button>
@@ -221,7 +221,7 @@ export default function CustomerProfileClient({ customer }: Props) {
                         required
                         value={formData.first_name}
                         onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                       />
                     </div>
 
@@ -234,7 +234,7 @@ export default function CustomerProfileClient({ customer }: Props) {
                         required
                         value={formData.last_name}
                         onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                       />
                     </div>
                   </div>
@@ -248,7 +248,7 @@ export default function CustomerProfileClient({ customer }: Props) {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                     />
                     <p className="text-xs text-gray-500 mt-1">
                       You'll need to use this email to log in
@@ -264,7 +264,7 @@ export default function CustomerProfileClient({ customer }: Props) {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="(555) 123-4567"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb]"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F]"
                     />
                   </div>
 
@@ -272,7 +272,7 @@ export default function CustomerProfileClient({ customer }: Props) {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors font-medium disabled:opacity-50"
+                      className="flex-1 px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors font-medium disabled:opacity-50"
                     >
                       {isSubmitting ? 'Saving...' : 'Save Changes'}
                     </button>

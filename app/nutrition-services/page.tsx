@@ -237,13 +237,13 @@ export default function NutritionServices() {
 
   return (
     <main className="bg-white">
-      {/* Hero Section - Redesigned with Darker Gradient */}
-      <section className="relative bg-gradient-to-br from-[#4c51bf] via-[#5a3a8f] to-[#6b46c1] px-4 py-20 overflow-hidden">
+      {/* Hero Section */}
+<section className="relative bg-[#5E8C8C] px-4 py-20 overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 right-20 w-96 h-96 bg-pink-400 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-blue-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-20 right-20 w-96 h-96 bg-[#C97B63] rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#5E8C8C] rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#8FAE8F] rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
 
         <div className="mx-auto max-w-7xl relative z-10">
@@ -268,14 +268,14 @@ export default function NutritionServices() {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link
                   href="#services"
-                  className="inline-flex items-center justify-center bg-white text-[#667eea] px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl"
+                  className="inline-flex items-center justify-center bg-white text-[#5E8C8C] px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Book Your Consultation →
                 </Link>
                 <Link
                   href="#meet-christie"
-                  className="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-[#667eea] transition-all"
+                  className="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-[#5E8C8C] transition-all"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Meet Christie
@@ -315,7 +315,7 @@ export default function NutritionServices() {
                   height={600}
                   className="w-full h-auto"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-black/20"></div>
               </div>
 
               {/* Floating Stats Cards */}
@@ -335,8 +335,8 @@ export default function NutritionServices() {
 
               <div className="absolute -top-6 -right-6 bg-white rounded-xl shadow-2xl p-6 transform hover:scale-110 transition-transform">
                 <div className="flex items-center gap-4">
-                  <div className="bg-purple-100 rounded-full p-3">
-                    <svg className="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="bg-[#8FAE8F]/20 rounded-full p-3">
+                    <svg className="w-8 h-8 text-[#5E8C8C]" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                     </svg>
                   </div>
@@ -355,7 +355,7 @@ export default function NutritionServices() {
       <section className="bg-white px-4 py-20">
         <div className="mx-auto max-w-7xl">
           {/* Main Intro Block */}
-          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-10 mb-12 border border-indigo-100">
+          <div className="bg-[#F8F5F0] rounded-2xl p-10 mb-12 border border-[#8FAE8F]/20">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-4xl font-normal text-[#3c3a47] mb-6 leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Confused About Your Dog's Diet? You're Not Alone.
@@ -366,7 +366,7 @@ export default function NutritionServices() {
               </p>
 
               <p className="text-lg text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                At <strong className="text-[#5a3a8f]">WGM Pet Nutrition Co.</strong>, we provide science-backed, personalized nutrition consultations to help you make confident decisions for your dog's health—whether you're managing allergies, chronic conditions, or simply want the best for your furry friend.
+                At <strong className="text-[#5E8C8C]">WGM Pet Nutrition Co.</strong>, we provide science-backed, personalized nutrition consultations to help you make confident decisions for your dog's health—whether you're managing allergies, chronic conditions, or simply want the best for your furry friend.
               </p>
             </div>
           </div>
@@ -374,12 +374,12 @@ export default function NutritionServices() {
           {/* Problem/Solution Grid - Colorful Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: '🤔', title: 'Conflicting Advice', desc: 'Too many opinions, not enough facts', gradient: 'from-orange-500 to-orange-600' },
-              { icon: '⚠️', title: 'Health Concerns', desc: 'Allergies, sensitivities, chronic issues', gradient: 'from-red-500 to-red-600' },
-              { icon: '📦', title: 'Brand Confusion', desc: 'Which commercial food is actually good?', gradient: 'from-blue-500 to-blue-600' },
-              { icon: '💡', title: 'Need Guidance', desc: 'Want an expert to create a plan', gradient: 'from-green-500 to-green-600' }
+              { icon: '🤔', title: 'Conflicting Advice', desc: 'Too many opinions, not enough facts', bgColor: 'bg-orange-500' },
+              { icon: '⚠️', title: 'Health Concerns', desc: 'Allergies, sensitivities, chronic issues', bgColor: 'bg-red-500' },
+              { icon: '📦', title: 'Brand Confusion', desc: 'Which commercial food is actually good?', bgColor: 'bg-blue-500' },
+              { icon: '💡', title: 'Need Guidance', desc: 'Want an expert to create a plan', bgColor: 'bg-green-500' }
             ].map((item, i) => (
-              <div key={i} className={`bg-gradient-to-br ${item.gradient} rounded-xl shadow-lg p-6 hover:shadow-2xl hover:scale-105 transition-all`}>
+              <div key={i} className={`${item.bgColor} rounded-xl shadow-lg p-6 hover:shadow-2xl hover:scale-105 transition-all`}>
                 <div className="text-4xl mb-3">{item.icon}</div>
                 <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   {item.title}
@@ -395,7 +395,7 @@ export default function NutritionServices() {
           <div className="text-center mt-12">
             <Link
               href="#services"
-              className="inline-flex items-center bg-[#5a3a8f] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#4c51bf] transition-all hover:scale-105 shadow-lg group"
+              className="inline-flex items-center bg-[#5E8C8C] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-all hover:scale-105 shadow-lg group"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Explore Our Services
@@ -416,13 +416,13 @@ export default function NutritionServices() {
 
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
             {/* Service Option 1: Comprehensive Consultation */}
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-[#6b46c1]">
-              <div className="bg-gradient-to-r from-[#5a3a8f] to-[#6b46c1] px-8 py-6">
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-[#5E8C8C]">
+              <div className="bg-[#5E8C8C] px-8 py-6">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-2xl font-normal text-white" style={{ fontFamily: "'Abril Fatface', serif" }}>
                     Comprehensive Canine<br />Nutrition Consultation
                   </h3>
-                  <div className="bg-white text-[#5a3a8f] px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">
+                  <div className="bg-white text-[#5E8C8C] px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">
                     MOST POPULAR
                   </div>
                 </div>
@@ -449,7 +449,7 @@ export default function NutritionServices() {
                     { title: 'Educational Resources', desc: 'Access to curated recipes, supplement ordering guides, and canine nutrition education materials.' }
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <svg className="w-5 h-5 text-[#6b46c1] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-5 h-5 text-[#5E8C8C] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       <div>
@@ -460,7 +460,7 @@ export default function NutritionServices() {
                   ))}
                 </ul>
 
-                <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 mb-6">
+                <div className="bg-[#F8F5F0] border border-[#8FAE8F]/20 rounded-lg p-4 mb-6">
                   <p className="text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Pre-Consultation Requirements:</p>
                   <ul className="text-xs text-[#666666] space-y-1 list-disc list-inside" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     <li>Complete a detailed intake questionnaire</li>
@@ -485,7 +485,7 @@ export default function NutritionServices() {
 
                 <button
                   onClick={() => openQuestionnaire('comprehensive')}
-                  className="w-full bg-[#5a3a8f] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#6b46c1] transition-colors shadow-lg"
+                  className="w-full bg-[#5E8C8C] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Schedule Now →
@@ -498,7 +498,7 @@ export default function NutritionServices() {
 
             {/* Service Option 2: Group Class */}
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-              <div className="bg-gradient-to-r from-[#10b981] to-[#34d058] px-8 py-6">
+              <div className="bg-[#10b981] px-8 py-6">
                 <h3 className="text-2xl font-normal text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   Canine Nutrition<br />Group Class
                 </h3>
@@ -547,7 +547,7 @@ export default function NutritionServices() {
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Service Option 3: Free 15-Minute Consultation */}
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-              <div className="bg-gradient-to-r from-[#fbbf24] to-[#fcd34d] px-8 py-6">
+              <div className="bg-[#fbbf24] px-8 py-6">
                 <h3 className="text-2xl font-normal text-[#3c3a47] mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   Start Your Dog's Nutrition Journey
                 </h3>
@@ -572,7 +572,7 @@ export default function NutritionServices() {
                     'Ensure a smooth transition to avoid digestive upset'
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <svg className="w-5 h-5 text-[#fbbf24] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-5 h-5 text-[#C97B63] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>{item}</span>
@@ -582,7 +582,7 @@ export default function NutritionServices() {
 
                 <button
                   onClick={() => openQuestionnaire('free')}
-                  className="w-full bg-[#fbbf24] text-[#3c3a47] px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#f59e0b] transition-colors shadow-lg"
+                  className="w-full bg-[#C97B63] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#b86b53] transition-colors shadow-lg"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Schedule Your Free Session →
@@ -590,41 +590,6 @@ export default function NutritionServices() {
                 <p className="text-center text-xs text-[#999999] mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Complete intake quiz to get started
                 </p>
-              </div>
-            </div>
-
-            {/* Service Option 4: Online Classes (Coming Soon) */}
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden opacity-75">
-              <div className="bg-gradient-to-r from-[#6b7280] to-[#9ca3af] px-8 py-6 relative">
-                <div className="absolute top-2 right-2 bg-white text-[#6b7280] px-3 py-1 rounded-full text-xs font-bold">
-                  COMING SOON
-                </div>
-                <h3 className="text-2xl font-normal text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                  Online Classes
-                </h3>
-                <p className="text-white/90 text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Interactive Learning Platform
-                </p>
-              </div>
-
-              <div className="p-8">
-                <p className="text-[15px] text-[#666666] leading-relaxed mb-8" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Stay tuned for interactive online courses on canine nutrition and meal prep. Our comprehensive digital learning platform will provide you with expert knowledge at your own pace.
-                </p>
-
-                <div className="bg-[#f8f9fa] rounded-lg p-6 mb-8 text-center">
-                  <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    Be the first to know when our online courses launch!
-                  </p>
-                </div>
-
-                <Link
-                  href="/contact"
-                  className="block w-full text-center bg-[#6b7280] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#4b5563] transition-colors shadow-lg"
-                  style={{ fontFamily: "'Poppins', sans-serif" }}
-                >
-                  Join Waitlist →
-                </Link>
               </div>
             </div>
           </div>
@@ -649,7 +614,7 @@ export default function NutritionServices() {
               <h2 className="text-4xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Meet Christie Willett
               </h2>
-              <p className="text-sm text-[#a5b5eb] font-semibold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <p className="text-sm text-[#5E8C8C] font-semibold mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 M.A., M.S. | Animal Nutritionist & Integrative Medicine Canine Specialist
               </p>
               <p className="text-[15px] text-[#666666] leading-relaxed mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -679,7 +644,7 @@ export default function NutritionServices() {
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <button
               onClick={() => setCandyStoryOpen(!candyStoryOpen)}
-              className="w-full px-8 py-6 flex items-center justify-between bg-gradient-to-r from-[#5a3a8f] to-[#6b46c1] hover:from-[#4c51bf] hover:to-[#5a3a8f] transition-colors"
+              className="w-full px-8 py-6 flex items-center justify-between bg-[#5E8C8C] hover:bg-[#6d8c6d] transition-colors"
             >
               <h3 className="text-xl font-semibold text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Read Candy's Success Story
@@ -720,7 +685,7 @@ export default function NutritionServices() {
                   ))}
                 </div>
 
-                <blockquote className="text-[15px] text-[#666666] leading-relaxed italic border-l-4 border-[#6b46c1] pl-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <blockquote className="text-[15px] text-[#666666] leading-relaxed italic border-l-4 border-[#5E8C8C] pl-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   "Christie's expertise transformed Candy's health completely. Within just a few weeks on the customized meal plan, we saw dramatic improvements in her energy levels, coat quality, and digestive health. I can't thank Christie enough for her knowledge and ongoing support!"
                 </blockquote>
 
@@ -762,7 +727,7 @@ export default function NutritionServices() {
       </section>
 
       {/* Footer CTA */}
-      <section className="bg-gradient-to-r from-[#4c51bf] via-[#5a3a8f] to-[#6b46c1] px-4 py-16">
+      <section className="bg-[#5E8C8C] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Ready to Give Your Dog the Nutrition They Deserve?
@@ -773,14 +738,14 @@ export default function NutritionServices() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="#services"
-              className="bg-white text-[#5a3a8f] px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg inline-block"
+              className="bg-white text-[#5E8C8C] px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg inline-block"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Book Now →
             </Link>
             <Link
               href="/contact"
-              className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-[#5a3a8f] transition-colors inline-block"
+              className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-[#5E8C8C] transition-colors inline-block"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Contact Us for Details →
@@ -803,7 +768,7 @@ export default function NutritionServices() {
             </button>
 
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#5a3a8f] to-[#6b46c1] px-8 py-6 rounded-t-2xl">
+            <div className="bg-[#5E8C8C] px-8 py-6 rounded-t-2xl">
               <h2 className="text-2xl font-normal text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 {consultationType === 'comprehensive'
                   ? 'Comprehensive Consultation Questionnaire'
@@ -831,7 +796,7 @@ export default function NutritionServices() {
                   </p>
                   <button
                     onClick={closeQuestionnaire}
-                    className="bg-[#5a3a8f] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#6b46c1] transition-colors"
+                    className="bg-[#5E8C8C] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     Close
@@ -863,7 +828,7 @@ export default function NutritionServices() {
                           type="text"
                           value={formData.ownerName}
                           onChange={(e) => updateFormData('ownerName', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           placeholder="John Smith"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         />
@@ -877,7 +842,7 @@ export default function NutritionServices() {
                           type="email"
                           value={formData.email}
                           onChange={(e) => updateFormData('email', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           placeholder="john@example.com"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         />
@@ -891,7 +856,7 @@ export default function NutritionServices() {
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => updateFormData('phone', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           placeholder="(555) 123-4567"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         />
@@ -906,7 +871,7 @@ export default function NutritionServices() {
                             type="text"
                             value={formData.city}
                             onChange={(e) => updateFormData('city', e.target.value)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                             placeholder="Asheville"
                             style={{ fontFamily: "'Poppins', sans-serif" }}
                           />
@@ -919,7 +884,7 @@ export default function NutritionServices() {
                             type="text"
                             value={formData.state}
                             onChange={(e) => updateFormData('state', e.target.value)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                             placeholder="NC"
                             style={{ fontFamily: "'Poppins', sans-serif" }}
                           />
@@ -946,7 +911,7 @@ export default function NutritionServices() {
                           type="text"
                           value={formData.dogName}
                           onChange={(e) => updateFormData('dogName', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           placeholder="Max"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         />
@@ -960,7 +925,7 @@ export default function NutritionServices() {
                           type="text"
                           value={formData.breed}
                           onChange={(e) => updateFormData('breed', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           placeholder="Golden Retriever (or Mixed)"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         />
@@ -975,7 +940,7 @@ export default function NutritionServices() {
                             type="text"
                             value={formData.age}
                             onChange={(e) => updateFormData('age', e.target.value)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                             placeholder="5 years"
                             style={{ fontFamily: "'Poppins', sans-serif" }}
                           />
@@ -988,7 +953,7 @@ export default function NutritionServices() {
                             type="text"
                             value={formData.weight}
                             onChange={(e) => updateFormData('weight', e.target.value)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                             placeholder="60 lbs"
                             style={{ fontFamily: "'Poppins', sans-serif" }}
                           />
@@ -1070,7 +1035,7 @@ export default function NutritionServices() {
                         <textarea
                           value={formData.currentFood}
                           onChange={(e) => updateFormData('currentFood', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           rows={3}
                           placeholder="e.g., Blue Buffalo Chicken & Brown Rice, homemade meals, raw diet, etc."
                           style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -1085,7 +1050,7 @@ export default function NutritionServices() {
                           type="text"
                           value={formData.durationOnDiet}
                           onChange={(e) => updateFormData('durationOnDiet', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           placeholder="e.g., 6 months, 2 years"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         />
@@ -1099,7 +1064,7 @@ export default function NutritionServices() {
                           type="text"
                           value={formData.portionSize}
                           onChange={(e) => updateFormData('portionSize', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           placeholder="e.g., 2 cups, 1.5 cups"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         />
@@ -1113,7 +1078,7 @@ export default function NutritionServices() {
                           type="text"
                           value={formData.feedingFrequency}
                           onChange={(e) => updateFormData('feedingFrequency', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           placeholder="e.g., Twice daily (morning and evening)"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         />
@@ -1138,7 +1103,7 @@ export default function NutritionServices() {
                         <textarea
                           value={formData.allergies}
                           onChange={(e) => updateFormData('allergies', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           rows={2}
                           placeholder="e.g., chicken, wheat, environmental allergens"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -1152,7 +1117,7 @@ export default function NutritionServices() {
                         <textarea
                           value={formData.sensitivities}
                           onChange={(e) => updateFormData('sensitivities', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           rows={2}
                           placeholder="e.g., upset stomach with beef, gas with dairy"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -1166,7 +1131,7 @@ export default function NutritionServices() {
                         <textarea
                           value={formData.chronicConditions}
                           onChange={(e) => updateFormData('chronicConditions', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           rows={2}
                           placeholder="e.g., arthritis, kidney disease, diabetes, obesity"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -1180,7 +1145,7 @@ export default function NutritionServices() {
                         <textarea
                           value={formData.medications}
                           onChange={(e) => updateFormData('medications', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           rows={2}
                           placeholder="List all medications, supplements, and dosages"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -1194,7 +1159,7 @@ export default function NutritionServices() {
                         <textarea
                           value={formData.recentVetVisits}
                           onChange={(e) => updateFormData('recentVetVisits', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           rows={2}
                           placeholder="e.g., Annual checkup last month - all clear"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -1220,7 +1185,7 @@ export default function NutritionServices() {
                         <textarea
                           value={formData.goals}
                           onChange={(e) => updateFormData('goals', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           rows={4}
                           placeholder="e.g., Improve digestion, manage weight, switch to fresh food, address allergies, optimize overall health"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -1232,7 +1197,7 @@ export default function NutritionServices() {
                           Preferred Consultation Format <span className="text-red-500">*</span>
                         </label>
                         <div className="space-y-2">
-                          <label className="flex items-center cursor-pointer p-3 border border-gray-300 rounded-lg hover:border-[#5a3a8f] hover:bg-purple-50 transition-colors">
+                          <label className="flex items-center cursor-pointer p-3 border border-gray-300 rounded-lg hover:border-[#5E8C8C] hover:bg-[#F8F5F0] transition-colors">
                             <input
                               type="radio"
                               value="zoom"
@@ -1242,7 +1207,7 @@ export default function NutritionServices() {
                             />
                             <span className="text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Zoom</span>
                           </label>
-                          <label className="flex items-center cursor-pointer p-3 border border-gray-300 rounded-lg hover:border-[#5a3a8f] hover:bg-purple-50 transition-colors">
+                          <label className="flex items-center cursor-pointer p-3 border border-gray-300 rounded-lg hover:border-[#5E8C8C] hover:bg-[#F8F5F0] transition-colors">
                             <input
                               type="radio"
                               value="facetime"
@@ -1252,7 +1217,7 @@ export default function NutritionServices() {
                             />
                             <span className="text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>FaceTime</span>
                           </label>
-                          <label className="flex items-center cursor-pointer p-3 border border-gray-300 rounded-lg hover:border-[#5a3a8f] hover:bg-purple-50 transition-colors">
+                          <label className="flex items-center cursor-pointer p-3 border border-gray-300 rounded-lg hover:border-[#5E8C8C] hover:bg-[#F8F5F0] transition-colors">
                             <input
                               type="radio"
                               value="in-person"
@@ -1277,7 +1242,7 @@ export default function NutritionServices() {
                         <textarea
                           value={formData.specialRequests}
                           onChange={(e) => updateFormData('specialRequests', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5a3a8f] focus:ring-2 focus:ring-[#5a3a8f]/20"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#5E8C8C] focus:ring-2 focus:ring-[#5E8C8C]/20"
                           rows={3}
                           placeholder="Any additional details you'd like Christie to know before your consultation..."
                           style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -1295,7 +1260,7 @@ export default function NutritionServices() {
                     disabled={!validateForm()}
                     className={`w-full px-8 py-4 rounded-lg text-lg font-semibold transition-colors ${
                       validateForm()
-                        ? 'bg-[#5a3a8f] text-white hover:bg-[#6b46c1] shadow-lg'
+                        ? 'bg-[#5E8C8C] text-white hover:bg-[#6d8c6d] shadow-lg'
                         : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     }`}
                     style={{ fontFamily: "'Poppins', sans-serif" }}

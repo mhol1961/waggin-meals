@@ -143,7 +143,7 @@ export function CustomizeBoxModal({
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4 z-50 overflow-y-auto">
       <div className="bg-white rounded-lg max-w-3xl w-full my-8">
         {/* Header */}
-        <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white p-6 rounded-t-lg">
+        <div className="bg-[#5E8C8C] text-white p-6 rounded-t-lg">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-2xl font-bold">Customize Your Box</h3>
@@ -286,7 +286,7 @@ export function CustomizeBoxModal({
           </div>
 
           {/* Price Summary */}
-          <div className="bg-gradient-to-br from-blue-50 to-green-50 rounded-lg p-4 border border-blue-200">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Current Total:</span>

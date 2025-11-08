@@ -101,7 +101,7 @@ export default function ProductsListClient({ initialProducts }: ProductsListClie
                     <div className="text-sm text-gray-500">/{product.handle}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-pink-100 text-pink-800">
+                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-[#C97B63]/10 text-[#C97B63]">
                       {product.category}
                     </span>
                   </td>

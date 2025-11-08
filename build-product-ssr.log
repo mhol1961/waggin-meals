@@ -1,0 +1,25 @@
+
+> waggin-meals@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.6
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 7.1min
+   Linting and checking validity of types ...
+Failed to compile.
+
+./app/products/[handle]/page-new.tsx:63:5
+Type error: Type '{ title: string; description: any; type: "product"; url: string; images: { url: any; width: number; height: number; alt: any; }[]; }' is not assignable to type 'OpenGraph | null | undefined'.
+  Types of property 'type' are incompatible.
+    Type '"product"' is not assignable to type '"article" | "website" | "book" | "profile" | "music.song" | "music.album" | "music.playlist" | "music.radio_station" | "video.movie" | "video.episode" | "video.tv_show" | "video.other" | undefined'.
+
+[0m [90m 61 |[39m     description[33m:[39m product[33m.[39mdescription [33m||[39m [32m`Fresh dog food: ${product.title}. Expert-formulated nutrition by certified pet nutritionist Christie Naquin.`[39m[33m,[39m
+ [90m 62 |[39m     keywords[33m:[39m [32m`${product.title}, fresh dog food, dog nutrition, ${product.category || 'pet food'}, Waggin Meals`[39m[33m,[39m
+[31m[1m>[22m[39m[90m 63 |[39m     openGraph[33m:[39m {
+ [90m    |[39m     [31m[1m^[22m[39m
+ [90m 64 |[39m       title[33m:[39m [32m`${product.title} - Fresh Dog Food`[39m[33m,[39m
+ [90m 65 |[39m       description[33m:[39m product[33m.[39mdescription[33m,[39m
+ [90m 66 |[39m       type[33m:[39m [32m'product'[39m[33m,[39m[0m
+Next.js build worker exited with code: 1 and signal: null

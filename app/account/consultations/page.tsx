@@ -97,8 +97,8 @@ export default function ConsultationsPage() {
       questionnaire_pending: 'bg-orange-100 text-orange-800',
       payment_pending: 'bg-yellow-100 text-yellow-800',
       paid: 'bg-blue-100 text-blue-800',
-      reviewed: 'bg-purple-100 text-purple-800',
-      scheduled: 'bg-indigo-100 text-indigo-800',
+      reviewed: 'bg-[#8FAE8F]/100 text-[#5E8C8C]',
+      scheduled: 'bg-[#5E8C8C]/10 text-[#5E8C8C]',
       delivered: 'bg-green-100 text-green-800',
     };
 
@@ -295,7 +295,7 @@ export default function ConsultationsPage() {
 
         {/* Call to Action */}
         {totalConsultations > 0 && (
-          <div className="mt-8 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200 p-6">
+          <div className="mt-8 bg-green-50 rounded-lg border border-green-200 p-6">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-medium text-gray-900">Need more help?</h3>

@@ -197,20 +197,20 @@ export default function TripleThreatFullPage() {
       {/* HERO: VARIATION B - THE TRIPLE THREAT */}
       <section className="relative bg-gradient-to-br from-[#f8f9fa] via-white to-[#fef7e8] px-4 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-[#a5b5eb] rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-96 h-96 bg-[#8FAE8F] rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#fbbf24] rounded-full blur-3xl"></div>
         </div>
 
         <div className="mx-auto max-w-7xl relative z-10">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center bg-[#a5b5eb]/10 border border-[#a5b5eb]/30 rounded-full px-5 py-2 mb-6">
-              <Star className="w-4 h-4 text-[#a5b5eb] mr-2" />
-              <span className="text-sm font-semibold text-[#a5b5eb]">Complete Pet Nutrition Solutions</span>
+            <div className="inline-flex items-center bg-[#8FAE8F]/10 border border-[#8FAE8F]/30 rounded-full px-5 py-2 mb-6">
+              <Star className="w-4 h-4 text-[#8FAE8F] mr-2" />
+              <span className="text-sm font-semibold text-[#8FAE8F]">Complete Pet Nutrition Solutions</span>
             </div>
 
             <h1 className="text-5xl lg:text-6xl font-normal text-[#3c3a47] mb-6 leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>
               Expert Guidance.{' '}
-              <span className="text-[#a5b5eb]">Prepared Meals.</span>
+              <span className="text-[#8FAE8F]">Prepared Meals.</span>
               <br />
               <span className="text-[#f59e0b]">Science-Based Education.</span>
             </h1>
@@ -223,14 +223,14 @@ export default function TripleThreatFullPage() {
             <div className="inline-flex items-center bg-white rounded-full shadow-lg px-8 py-4 mb-12 border border-gray-100">
               <div className="text-center">
                 <p className="text-lg font-semibold text-[#3c3a47]">Christie A. Willett, M.A., M.S.</p>
-                <p className="text-sm text-[#a5b5eb]">Canine Integrative Animal Nutritionist</p>
+                <p className="text-sm text-[#8FAE8F]">Canine Integrative Animal Nutritionist</p>
               </div>
             </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
-              {icon: BookOpen, color: '#a5b5eb', title: 'Expert Consultations', desc: "One-on-one nutrition consultations tailored to your dog's unique health needs, sensitivities, and goals.", points: ['Custom nutrition plans', 'Food sensitivity testing', 'Ongoing support', 'Virtual or in-person'], cta: 'Book Consultation', href: '/nutrition-services'},
+              {icon: BookOpen, color: '#8FAE8F', title: 'Expert Consultations', desc: "One-on-one nutrition consultations tailored to your dog's unique health needs, sensitivities, and goals.", points: ['Custom nutrition plans', 'Food sensitivity testing', 'Ongoing support', 'Virtual or in-person'], cta: 'Book Consultation', href: '/nutrition-services'},
               {icon: ShoppingCart, color: '#10b981', title: 'Fresh Prepared Meals', desc: 'Nutritionally balanced, locally-sourced fresh meals delivered to your door—no prep work required.', points: ['Human-grade ingredients', 'Balanced by nutritionist', 'Fresh, never frozen', 'Local delivery available'], cta: 'Shop Fresh Meals', href: '/shop'},
               {icon: GraduationCap, color: '#f59e0b', title: 'Education & Resources', desc: 'Free guides, calculators, and science-based resources to help you make informed nutrition decisions.', points: ['Fresh food feeding guide', 'Feeding calculator', 'Science-based articles', 'Events & workshops'], cta: 'Access Resources', href: '/resources'}
             ].map((service, i) => (
@@ -259,7 +259,7 @@ export default function TripleThreatFullPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               {[{num: '500+', label: 'Dogs Helped'}, {num: '15+', label: 'Years Experience'}, {num: '2', label: "Master's Degrees"}, {num: '95%', label: 'Satisfaction Rate'}].map((stat, i) => (
                 <div key={i}>
-                  <div className="text-4xl font-bold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>{stat.num}</div>
+                  <div className="text-4xl font-bold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>{stat.num}</div>
                   <div className="text-sm text-[#666666]">{stat.label}</div>
                 </div>
               ))}
@@ -303,7 +303,7 @@ export default function TripleThreatFullPage() {
 
       <section className="bg-[#f5f5f5] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-6 text-[60px] leading-none text-[#a5b5eb] opacity-30">&quot;</div>
+          <div className="mb-6 text-[60px] leading-none text-[#8FAE8F] opacity-30">&quot;</div>
           <blockquote className="mb-8 text-[18px] italic leading-relaxed text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             I do not try to compete with big box companies. What we offer is specialized nutrition. We listen, and do not use computer generated responses to determine what your special dog needs. Because every dog is different.
           </blockquote>
@@ -321,7 +321,7 @@ export default function TripleThreatFullPage() {
             {quote: '"Top notch, healthiest possible dog meals! The new location is fantastic!!"', author: 'Thom Slater'}
           ].map((t, i) => (
             <div key={i} className="bg-white p-6">
-              <div className="mb-4 text-[48px] leading-none text-[#a5b5eb] opacity-30">&quot;</div>
+              <div className="mb-4 text-[48px] leading-none text-[#8FAE8F] opacity-30">&quot;</div>
               <p className="mb-4 text-[15px] leading-relaxed text-[#3c3a47]">{t.quote}</p>
               <p className="text-[14px] font-semibold text-[#3c3a47]">{t.author}</p>
             </div>

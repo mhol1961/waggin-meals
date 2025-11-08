@@ -61,13 +61,13 @@ export default function NewsletterSignupForm({ source = 'blog', variant = 'defau
             onChange={(e) => setEmail(e.target.value)}
             disabled={isLoading}
             placeholder="Enter your email"
-            className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-[#a5b5eb] disabled:opacity-50"
+            className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-[#8FAE8F] disabled:opacity-50"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           />
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-[#a5b5eb] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#8FAE8F] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             {isLoading ? 'Subscribing...' : 'Subscribe'}
@@ -100,13 +100,13 @@ export default function NewsletterSignupForm({ source = 'blog', variant = 'defau
           onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
           placeholder="Enter your email"
-          className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-[#a5b5eb] disabled:opacity-50"
+          className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-[#8FAE8F] disabled:opacity-50"
           style={{ fontFamily: "'Poppins', sans-serif" }}
         />
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-[#a5b5eb] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-[#8FAE8F] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ fontFamily: "'Poppins', sans-serif" }}
         >
           {isLoading ? 'Subscribing...' : 'Subscribe'}

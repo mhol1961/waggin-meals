@@ -82,12 +82,12 @@ export default function MealToppersPage() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#f0f9ff] via-[#fef7e8] to-[#f0fdf4] px-4 py-20 overflow-hidden">
+      <section className="relative bg-[#f0f9ff] px-4 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           {[...Array(10)].map((_, i) => (
             <Sparkles
               key={i}
-              className="absolute text-[#a5b5eb]"
+              className="absolute text-[#8FAE8F]"
               style={{
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
@@ -99,14 +99,14 @@ export default function MealToppersPage() {
         </div>
 
         <div className="mx-auto max-w-6xl relative z-10 text-center">
-          <div className="inline-flex items-center bg-purple-50 border border-purple-200 rounded-full px-5 py-2 mb-6">
-            <ChefHat className="w-4 h-4 text-purple-600 mr-2" />
-            <span className="text-sm font-semibold text-purple-700">Flavor & Nutrition Enhancers</span>
+          <div className="inline-flex items-center bg-[#F8F5F0] border border-[#8FAE8F]/30 rounded-full px-5 py-2 mb-6">
+            <ChefHat className="w-4 h-4 text-[#8FAE8F] mr-2" />
+            <span className="text-sm font-semibold text-[#6d8c6d]">Flavor & Nutrition Enhancers</span>
           </div>
 
           <h1 className="text-5xl lg:text-6xl font-normal text-[#3c3a47] mb-6 leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Meal Toppers:{' '}
-            <span className="text-[#a5b5eb]">Transform</span>
+            <span className="text-[#8FAE8F]">Transform</span>
             <br />
             Every Meal Into a Feast
           </h1>
@@ -189,15 +189,15 @@ export default function MealToppersPage() {
                     href="/shop"
                     className={`block w-full text-center py-3 rounded-lg font-semibold transition-colors mb-4 ${
                       topper.featured
-                        ? 'bg-green-600 text-white hover:bg-green-700'
-                        : 'bg-[#a5b5eb] text-white hover:bg-[#8a9fd9]'
+                        ? 'bg-[#8FAE8F] text-white hover:bg-[#6d8c6d]'
+                        : 'bg-[#5E8C8C] text-white hover:bg-[#6d8c6d]'
                     }`}
                   >
                     Add to Cart
                   </Link>
 
                   <details className="group">
-                    <summary className="cursor-pointer text-sm font-semibold text-[#a5b5eb] hover:text-[#8a9fd9] flex items-center justify-between">
+                    <summary className="cursor-pointer text-sm font-semibold text-[#5E8C8C] hover:text-[#6d8c6d] flex items-center justify-between">
                       <span>View Details</span>
                       <span className="group-open:rotate-180 transition-transform">▼</span>
                     </summary>
@@ -261,8 +261,8 @@ export default function MealToppersPage() {
               }
             ].map((reason, i) => (
               <div key={i} className="bg-white rounded-xl shadow-lg p-6 text-center">
-                <div className="w-14 h-14 bg-[#a5b5eb]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <reason.icon className="w-7 h-7 text-[#a5b5eb]" />
+                <div className="w-14 h-14 bg-[#8FAE8F]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <reason.icon className="w-7 h-7 text-[#8FAE8F]" />
                 </div>
                 <h3 className="text-lg font-semibold text-[#3c3a47] mb-3">{reason.title}</h3>
                 <p className="text-sm text-[#666666] leading-relaxed">{reason.desc}</p>
@@ -279,7 +279,7 @@ export default function MealToppersPage() {
             Topper Tips from Christie
           </h2>
 
-          <div className="bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe] rounded-2xl shadow-xl p-10 border-l-4 border-[#a5b5eb]">
+          <div className="bg-[#F8F5F0] rounded-2xl shadow-xl p-10 border-l-4 border-[#8FAE8F]">
             <div className="space-y-6">
               {[
                 {
@@ -304,7 +304,7 @@ export default function MealToppersPage() {
                 }
               ].map((item, i) => (
                 <div key={i} className="flex items-start">
-                  <div className="w-8 h-8 bg-[#a5b5eb] rounded-full flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                  <div className="w-8 h-8 bg-[#8FAE8F] rounded-full flex items-center justify-center flex-shrink-0 mr-4 mt-1">
                     <span className="text-white font-bold text-sm">{i + 1}</span>
                   </div>
                   <div>
@@ -349,14 +349,14 @@ export default function MealToppersPage() {
               </div>
               <p className="mb-4 text-[15px] leading-relaxed text-[#3c3a47]">{t.quote}</p>
               <p className="text-[14px] font-semibold text-[#3c3a47]">{t.author}</p>
-              <p className="text-xs text-[#a5b5eb]">{t.product}</p>
+              <p className="text-xs text-[#5E8C8C]">{t.product}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="text-4xl font-normal mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Ready to Make Every Meal Extraordinary?
@@ -367,13 +367,13 @@ export default function MealToppersPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/shop"
-              className="bg-white text-[#a5b5eb] px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+              className="bg-white text-[#5E8C8C] px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
             >
               Shop Meal Toppers
             </Link>
             <Link
               href="/nutrition-services"
-              className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-[#a5b5eb] transition-colors"
+              className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-[#5E8C8C] transition-colors"
             >
               Get Feeding Advice
             </Link>
@@ -383,7 +383,7 @@ export default function MealToppersPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#2f4b38] to-[#1f3324] text-white mt-16">
+      <footer className="bg-[#2f4b38] text-white mt-16">
         {/* Main Footer Content */}
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

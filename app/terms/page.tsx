@@ -4,7 +4,7 @@ export default function TermsPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Terms of Service
@@ -18,7 +18,7 @@ export default function TermsPage() {
       {/* Terms Content */}
       <section className="bg-white px-4 py-16">
         <div className="mx-auto max-w-4xl">
-          <div className="bg-[#f8f9fa] rounded-lg p-6 mb-8 border-l-4 border-[#a5b5eb]">
+          <div className="bg-[#f8f9fa] rounded-lg p-6 mb-8 border-l-4 border-[#8FAE8F]">
             <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
               <strong>Last Updated:</strong> {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
             </p>
@@ -249,7 +249,7 @@ export default function TermsPage() {
             </div>
 
             {/* Contact Information */}
-            <div className="bg-[#e8f4fb] rounded-lg p-6 border-2 border-[#a5b5eb]">
+            <div className="bg-[#e8f4fb] rounded-lg p-6 border-2 border-[#8FAE8F]">
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Contact Us
               </h2>
@@ -258,11 +258,11 @@ export default function TermsPage() {
               </p>
               <div className="space-y-2">
                 <p><strong>Waggin Meals Pet Nutrition Co.</strong></p>
-                <p>Email: <a href="mailto:info@wagginmeals.com" className="text-[#a5b5eb] hover:text-[#8a9fd9]">info@wagginmeals.com</a></p>
+                <p>Email: <a href="mailto:info@wagginmeals.com" className="text-[#8FAE8F] hover:text-[#6d8c6d]">info@wagginmeals.com</a></p>
                 <p className="mt-4">
                   <Link
                     href="/contact"
-                    className="inline-block bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                    className="inline-block bg-[#8FAE8F] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
                   >
                     Contact Us
                   </Link>

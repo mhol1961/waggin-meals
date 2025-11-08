@@ -248,7 +248,7 @@ export default function ScienceEducatorFullPage() {
               <div className="inline-flex items-center bg-white rounded-lg shadow-md px-6 py-3 border border-gray-100">
                 <div className="mr-4">
                   <p className="text-sm font-semibold text-[#3c3a47]">Christie A. Willett, M.A., M.S.</p>
-                  <p className="text-xs text-[#a5b5eb]">15+ Years Teaching Pet Nutrition</p>
+                  <p className="text-xs text-[#8FAE8F]">15+ Years Teaching Pet Nutrition</p>
                 </div>
               </div>
             </div>
@@ -331,7 +331,7 @@ export default function ScienceEducatorFullPage() {
 
       <section className="bg-[#f5f5f5] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-6 text-[60px] leading-none text-[#a5b5eb] opacity-30">&quot;</div>
+          <div className="mb-6 text-[60px] leading-none text-[#8FAE8F] opacity-30">&quot;</div>
           <blockquote className="mb-8 text-[18px] italic leading-relaxed text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             I do not try to compete with big box companies. What we offer is specialized nutrition. We listen, and do not use computer generated responses to determine what your special dog needs. Because every dog is different.
           </blockquote>
@@ -349,7 +349,7 @@ export default function ScienceEducatorFullPage() {
             {quote: '"Top notch, healthiest possible dog meals! The new location is fantastic!!"', author: 'Thom Slater'}
           ].map((t, i) => (
             <div key={i} className="bg-white p-6">
-              <div className="mb-4 text-[48px] leading-none text-[#a5b5eb] opacity-30">&quot;</div>
+              <div className="mb-4 text-[48px] leading-none text-[#8FAE8F] opacity-30">&quot;</div>
               <p className="mb-4 text-[15px] leading-relaxed text-[#3c3a47]">{t.quote}</p>
               <p className="text-[14px] font-semibold text-[#3c3a47]">{t.author}</p>
             </div>

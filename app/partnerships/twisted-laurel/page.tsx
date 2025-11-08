@@ -10,7 +10,7 @@ export default function TwistedLaurelPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#2f4b38] via-[#3d5f4a] to-[#2f4b38] text-white px-4 py-16 md:py-24">
+      <section className="bg-[#2f4b38] text-white px-4 py-16 md:py-24">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-4 py-2 mb-6">
             <UtensilsCrossed className="w-5 h-5 text-[#f6a723]" />
@@ -190,7 +190,7 @@ export default function TwistedLaurelPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="px-4 py-16 md:py-20 bg-gradient-to-br from-[#2f4b38] via-[#3d5f4a] to-[#2f4b38] text-white">
+      <section className="px-4 py-16 md:py-20 bg-[#2f4b38] text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2
             className="text-4xl md:text-5xl font-normal mb-6"

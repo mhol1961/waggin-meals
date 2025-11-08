@@ -311,33 +311,70 @@ export function generateOrganizationSchema() {
 
 /**
  * Generate product structured data (JSON-LD)
+ * Enhanced to support variants and detailed product information
  */
-export function generateProductSchema(product: {
-  name: string;
-  description: string;
-  price: number;
-  image?: string;
-  sku?: string;
-  brand?: string;
-}) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    description: product.description,
-    image: product.image ? `${siteUrl}${product.image}` : undefined,
-    sku: product.sku,
-    brand: {
-      '@type': 'Brand',
-      name: product.brand || siteName,
-    },
-    offers: {
+export function generateProductSchema(product: any, variants: any[] = []) {
+  const hasVariants = variants && variants.length > 0;
+
+  // Base product images
+  const images = product.images && product.images.length > 0
+    ? product.images.map((img: string) =>
+        img.startsWith('http') ? img : `${siteUrl}${img}`
+      )
+    : [`${siteUrl}/images/logo-waggin-meals.png`];
+
+  // Determine availability
+  const availability = product.in_stock
+    ? 'https://schema.org/InStock'
+    : 'https://schema.org/OutOfStock';
+
+  // Build offers - either single or multiple (for variants)
+  let offers;
+  if (hasVariants) {
+    // Multiple offers for variants
+    offers = variants.map((variant: any) => ({
+      '@type': 'Offer',
+      name: variant.title,
+      price: variant.price.toFixed(2),
+      priceCurrency: 'USD',
+      availability: variant.is_available && variant.inventory_quantity > 0
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      url: `${siteUrl}/products/${product.handle}`,
+      sku: variant.sku || undefined,
+      priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    }));
+  } else {
+    // Single offer
+    offers = {
       '@type': 'Offer',
       price: product.price.toFixed(2),
       priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      url: siteUrl,
+      availability,
+      url: `${siteUrl}/products/${product.handle}`,
+      sku: product.sku || undefined,
+      priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    };
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.title,
+    description: product.description || `Premium fresh dog food: ${product.title}`,
+    image: images,
+    sku: product.sku || undefined,
+    brand: {
+      '@type': 'Brand',
+      name: siteName,
     },
+    offers: hasVariants ? offers : offers,
+    // Add aggregate rating if available (future enhancement)
+    // aggregateRating: {
+    //   '@type': 'AggregateRating',
+    //   ratingValue: '4.8',
+    //   reviewCount: '24',
+    // },
   };
 }
 

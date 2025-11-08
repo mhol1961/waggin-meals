@@ -57,7 +57,7 @@ export function DocumentUploader({ onContentExtracted }: DocumentUploaderProps) 
       <div
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
-        className="border-2 border-dashed border-[#a5b5eb] rounded-lg p-8 text-center bg-[#f8f9fa] hover:bg-[#e8f4fb] transition-colors cursor-pointer"
+        className="border-2 border-dashed border-[#8FAE8F] rounded-lg p-8 text-center bg-[#f8f9fa] hover:bg-[#e8f4fb] transition-colors cursor-pointer"
       >
         <input
           type="file"
@@ -70,14 +70,14 @@ export function DocumentUploader({ onContentExtracted }: DocumentUploaderProps) 
         <label htmlFor="document-upload" className="cursor-pointer">
           {isProcessing ? (
             <div>
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#a5b5eb] mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8FAE8F] mx-auto mb-4"></div>
               <p className="text-[#3c3a47] font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Processing document...
               </p>
             </div>
           ) : (
             <div>
-              <svg className="w-16 h-16 text-[#a5b5eb] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-16 h-16 text-[#8FAE8F] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
               <p className="text-lg font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>

@@ -244,7 +244,7 @@ export async function POST(request: NextRequest) {
 
     // Build pet sections for email
     const petSections = body.pets.map((pet, index) => `
-      <div style="background-color: #e8f4fb; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #a5b5eb;">
+      <div style="background-color: #e8f4fb; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #8FAE8F;">
         <h3 style="color: #3c3a47; margin-top: 0;">Pet #${index + 1}: ${pet.name || 'Not provided'}</h3>
 
         <table style="width: 100%; border-collapse: collapse;">
@@ -327,7 +327,7 @@ export async function POST(request: NextRequest) {
 
     const emailHtml = `
       <div style="font-family: 'Poppins', Arial, sans-serif; max-width: 800px; margin: 0 auto;">
-        <div style="background: linear-gradient(to right, #a5b5eb, #c5d4f7); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
+        <div style="background: linear-gradient(to right, #8FAE8F, #F8F5F0); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
           <h1 style="color: white; margin: 0; font-family: 'Abril Fatface', serif; font-size: 32px;">
             New Free Consultation Request
           </h1>
@@ -345,7 +345,7 @@ export async function POST(request: NextRequest) {
           </div>
 
           <!-- Contact Information -->
-          <div style="background-color: #f8f9fa; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #a5b5eb;">
+          <div style="background-color: #f8f9fa; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #8FAE8F;">
             <h2 style="color: #3c3a47; margin-top: 0;">Contact Information</h2>
             <table style="width: 100%; border-collapse: collapse;">
               <tr>
@@ -375,7 +375,7 @@ export async function POST(request: NextRequest) {
           ${petSections}
 
           <!-- Budget & Delivery Preferences -->
-          <div style="background-color: #f8f9fa; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #a5b5eb;">
+          <div style="background-color: #f8f9fa; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #8FAE8F;">
             <h2 style="color: #3c3a47; margin-top: 0;">Budget & Delivery Preferences</h2>
             <table style="width: 100%; border-collapse: collapse;">
               <tr>
@@ -413,7 +413,7 @@ export async function POST(request: NextRequest) {
         <div style="background-color: #3c3a47; padding: 20px; text-align: center; border-radius: 0 0 8px 8px;">
           <p style="color: #ffffff; margin: 0; font-size: 14px;">
             Waggin Meals Pet Nutrition Co.<br/>
-            <a href="mailto:info@wagginmeals.com" style="color: #a5b5eb;">info@wagginmeals.com</a>
+            <a href="mailto:info@wagginmeals.com" style="color: #8FAE8F;">info@wagginmeals.com</a>
           </p>
         </div>
       </div>
@@ -475,7 +475,7 @@ info@wagginmeals.com`;
     // Send confirmation email to customer
     const customerEmailHtml = `
       <div style="font-family: 'Poppins', Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: linear-gradient(to right, #a5b5eb, #c5d4f7); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
+        <div style="background: linear-gradient(to right, #8FAE8F, #F8F5F0); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
           <h1 style="color: white; margin: 0; font-family: 'Abril Fatface', serif; font-size: 32px;">
             Thank You!
           </h1>
@@ -492,7 +492,7 @@ info@wagginmeals.com`;
             We've received your information and are excited to help create a personalized nutrition plan tailored to your pet's unique needs.
           </p>
 
-          <div style="background-color: #e8f4fb; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #a5b5eb;">
+          <div style="background-color: #e8f4fb; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #8FAE8F;">
             <h3 style="color: #3c3a47; margin-top: 0;">What Happens Next?</h3>
             <ul style="color: #3c3a47; line-height: 1.8;">
               <li>We'll review your pet's information within 24-48 hours</li>
@@ -504,7 +504,7 @@ info@wagginmeals.com`;
 
           <p style="font-size: 16px; color: #3c3a47;">
             If you have any immediate questions, please don't hesitate to reach out at
-            <a href="mailto:info@wagginmeals.com" style="color: #a5b5eb;">info@wagginmeals.com</a>.
+            <a href="mailto:info@wagginmeals.com" style="color: #8FAE8F;">info@wagginmeals.com</a>.
           </p>
 
           <p style="font-size: 16px; color: #3c3a47; margin-top: 30px;">
@@ -516,8 +516,8 @@ info@wagginmeals.com`;
         <div style="background-color: #3c3a47; padding: 20px; text-align: center; border-radius: 0 0 8px 8px;">
           <p style="color: #ffffff; margin: 0; font-size: 14px;">
             Waggin Meals Pet Nutrition Co.<br/>
-            <a href="mailto:info@wagginmeals.com" style="color: #a5b5eb;">info@wagginmeals.com</a><br/>
-            <a href="https://wagginmeals.com" style="color: #a5b5eb;">wagginmeals.com</a>
+            <a href="mailto:info@wagginmeals.com" style="color: #8FAE8F;">info@wagginmeals.com</a><br/>
+            <a href="https://wagginmeals.com" style="color: #8FAE8F;">wagginmeals.com</a>
           </p>
         </div>
       </div>

@@ -1,0 +1,1 @@
+Hi {{first_name}}! 🐾 {{wm_dog_name}}'s fresh food has shipped! Track: {{tracking_url}} ETA: {{delivery_date}} – Waggin Meals

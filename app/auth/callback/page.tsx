@@ -64,7 +64,7 @@ export default function AuthCallbackPage() {
           ) : (
             <>
               <div className="text-center">
-                <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#a5b5eb] border-r-transparent mb-4"></div>
+                <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#8FAE8F] border-r-transparent mb-4"></div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
                   Completing Sign In...
                 </h2>

@@ -175,29 +175,45 @@ export async function POST(
     });
 
     // =============================================
-    // Sync to GoHighLevel CRM
+    // SYNC TO GHL (Tag Accumulation)
     // =============================================
-    if (currentSub.customers && process.env.GHL_API_KEY && process.env.GHL_LOCATION_ID) {
+    if (currentSub.customers) {
       try {
         const customer = currentSub.customers;
 
         // Add tag to indicate subscription was customized
-        const ghlPayload = {
-          locationId: process.env.GHL_LOCATION_ID,
-          email: customer.email,
-          tags: ['subscription-customized'],
-        };
+        const tags = ['subscription-customized'];
 
-        await fetch('https://rest.gohighlevel.com/v1/contacts/', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${process.env.GHL_API_KEY}`,
-            'Content-Type': 'application/json',
+        const ghlResult: GHL.GHLSyncResult = await GHL.syncContactToGHL({
+          email: customer.email,
+          firstName: customer.first_name,
+          lastName: customer.last_name,
+          phone: customer.phone,
+          tags,
+          customFields: {
+            subscription_id: subscription.id,
+            subscription_amount: calculatedTotal.toString(),
+            subscription_item_count: validatedItems.length.toString(),
           },
-          body: JSON.stringify(ghlPayload),
         });
 
-        console.log('✅ Synced subscription customization to GHL');
+        // Log GHL sync result
+        if (ghlResult.success && ghlResult.contactId) {
+          await supabase
+            .from('subscriptions')
+            .update({
+              ghl_contact_id: ghlResult.contactId,
+              ghl_tags: [...(currentSub.ghl_tags || []), ...tags], // Accumulate tags
+              ghl_last_sync_at: new Date().toISOString(),
+              ghl_sync_error: null,
+            })
+            .eq('id', id);
+
+          console.log('✅ Synced subscription customization to GHL');
+        } else {
+          console.error('❌ Error syncing to GHL:', ghlResult.error);
+          // Don't fail the request if GHL sync fails
+        }
       } catch (ghlError) {
         console.error('❌ Error syncing to GHL:', ghlError);
         // Don't fail the request if GHL sync fails

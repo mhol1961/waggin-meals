@@ -6,17 +6,17 @@ import Image from 'next/image';
 import { X, CheckCircle2, Award, FlaskConical, UtensilsCrossed, HeartPulse, Calculator, ClipboardList, MessageCircle, ChevronDown, Menu, ShieldCheck, Stethoscope, Leaf, Mail, Phone, Star, ArrowRight, Gift } from 'lucide-react';
 
 const rotatingProblems = [
-  'Digestive Issues',
-  'Skin Problems',
-  'Weight Management',
-  'Food Sensitivities',
-  'Low Energy',
+  'Dog Allergies & Sensitivities',
+  'Dog Digestive Problems',
+  'Dog Weight Management',
+  'Dog Chronic Conditions',
+  'Dog Picky Eating & Feeding Behaviors',
 ];
 
 const heroBullets = [
-  'Dual Master\'s Degrees in Animal Science & Food Science',
-  'Over 520 Dogs Thriving on Tailored Nutrition Plans',
-  'Personal Chef Service with Concierge-Level Support',
+  'Education That Empowers: Discover expert insights most dog owners never learn—like how to manage feeding behaviors and make meals irresistible for selective eaters.',
+  'Expertly Formulated Diets: Choose from our carefully designed whole-food collections for optimal health and flavor.',
+  'Custom Solutions for Special Needs: Custom diet plans based on health conditions and feeding habits.',
 ];
 
 const quickAssessmentQuestions = [
@@ -55,7 +55,7 @@ const services = [
     description: 'Comprehensive gut health testing with visual palette reports you can share with your vet.',
     cta: 'Learn More',
     href: '/nutrition-services',
-    accent: '#5E3B76',
+    accent: '#8FAE8F',
   },
   {
     icon: UtensilsCrossed,
@@ -64,7 +64,7 @@ const services = [
     description: 'Small-batch, chef-crafted meals tailored to your dog\'s unique nutritional needs.',
     cta: 'Browse Menu',
     href: '/shop',
-    accent: '#9657EE',
+    accent: '#5E8C8C',
   },
   {
     icon: HeartPulse,
@@ -73,26 +73,34 @@ const services = [
     description: 'Personalized nutrition plans with ongoing support from our dual-degreed nutrition specialist.',
     cta: 'Book Now',
     href: '/contact-expert',
-    accent: '#C26AF0',
+    accent: '#C97B63',
   },
 ];
 
 const testimonials = [
   {
-    name: 'Matt Wolfe',
-    text: 'Our dog Maisy absolutely devours the fresh meals that Christie prepares. Can\'t recommend her enough.',
+    name: 'Dawn H.',
+    dogName: 'Kane',
+    dogPhoto: '/images/Kane.jpg',
+    text: 'Christie, thank you for everything you\'ve done! Before you, we had tried everything—even spent thousands at the vet and worked with another online company where we only talked to a computer. You personally spoke with us, explained a clear step-by-step process, and even answered our call while on vacation in Ireland! Now Kane is thriving—no more diarrhea or vomiting—and he absolutely loves mealtime!',
   },
   {
-    name: 'Elizabeth Joslin',
-    text: 'Christie is so helpful, kind & very knowledgeable about canine nutrition! She genuinely cares about your dog\'s health.',
+    name: 'Jason H.',
+    dogName: 'Mango',
+    dogPhoto: '/images/Mango.jpg',
+    text: 'Mango gets excited every time a Waggin\' Meals box arrives—and loves the surprises inside! We appreciate being able to speak directly with the team and make adjustments as needed. Knowing that as Mango grows, Christie and her staff will customize his diet to match his changing needs gives us complete peace of mind.',
   },
   {
-    name: 'Amber Munoz',
-    text: 'My dogs love this food!! I know both of my dogs are getting the best quality ingredients.',
+    name: 'Cathy & Nicole',
+    dogName: 'Imagie',
+    dogPhoto: '/images/Rewivew 3 image.jpg',
+    text: 'Your food and professional guidance have made a world of difference for our pups! They absolutely love every meal, and your expert advice has been invaluable. We\'re so grateful we met you and could benefit from your knowledge and experience. Thank you for sharing your expertise and creating such an amazing product!',
   },
   {
-    name: 'Thom Slater',
-    text: 'Top notch, prepared fresh on-site healthiest possible dog meals! Knowledgeable and experienced owners who care!',
+    name: 'Michael & Lois',
+    dogName: null,
+    dogPhoto: null,
+    text: 'We booked a personal consultation with Christie to learn how to cook for our dog. She took the time to review everything—recommended specific tests, analyzed lab results, and even assessed photos of her skin and stool. Christie discovered that our dog\'s current food and shampoo were causing severe skin issues and designed a limited, hypoallergenic diet tailored to her needs. Thanks to her expertise, we finally have hope.',
   },
 ];
 
@@ -167,6 +175,13 @@ export default function LavenderLuxeHomepage() {
   const [dogAge, setDogAge] = useState('');
   const [activityLevel, setActivityLevel] = useState('moderate');
   const [calculatedCalories, setCalculatedCalories] = useState<number | null>(null);
+  const [feedingGuide, setFeedingGuide] = useState<{
+    weightRange: string;
+    cupsPerDay: { min: number; max: number };
+    cupsPerMeal: { min: number; max: number };
+    packsPerWeek: { min: number; max: number };
+  } | null>(null);
+  const [mealsPerDay, setMealsPerDay] = useState(2);
 
   // Rotating text effect
   useEffect(() => {
@@ -194,6 +209,41 @@ export default function LavenderLuxeHomepage() {
     }
   };
 
+  // Feeding guide data based on Waggin Meals feeding guide chart
+  const feedingGuideData = [
+    { weightRange: '5-10 lbs', minWeight: 5, maxWeight: 10, cupsPerDay: { min: 0.5, max: 1 }, cupsPerMeal: { min: 0.25, max: 0.5 }, packsPerWeek: { min: 1, max: 2 } },
+    { weightRange: '11-20 lbs', minWeight: 11, maxWeight: 20, cupsPerDay: { min: 1, max: 1.5 }, cupsPerMeal: { min: 0.5, max: 0.75 }, packsPerWeek: { min: 2, max: 3 } },
+    { weightRange: '21-30 lbs', minWeight: 21, maxWeight: 30, cupsPerDay: { min: 1.5, max: 2.25 }, cupsPerMeal: { min: 0.75, max: 1.125 }, packsPerWeek: { min: 3, max: 4 } },
+    { weightRange: '31-50 lbs', minWeight: 31, maxWeight: 50, cupsPerDay: { min: 2.25, max: 3.75 }, cupsPerMeal: { min: 1.125, max: 1.875 }, packsPerWeek: { min: 4, max: 7 } },
+    { weightRange: '51-75 lbs', minWeight: 51, maxWeight: 75, cupsPerDay: { min: 3.75, max: 5.5 }, cupsPerMeal: { min: 1.875, max: 2.75 }, packsPerWeek: { min: 7, max: 10 } },
+    { weightRange: '76-100 lbs', minWeight: 76, maxWeight: 100, cupsPerDay: { min: 5.5, max: 7.5 }, cupsPerMeal: { min: 2.75, max: 3.75 }, packsPerWeek: { min: 10, max: 14 } },
+  ];
+
+  const getFeedingGuide = (weight: number) => {
+    const guide = feedingGuideData.find(g => weight >= g.minWeight && weight <= g.maxWeight);
+    return guide ? {
+      weightRange: guide.weightRange,
+      cupsPerDay: guide.cupsPerDay,
+      cupsPerMeal: guide.cupsPerMeal,
+      packsPerWeek: guide.packsPerWeek,
+    } : null;
+  };
+
+  const formatFraction = (num: number): string => {
+    if (num === Math.floor(num)) return num.toString();
+    const whole = Math.floor(num);
+    const decimal = num - whole;
+    // Common fractions
+    if (Math.abs(decimal - 0.25) < 0.01) return whole > 0 ? `${whole} 1/4` : '1/4';
+    if (Math.abs(decimal - 0.33) < 0.01) return whole > 0 ? `${whole} 1/3` : '1/3';
+    if (Math.abs(decimal - 0.5) < 0.01) return whole > 0 ? `${whole} 1/2` : '1/2';
+    if (Math.abs(decimal - 0.66) < 0.01) return whole > 0 ? `${whole} 2/3` : '2/3';
+    if (Math.abs(decimal - 0.75) < 0.01) return whole > 0 ? `${whole} 3/4` : '3/4';
+    if (Math.abs(decimal - 0.125) < 0.01) return whole > 0 ? `${whole} 1/8` : '1/8';
+    if (Math.abs(decimal - 0.875) < 0.01) return whole > 0 ? `${whole} 7/8` : '7/8';
+    return num.toFixed(2);
+  };
+
   const calculateCalories = () => {
     if (!dogWeight || !dogAge) return;
 
@@ -218,17 +268,21 @@ export default function LavenderLuxeHomepage() {
     if (age > 7) dailyCalories *= 0.9; // Seniors need slightly less
 
     setCalculatedCalories(Math.round(dailyCalories));
+
+    // Calculate feeding guide based on weight
+    const guide = getFeedingGuide(weight);
+    setFeedingGuide(guide);
   };
 
   return (
-    <main className="bg-[#d8c6ff] min-h-screen">
+    <main className="bg-[#F8F5F0] min-h-screen">
       {/* Announcement Bar */}
-      <div className="bg-[#5E3B76] text-white text-center text-xs py-2.5 px-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+      <div className="bg-[#8FAE8F] text-white text-center text-xs py-2.5 px-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
         Free insulated tote on local delivery · Weekly Nutrition Workshops · Complimentary vet-ready reports
       </div>
 
       {/* Compact Navigation */}
-      <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-[#ead9ff] px-4 py-3">
+      <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-[#F8F5F0] px-4 py-3">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
@@ -237,16 +291,16 @@ export default function LavenderLuxeHomepage() {
                 alt="Waggin Meals"
                 width={72}
                 height={72}
-                className="rounded-full border border-[#ead9ff] shadow-md"
+                className="rounded-full border border-[#F8F5F0] shadow-md"
               />
               <div>
-                <p className="text-[8.4px] uppercase tracking-[0.25em] text-[#C26AF0]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-[8.4px] uppercase tracking-[0.25em] text-[#C97B63]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Waggin Meals
                 </p>
-                <p className="text-[14.4px] leading-tight text-[#5E3B76]" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                <p className="text-[14.4px] leading-tight text-[#8FAE8F]" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   Healthy Gut = Clean Butt
                 </p>
-                <p className="text-[7.2px] text-[#8a7ba8] mt-0.5" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-[7.2px] text-[#333333] mt-0.5" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Christie Webb, M.S. Animal Nutrition & M.A. Food Science
                 </p>
               </div>
@@ -264,19 +318,19 @@ export default function LavenderLuxeHomepage() {
                   {'dropdown' in item ? (
                     <>
                       <button
-                        className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-[#5E3B76] px-3 py-2 hover:text-[#9657EE] transition-colors"
+                        className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-[#8FAE8F] px-3 py-2 hover:text-[#5E8C8C] transition-colors"
                         suppressHydrationWarning
                       >
                         {item.label}
                         <ChevronDown className="w-3 h-3" />
                       </button>
                       {activeDropdown === item.label && item.dropdown && (
-                        <div className="absolute left-0 top-full mt-1 w-64 bg-white rounded-lg shadow-xl border border-[#ead9ff] py-2 z-50">
+                        <div className="absolute left-0 top-full mt-1 w-64 bg-white rounded-lg shadow-xl border border-[#F8F5F0] py-2 z-50">
                           {item.dropdown?.map((dropdownItem) => (
                             <Link
                               key={dropdownItem.href}
                               href={dropdownItem.href}
-                              className="block px-4 py-2 text-sm text-[#5E3B76] hover:bg-[#d8c6ff] transition-colors"
+                              className="block px-4 py-2 text-sm text-[#8FAE8F] hover:bg-[#F8F5F0] transition-colors"
                               style={{ fontFamily: "'Poppins', sans-serif" }}
                             >
                               {dropdownItem.label}
@@ -288,7 +342,7 @@ export default function LavenderLuxeHomepage() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="text-xs font-semibold uppercase tracking-wide text-[#5E3B76] px-3 py-2 hover:text-[#9657EE] transition-colors"
+                      className="text-xs font-semibold uppercase tracking-wide text-[#8FAE8F] px-3 py-2 hover:text-[#5E8C8C] transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -297,7 +351,7 @@ export default function LavenderLuxeHomepage() {
               ))}
               <Link
                 href="/contact"
-                className="bg-[#9657EE] text-white px-5 py-2 rounded-full text-xs font-semibold hover:bg-[#7e43c4] transition-colors ml-2"
+                className="bg-[#5E8C8C] text-white px-5 py-2 rounded-full text-xs font-semibold hover:bg-[#5E8C8C] transition-colors ml-2"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Contact
@@ -307,7 +361,7 @@ export default function LavenderLuxeHomepage() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-[#5E3B76] hover:bg-[#d8c6ff] rounded-md"
+              className="lg:hidden p-2 text-[#8FAE8F] hover:bg-[#F8F5F0] rounded-md"
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -315,14 +369,14 @@ export default function LavenderLuxeHomepage() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="lg:hidden mt-3 pb-3 border-t border-[#ead9ff] pt-3">
+            <div className="lg:hidden mt-3 pb-3 border-t border-[#F8F5F0] pt-3">
               {navItems.map((item) => (
                 <div key={item.label}>
                   {'dropdown' in item ? (
                     <>
                       <button
                         onClick={() => setActiveDropdown(activeDropdown === item.label ? null : item.label)}
-                        className="w-full flex items-center justify-between text-sm font-semibold text-[#5E3B76] px-3 py-2 hover:bg-[#d8c6ff] rounded-md"
+                        className="w-full flex items-center justify-between text-sm font-semibold text-[#8FAE8F] px-3 py-2 hover:bg-[#F8F5F0] rounded-md"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                         suppressHydrationWarning
                       >
@@ -335,7 +389,7 @@ export default function LavenderLuxeHomepage() {
                             <Link
                               key={dropdownItem.href}
                               href={dropdownItem.href}
-                              className="block px-4 py-2 text-sm text-[#8a7ba8] hover:bg-[#d8c6ff] rounded-md"
+                              className="block px-4 py-2 text-sm text-[#333333] hover:bg-[#F8F5F0] rounded-md"
                               style={{ fontFamily: "'Poppins', sans-serif" }}
                               onClick={() => setMobileMenuOpen(false)}
                             >
@@ -348,7 +402,7 @@ export default function LavenderLuxeHomepage() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="block text-sm font-semibold text-[#5E3B76] px-3 py-2 hover:bg-[#d8c6ff] rounded-md"
+                      className="block text-sm font-semibold text-[#8FAE8F] px-3 py-2 hover:bg-[#F8F5F0] rounded-md"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                       onClick={() => setMobileMenuOpen(false)}
                     >
@@ -359,7 +413,7 @@ export default function LavenderLuxeHomepage() {
               ))}
               <Link
                 href="/contact"
-                className="block text-center bg-[#9657EE] text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-[#7e43c4] transition-colors mt-3 mx-3"
+                className="block text-center bg-[#5E8C8C] text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-[#5E8C8C] transition-colors mt-3 mx-3"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -371,90 +425,92 @@ export default function LavenderLuxeHomepage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative px-4 py-16 overflow-hidden">
+      <section className="relative px-4 py-8 overflow-hidden">
         {/* Subtle background gradients */}
         <div className="absolute inset-0 pointer-events-none opacity-40">
-          <div className="absolute -top-40 -left-24 w-96 h-96 bg-[#9657EE]/8 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-[#5E3B76]/8 rounded-full blur-3xl" />
+          <div className="absolute -top-40 -left-24 w-96 h-96 bg-[#5E8C8C]/8 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-[#8FAE8F]/8 rounded-full blur-3xl" />
         </div>
 
-        <div className="mx-auto max-w-6xl relative z-10 grid lg:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
+        <div className="mx-auto max-w-6xl relative z-10 grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
           {/* Left Column: Copy & CTA */}
             <div>
-              <div className="inline-flex items-center gap-2 bg-white border border-[#ead9ff] rounded-full px-4 py-2 mb-6 shadow-sm">
-                <Award className="w-4 h-4 text-[#9657EE]" />
-                <span className="text-xs font-semibold text-[#5E3B76] uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Nutrition Science Specialist
+              <div className="inline-flex items-center gap-2 bg-white border border-[#F8F5F0] rounded-full px-3 py-1.5 mb-4 shadow-sm">
+                <Award className="w-4 h-4 text-[#5E8C8C]" />
+                <span className="text-xs font-semibold text-[#8FAE8F] uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Dog Nutrition & Feeding Behavior Specialists
                 </span>
               </div>
 
               {/* H1 with rotating text */}
-              <h1 className="text-[48px] leading-[1.1] text-[#2b1d3b] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                Dual-Degreed Nutrition Specialist
+              <h1 className="text-[40px] leading-[1.1] text-[#333333] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                When You've Tried Everything,
                 <br />
-                Solving{' '}
-                <span className="text-[#9657EE]">
-                  {rotatingProblems[currentProblem]}
+                We Find Answers—Rooted in Science{' '}
+                <span className="block text-[32px] text-[#5E8C8C] mt-2">
+                  for {rotatingProblems[currentProblem]}
                 </span>
               </h1>
 
               {/* Subheading */}
-              <p className="text-lg text-[#6e5c8f] mb-8 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                When your vet can't find answers, our dual-degreed nutrition specialist digs deeper into gut health, custom meal plans, and lasting results. <strong>520+ dogs transformed</strong> with concierge-level care.
+              <p className="text-base text-[#333333] mb-6 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Our approach combines advanced research and nutritional science to create customized whole-food diets for dogs. Led by Christie Willett—Master's in Animal Feed & Nutrition and certified in feeding behavior—we ensure precision in diet formulation and empower pet owners with clinically validated knowledge for sustained health.
               </p>
 
             {/* Bullets */}
-            <div className="space-y-3 mb-8">
+            <div className="space-y-2 mb-6">
               {heroBullets.map((bullet) => (
-                <div key={bullet} className="flex items-start gap-3 text-[#5E3B76]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  <CheckCircle2 className="w-5 h-5 text-[#9657EE] mt-0.5 flex-shrink-0" />
+                <div key={bullet} className="flex items-start gap-3 text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <CheckCircle2 className="w-5 h-5 text-[#5E8C8C] mt-0.5 flex-shrink-0" />
                   <span>{bullet}</span>
                 </div>
               ))}
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 mb-10">
+            <div className="flex flex-wrap gap-3 mb-6">
               <Link
-                href="#calculator"
-                className="bg-[#5E3B76] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-[#452a6d] transition-all hover:shadow-xl inline-flex items-center gap-2"
+                href="/shop"
+                className="bg-[#8FAE8F] text-white px-6 py-3 rounded-full text-base font-semibold shadow-lg hover:bg-[#6d8c6d] transition-all hover:shadow-xl inline-flex items-center gap-2"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
+                title="Explore our curated whole-food collections designed for optimal health and taste"
               >
-                <Calculator className="w-5 h-5" />
-                Calculate Your Dog's Needs
+                <UtensilsCrossed className="w-5 h-5" />
+                Shop Our Meals
               </Link>
               <Link
-                href="/contact-expert"
-                className="border-2 border-[#5E3B76] text-[#5E3B76] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#5E3B76] hover:text-white transition-colors"
+                href="/nutrition-services"
+                className="border-2 border-[#8FAE8F] text-[#8FAE8F] px-6 py-3 rounded-full text-base font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
+                title="Book a one-on-one consultation for a custom nutrition plan tailored to your dog's unique needs"
               >
-                Book Free Consultation
+                Need Special Attention?
               </Link>
             </div>
 
             {/* Stats */}
-            <div className="flex gap-10 pt-6 border-t border-[#ead9ff]">
+            <div className="flex gap-8 pt-4 border-t border-[#F8F5F0]">
               <div>
-                <p className="text-4xl text-[#5E3B76] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                <p className="text-3xl text-[#8FAE8F] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   520+
                 </p>
-                <p className="text-xs uppercase tracking-wide text-[#8a7ba8] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-xs uppercase tracking-wide text-[#333333] mt-0.5" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Dogs Thriving
                 </p>
               </div>
               <div>
-                <p className="text-4xl text-[#5E3B76] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                <p className="text-3xl text-[#8FAE8F] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   17 days
                 </p>
-                <p className="text-xs uppercase tracking-wide text-[#8a7ba8] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-xs uppercase tracking-wide text-[#333333] mt-0.5" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Avg. Relief
                 </p>
               </div>
               <div>
-                <p className="text-4xl text-[#5E3B76] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                <p className="text-3xl text-[#8FAE8F] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   94%
                 </p>
-                <p className="text-xs uppercase tracking-wide text-[#8a7ba8] mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-xs uppercase tracking-wide text-[#333333] mt-0.5" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Success Rate
                 </p>
               </div>
@@ -463,20 +519,20 @@ export default function LavenderLuxeHomepage() {
 
           {/* Right Column: Visual Card */}
           <div className="relative">
-            <div className="bg-white rounded-[32px] shadow-2xl border border-[#ead9ff] p-6 hover:shadow-3xl transition-shadow">
-              <div className="grid gap-4">
-                {/* Featured meal images */}
-                <div className="rounded-2xl overflow-hidden border border-[#e8ddff]">
+            <div className="bg-white rounded-[32px] shadow-2xl border border-[#F8F5F0] p-4 hover:shadow-3xl transition-shadow">
+              <div className="grid gap-3">
+                {/* Christie photo - Personal touch */}
+                <div className="rounded-2xl overflow-hidden border border-[#F8F5F0]">
                   <Image
-                    src="/images/2025/07/Beef-and-Sweet-Potato-Bowl-scaled.jpg"
-                    alt="Beef and sweet potato bowl"
+                    src="/images/Christie 7 16 25-8 - Copy.jpg"
+                    alt="Christie Willett - Board-Certified Canine Nutritionist"
                     width={1200}
                     height={800}
                     className="object-cover hover:scale-105 transition-transform duration-500"
                     priority
                   />
                 </div>
-                <div className="rounded-2xl overflow-hidden border border-[#e8ddff]">
+                <div className="rounded-2xl overflow-hidden border border-[#F8F5F0]">
                   <Image
                     src="/images/2025/07/Chicken-Superfood-Cake-Board-scaled.jpg"
                     alt="Chicken superfood board"
@@ -488,19 +544,19 @@ export default function LavenderLuxeHomepage() {
               </div>
 
               {/* CTA within card */}
-              <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.4em] text-[#C26AF0] font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    Featured This Week
+                  <p className="text-xs uppercase tracking-[0.4em] text-[#C97B63] font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    See What's New
                   </p>
-                  <p className="text-2xl font-semibold text-[#2b1d3b] mt-1" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                    Better Belly Bundle
+                  <p className="text-xl font-semibold text-[#333333] mt-1" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                    Explore Smart Bundles
                   </p>
-                  <p className="text-sm text-[#8a7ba8]">Fresh meals + bone broth</p>
+                  <p className="text-sm text-[#333333]">Fresh meals + expert guidance</p>
                 </div>
                 <Link
                   href="/shop"
-                  className="inline-flex items-center gap-2 bg-[#9657EE] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#7e43c4] transition-colors whitespace-nowrap"
+                  className="inline-flex items-center gap-2 bg-[#5E8C8C] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[#5E8C8C] transition-colors whitespace-nowrap text-sm"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Shop Now
@@ -514,7 +570,7 @@ export default function LavenderLuxeHomepage() {
         <div className="absolute bottom-6 left-6 z-50">
           <Link
             href="/monthly-wag-box"
-            className="flex items-center gap-2 bg-[#9657EE] text-white px-5 py-3 rounded-full shadow-xl text-sm font-semibold hover:bg-[#7e43c4] transition-all hover:scale-105"
+            className="flex items-center gap-2 bg-[#5E8C8C] text-white px-5 py-3 rounded-full shadow-xl text-sm font-semibold hover:bg-[#5E8C8C] transition-all hover:scale-105"
           >
             <Gift className="w-4 h-4" />
             Waggin Rewards
@@ -523,16 +579,16 @@ export default function LavenderLuxeHomepage() {
 
         {/* Floating Chat Widget */}
         {chatWidgetOpen ? (
-          <div className="absolute bottom-6 right-6 z-50 w-96 bg-white border border-[#e8ddff] rounded-3xl shadow-2xl overflow-hidden">
+          <div className="absolute bottom-6 right-6 z-50 w-96 bg-white border border-[#F8F5F0] rounded-3xl shadow-2xl overflow-hidden">
             {/* Header with close button */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#d5c1ff] bg-gradient-to-r from-[#d8c6ff] to-white">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[#d4e4d4] bg-gradient-to-r from-[#F8F5F0] to-white">
               <div className="flex items-center gap-2">
-                <MessageCircle className="w-5 h-5 text-[#5E3B76]" />
-                <span className="text-sm font-semibold text-[#5E3B76]">How can we help?</span>
+                <MessageCircle className="w-5 h-5 text-[#8FAE8F]" />
+                <span className="text-sm font-semibold text-[#8FAE8F]">How can we help?</span>
               </div>
               <button
                 onClick={() => setChatWidgetOpen(false)}
-                className="text-[#8a7ba8] hover:text-[#5E3B76] transition-colors"
+                className="text-[#333333] hover:text-[#8FAE8F] transition-colors"
                 aria-label="Close chat"
               >
                 <X className="w-5 h-5" />
@@ -540,12 +596,12 @@ export default function LavenderLuxeHomepage() {
             </div>
 
             {/* Tabs */}
-            <div className="flex border-b border-[#e8ddff]">
+            <div className="flex border-b border-[#F8F5F0]">
               <button
                 className={`flex-1 text-sm font-semibold py-3 transition-colors ${
                   !showChatView
-                    ? 'border-b-2 border-[#5E3B76] text-[#5E3B76]'
-                    : 'text-[#a0a0a0] hover:text-[#5E3B76]'
+                    ? 'border-b-2 border-[#8FAE8F] text-[#8FAE8F]'
+                    : 'text-[#a0a0a0] hover:text-[#8FAE8F]'
                 }`}
                 onClick={() => setShowChatView(false)}
               >
@@ -554,8 +610,8 @@ export default function LavenderLuxeHomepage() {
               <button
                 className={`flex-1 text-sm font-semibold py-3 transition-colors ${
                   showChatView
-                    ? 'border-b-2 border-[#5E3B76] text-[#5E3B76]'
-                    : 'text-[#a0a0a0] hover:text-[#5E3B76]'
+                    ? 'border-b-2 border-[#8FAE8F] text-[#8FAE8F]'
+                    : 'text-[#a0a0a0] hover:text-[#8FAE8F]'
                 }`}
                 onClick={() => setShowChatView(true)}
               >
@@ -567,37 +623,37 @@ export default function LavenderLuxeHomepage() {
             <div className="p-4 max-h-96 overflow-y-auto">
               {!showChatView ? (
                 <div className="space-y-4">
-                  <p className="text-xs text-[#8a7ba8] mb-3">Select a question below or start a chat</p>
+                  <p className="text-xs text-[#333333] mb-3">Select a question below or start a chat</p>
                   {faqs.map((faq, index) => (
                     <details key={index} className="group">
                       <summary className="cursor-pointer list-none">
                         <div className="flex items-start justify-between gap-3 p-3 bg-[#f8f9fa] hover:bg-[#f0f1f2] rounded-xl transition-colors">
-                          <p className="text-sm font-semibold text-[#5E3B76] flex-1">{faq.question}</p>
-                          <ChevronDown className="w-4 h-4 text-[#5E3B76] group-open:rotate-180 transition-transform flex-shrink-0 mt-0.5" />
+                          <p className="text-sm font-semibold text-[#8FAE8F] flex-1">{faq.question}</p>
+                          <ChevronDown className="w-4 h-4 text-[#8FAE8F] group-open:rotate-180 transition-transform flex-shrink-0 mt-0.5" />
                         </div>
                       </summary>
                       <div className="mt-2 px-3 pb-2">
-                        <p className="text-xs text-[#6e5c8f] leading-relaxed">{faq.answer}</p>
+                        <p className="text-xs text-[#333333] leading-relaxed">{faq.answer}</p>
                       </div>
                     </details>
                   ))}
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center w-full bg-[#5E3B76] text-white py-3 rounded-2xl font-semibold hover:bg-[#452a6d] transition-colors mt-2"
+                    className="inline-flex items-center justify-center w-full bg-[#8FAE8F] text-white py-3 rounded-2xl font-semibold hover:bg-[#6d8c6d] transition-colors mt-2"
                   >
                     Ask a Different Question
                   </Link>
                 </div>
               ) : (
                 <div className="text-center py-6">
-                  <MessageCircle className="w-10 h-10 text-[#5E3B76] mx-auto mb-4" />
+                  <MessageCircle className="w-10 h-10 text-[#8FAE8F] mx-auto mb-4" />
                   <p className="font-semibold text-base mb-2">Ready to Chat?</p>
-                  <p className="text-sm text-[#8a7ba8] mb-4">
+                  <p className="text-sm text-[#333333] mb-4">
                     We're here to help answer your questions and discuss your pet's nutrition needs.
                   </p>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center w-full bg-[#5E3B76] text-white py-3 rounded-2xl font-semibold hover:bg-[#452a6d] transition-colors"
+                    className="inline-flex items-center justify-center w-full bg-[#8FAE8F] text-white py-3 rounded-2xl font-semibold hover:bg-[#6d8c6d] transition-colors"
                   >
                     Contact Us Now
                   </Link>
@@ -608,7 +664,7 @@ export default function LavenderLuxeHomepage() {
         ) : (
           <button
             onClick={() => setChatWidgetOpen(true)}
-            className="absolute bottom-6 right-6 z-50 flex items-center gap-2 bg-[#5E3B76] text-white px-5 py-3 rounded-full shadow-xl hover:bg-[#452a6d] transition-colors"
+            className="absolute bottom-6 right-6 z-50 flex items-center gap-2 bg-[#8FAE8F] text-white px-5 py-3 rounded-full shadow-xl hover:bg-[#6d8c6d] transition-colors"
           >
             <MessageCircle className="w-5 h-5" />
             <span className="text-sm font-semibold">Need Help?</span>
@@ -617,29 +673,29 @@ export default function LavenderLuxeHomepage() {
       </section>
 
       {/* Stunning Quiz + Calculator Section */}
-      <section id="calculator" className="px-4 py-16 bg-gradient-to-br from-white to-[#d8c6ff]">
+      <section id="calculator" className="px-4 py-16 bg-gradient-to-br from-white to-[#F8F5F0]">
         <div className="mx-auto max-w-5xl">
           <div className="text-center mb-10">
-            <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-sm font-semibold text-[#5E8C8C] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Personalized Nutrition Planning
             </p>
-            <h2 className="text-4xl text-[#2b1d3b] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+            <h2 className="text-4xl text-[#333333] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
               Start Your Dog's Transformation
             </h2>
-            <p className="text-base text-[#6e5c8f] max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-base text-[#333333] max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Answer a few quick questions to get personalized feeding recommendations, or jump straight to our calculator.
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl border-2 border-[#ead9ff] shadow-2xl overflow-hidden">
+          <div className="bg-white rounded-3xl border-2 border-[#F8F5F0] shadow-2xl overflow-hidden">
             {/* Tabs */}
-            <div className="flex border-b border-[#ead9ff]">
+            <div className="flex border-b border-[#F8F5F0]">
               <button
                 onClick={() => setShowQuiz(true)}
                 className={`flex-1 py-4 text-sm font-semibold transition-colors ${
                   showQuiz
-                    ? 'border-b-2 border-[#5E3B76] text-[#5E3B76] bg-[#d8c6ff]'
-                    : 'text-[#888] hover:text-[#5E3B76]'
+                    ? 'border-b-2 border-[#8FAE8F] text-[#8FAE8F] bg-[#F8F5F0]'
+                    : 'text-[#888] hover:text-[#8FAE8F]'
                 }`}
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
@@ -650,8 +706,8 @@ export default function LavenderLuxeHomepage() {
                 onClick={() => setShowQuiz(false)}
                 className={`flex-1 py-4 text-sm font-semibold transition-colors ${
                   !showQuiz
-                    ? 'border-b-2 border-[#5E3B76] text-[#5E3B76] bg-[#d8c6ff]'
-                    : 'text-[#888] hover:text-[#5E3B76]'
+                    ? 'border-b-2 border-[#8FAE8F] text-[#8FAE8F] bg-[#F8F5F0]'
+                    : 'text-[#888] hover:text-[#8FAE8F]'
                 }`}
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
@@ -666,7 +722,7 @@ export default function LavenderLuxeHomepage() {
                 <div className="max-w-2xl mx-auto">
                   <div className="mb-6">
                     <div className="flex justify-between items-center mb-4">
-                      <p className="text-sm text-[#8a7ba8]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      <p className="text-sm text-[#333333]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         Question {quizStep + 1} of {quickAssessmentQuestions.length}
                       </p>
                       <div className="flex gap-1">
@@ -674,13 +730,13 @@ export default function LavenderLuxeHomepage() {
                           <div
                             key={index}
                             className={`w-8 h-1 rounded-full ${
-                              index <= quizStep ? 'bg-[#5E3B76]' : 'bg-[#ead9ff]'
+                              index <= quizStep ? 'bg-[#8FAE8F]' : 'bg-[#F8F5F0]'
                             }`}
                           />
                         ))}
                       </div>
                     </div>
-                    <h3 className="text-2xl text-[#2b1d3b] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                    <h3 className="text-2xl text-[#333333] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
                       {quickAssessmentQuestions[quizStep].question}
                     </h3>
                   </div>
@@ -690,7 +746,7 @@ export default function LavenderLuxeHomepage() {
                       <button
                         key={option}
                         onClick={() => handleQuizAnswer(quickAssessmentQuestions[quizStep].id, option)}
-                        className="border-2 border-[#d3baff] rounded-xl p-4 text-left hover:border-[#5E3B76] hover:bg-[#d8c6ff] transition-all text-sm font-medium"
+                        className="border-2 border-[#d4e4d4] rounded-xl p-4 text-left hover:border-[#8FAE8F] hover:bg-[#F8F5F0] transition-all text-sm font-medium"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       >
                         {option}
@@ -701,7 +757,7 @@ export default function LavenderLuxeHomepage() {
                   {quizStep > 0 && (
                     <button
                       onClick={() => setQuizStep(quizStep - 1)}
-                      className="mt-6 text-sm text-[#5E3B76] hover:text-[#9657EE] font-semibold"
+                      className="mt-6 text-sm text-[#8FAE8F] hover:text-[#5E8C8C] font-semibold"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       ← Back
@@ -712,7 +768,7 @@ export default function LavenderLuxeHomepage() {
                 <div className="max-w-2xl mx-auto">
                   <div className="grid md:grid-cols-2 gap-6 mb-6">
                     <div>
-                      <label className="block text-sm font-semibold text-[#5E3B76] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      <label className="block text-sm font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         Dog's Weight (lbs)
                       </label>
                       <input
@@ -720,12 +776,12 @@ export default function LavenderLuxeHomepage() {
                         value={dogWeight}
                         onChange={(e) => setDogWeight(e.target.value)}
                         placeholder="e.g., 45"
-                        className="w-full px-4 py-3 border-2 border-[#ead9ff] rounded-xl focus:outline-none focus:border-[#5E3B76] transition-colors"
+                        className="w-full px-4 py-3 border-2 border-[#F8F5F0] rounded-xl focus:outline-none focus:border-[#8FAE8F] transition-colors"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-[#5E3B76] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      <label className="block text-sm font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         Dog's Age (years)
                       </label>
                       <input
@@ -733,14 +789,14 @@ export default function LavenderLuxeHomepage() {
                         value={dogAge}
                         onChange={(e) => setDogAge(e.target.value)}
                         placeholder="e.g., 5"
-                        className="w-full px-4 py-3 border-2 border-[#ead9ff] rounded-xl focus:outline-none focus:border-[#5E3B76] transition-colors"
+                        className="w-full px-4 py-3 border-2 border-[#F8F5F0] rounded-xl focus:outline-none focus:border-[#8FAE8F] transition-colors"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       />
                     </div>
                   </div>
 
                   <div className="mb-6">
-                    <label className="block text-sm font-semibold text-[#5E3B76] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <label className="block text-sm font-semibold text-[#8FAE8F] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       Activity Level
                     </label>
                     <div className="grid grid-cols-3 gap-3">
@@ -750,8 +806,8 @@ export default function LavenderLuxeHomepage() {
                           onClick={() => setActivityLevel(level)}
                           className={`py-3 px-4 rounded-xl text-sm font-semibold transition-all ${
                             activityLevel === level
-                              ? 'bg-[#5E3B76] text-white'
-                              : 'border-2 border-[#ead9ff] text-[#8a7ba8] hover:border-[#5E3B76]'
+                              ? 'bg-[#8FAE8F] text-white'
+                              : 'border-2 border-[#F8F5F0] text-[#333333] hover:border-[#8FAE8F]'
                           }`}
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         >
@@ -761,16 +817,32 @@ export default function LavenderLuxeHomepage() {
                     </div>
                   </div>
 
+                  <div className="mb-6">
+                    <label className="block text-sm font-semibold text-[#8FAE8F] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      Meals Per Day
+                    </label>
+                    <select
+                      value={mealsPerDay}
+                      onChange={(e) => setMealsPerDay(parseInt(e.target.value))}
+                      className="w-full px-4 py-3 border-2 border-[#F8F5F0] rounded-xl focus:outline-none focus:border-[#8FAE8F] transition-colors"
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
+                    >
+                      <option value="1">1 meal per day</option>
+                      <option value="2">2 meals per day</option>
+                      <option value="3">3 meals per day</option>
+                    </select>
+                  </div>
+
                   <button
                     onClick={calculateCalories}
-                    className="w-full bg-[#5E3B76] text-white py-4 rounded-xl text-base font-semibold hover:bg-[#452a6d] transition-colors shadow-lg hover:shadow-xl"
+                    className="w-full bg-[#8FAE8F] text-white py-4 rounded-xl text-base font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg hover:shadow-xl"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
-                    Calculate Daily Calories
+                    Calculate Feeding Plan
                   </button>
 
                   {calculatedCalories && (
-                    <div className="mt-8 bg-gradient-to-br from-[#5E3B76] to-[#452a6d] rounded-2xl p-8 text-white">
+                    <div className="mt-8 bg-[#8FAE8F] rounded-2xl p-8 text-white">
                       <div className="text-center mb-6">
                         <p className="text-sm opacity-90 mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           Recommended Daily Calories
@@ -782,6 +854,37 @@ export default function LavenderLuxeHomepage() {
                           calories per day
                         </p>
                       </div>
+
+                      {feedingGuide && (
+                        <div className="border-t border-white/20 mt-6 pt-6">
+                          <h3 className="text-xl font-bold mb-4 text-center text-white" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                            Feeding Guide for {feedingGuide.weightRange}
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="bg-white/10 rounded-xl p-4 text-center">
+                              <p className="text-xs text-white opacity-75 mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>Cups Per Day</p>
+                              <p className="text-2xl font-bold text-white" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                                {formatFraction(feedingGuide.cupsPerDay.min)} - {formatFraction(feedingGuide.cupsPerDay.max)}
+                              </p>
+                              <p className="text-xs text-white opacity-75 mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>cups</p>
+                            </div>
+                            <div className="bg-white/10 rounded-xl p-4 text-center">
+                              <p className="text-xs text-white opacity-75 mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>Per Meal ({mealsPerDay}x/day)</p>
+                              <p className="text-2xl font-bold text-white" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                                {formatFraction(feedingGuide.cupsPerDay.min / mealsPerDay)} - {formatFraction(feedingGuide.cupsPerDay.max / mealsPerDay)}
+                              </p>
+                              <p className="text-xs text-white opacity-75 mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>cups</p>
+                            </div>
+                            <div className="bg-white/10 rounded-xl p-4 text-center">
+                              <p className="text-xs text-white opacity-75 mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>Packs Per Week</p>
+                              <p className="text-2xl font-bold text-white" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                                {feedingGuide.packsPerWeek.min} - {feedingGuide.packsPerWeek.max}
+                              </p>
+                              <p className="text-xs text-white opacity-75 mt-1" style={{ fontFamily: "'Poppins', sans-serif" }}>packs</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
                       <div className="border-t border-white/20 pt-6 space-y-3 text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         <p className="flex items-start gap-2">
@@ -796,7 +899,7 @@ export default function LavenderLuxeHomepage() {
 
                       <Link
                         href="/contact-expert"
-                        className="mt-6 w-full bg-white text-[#5E3B76] py-3 rounded-xl text-base font-semibold hover:bg-[#d8c6ff] transition-colors inline-flex items-center justify-center gap-2"
+                        className="mt-6 w-full bg-white text-[#8FAE8F] py-3 rounded-xl text-base font-semibold hover:bg-[#F8F5F0] transition-colors inline-flex items-center justify-center gap-2"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       >
                         Get Personalized Plan
@@ -815,12 +918,12 @@ export default function LavenderLuxeHomepage() {
 
           {/* Bottom CTA */}
           <div className="text-center mt-8">
-            <p className="text-sm text-[#8a7ba8] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-sm text-[#333333] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Want a complete nutrition analysis with microbiome testing and custom meal plans?
             </p>
             <Link
               href="/nutrition-services"
-              className="inline-flex items-center gap-2 bg-[#9657EE] text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-[#7e43c4] transition-colors shadow-lg"
+              className="inline-flex items-center gap-2 bg-[#5E8C8C] text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-[#5E8C8C] transition-colors shadow-lg"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Book Expert Consultation ($395)
@@ -834,13 +937,13 @@ export default function LavenderLuxeHomepage() {
       <section className="px-4 py-16 bg-white">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-sm font-semibold text-[#5E8C8C] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Our Three-Part Approach
             </p>
-            <h2 className="text-4xl text-[#2b1d3b] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+            <h2 className="text-4xl text-[#333333] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
               Test. Feed. Thrive.
             </h2>
-            <p className="text-base text-[#6e5c8f] max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-base text-[#333333] max-w-2xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
               We combine science, fresh food, and personalized support to give your dog the health breakthrough they deserve.
             </p>
           </div>
@@ -851,7 +954,7 @@ export default function LavenderLuxeHomepage() {
               return (
                 <div
                   key={service.title}
-                  className="rounded-2xl border-2 border-[#ead9ff] bg-[#fdfbf7] shadow-md p-6 hover:shadow-xl hover:border-[#9657EE]/30 transition-all group"
+                  className="rounded-2xl border-2 border-[#F8F5F0] bg-[#fdfbf7] shadow-md p-6 hover:shadow-xl hover:border-[#5E8C8C]/30 transition-all group"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div
@@ -868,17 +971,17 @@ export default function LavenderLuxeHomepage() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl text-[#2b1d3b] mb-3 group-hover:text-[#9657EE] transition-colors" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  <h3 className="text-xl text-[#333333] mb-3 group-hover:text-[#5E8C8C] transition-colors" style={{ fontFamily: "'Abril Fatface', serif" }}>
                     {service.title}
                   </h3>
 
-                  <p className="text-sm text-[#6e5c8f] mb-5 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <p className="text-sm text-[#333333] mb-5 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     {service.description}
                   </p>
 
                   <Link
                     href={service.href}
-                    className="inline-flex items-center text-sm font-semibold text-[#5E3B76] hover:text-[#9657EE] transition-colors group-hover:gap-2 gap-1"
+                    className="inline-flex items-center text-sm font-semibold text-[#8FAE8F] hover:text-[#5E8C8C] transition-colors group-hover:gap-2 gap-1"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     {service.cta}
@@ -891,38 +994,178 @@ export default function LavenderLuxeHomepage() {
         </div>
       </section>
 
-      {/* Christie's Credentials Section */}
-      <section className="px-4 py-16 bg-gradient-to-br from-[#d8c6ff] to-[#e9dcff]">
+      {/* Start Your Dog's Transformation Section */}
+      <section className="px-4 py-16 bg-white">
+        <div className="mx-auto max-w-5xl">
+          <div className="bg-[#8FAE8F] rounded-3xl shadow-2xl overflow-hidden">
+            <div className="grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
+              {/* Left: Content */}
+              <div className="text-white">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  Start Your Dog's Transformation
+                </h2>
+                <p className="text-lg mb-4 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Struggling to find the right meals? We're here to help.
+                </p>
+                <p className="mb-6 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Unlike big-box companies, we believe in personalized care—not computer-generated responses. Our experts guide you every step of the way.
+                </p>
+                <Link
+                  href="#calculator"
+                  className="inline-flex items-center gap-2 bg-white text-[#8FAE8F] px-6 py-3 rounded-full font-semibold hover:bg-[#F8F5F0] transition-colors"
+                  style={{ fontFamily: "'Poppins', sans-serif" }}
+                >
+                  <Calculator className="w-5 h-5" />
+                  Learn More & Try the Feeding Calculator
+                </Link>
+              </div>
+
+              {/* Right: Image */}
+              <div className="relative">
+                <Image
+                  src="/images/Copy of Westie+and+plate+Waggin+Meals logo.jpg"
+                  alt="Happy Westie with fresh food"
+                  width={500}
+                  height={500}
+                  className="rounded-2xl shadow-xl"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Special Diet Solutions Section */}
+      <section className="px-4 py-16 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#333333] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              Special Diet Solutions
+            </h2>
+            <p className="text-lg text-[#4a4a4a] max-w-3xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              For dogs with unique health needs, our experts craft customized meals aligned with veterinary recommendations.
+            </p>
+          </div>
+
+          {/* 3 Blocks */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Block 1: 5-Strands Testing */}
+            <a
+              href="https://5strands.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-[#F8F5F0] rounded-2xl p-6 hover:shadow-xl transition-all border-2 border-transparent hover:border-[#8FAE8F]"
+            >
+              <div className="aspect-square relative mb-4 rounded-xl overflow-hidden">
+                <Image
+                  src="/images/5 Strands (1).webp"
+                  alt="5-Strands Testing"
+                  width={400}
+                  height={400}
+                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-[#333333] mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                5-Strands Testing
+              </h3>
+              <p className="text-[#4a4a4a] text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Comprehensive intolerance testing to identify food sensitivities
+              </p>
+            </a>
+
+            {/* Block 2: Custom Prepared Diet Meals */}
+            <Link
+              href="/contact"
+              className="group bg-[#F8F5F0] rounded-2xl p-6 hover:shadow-xl transition-all border-2 border-transparent hover:border-[#5E8C8C]"
+            >
+              <div className="aspect-square relative mb-4 rounded-xl overflow-hidden">
+                <Image
+                  src="/images/Tres Naquin.png"
+                  alt="Custom Prepared Meals"
+                  width={400}
+                  height={400}
+                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-[#333333] mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                Custom Prepared Diet Meals
+              </h3>
+              <p className="text-[#4a4a4a] text-sm mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Personalized meal prep for dogs with special dietary needs
+              </p>
+              <span className="inline-flex items-center gap-2 bg-[#5E8C8C] text-white px-4 py-2 rounded-full text-sm font-semibold group-hover:bg-[#4a6e6e] transition-colors">
+                Contact Us Now
+                <ArrowRight className="w-4 h-4" />
+              </span>
+            </Link>
+
+            {/* Block 3: Expert Consultation */}
+            <Link
+              href="/nutrition-services"
+              className="group bg-[#F8F5F0] rounded-2xl p-6 hover:shadow-xl transition-all border-2 border-transparent hover:border-[#C97B63]"
+            >
+              <div className="aspect-square relative mb-4 rounded-xl overflow-hidden">
+                <Image
+                  src="/images/Expert Consultation.jpg"
+                  alt="Expert Consultation"
+                  width={400}
+                  height={400}
+                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-[#333333] mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                Expert Consultation
+              </h3>
+              <p className="text-[#4a4a4a] text-sm" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Cook with confidence using whole foods! Our experts create tailored recipes for dogs with special health requirements—always backed by veterinary science.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Meet Your Expert Section */}
+      <section className="px-4 py-16 bg-[#d4e4d4]">
         <div className="mx-auto max-w-4xl">
-          <div className="bg-white rounded-3xl border-2 border-[#ead9ff] shadow-2xl p-8 md:p-10">
-            <div className="flex flex-col md:flex-row gap-6 items-center">
+          <div className="bg-white rounded-3xl border-2 border-[#8FAE8F]/30 shadow-2xl p-8 md:p-10">
+            <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="flex-shrink-0">
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#5E3B76] to-[#452a6d] flex items-center justify-center text-white shadow-xl border-4 border-white">
-                  <span className="text-5xl font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>C</span>
+                <div className="w-48 h-48 rounded-full overflow-hidden shadow-2xl border-4 border-white">
+                  <Image
+                    src="/images/Christie 7 16 25-8 - Copy.jpg"
+                    alt="Christie Willett - Board-Certified Canine Nutritionist"
+                    width={300}
+                    height={300}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </div>
               <div className="flex-1 text-center md:text-left">
-                <p className="text-sm font-semibold text-[#9657EE] uppercase tracking-[0.3em] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-sm font-semibold text-[#8FAE8F] uppercase tracking-[0.3em] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Meet Your Expert
                 </p>
-                <h2 className="text-3xl text-[#2b1d3b] mb-3" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                  Christie Webb, M.A., M.S.
+                <h2 className="text-3xl text-[#333333] mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                  Christie Willett, M.A., M.S.
                 </h2>
-                <p className="text-sm text-[#6e5c8f] mb-4 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  Christie holds dual master&rsquo;s degrees in animal nutrition and food science with over 8 years transforming dogs&rsquo; lives through personalized nutrition. She specializes in gut health, microbiome optimization, and partnering with families whose dogs haven&rsquo;t responded to traditional veterinary approaches.
+                <p className="text-sm font-semibold text-[#5E8C8C] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Integrative Animal Nutrition<br />
+                  Canine Specialist in Nutrition and Feeding Behavior | Owner of Waggin Meals
+                </p>
+                <p className="text-sm text-[#4a4a4a] mb-4 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  Since 2019, Christie has transformed dogs' lives through personalized, whole-food nutrition. She specializes in gut and behavioral health, stress and anxiety management, gestation, and complex dietary restrictions. Christie collaborates closely with veterinarians to ensure every plan is science-based and tailored to each dog's unique needs. Her approach combines animal science with attentive listening to pet owners—creating nutrition strategies that truly work.
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                  <span className="bg-[#5E3B76]/10 text-[#5E3B76] px-3 py-1.5 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    Dual Master&apos;s Degrees
+                  <span className="bg-[#8FAE8F]/10 text-[#8FAE8F] px-3 py-1.5 rounded-full text-xs font-semibold border border-[#8FAE8F]/20" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    M.A. Animal Feed & Nutrition
                   </span>
-                  <span className="bg-[#5E3B76]/10 text-[#5E3B76] px-3 py-1.5 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    M.S. Animal Nutrition
+                  <span className="bg-[#5E8C8C]/10 text-[#5E8C8C] px-3 py-1.5 rounded-full text-xs font-semibold border border-[#5E8C8C]/20" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    M.S. Food Science
                   </span>
-                  <span className="bg-[#5E3B76]/10 text-[#5E3B76] px-3 py-1.5 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    M.A. Food Science
+                  <span className="bg-[#C97B63]/10 text-[#C97B63] px-3 py-1.5 rounded-full text-xs font-semibold border border-[#C97B63]/20" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Certified Feeding Behavior
                   </span>
-                  <span className="bg-[#5E3B76]/10 text-[#5E3B76] px-3 py-1.5 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    520+ Success Stories
+                  <span className="bg-[#333333]/10 text-[#333333] px-3 py-1.5 rounded-full text-xs font-semibold border border-[#333333]/20" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    Since 2019
                   </span>
                 </div>
               </div>
@@ -931,17 +1174,17 @@ export default function LavenderLuxeHomepage() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="px-4 py-16 bg-gradient-to-b from-white to-[#d8c6ff]">
+      {/* Success Stories Section */}
+      <section className="px-4 py-16 bg-[#F8F5F0]">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              What Pet Parents Say
+            <p className="text-sm font-semibold text-[#8FAE8F] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              Real Results
             </p>
-            <h2 className="text-4xl text-[#2b1d3b] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-              Happy Customers & Waggin Tails
+            <h2 className="text-4xl text-[#333333] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              Success Stories from Our Waggin' Pack
             </h2>
-            <p className="text-base text-[#6e5c8f] max-w-3xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-base text-[#333333]/70 max-w-3xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Real stories from real pet parents who trusted us with their dog's health and nutrition.
             </p>
           </div>
@@ -950,24 +1193,41 @@ export default function LavenderLuxeHomepage() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-white border-2 border-[#ead9ff] rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:border-[#9657EE]/30 transition-all"
+                className="bg-white border-2 border-[#8FAE8F]/20 rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:border-[#8FAE8F] transition-all"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#5E3B76] to-[#452a6d] flex items-center justify-center text-white font-bold text-lg shadow-md" style={{ fontFamily: "'Abril Fatface', serif" }}>
-                    {testimonial.name[0]}
-                  </div>
+                <div className="flex items-center gap-4 mb-4">
+                  {testimonial.dogPhoto ? (
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-3 border-[#8FAE8F] shadow-md flex-shrink-0">
+                      <Image
+                        src={testimonial.dogPhoto}
+                        alt={testimonial.dogName || 'Happy customer dog'}
+                        width={64}
+                        height={64}
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-16 h-16 rounded-full bg-[#8FAE8F] flex items-center justify-center text-white font-bold text-xl shadow-md flex-shrink-0" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                      {testimonial.name[0]}
+                    </div>
+                  )}
                   <div className="flex-1">
-                    <p className="text-sm font-semibold text-[#5E3B76]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <p className="text-base font-semibold text-[#333333]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       {testimonial.name}
                     </p>
-                    <div className="flex text-[#e6b4ff]">
+                    {testimonial.dogName && (
+                      <p className="text-sm text-[#5E8C8C] font-medium" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        {testimonial.dogName}'s Parent
+                      </p>
+                    )}
+                    <div className="flex text-[#C97B63] mt-1">
                       {Array.from({ length: 5 }).map((_, starIndex) => (
                         <Star key={starIndex} className="w-4 h-4 fill-current" />
                       ))}
                     </div>
                   </div>
                 </div>
-                <p className="text-sm text-[#6e5c8f] leading-relaxed italic" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-sm text-[#333333]/80 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   "{testimonial.text}"
                 </p>
               </div>
@@ -977,7 +1237,7 @@ export default function LavenderLuxeHomepage() {
           <div className="text-center mt-10">
             <Link
               href="/testimonials"
-              className="inline-flex items-center gap-2 bg-[#5E3B76] text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-[#452a6d] transition-all shadow-lg hover:shadow-xl"
+              className="inline-flex items-center gap-2 bg-[#8FAE8F] text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-[#6d8c6d] transition-all shadow-lg hover:shadow-xl"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Read More Success Stories
@@ -990,11 +1250,11 @@ export default function LavenderLuxeHomepage() {
       {/* Newsletter Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full p-8 md:p-10 relative border-2 border-[#ead9ff] animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full p-8 md:p-10 relative border-2 border-[#F8F5F0] animate-in fade-in slide-in-from-bottom-4 duration-300">
             <button
               aria-label="Close modal"
               onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-[#8a7ba8] hover:text-black transition-colors"
+              className="absolute top-4 right-4 text-[#333333] hover:text-black transition-colors"
             >
               <X className="w-6 h-6" />
             </button>
@@ -1005,28 +1265,28 @@ export default function LavenderLuxeHomepage() {
                 alt="Waggin Meals logo"
                 width={120}
                 height={120}
-                className="rounded-full border-2 border-[#d3baff] shadow-lg bg-[#d8c6ff]"
+                className="rounded-full border-2 border-[#d4e4d4] shadow-lg bg-[#F8F5F0]"
               />
               <div className="flex-1">
-                <p className="text-sm font-semibold text-[#9657EE] uppercase tracking-[0.3em] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-sm font-semibold text-[#5E8C8C] uppercase tracking-[0.3em] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Save $25 Today
                 </p>
-                <h3 className="text-2xl text-[#2b1d3b] mb-3" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                <h3 className="text-2xl text-[#333333] mb-3" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   Join Our Nutrition Newsletter
                 </h3>
-                <p className="text-sm text-[#6e5c8f] mb-5 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-sm text-[#333333] mb-5 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Get weekly meal prep tips, exclusive recipes, and VIP-only discounts delivered to your inbox.
                 </p>
                 <form className="flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
                   <input
                     type="email"
                     placeholder="Enter your email"
-                    className="flex-1 rounded-full border-2 border-[#ead9ff] px-5 py-3 text-sm focus:outline-none focus:border-[#9657EE] transition-colors"
+                    className="flex-1 rounded-full border-2 border-[#F8F5F0] px-5 py-3 text-sm focus:outline-none focus:border-[#5E8C8C] transition-colors"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                   <button
                     type="submit"
-                    className="bg-[#5E3B76] text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#472d70] transition-colors shadow-lg hover:shadow-xl"
+                    className="bg-[#8FAE8F] text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg hover:shadow-xl"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     Claim My $25
@@ -1039,7 +1299,7 @@ export default function LavenderLuxeHomepage() {
       )}
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#5E3B76] to-[#452a6d] text-white mt-16">
+      <footer className="bg-[#8FAE8F] text-white mt-16">
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             {/* About Section */}
@@ -1050,7 +1310,7 @@ export default function LavenderLuxeHomepage() {
                   alt="Waggin Meals"
                   width={50}
                   height={50}
-                  className="rounded-full border border-[#ead9ff]"
+                  className="rounded-full border border-[#F8F5F0]"
                 />
                 <div>
                   <p className="text-sm font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
@@ -1067,13 +1327,13 @@ export default function LavenderLuxeHomepage() {
               <div className="space-y-2 text-xs">
                 <div className="flex items-center gap-2 opacity-90">
                   <Mail className="w-4 h-4" />
-                  <a href="mailto:info@wagginmeals.com" className="hover:text-[#e6b4ff] transition-colors">
+                  <a href="mailto:info@wagginmeals.com" className="hover:text-[#d4e4d4] transition-colors">
                     info@wagginmeals.com
                   </a>
                 </div>
                 <div className="flex items-center gap-2 opacity-90">
                   <Phone className="w-4 h-4" />
-                  <a href="tel:+1234567890" className="hover:text-[#e6b4ff] transition-colors">
+                  <a href="tel:+1234567890" className="hover:text-[#d4e4d4] transition-colors">
                     Contact Us
                   </a>
                 </div>
@@ -1086,11 +1346,11 @@ export default function LavenderLuxeHomepage() {
                 Quick Links
               </h3>
               <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <li><Link href="/" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Home</Link></li>
-                <li><Link href="/shop" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Shop</Link></li>
-                <li><Link href="/nutrition-services" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Nutrition Services</Link></li>
-                <li><Link href="/case-studies" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Success Stories</Link></li>
-                <li><Link href="/blog" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Pet Nutrition Insights</Link></li>
+                <li><Link href="/" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Home</Link></li>
+                <li><Link href="/shop" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Shop</Link></li>
+                <li><Link href="/nutrition-services" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Nutrition Services</Link></li>
+                <li><Link href="/case-studies" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Success Stories</Link></li>
+                <li><Link href="/blog" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Pet Nutrition Insights</Link></li>
               </ul>
             </div>
 
@@ -1100,11 +1360,11 @@ export default function LavenderLuxeHomepage() {
                 Resources
               </h3>
               <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <li><Link href="/feeding-calculator" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Feeding Calculator</Link></li>
-                <li><Link href="/guides/fresh-food-guide" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Fresh Food Guide</Link></li>
-                <li><Link href="/resources" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Free PDF Guides</Link></li>
-                <li><Link href="/faq" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">FAQs</Link></li>
-                <li><Link href="/contact" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Contact Us</Link></li>
+                <li><Link href="/feeding-calculator" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Feeding Calculator</Link></li>
+                <li><Link href="/guides/fresh-food-guide" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Fresh Food Guide</Link></li>
+                <li><Link href="/resources" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Free PDF Guides</Link></li>
+                <li><Link href="/faq" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">FAQs</Link></li>
+                <li><Link href="/contact" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Contact Us</Link></li>
               </ul>
             </div>
 
@@ -1114,9 +1374,9 @@ export default function LavenderLuxeHomepage() {
                 Legal
               </h3>
               <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <li><Link href="/shipping" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Shipping & Delivery</Link></li>
-                <li><Link href="/privacy" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Terms of Service</Link></li>
+                <li><Link href="/shipping" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Shipping & Delivery</Link></li>
+                <li><Link href="/privacy" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Terms of Service</Link></li>
               </ul>
             </div>
           </div>
@@ -1125,7 +1385,7 @@ export default function LavenderLuxeHomepage() {
           <div className="border-t border-white/20 pt-8 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-[#e6b4ff] flex-shrink-0" />
+                <ShieldCheck className="w-5 h-5 text-[#d4e4d4] flex-shrink-0" />
                 <div>
                   <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     FDA Pet Feed Program
@@ -1136,7 +1396,7 @@ export default function LavenderLuxeHomepage() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Stethoscope className="w-5 h-5 text-[#e6b4ff] flex-shrink-0" />
+                <Stethoscope className="w-5 h-5 text-[#d4e4d4] flex-shrink-0" />
                 <div>
                   <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     Christie Formulated
@@ -1147,7 +1407,7 @@ export default function LavenderLuxeHomepage() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Leaf className="w-5 h-5 text-[#e6b4ff] flex-shrink-0" />
+                <Leaf className="w-5 h-5 text-[#d4e4d4] flex-shrink-0" />
                 <div>
                   <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     AAFCO Complete

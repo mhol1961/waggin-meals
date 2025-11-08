@@ -54,8 +54,8 @@ export default function AdminInventoryAdjustmentsPage() {
       restock: 'bg-blue-100 text-blue-800',
       return: 'bg-yellow-100 text-yellow-800',
       damage: 'bg-red-100 text-red-800',
-      adjustment: 'bg-purple-100 text-purple-800',
-      subscription: 'bg-indigo-100 text-indigo-800',
+      adjustment: 'bg-[#8FAE8F]/10 text-[#5E8C8C]',
+      subscription: 'bg-[#5E8C8C]/10 text-[#5E8C8C]',
     };
     return colors[reason] || 'bg-gray-100 text-gray-800';
   }

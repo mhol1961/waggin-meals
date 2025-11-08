@@ -54,7 +54,7 @@ ${message}
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
           </div>
-          <div style="background-color: #fff; padding: 20px; border-left: 4px solid #a5b5eb; margin: 20px 0;">
+          <div style="background-color: #fff; padding: 20px; border-left: 4px solid #8FAE8F; margin: 20px 0;">
             <h3 style="color: #3c3a47; margin-top: 0;">Message:</h3>
             <p style="color: #666666; line-height: 1.6;">${message.replace(/\n/g, '<br>')}</p>
           </div>
@@ -90,7 +90,7 @@ This is an automated response. Please do not reply to this email.
       `,
       html: `
         <div style="font-family: 'Poppins', Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
-          <div style="background: linear-gradient(to right, #a5b5eb, #c5d4f7); padding: 40px; text-align: center;">
+          <div style="background: linear-gradient(to right, #8FAE8F, #F8F5F0); padding: 40px; text-align: center;">
             <h1 style="color: #ffffff; font-family: 'Abril Fatface', serif; margin: 0;">Waggin Meals</h1>
             <p style="color: #ffffff; margin: 10px 0 0 0;">Pet Nutrition Co.</p>
           </div>
@@ -107,9 +107,9 @@ This is an automated response. Please do not reply to this email.
             <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 30px 0;">
               <h3 style="color: #3c3a47; margin-top: 0;">In the meantime, feel free to explore:</h3>
               <ul style="color: #666666; line-height: 1.8;">
-                <li><a href="https://wagginmeals.com/shop" style="color: #a5b5eb; text-decoration: none;">Our Fresh Meals</a></li>
-                <li><a href="https://wagginmeals.com/nutrition-services" style="color: #a5b5eb; text-decoration: none;">Nutrition Services with Christie</a></li>
-                <li><a href="https://wagginmeals.com/blog" style="color: #a5b5eb; text-decoration: none;">Free Resources & Blog</a></li>
+                <li><a href="https://wagginmeals.com/shop" style="color: #8FAE8F; text-decoration: none;">Our Fresh Meals</a></li>
+                <li><a href="https://wagginmeals.com/nutrition-services" style="color: #8FAE8F; text-decoration: none;">Nutrition Services with Christie</a></li>
+                <li><a href="https://wagginmeals.com/blog" style="color: #8FAE8F; text-decoration: none;">Free Resources & Blog</a></li>
               </ul>
             </div>
 
@@ -119,7 +119,7 @@ This is an automated response. Please do not reply to this email.
             </p>
           </div>
 
-          <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 2px solid #a5b5eb;">
+          <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 2px solid #8FAE8F;">
             <p style="color: #999999; font-size: 12px; margin: 0;">
               This is an automated response. Please do not reply to this email.
             </p>

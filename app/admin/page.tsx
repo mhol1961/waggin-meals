@@ -163,7 +163,7 @@ export default function AdminDashboard() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8FAE8F] mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading dashboard...</p>
         </div>
       </div>
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
           <p className="text-red-600">{error || 'Failed to load dashboard'}</p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+            className="mt-4 px-4 py-2 bg-[#8FAE8F]/600 text-white rounded-lg hover:bg-[#8FAE8F]/700"
           >
             Retry
           </button>
@@ -190,7 +190,7 @@ export default function AdminDashboard() {
   const allOrderStatusData = [
     { name: 'Processing', value: stats.orders.byStatus.processing, color: '#f59e0b' },
     { name: 'Shipped', value: stats.orders.byStatus.shipped, color: '#6366f1' },
-    { name: 'Out for Delivery', value: stats.orders.byStatus.out_for_delivery, color: '#8b5cf6' },
+    { name: 'Out for Delivery', value: stats.orders.byStatus.out_for_delivery, color: '#5E8C8C' },
     { name: 'Delivered', value: stats.orders.byStatus.delivered, color: '#10b981' },
     { name: 'Canceled', value: stats.orders.byStatus.canceled, color: '#ef4444' },
   ];
@@ -250,7 +250,7 @@ export default function AdminDashboard() {
         {/* Key Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Monthly Revenue */}
-          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
+          <div className="bg-[#8FAE8F] rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium opacity-90">Monthly Revenue</h3>
               <span className="text-2xl">💰</span>
@@ -269,7 +269,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Average Order Value */}
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
+          <div className="bg-blue-500 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium opacity-90">Average Order Value</h3>
               <span className="text-2xl">📊</span>
@@ -283,7 +283,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Customer Lifetime Value */}
-          <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
+          <div className="bg-green-500 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium opacity-90">Customer LTV</h3>
               <span className="text-2xl">💎</span>
@@ -297,7 +297,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Monthly Recurring Revenue */}
-          <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
+          <div className="bg-[#5E8C8C] rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-all duration-200">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium opacity-90">Monthly Recurring</h3>
               <span className="text-2xl">🔄</span>
@@ -315,7 +315,7 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Link
             href="/admin/orders"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-purple-300 transition-all duration-200 group"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-[#8FAE8F]/40 transition-all duration-200 group"
           >
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium text-gray-600">Total Orders</h3>
@@ -324,7 +324,7 @@ export default function AdminDashboard() {
             <div className="text-3xl font-bold text-gray-900 mb-1">
               {stats.orders.total}
             </div>
-            <div className="text-sm text-purple-600 group-hover:text-purple-700">
+            <div className="text-sm text-[#5E8C8C] group-hover:text-[#6d8c6d]">
               View all orders →
             </div>
           </Link>
@@ -386,7 +386,7 @@ export default function AdminDashboard() {
             </div>
             <div className="text-right">
               <div className="text-sm text-gray-600">Total (30 days)</div>
-              <div className="text-lg font-bold text-purple-600">
+              <div className="text-lg font-bold text-[#5E8C8C]">
                 {formatCurrency(stats.charts.revenueChart.reduce((sum, day) => sum + day.revenue, 0))}
               </div>
             </div>
@@ -395,7 +395,7 @@ export default function AdminDashboard() {
             <AreaChart data={stats.charts.revenueChart}>
               <defs>
                 <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.4} />
+                  <stop offset="5%" stopColor="#5E8C8C" stopOpacity={0.4} />
                   <stop offset="95%" stopColor="#c4b5fd" stopOpacity={0.1} />
                 </linearGradient>
               </defs>
@@ -422,7 +422,7 @@ export default function AdminDashboard() {
               <Area
                 type="monotone"
                 dataKey="revenue"
-                stroke="#8b5cf6"
+                stroke="#5E8C8C"
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#colorRevenue)"
@@ -536,7 +536,7 @@ export default function AdminDashboard() {
             </div>
             <Link
               href="/admin/products"
-              className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+              className="text-sm text-[#5E8C8C] hover:text-[#6d8c6d] font-medium"
             >
               View all products →
             </Link>
@@ -578,7 +578,7 @@ export default function AdminDashboard() {
                         <Link
                           href={`/products/${product.handle}`}
                           target="_blank"
-                          className="text-gray-900 hover:text-purple-600 font-medium transition-colors"
+                          className="text-gray-900 hover:text-[#5E8C8C] font-medium transition-colors"
                         >
                           {product.title}
                         </Link>
@@ -627,7 +627,7 @@ export default function AdminDashboard() {
 
           <Link
             href="/admin/newsletter"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-purple-300 transition-all duration-200 group"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-[#8FAE8F]/40 transition-all duration-200 group"
           >
             <h4 className="text-sm font-medium text-gray-600 mb-2">Newsletter Subscribers</h4>
             <div className="text-2xl font-bold text-gray-900">
@@ -642,7 +642,7 @@ export default function AdminDashboard() {
             <h3 className="text-lg font-semibold text-gray-900">Recent Orders</h3>
             <Link
               href="/admin/orders"
-              className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+              className="text-sm text-[#5E8C8C] hover:text-[#6d8c6d] font-medium"
             >
               View all →
             </Link>
@@ -675,7 +675,7 @@ export default function AdminDashboard() {
                     <td className="px-4 py-3">
                       <Link
                         href={`/admin/orders/${order.id}`}
-                        className="text-purple-600 hover:text-purple-700 font-medium"
+                        className="text-[#5E8C8C] hover:text-[#6d8c6d] font-medium"
                       >
                         {order.order_number}
                       </Link>
@@ -712,7 +712,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Tax Documents Section */}
-        <div className="mt-8 bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200">
+        <div className="mt-8 bg-[#8FAE8F]/10 rounded-xl p-6 border border-[#8FAE8F]/20">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
             Tax & Accounting Reports
           </h3>
@@ -721,25 +721,25 @@ export default function AdminDashboard() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="bg-white rounded-lg p-4 text-center">
-              <div className="text-xl font-bold text-purple-600">
+              <div className="text-xl font-bold text-[#5E8C8C]">
                 {formatCurrency(stats.revenue.year)}
               </div>
               <div className="text-sm text-gray-600 mt-1">Year to Date</div>
             </div>
             <div className="bg-white rounded-lg p-4 text-center">
-              <div className="text-xl font-bold text-purple-600">
+              <div className="text-xl font-bold text-[#5E8C8C]">
                 {formatCurrency(stats.revenue.allTime)}
               </div>
               <div className="text-sm text-gray-600 mt-1">All Time</div>
             </div>
             <div className="bg-white rounded-lg p-4 text-center">
-              <div className="text-xl font-bold text-purple-600">
+              <div className="text-xl font-bold text-[#5E8C8C]">
                 {stats.orders.total}
               </div>
               <div className="text-sm text-gray-600 mt-1">Total Orders</div>
             </div>
             <div className="bg-white rounded-lg p-4 text-center">
-              <div className="text-xl font-bold text-purple-600">
+              <div className="text-xl font-bold text-[#5E8C8C]">
                 {stats.subscriptions.total}
               </div>
               <div className="text-sm text-gray-600 mt-1">Total Subscriptions</div>

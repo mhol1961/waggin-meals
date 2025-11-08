@@ -28,11 +28,11 @@ export default function AddressesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb]">
+    <div className="min-h-screen bg-[#f8f9fa]">
       <div className="max-w-4xl mx-auto px-4 py-16">
         <Link
           href="/account"
-          className="inline-flex items-center gap-2 text-[#a5b5eb] hover:text-[#8a9fd9] mb-8"
+          className="inline-flex items-center gap-2 text-[#8FAE8F] hover:text-[#6d8c6d] mb-8"
           style={{ fontFamily: "'Poppins', sans-serif" }}
         >
           <ArrowLeft className="w-4 h-4" />
@@ -47,7 +47,7 @@ export default function AddressesPage() {
             Shipping Addresses
           </h1>
           <button
-            className="flex items-center gap-2 bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+            className="flex items-center gap-2 bg-[#8FAE8F] text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             <Plus className="w-5 h-5" />
@@ -57,7 +57,7 @@ export default function AddressesPage() {
 
         {loading ? (
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#a5b5eb] mx-auto"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8FAE8F] mx-auto"></div>
           </div>
         ) : addresses.length > 0 ? (
           <div className="grid md:grid-cols-2 gap-4">
@@ -69,7 +69,7 @@ export default function AddressesPage() {
           </div>
         ) : (
           <div className="bg-white rounded-2xl p-12 shadow-lg text-center">
-            <MapPin className="w-16 h-16 text-[#a5b5eb] mx-auto mb-4" />
+            <MapPin className="w-16 h-16 text-[#8FAE8F] mx-auto mb-4" />
             <h3
               className="text-xl font-bold text-[#3c3a47] mb-2"
               style={{ fontFamily: "'Abril Fatface', serif" }}

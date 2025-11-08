@@ -8,18 +8,19 @@ import { createClient } from '@supabase/supabase-js';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wagginmeals.com';
 
+// Use anon key instead of service role key for sitemap generation
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages with priorities and change frequencies
+  // Note: lastModified omitted for static pages to prevent unnecessary crawl signals
   const staticPages: MetadataRoute.Sitemap = [
     // Homepage - Highest priority
     {
       url: siteUrl,
-      lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1.0,
     },
@@ -27,13 +28,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Main service pages - Very high priority
     {
       url: `${siteUrl}/nutrition-services`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
       url: `${siteUrl}/shop`,
-      lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
     },
@@ -41,19 +40,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Important content pages - High priority
     {
       url: `${siteUrl}/blog`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${siteUrl}/case-studies`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${siteUrl}/testimonials`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
@@ -61,31 +57,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Product categories and collections
     {
       url: `${siteUrl}/collections`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/meal-toppers`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/bundles`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/smart-bundles`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/recommended-products`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
@@ -93,25 +84,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Health condition pages
     {
       url: `${siteUrl}/digestive-health`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/food-sensitivities`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/kidney-health`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/weight-management`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
@@ -119,25 +106,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Resource pages
     {
       url: `${siteUrl}/resources`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${siteUrl}/faq`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${siteUrl}/feeding-calculator`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${siteUrl}/guides/fresh-food-guide`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
@@ -145,25 +128,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // About and company pages
     {
       url: `${siteUrl}/contact`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.5,
     },
     {
       url: `${siteUrl}/contact-expert`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.5,
     },
     {
       url: `${siteUrl}/ingredient-sourcing`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.5,
     },
     {
       url: `${siteUrl}/feeding-made-simple`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.5,
     },
@@ -171,31 +150,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Special programs
     {
       url: `${siteUrl}/monthly-wag-box`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${siteUrl}/diagnostic`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${siteUrl}/puppies`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${siteUrl}/supplementation`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${siteUrl}/boost-nutrition`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
@@ -203,19 +177,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Partnership and events
     {
       url: `${siteUrl}/partnerships/twisted-laurel`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.4,
     },
     {
       url: `${siteUrl}/events`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
       url: `${siteUrl}/market-brochure`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.4,
     },
@@ -223,19 +194,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Legal pages - Low priority but necessary
     {
       url: `${siteUrl}/privacy`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${siteUrl}/terms`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${siteUrl}/shipping`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
@@ -243,13 +211,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Auth pages - Low priority
     {
       url: `${siteUrl}/auth/login`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.2,
     },
     {
       url: `${siteUrl}/auth/signup`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.2,
     },

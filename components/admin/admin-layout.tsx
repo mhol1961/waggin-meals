@@ -46,6 +46,12 @@ export default function AdminLayout({ children, title, username }: AdminLayoutPr
                 Blog
               </Link>
               <Link
+                href="/admin/conditions"
+                className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition"
+              >
+                Condition Pages
+              </Link>
+              <Link
                 href="/admin/newsletter"
                 className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition"
               >

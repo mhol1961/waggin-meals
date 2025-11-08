@@ -118,7 +118,7 @@ export default function CustomerOrdersClient({ customer, orders }: Props) {
               </Link>
               <Link
                 href="/customer/orders"
-                className="block px-4 py-3 rounded-lg bg-[#a5b5eb] text-white font-medium"
+                className="block px-4 py-3 rounded-lg bg-[#8FAE8F] text-white font-medium"
               >
                 Order History
               </Link>
@@ -164,7 +164,7 @@ export default function CustomerOrdersClient({ customer, orders }: Props) {
                 </p>
                 <Link
                   href="/shop"
-                  className="inline-block px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors"
+                  className="inline-block px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors"
                 >
                   Start Shopping
                 </Link>

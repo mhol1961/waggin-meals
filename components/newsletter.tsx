@@ -1,49 +1,112 @@
 'use client';
 
+import { useState, FormEvent } from 'react';
+import { Mail } from 'lucide-react';
+
 export function Newsletter() {
+  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: firstName.trim(),
+          email: email.trim(),
+          source: 'page'
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus('success');
+        setMessage('Welcome to the pack! Check your email for a special welcome gift.');
+        setFirstName('');
+        setEmail('');
+
+        setTimeout(() => {
+          setStatus('idle');
+          setMessage('');
+        }, 5000);
+      } else {
+        setStatus('error');
+        setMessage(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      setStatus('error');
+      setMessage('Unable to connect. Please try again later.');
+    }
+  };
+
   return (
-    <section className="bg-gradient-to-br from-[#a5b5eb] to-[#8a9fd9] px-4 py-16">
+    <section className="bg-[#8FAE8F] px-4 py-16">
       <div className="mx-auto max-w-4xl">
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-normal text-white mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
-            Join Our Pack!
-          </h2>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Mail className="w-10 h-10 text-white" />
+            <h2 className="text-4xl font-normal text-white" style={{ fontFamily: "'Abril Fatface', serif" }}>
+              Join Our Pack!
+            </h2>
+          </div>
           <p className="text-lg text-white/90" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Get exclusive nutrition tips, recipes, special offers, and updates delivered to your inbox.
           </p>
         </div>
 
-        {/* GoHighLevel Newsletter Form Embed Placeholder */}
+        {/* Functional Newsletter Form */}
         <div className="bg-white rounded-lg shadow-xl p-8">
-          <div className="border-2 border-dashed border-[#a5b5eb] rounded-lg p-8 bg-[#f8f9fa]">
-            <div className="text-center">
-              <svg className="h-16 w-16 text-[#a5b5eb] mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-              </svg>
-              <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Newsletter Signup Form
-              </h3>
-              <p className="text-[14px] text-[#666666] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                The newsletter signup form will appear here once the GoHighLevel embed code is provided.
-              </p>
-              <div className="bg-white rounded p-4 text-left">
-                <p className="text-[13px] text-[#999999] font-mono" style={{ fontFamily: "'Courier New', monospace" }}>
-                  {`<!-- GHL Newsletter Embed Placeholder -->`}
-                </p>
-                <p className="text-[13px] text-[#999999] font-mono mt-2" style={{ fontFamily: "'Courier New', monospace" }}>
-                  {`<!-- Insert your GoHighLevel newsletter -->`}
-                </p>
-                <p className="text-[13px] text-[#999999] font-mono mt-2" style={{ fontFamily: "'Courier New', monospace" }}>
-                  {`<!-- signup form embed code here -->`}
-                </p>
-              </div>
-              <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded text-left">
-                <p className="text-[13px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  <strong className="text-[#3c3a47]">Developer Note:</strong> To add your GoHighLevel newsletter form, replace the placeholder div above with your GHL newsletter embed code. Subscribers will be automatically added to your GHL CRM.
-                </p>
-              </div>
+          <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <input
+                type="text"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+                disabled={status === 'loading'}
+                className="px-4 py-3 rounded-lg text-gray-900 bg-gray-50 border-2 border-gray-200 focus:border-[#8FAE8F] focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              />
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={status === 'loading'}
+                className="px-4 py-3 rounded-lg text-gray-900 bg-gray-50 border-2 border-gray-200 focus:border-[#8FAE8F] focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              />
             </div>
-          </div>
+            <button
+              type="submit"
+              disabled={status === 'loading'}
+              className="w-full px-6 py-3 rounded-lg text-lg font-semibold bg-[#8FAE8F] text-white hover:bg-[#6d8c6d] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
+              {status === 'loading' ? 'Subscribing...' : 'Subscribe Now'}
+            </button>
+
+            {message && (
+              <p
+                className={`text-sm mt-4 text-center ${status === 'success' ? 'text-green-700' : 'text-red-700'}`}
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                {message}
+              </p>
+            )}
+          </form>
         </div>
 
         {/* Trust Indicators */}

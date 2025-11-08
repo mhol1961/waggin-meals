@@ -1,18 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Fresh Food Guide for Your Dog | Waggin Meals',
-  description: 'Complete guide to fresh food feeding for dogs. Learn about safe foods, toxic ingredients to avoid, proper nutrition, and how to build balanced meals for your dog.',
-  keywords: 'dog nutrition, fresh food for dogs, safe foods for dogs, dog diet guide, homemade dog food, toxic foods for dogs',
-};
+import FoodCalculator from '@/components/food-calculator';
 
 export default function FreshFoodGuidePage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Fresh Food Guide for Your Dog's Bowl
@@ -23,7 +19,7 @@ export default function FreshFoodGuidePage() {
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="#safe-foods"
-              className="bg-white text-[#a5b5eb] px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-white text-[#8FAE8F] px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Safe Foods
@@ -37,7 +33,7 @@ export default function FreshFoodGuidePage() {
             </a>
             <a
               href="#proteins"
-              className="bg-white text-[#a5b5eb] px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-white text-[#8FAE8F] px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Protein Sources
@@ -52,7 +48,13 @@ export default function FreshFoodGuidePage() {
           <h2 className="text-2xl font-semibold text-[#3c3a47] mb-6 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Quick Navigation
           </h2>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-4 gap-4">
+            <a href="#calculator" className="bg-[#8FAE8F] text-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow text-center">
+              <div className="text-3xl mb-2">🧮</div>
+              <h3 className="font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Feeding Calculator
+              </h3>
+            </a>
             <a href="#produce" className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow text-center">
               <div className="text-3xl mb-2">🥕</div>
               <h3 className="font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -93,6 +95,19 @@ export default function FreshFoodGuidePage() {
         </div>
       </section>
 
+      {/* Food Calculator Section */}
+      <section id="calculator" className="bg-[#F8F5F0] px-4 py-16">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="text-4xl font-normal text-[#333333] mb-4 text-center" style={{ fontFamily: "'Abril Fatface', serif" }}>
+            Fresh Food Feeding Calculator
+          </h2>
+          <p className="text-center text-[16px] text-[#666666] mb-8 max-w-3xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Calculate the perfect portion sizes for your dog based on their weight, activity level, and life stage.
+          </p>
+          <FoodCalculator />
+        </div>
+      </section>
+
       {/* Garden Goodies Section */}
       <section id="produce" className="bg-white px-4 py-16">
         <div className="mx-auto max-w-6xl">
@@ -110,7 +125,7 @@ export default function FreshFoodGuidePage() {
 
           <div className="overflow-x-auto shadow-lg rounded-lg">
             <table className="w-full bg-white">
-              <thead className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7]">
+              <thead className="bg-[#8FAE8F]">
                 <tr>
                   <th className="px-6 py-4 text-left text-white font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     Ingredient
@@ -267,43 +282,43 @@ export default function FreshFoodGuidePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Whole Grains</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Whole Grains</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Energy and gut health</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Flaxseed</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Flaxseed</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Omega-3s, anti-inflammatory</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Turmeric</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Turmeric</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Joint and heart support</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Thyme / Oregano</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Thyme / Oregano</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Antimicrobial, immune boost</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Ginger</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Ginger</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Nausea relief, joint health</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Coconut / Olive Oil</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Coconut / Olive Oil</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Skin, coat, brain health</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Apple Cider Vinegar (diluted)</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Apple Cider Vinegar (diluted)</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Digestion, immunity</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Calcium Phosphate</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Calcium Phosphate</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Bone health (vet-approved dosage)</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Vitamin E (sunflower oil)</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Vitamin E (sunflower oil)</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Heart and cancer protection</p>
             </div>
             <div className="bg-white p-4 rounded-lg shadow">
-              <h3 className="font-semibold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Eggs (cooked)</h3>
+              <h3 className="font-semibold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>Eggs (cooked)</h3>
               <p className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Muscle and coat support</p>
             </div>
           </div>
@@ -322,7 +337,7 @@ export default function FreshFoodGuidePage() {
 
           <div className="overflow-x-auto shadow-lg rounded-lg mb-8">
             <table className="w-full bg-white">
-              <thead className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7]">
+              <thead className="bg-[#8FAE8F]">
                 <tr>
                   <th className="px-6 py-4 text-left text-white font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Cheese Type</th>
                   <th className="px-6 py-4 text-left text-white font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Benefits</th>
@@ -396,7 +411,7 @@ export default function FreshFoodGuidePage() {
 
           <div className="overflow-x-auto shadow-lg rounded-lg">
             <table className="w-full bg-white">
-              <thead className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7]">
+              <thead className="bg-[#8FAE8F]">
                 <tr>
                   <th className="px-6 py-4 text-left text-white font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Protein</th>
                   <th className="px-6 py-4 text-left text-white font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Benefits</th>
@@ -458,7 +473,7 @@ export default function FreshFoodGuidePage() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div className="bg-[#f8f9fa] rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-[#a5b5eb] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>Starchy Veggies</h3>
+              <h3 className="text-xl font-semibold text-[#8FAE8F] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>Starchy Veggies</h3>
               <ul className="space-y-2 text-[14px] text-[#666666]">
                 <li>• Sweet potatoes</li>
                 <li>• Pumpkin</li>
@@ -468,7 +483,7 @@ export default function FreshFoodGuidePage() {
             </div>
 
             <div className="bg-[#f8f9fa] rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-[#a5b5eb] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>Grains (if tolerated)</h3>
+              <h3 className="text-xl font-semibold text-[#8FAE8F] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>Grains (if tolerated)</h3>
               <ul className="space-y-2 text-[14px] text-[#666666]">
                 <li>• Brown rice</li>
                 <li>• White rice</li>
@@ -479,7 +494,7 @@ export default function FreshFoodGuidePage() {
             </div>
 
             <div className="bg-[#f8f9fa] rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-[#a5b5eb] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>Other Options</h3>
+              <h3 className="text-xl font-semibold text-[#8FAE8F] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>Other Options</h3>
               <ul className="space-y-2 text-[14px] text-[#666666]">
                 <li>• Whole wheat pasta (small amounts)</li>
                 <li>• Cooked lentils or chickpeas (watch for gas)</li>
@@ -611,19 +626,19 @@ export default function FreshFoodGuidePage() {
               </p>
               <ul className="space-y-2 ml-6">
                 <li className="flex items-start">
-                  <span className="text-[#a5b5eb] mr-2 font-bold">✓</span>
+                  <span className="text-[#8FAE8F] mr-2 font-bold">✓</span>
                   <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Work with a nutritionist</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#a5b5eb] mr-2 font-bold">✓</span>
+                  <span className="text-[#8FAE8F] mr-2 font-bold">✓</span>
                   <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Use recipes that have been professionally formulated and tested</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#a5b5eb] mr-2 font-bold">✓</span>
+                  <span className="text-[#8FAE8F] mr-2 font-bold">✓</span>
                   <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Include proper supplements to meet all nutrient needs</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#a5b5eb] mr-2 font-bold">✓</span>
+                  <span className="text-[#8FAE8F] mr-2 font-bold">✓</span>
                   <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>Practice safe food handling to avoid contamination</span>
                 </li>
               </ul>
@@ -633,7 +648,7 @@ export default function FreshFoodGuidePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Ready to Cook for Your Dog?
@@ -649,7 +664,7 @@ export default function FreshFoodGuidePage() {
             </div>
             <Link
               href="/nutrition-services"
-              className="bg-white text-[#a5b5eb] px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg inline-block"
+              className="bg-white text-[#8FAE8F] px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg inline-block"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Book Your Appointment Today

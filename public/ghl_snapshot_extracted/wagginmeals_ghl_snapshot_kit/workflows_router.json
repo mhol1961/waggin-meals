@@ -1,0 +1,74 @@
+{
+  "name": "Event Router (Next.js \u2192 GHL)",
+  "trigger": "Incoming Webhook",
+  "routes": [
+    {
+      "event": "order.placed",
+      "set_tags": [
+        "order-placed"
+      ],
+      "move_pipeline": {
+        "pipeline": "Orders & Subscriptions",
+        "stage": "Order Placed"
+      },
+      "start_sequence": "Order Lifecycle"
+    },
+    {
+      "event": "order.shipped",
+      "set_tags": [
+        "order-shipped"
+      ],
+      "move_pipeline": {
+        "pipeline": "Orders & Subscriptions",
+        "stage": "Shipped"
+      },
+      "start_sequence": "Out for Delivery Scheduler"
+    },
+    {
+      "event": "subscription.created",
+      "set_tags": [
+        "subscriber-active",
+        "first-subscription"
+      ],
+      "move_pipeline": {
+        "pipeline": "Orders & Subscriptions",
+        "stage": "Subscription Active"
+      },
+      "start_sequence": "Subscription Lifecycle"
+    },
+    {
+      "event": "payment.failed",
+      "set_tags": [
+        "subscriber-past-due",
+        "payment-failed"
+      ],
+      "move_pipeline": {
+        "pipeline": "Orders & Subscriptions",
+        "stage": "Subscription Past Due"
+      },
+      "start_sequence": "Dunning Sequence"
+    },
+    {
+      "event": "cart.abandoned",
+      "set_tags": [
+        "cart-abandoned"
+      ],
+      "move_pipeline": {
+        "pipeline": "Orders & Subscriptions",
+        "stage": "Cart Abandoned"
+      },
+      "start_sequence": "Abandoned Cart"
+    },
+    {
+      "event": "consultation.booked",
+      "set_tags": [
+        "consultation-booked"
+      ],
+      "move_pipeline": {
+        "pipeline": "Consultations ($395)",
+        "stage": "Scheduled"
+      },
+      "start_sequence": "Consultation Reminders"
+    }
+  ]
+}

@@ -85,7 +85,7 @@ export default function FAQPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Frequently Asked Questions
@@ -103,7 +103,7 @@ export default function FAQPage() {
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="border-2 border-[#e0e0e0] rounded-lg overflow-hidden hover:border-[#a5b5eb] transition-colors"
+                className="border-2 border-[#e0e0e0] rounded-lg overflow-hidden hover:border-[#8FAE8F] transition-colors"
               >
                 <button
                   onClick={() => toggleFAQ(index)}
@@ -113,7 +113,7 @@ export default function FAQPage() {
                     {faq.question}
                   </h3>
                   <svg
-                    className={`w-6 h-6 text-[#a5b5eb] flex-shrink-0 transition-transform ${
+                    className={`w-6 h-6 text-[#8FAE8F] flex-shrink-0 transition-transform ${
                       openIndex === index ? 'transform rotate-180' : ''
                     }`}
                     fill="none"
@@ -137,7 +137,7 @@ export default function FAQPage() {
       </section>
 
       {/* Still Have Questions CTA */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Still Have Questions?
@@ -148,14 +148,14 @@ export default function FAQPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg inline-block"
+              className="bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg inline-block"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Contact Us
             </Link>
             <Link
               href="/nutrition-services"
-              className="bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors shadow-lg inline-block"
+              className="bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors shadow-lg inline-block"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Schedule Consultation

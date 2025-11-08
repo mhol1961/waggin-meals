@@ -179,7 +179,7 @@ export default function RecommendedProductsPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Christie's Recommended Products
@@ -222,7 +222,7 @@ export default function RecommendedProductsPage() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === category
-                    ? "bg-[#a5b5eb] text-white"
+                    ? "bg-[#8FAE8F] text-white"
                     : "bg-gray-100 text-[#666666] hover:bg-gray-200"
                 }`}
                 style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -258,7 +258,7 @@ export default function RecommendedProductsPage() {
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute top-3 right-3 bg-[#a5b5eb] text-white px-3 py-1 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <div className="absolute top-3 right-3 bg-[#8FAE8F] text-white px-3 py-1 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     {product.category}
                   </div>
                 </div>
@@ -280,10 +280,10 @@ export default function RecommendedProductsPage() {
                   {/* Christie's Recommendation */}
                   <div className="bg-[#f8f9fa] rounded-lg p-4 mb-4">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="w-6 h-6 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-xs font-bold">
+                      <div className="w-6 h-6 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-xs font-bold">
                         C
                       </div>
-                      <p className="text-xs font-semibold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      <p className="text-xs font-semibold text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         Christie's Take:
                       </p>
                     </div>
@@ -297,7 +297,7 @@ export default function RecommendedProductsPage() {
                     <ul className="space-y-1">
                       {product.features.map((feature, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <svg className="w-4 h-4 text-[#a5b5eb] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-4 h-4 text-[#8FAE8F] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                           </svg>
                           <span className="text-xs text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -314,7 +314,7 @@ export default function RecommendedProductsPage() {
                       <p className="text-xs text-[#999999] mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         Price
                       </p>
-                      <p className="text-2xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                      <p className="text-2xl font-bold text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         {product.price}
                       </p>
                     </div>
@@ -322,7 +322,7 @@ export default function RecommendedProductsPage() {
                       href={product.affiliateLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-[#a5b5eb] text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-[#8a9fd9] transition-colors"
+                      className="bg-[#8FAE8F] text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-[#6d8c6d] transition-colors"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       View Product →
@@ -375,7 +375,7 @@ export default function RecommendedProductsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Need Help Choosing the Right Products?
@@ -385,7 +385,7 @@ export default function RecommendedProductsPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
+            className="inline-block bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Book Your Consultation - $395

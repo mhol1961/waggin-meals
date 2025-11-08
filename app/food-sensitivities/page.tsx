@@ -5,7 +5,7 @@ export default function FoodSensitivitiesPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Food Sensitivities Testing
@@ -63,7 +63,7 @@ export default function FoodSensitivitiesPage() {
 
           <div className="grid md:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 1
               </div>
               <h3 className="text-lg font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -75,7 +75,7 @@ export default function FoodSensitivitiesPage() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 2
               </div>
               <h3 className="text-lg font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -87,7 +87,7 @@ export default function FoodSensitivitiesPage() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 3
               </div>
               <h3 className="text-lg font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -99,7 +99,7 @@ export default function FoodSensitivitiesPage() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 4
               </div>
               <h3 className="text-lg font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -114,12 +114,12 @@ export default function FoodSensitivitiesPage() {
       </section>
 
       {/* QR Code Section */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-5xl">
           <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
             <div className="grid md:grid-cols-2 gap-8">
               {/* Left Side - QR Code */}
-              <div className="bg-[#a5b5eb] p-12 flex flex-col items-center justify-center">
+              <div className="bg-[#8FAE8F] p-12 flex flex-col items-center justify-center">
                 <h3 className="text-2xl font-semibold text-white mb-6 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Order Your Test Kit
                 </h3>
@@ -141,7 +141,7 @@ export default function FoodSensitivitiesPage() {
                       Use Discount Code:
                     </p>
                     <div className="bg-white rounded-lg py-3 px-6 inline-block">
-                      <span className="text-2xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Courier New', monospace" }}>
+                      <span className="text-2xl font-bold text-[#8FAE8F]" style={{ fontFamily: "'Courier New', monospace" }}>
                         Wagginmeals
                       </span>
                     </div>
@@ -150,7 +150,7 @@ export default function FoodSensitivitiesPage() {
                     href="http://www.5strands.com/#Wagginmeals"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full text-center bg-white text-[#a5b5eb] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+                    className="block w-full text-center bg-white text-[#8FAE8F] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-lg"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     Order 5Strands Test →
@@ -165,7 +165,7 @@ export default function FoodSensitivitiesPage() {
                 </h3>
                 <ul className="space-y-4">
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <div>
@@ -176,7 +176,7 @@ export default function FoodSensitivitiesPage() {
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <div>
@@ -187,7 +187,7 @@ export default function FoodSensitivitiesPage() {
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <div>
@@ -198,7 +198,7 @@ export default function FoodSensitivitiesPage() {
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <div>
@@ -283,7 +283,7 @@ export default function FoodSensitivitiesPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg inline-block"
+            className="bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg inline-block"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Schedule a Consultation

@@ -26,7 +26,7 @@ export default function CollectionPage() {
           <h1 className="text-4xl font-normal text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Collection Not Found
           </h1>
-          <Link href="/collections" className="text-[#a5b5eb] hover:text-[#8a9fd9]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <Link href="/collections" className="text-[#8FAE8F] hover:text-[#6d8c6d]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             ← Back to Collections
           </Link>
         </div>
@@ -69,7 +69,7 @@ export default function CollectionPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Collection Hero */}
-      <section className="relative bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="relative bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
@@ -114,7 +114,7 @@ export default function CollectionPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="px-4 py-2 border border-[#e0e0e0] rounded-lg bg-white text-[#3c3a47] focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                className="px-4 py-2 border border-[#e0e0e0] rounded-lg bg-white text-[#3c3a47] focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 <option value="featured">Featured</option>
@@ -129,7 +129,7 @@ export default function CollectionPage() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-[#a5b5eb] text-white' : 'bg-white text-[#666666] hover:bg-gray-100'}`}
+                className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-[#8FAE8F] text-white' : 'bg-white text-[#666666] hover:bg-gray-100'}`}
                 aria-label="Grid view"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -138,7 +138,7 @@ export default function CollectionPage() {
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-[#a5b5eb] text-white' : 'bg-white text-[#666666] hover:bg-gray-100'}`}
+                className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-[#8FAE8F] text-white' : 'bg-white text-[#666666] hover:bg-gray-100'}`}
                 aria-label="List view"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -167,7 +167,7 @@ export default function CollectionPage() {
               </p>
               <Link
                 href="/collections"
-                className="inline-block bg-[#a5b5eb] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#8a9fd9] transition-colors"
+                className="inline-block bg-[#8FAE8F] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#6d8c6d] transition-colors"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Browse All Collections
@@ -188,7 +188,7 @@ export default function CollectionPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Need Personalized Recommendations?
@@ -198,7 +198,7 @@ export default function CollectionPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
+            className="inline-block bg-[#8FAE8F] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Book Free Consultation
@@ -231,17 +231,17 @@ function ProductCardGrid({ product }: { product: any }) {
       </div>
 
       <div className="p-6">
-        <h3 className="text-xl font-semibold text-[#3c3a47] mb-2 group-hover:text-[#a5b5eb] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
+        <h3 className="text-xl font-semibold text-[#3c3a47] mb-2 group-hover:text-[#8FAE8F] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
           {product.title}
         </h3>
         <p className="text-sm text-[#666666] leading-relaxed mb-4 line-clamp-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
           {product.description}
         </p>
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <span className="text-2xl font-bold text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             ${product.price.toFixed(2)}
           </span>
-          <div className="flex items-center text-[#a5b5eb] font-semibold text-sm group-hover:text-[#8a9fd9]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <div className="flex items-center text-[#8FAE8F] font-semibold text-sm group-hover:text-[#6d8c6d]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             View Product
             <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -271,7 +271,7 @@ function ProductCardList({ product }: { product: any }) {
 
       <div className="flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="text-2xl font-semibold text-[#3c3a47] mb-3 group-hover:text-[#a5b5eb] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <h3 className="text-2xl font-semibold text-[#3c3a47] mb-3 group-hover:text-[#8FAE8F] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
             {product.title}
           </h3>
           <p className="text-[15px] text-[#666666] leading-relaxed mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -280,10 +280,10 @@ function ProductCardList({ product }: { product: any }) {
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="text-3xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <span className="text-3xl font-bold text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             ${product.price.toFixed(2)}
           </span>
-          <div className="flex items-center text-[#a5b5eb] font-semibold group-hover:text-[#8a9fd9]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <div className="flex items-center text-[#8FAE8F] font-semibold group-hover:text-[#6d8c6d]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             View Details
             <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

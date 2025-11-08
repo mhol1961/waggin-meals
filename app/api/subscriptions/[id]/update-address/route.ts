@@ -29,6 +29,29 @@ export async function POST(
 ) {
   try {
     const { id } = await params;
+
+    // =================================
+    // SECURITY: Authenticate user
+    // =================================
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Unauthorized - missing authentication' },
+        { status: 401 }
+      );
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser(
+      authHeader.replace('Bearer ', '')
+    );
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - invalid authentication' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { shipping_address }: { shipping_address: ShippingAddress } = body;
 
@@ -53,7 +76,7 @@ export async function POST(
     // Get current subscription
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
-      .select('*')
+      .select('*, customers!inner(*)')
       .eq('id', id)
       .single();
 
@@ -61,6 +84,17 @@ export async function POST(
       return NextResponse.json(
         { error: 'Subscription not found' },
         { status: 404 }
+      );
+    }
+
+    // =================================
+    // SECURITY: Verify user owns this subscription
+    // =================================
+    if (currentSub.customers.email !== user.email) {
+      console.warn(`🚨 Unauthorized action attempt: User ${user.email} tried to modify subscription ${id} owned by ${currentSub.customers.email}`);
+      return NextResponse.json(
+        { error: 'Forbidden - you do not own this subscription' },
+        { status: 403 }
       );
     }
 

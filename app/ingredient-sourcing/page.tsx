@@ -6,7 +6,7 @@ export default function IngredientSourcingPage() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#f0fdf4] via-white to-[#fef3c7] px-4 py-20 overflow-hidden">
+      <section className="relative bg-[#f0fdf4] px-4 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-96 h-96 bg-green-400 rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-400 rounded-full blur-3xl"></div>
@@ -122,7 +122,7 @@ export default function IngredientSourcingPage() {
               }
             ].map((section, i) => (
               <div key={i} className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div className="bg-gradient-to-r from-green-500 to-green-600 px-8 py-6">
+                <div className="bg-green-500 px-8 py-6">
                   <div className="flex items-center">
                     <span className="text-5xl mr-4">{section.icon}</span>
                     <h3 className="text-3xl font-semibold text-white">{section.category}</h3>
@@ -227,8 +227,8 @@ export default function IngredientSourcingPage() {
               { icon: Heart, title: 'Humane Certified', desc: 'All animal proteins from humanely-raised sources' }
             ].map((cert, i) => (
               <div key={i} className="bg-white rounded-xl shadow-lg p-6 text-center">
-                <div className="w-14 h-14 bg-[#a5b5eb]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <cert.icon className="w-7 h-7 text-[#a5b5eb]" />
+                <div className="w-14 h-14 bg-[#8FAE8F]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <cert.icon className="w-7 h-7 text-[#8FAE8F]" />
                 </div>
                 <h3 className="text-lg font-semibold text-[#3c3a47] mb-2">{cert.title}</h3>
                 <p className="text-sm text-[#666666]">{cert.desc}</p>
@@ -245,7 +245,7 @@ export default function IngredientSourcingPage() {
             What You'll NEVER Find in Our Food
           </h2>
 
-          <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl shadow-xl p-10 border-l-4 border-red-500">
+          <div className="bg-red-50 rounded-2xl shadow-xl p-10 border-l-4 border-red-500">
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 'Artificial preservatives or colors',
@@ -270,7 +270,7 @@ export default function IngredientSourcingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-green-600 to-green-500 px-4 py-16">
+      <section className="bg-green-600 px-4 py-16">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="text-4xl font-normal mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Transparency You Can Trust

@@ -60,7 +60,7 @@ export default function BoostNutritionPage() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#fef3c7] via-white to-[#f0f9ff] px-4 py-20 overflow-hidden">
+      <section className="relative bg-[#fef3c7] px-4 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-96 h-96 bg-amber-400 rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-green-400 rounded-full blur-3xl"></div>
@@ -244,7 +244,7 @@ export default function BoostNutritionPage() {
       {/* The Story Behind Prince Jax */}
       <section className="bg-white px-4 py-16">
         <div className="mx-auto max-w-4xl">
-          <div className="bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe] rounded-2xl shadow-xl p-10 border-t-4 border-green-500">
+          <div className="bg-[#f0f9ff] rounded-2xl shadow-xl p-10 border-t-4 border-green-500">
             <div className="flex items-center justify-center mb-6">
               <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center">
                 <Heart className="w-10 h-10 text-white" />
@@ -300,8 +300,8 @@ export default function BoostNutritionPage() {
               }
             ].map((reason, i) => (
               <div key={i} className="bg-white rounded-xl shadow-lg p-8 flex items-start">
-                <div className="w-14 h-14 bg-[#a5b5eb]/10 rounded-full flex items-center justify-center flex-shrink-0 mr-6">
-                  <reason.icon className="w-7 h-7 text-[#a5b5eb]" />
+                <div className="w-14 h-14 bg-[#8FAE8F]/10 rounded-full flex items-center justify-center flex-shrink-0 mr-6">
+                  <reason.icon className="w-7 h-7 text-[#8FAE8F]" />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-[#3c3a47] mb-3">{reason.title}</h3>
@@ -337,17 +337,17 @@ export default function BoostNutritionPage() {
             }
           ].map((t, i) => (
             <div key={i} className="bg-[#f5f5f5] p-6 rounded-lg">
-              <div className="mb-4 text-[48px] leading-none text-[#a5b5eb] opacity-30">&quot;</div>
+              <div className="mb-4 text-[48px] leading-none text-[#8FAE8F] opacity-30">&quot;</div>
               <p className="mb-4 text-[15px] leading-relaxed text-[#3c3a47]">{t.quote}</p>
               <p className="text-[14px] font-semibold text-[#3c3a47]">{t.author}</p>
-              <p className="text-xs text-[#a5b5eb]">{t.product}</p>
+              <p className="text-xs text-[#8FAE8F]">{t.product}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-[#10b981] to-[#34d399] px-4 py-16">
+      <section className="bg-[#10b981] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="text-4xl font-normal mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Give Your Dog the Gift of Healing Nutrition
@@ -373,7 +373,7 @@ export default function BoostNutritionPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#2f4b38] to-[#1f3324] text-white mt-16">
+      <footer className="bg-[#2f4b38] text-white mt-16">
         {/* Main Footer Content */}
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

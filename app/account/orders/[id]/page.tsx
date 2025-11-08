@@ -108,7 +108,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
     const badges: { [key: string]: { bg: string; text: string; label: string } } = {
       pending: { bg: 'bg-yellow-100', text: 'text-yellow-800', label: 'Pending' },
       processing: { bg: 'bg-blue-100', text: 'text-blue-800', label: 'Processing' },
-      shipped: { bg: 'bg-purple-100', text: 'text-purple-800', label: 'Shipped' },
+      shipped: { bg: 'bg-[#8FAE8F]/10', text: 'text-[#5E8C8C]', label: 'Shipped' },
       delivered: { bg: 'bg-green-100', text: 'text-green-800', label: 'Delivered' },
       cancelled: { bg: 'bg-red-100', text: 'text-red-800', label: 'Cancelled' },
       payment_failed: { bg: 'bg-red-100', text: 'text-red-800', label: 'Payment Failed' },
@@ -129,7 +129,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
   if (loading || orderLoading) {
     return (
       <div className="min-h-screen bg-white">
-        <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-12">
+        <section className="bg-[#8FAE8F] px-4 py-12">
           <div className="mx-auto max-w-6xl">
             <h1 className="text-4xl font-normal text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
               Order Details
@@ -138,7 +138,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
         </section>
         <section className="px-4 py-12">
           <div className="mx-auto max-w-6xl text-center">
-            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#a5b5eb] border-r-transparent"></div>
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8FAE8F] border-r-transparent"></div>
             <p className="mt-4 text-gray-600">Loading order details...</p>
           </div>
         </section>
@@ -149,7 +149,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
   if (error || !order) {
     return (
       <div className="min-h-screen bg-white">
-        <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-12">
+        <section className="bg-[#8FAE8F] px-4 py-12">
           <div className="mx-auto max-w-6xl">
             <h1 className="text-4xl font-normal text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
               Order Not Found
@@ -161,7 +161,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
             <p className="text-gray-600 mb-6">{error || 'The order you are looking for does not exist.'}</p>
             <Link
               href="/account/orders"
-              className="inline-block bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+              className="inline-block bg-[#8FAE8F] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Back to Orders
@@ -175,7 +175,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-12">
+      <section className="bg-[#8FAE8F] px-4 py-12">
         <div className="mx-auto max-w-6xl">
           <Link
             href="/account/orders"
@@ -272,7 +272,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                 <div className="bg-blue-50 rounded-xl border border-blue-100 p-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0">
-                      <svg className="w-8 h-8 text-[#a5b5eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-8 h-8 text-[#8FAE8F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                       </svg>
                     </div>
@@ -285,7 +285,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                         href={`https://www.google.com/search?q=${order.tracking_number}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-[#a5b5eb] hover:text-[#8a9fd9] font-medium transition-colors"
+                        className="inline-flex items-center gap-2 text-[#8FAE8F] hover:text-[#6d8c6d] font-medium transition-colors"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       >
                         Track Your Package
@@ -333,7 +333,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                     <span className="text-lg font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       Total
                     </span>
-                    <span className="text-2xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <span className="text-2xl font-bold text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       ${order.total.toFixed(2)}
                     </span>
                   </div>
@@ -377,7 +377,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                 <div className="space-y-3">
                   <Link
                     href="/contact"
-                    className="block w-full bg-[#a5b5eb] text-white text-center px-4 py-3 rounded-lg font-medium hover:bg-[#8a9fd9] transition-colors"
+                    className="block w-full bg-[#8FAE8F] text-white text-center px-4 py-3 rounded-lg font-medium hover:bg-[#6d8c6d] transition-colors"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     Contact Support
@@ -388,7 +388,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                         // TODO: Implement reorder
                         console.log('Reorder:', order.id);
                       }}
-                      className="block w-full bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] text-center px-4 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors"
+                      className="block w-full bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] text-center px-4 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       Order Again

@@ -1,0 +1,115 @@
+{
+  "order.placed": {
+    "contact": {
+      "email": "customer@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "phone": "+18285551234",
+      "customFields": {
+        "wm_customer_id": "uuid",
+        "wm_last_order_number": "WM123",
+        "wm_last_order_amount": 89.99,
+        "wm_last_order_date": "2025-01-28",
+        "wm_last_shipping_method": "standard",
+        "wm_total_orders": 1,
+        "wm_total_spent": 89.99
+      },
+      "tags": [
+        "order-placed",
+        "new-customer"
+      ]
+    },
+    "order": {
+      "id": "order-uuid",
+      "orderNumber": "WM123",
+      "total": 89.99,
+      "items": [
+        {
+          "title": "Beef & Sweet Potato Bowl",
+          "quantity": 2,
+          "price": 39.99
+        }
+      ],
+      "shippingMethod": "standard",
+      "estimatedDelivery": "2025-02-05"
+    }
+  },
+  "order.shipped": {
+    "contact": {
+      "email": "customer@example.com"
+    },
+    "order": {
+      "orderNumber": "WM123",
+      "trackingNumber": "1Z...",
+      "carrier": "USPS",
+      "estimatedDelivery": "2025-02-05",
+      "trackingUrl": "https://tools.usps.com/..."
+    }
+  },
+  "subscription.created": {
+    "contact": {
+      "email": "customer@example.com"
+    },
+    "subscription": {
+      "id": "sub-uuid",
+      "status": "active",
+      "frequency": "bi-weekly",
+      "amount": 79.99,
+      "nextBillingDate": "2025-02-11",
+      "items": [
+        {
+          "title": "Chicken Bowl",
+          "qty": 1
+        }
+      ]
+    }
+  },
+  "payment.failed": {
+    "contact": {
+      "email": "customer@example.com"
+    },
+    "subscription": {
+      "id": "sub-uuid",
+      "attemptCount": 1,
+      "nextRetryDate": "2025-02-01",
+      "amountDue": 79.99
+    }
+  },
+  "cart.abandoned": {
+    "contact": {
+      "email": "customer@example.com",
+      "firstName": "John",
+      "customFields": {
+        "wm_cart_abandoned": true,
+        "wm_cart_abandon_date": "2025-01-28T15:30:00Z",
+        "wm_cart_value": 89.99,
+        "wm_cart_items": "[...]"
+      },
+      "tags": [
+        "cart-abandoned"
+      ]
+    },
+    "cart": {
+      "items": "[...]",
+      "subtotal": 89.99,
+      "cartUrl": "https://wagginmeals.com/cart?restore=abc123"
+    }
+  },
+  "consultation.booked": {
+    "contact": {
+      "email": "customer@example.com",
+      "customFields": {
+        "wm_consultation_booked": true,
+        "wm_consultation_date": "2025-02-05T14:00:00Z",
+        "wm_consultation_type": "initial",
+        "wm_dog_name": "Max",
+        "wm_dog_breed": "Golden Retriever",
+        "wm_dog_age": 3,
+        "wm_health_concerns": "Digestive issues"
+      }
+    },
+    "tags": [
+      "consultation-booked"
+    ]
+  }
+}

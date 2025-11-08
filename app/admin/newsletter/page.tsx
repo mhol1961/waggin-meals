@@ -96,12 +96,12 @@ export default async function NewsletterPage() {
               <p className="text-sm font-medium text-gray-600" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 This Week
               </p>
-              <p className="text-3xl font-bold text-[#a5b5eb] mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <p className="text-3xl font-bold text-[#8FAE8F] mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 {stats.thisWeek}
               </p>
             </div>
-            <div className="bg-purple-50 p-3 rounded-lg">
-              <svg className="h-8 w-8 text-[#a5b5eb]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="bg-[#F8F5F0] p-3 rounded-lg">
+              <svg className="h-8 w-8 text-[#8FAE8F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
             </div>

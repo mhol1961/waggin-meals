@@ -37,18 +37,16 @@ export const freshFoodProducts: Product[] = [
     id: 'chicken-sweet-potato',
     handle: 'chicken-farm-meal-copy',
     title: 'Chicken & Sweet Potato Farm Meal',
-    description: '800 Grams - 4 cups. Fresh chicken with sweet potatoes, organic superfoods, and essential supplements for complete nutrition.',
+    description: '800 Grams - 4 cups. Fresh chicken with sweet potatoes, organic superfoods, and essential supplements for complete nutrition. Sourced from hormone & antibiotic-free TN farms.',
     price: 15.99,
     images: [
-      '/images/products/ChickenandSweetPotatoBowl.jpg',
-      '/images/products/Chicken_and_Sweet_Potato.jpg',
-      '/images/products/Chicken_SP.jpg'
+      '/images/products/ChickenandSweetPotatoBowl.jpg'
     ],
     category: 'Dog Food',
     collection: 'fresh-food',
     tags: ['chicken', 'sweet-potato', 'grain-free', 'fresh', 'superfoods'],
     status: 'active',
-    ingredients: 'Chicken, Sweet Potatoes, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Olive Oil, Coconut Oil, Turmeric, Ginger, Calcium Phosphorus, Folic Acid',
+    ingredients: 'Chicken, Chicken Liver, Sweet Potatoes, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Extra Virgin Olive Oil, Organic Coconut Oil, Turmeric, Ginger, Calcium Carbonate, Dicalcium Phosphate, Folic Acid, Vitamin E Supplement',
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 3%, Moisture (max) 74%',
     weight: '800g (4 cups)',
     inStock: true,
@@ -58,19 +56,17 @@ export const freshFoodProducts: Product[] = [
     id: 'chicken-rice',
     handle: 'chicken-farm-meal',
     title: 'Chicken & Rice Farm Meal',
-    description: '800 Grams - 4 cups. Complete and balanced chicken meal with rice, perfect for dogs with sensitive stomachs.',
+    description: '800 Grams - 4 cups. Complete and balanced chicken meal with rice, perfect for dogs with sensitive stomachs. 282 kcal per cup. Sourced from hormone & antibiotic-free TN farms.',
     price: 15.99,
     images: [
-      '/images/products/Chicken_and_Rice_Bowl.jpg',
-      '/images/products/Chicken_and_Rice.jpg',
-      '/images/products/Chicken_Rice.jpg'
+      '/images/products/Chicken_and_Rice_Bowl.jpg'
     ],
     category: 'Dog Food',
     collection: 'fresh-food',
     tags: ['chicken', 'rice', 'sensitive-stomach', 'fresh', 'digestive-health'],
     status: 'active',
-    ingredients: 'Chicken, Rice, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Olive Oil, Coconut Oil, Turmeric, Ginger, Calcium Phosphorus, Folic Acid',
-    analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 73%',
+    ingredients: 'Chicken, Chicken Liver, Rice, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Extra Virgin Olive Oil, Organic Coconut Oil, Turmeric, Ginger, Calcium Carbonate, Dicalcium Phosphate, Folic Acid, Vitamin E Supplement',
+    analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 73%. 282 kcal per cup',
     weight: '800g (4 cups)',
     inStock: true,
     stockQty: 9892
@@ -79,19 +75,17 @@ export const freshFoodProducts: Product[] = [
     id: 'turkey-rice',
     handle: 'turkey-farm-meal-copy-1',
     title: 'Turkey & Rice Farm Meal',
-    description: '800 Grams - 4 cups. Lean turkey protein with rice and superfoods for optimal nutrition.',
+    description: '800 Grams - 4 cups. Lean turkey protein with rice and superfoods for optimal nutrition. 279 kcal per cup. Sourced from GA farms.',
     price: 15.99,
     images: [
-      '/images/products/Chicken_and_Rice_Bowl.jpg',
-      '/images/products/Turkey_Rice.jpg',
-      '/images/products/Turkey_and_Rice.jpg'
+      '/images/products/Chicken_and_Rice_Bowl.jpg'
     ],
     category: 'Dog Food',
     collection: 'fresh-food',
     tags: ['turkey', 'rice', 'lean-protein', 'fresh'],
     status: 'active',
-    ingredients: 'Turkey, Rice, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Olive Oil, Coconut Oil, Turmeric, Ginger, Calcium Phosphorus, Folic Acid',
-    analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 74%',
+    ingredients: 'Turkey, Chicken Liver, Rice, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Extra Virgin Olive Oil, Organic Coconut Oil, Turmeric, Ginger, Calcium Carbonate, Dicalcium Phosphate, Folic Acid, Vitamin E Supplement',
+    analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 74%. 279 kcal per cup',
     weight: '800g (4 cups)',
     inStock: true,
     stockQty: 9918
@@ -100,19 +94,17 @@ export const freshFoodProducts: Product[] = [
     id: 'turkey-sweet-potato',
     handle: 'turkey-farm-meal-copy',
     title: 'Turkey & Sweet Potato Farm Meal',
-    description: '800 Grams - 4 cups. Turkey with sweet potatoes and nutrient-rich superfoods.',
+    description: '800 Grams - 4 cups. Turkey with sweet potatoes and nutrient-rich superfoods. 270 kcal per cup. Sourced from GA farms.',
     price: 15.99,
     images: [
-      '/images/products/ChickenandSweetPotatoBowl.jpg',
-      '/images/products/Turkey_and_Sweet_Potato_copy_385764f1-975a-4e36-82a8-3319670f7b23.jpg',
-      '/images/products/Turkey_SP.jpg'
+      '/images/products/ChickenandSweetPotatoBowl.jpg'
     ],
     category: 'Dog Food',
     collection: 'fresh-food',
     tags: ['turkey', 'sweet-potato', 'grain-free', 'fresh'],
     status: 'active',
-    ingredients: 'Turkey, Sweet Potatoes, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Olive Oil, Coconut Oil, Turmeric, Ginger, Calcium Phosphorus, Folic Acid',
-    analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 3%, Moisture (max) 76%',
+    ingredients: 'Turkey, Chicken Liver, Sweet Potatoes, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Extra Virgin Olive Oil, Organic Coconut Oil, Turmeric, Ginger, Calcium Carbonate, Dicalcium Phosphate, Folic Acid, Vitamin E Supplement',
+    analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 3%, Moisture (max) 76%. 270 kcal per cup',
     weight: '800g (4 cups)',
     inStock: true,
     stockQty: 9854
@@ -121,19 +113,17 @@ export const freshFoodProducts: Product[] = [
     id: 'beef-sweet-potato',
     handle: 'beef-farm-meal-copy',
     title: 'Beef & Sweet Potato Farm Meal',
-    description: '750 Grams - 4 cups. Rich beef protein with sweet potatoes for active dogs.',
+    description: '750 Grams - 4 cups. Rich beef protein with sweet potatoes for active dogs. 303 kcal per cup. Sourced from grass-fed NC farms.',
     price: 16.99,
     images: [
-      '/images/products/BeefandSweetPotatoBowl.jpg',
-      '/images/products/Beef_and_Sweet_Potato_8a466a70-4ac9-440b-ad19-9db86d19776f.jpg',
-      '/images/products/Beef_SP_56043c48-b7d6-4db1-a54f-1702c008349a.jpg'
+      '/images/products/BeefandSweetPotatoBowl.jpg'
     ],
     category: 'Dog Food',
     collection: 'fresh-food',
     tags: ['beef', 'sweet-potato', 'high-protein', 'fresh', 'active-dogs'],
     status: 'active',
-    ingredients: 'Beef, Sweet Potatoes, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Olive Oil, Coconut Oil, Turmeric, Ginger, Calcium Phosphorus, Folic Acid',
-    analysis: 'Crude Protein (min) 11%, Crude Fat (min) 8%, Crude Fiber (max) 1.5%, Moisture (max) 72%',
+    ingredients: 'Beef, Beef Liver, Sweet Potatoes, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Extra Virgin Olive Oil, Organic Coconut Oil, Turmeric, Ginger, Calcium Carbonate, Dicalcium Phosphate, Folic Acid, Vitamin E Supplement',
+    analysis: 'Crude Protein (min) 11%, Crude Fat (min) 8%, Crude Fiber (max) 1.5%, Moisture (max) 72%. 303 kcal per cup',
     weight: '750g (4 cups)',
     inStock: true,
     stockQty: 9891
@@ -142,19 +132,17 @@ export const freshFoodProducts: Product[] = [
     id: 'beef-rice',
     handle: 'beef-farm-meal-copy-copy',
     title: 'Beef & Rice Farm Meal',
-    description: '750 Grams - 4 cups. Hearty beef with rice for sustained energy.',
+    description: '750 Grams - 4 cups. Hearty beef with rice for sustained energy. 320 kcal per cup. Sourced from grass-fed NC farms.',
     price: 16.99,
     images: [
-      '/images/products/Beef_and_Rice_Bowl.jpg',
-      '/images/products/Beef_and_Rice_d876c154-b6d9-4efb-b88b-955caca7a311.jpg',
-      '/images/products/Beef_Rice.jpg'
+      '/images/products/Beef_and_Rice_Bowl.jpg'
     ],
     category: 'Dog Food',
     collection: 'fresh-food',
     tags: ['beef', 'rice', 'high-protein', 'fresh'],
     status: 'active',
-    ingredients: 'Beef, Rice, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Olive Oil, Coconut Oil, Turmeric, Ginger, Calcium Phosphorus, Folic Acid',
-    analysis: 'Crude Protein (min) 11%, Crude Fat (min) 8%, Crude Fiber (max) 1.5%, Moisture (max) 72%',
+    ingredients: 'Beef, Beef Liver, Rice, Carrots, Squash, Zucchini, Green Beans, Cucumbers, Spinach, Kale, Apples, Cranberries, Blueberries, Collagen Powder, Pomegranate Powder, Pumpkin Powder, Oregano, Safflower Oil, Extra Virgin Olive Oil, Organic Coconut Oil, Turmeric, Ginger, Calcium Carbonate, Dicalcium Phosphate, Folic Acid, Vitamin E Supplement',
+    analysis: 'Crude Protein (min) 11%, Crude Fat (min) 8%, Crude Fiber (max) 1.5%, Moisture (max) 72%. 320 kcal per cup',
     weight: '750g (4 cups)',
     inStock: true,
     stockQty: 9881
@@ -166,8 +154,7 @@ export const freshFoodProducts: Product[] = [
     description: '2 Cup Packs (Pre-Order Only). Specially formulated for dogs requiring low protein diets, perfect for kidney health.',
     price: 10.50,
     images: [
-      '/images/products/Waggin_Meals.png',
-      '/images/products/Kidney_Diease.png'
+      '/images/products/Waggin_Meals.png'
     ],
     category: 'Prescription Dog Food',
     collection: 'fresh-food',
@@ -186,9 +173,7 @@ export const freshFoodProducts: Product[] = [
     description: 'Our best seller! A dog-friendly meatloaf. 390 Grams, 1 Loaf, 6 Slices. Perfect for training or special treats.',
     price: 14.00,
     images: [
-      '/images/products/PupALoafBoard72res.jpg',
-      '/images/products/Pup_A_Loaf_72res.jpg',
-      '/images/products/Pupaloaf_copy_793ac649-8682-46ae-bde1-e9481d79a49f.jpg'
+      '/images/products/PupALoafBoard72res.jpg'
     ],
     category: 'Dog Food',
     collection: 'fresh-food',
@@ -207,9 +192,7 @@ export const freshFoodProducts: Product[] = [
     description: 'Perfect for travel or picky eaters. 430 Grams, 4 Cakes per package.',
     price: 14.25,
     images: [
-      '/images/products/ChickenSuperfoodCakeBoard.jpg',
-      '/images/products/Chicken_Superfood_Cake_1b7bebd2-94a6-4c61-8ec9-3c106eab2c49.jpg',
-      '/images/products/Chicken_Superfood_Cakes.jpg'
+      '/images/products/ChickenSuperfoodCakeBoard.jpg'
     ],
     category: 'Dog Food',
     collection: 'fresh-food',
@@ -296,9 +279,7 @@ export const mealToppersProducts: Product[] = [
     description: 'Slow simmered for 48 hours. 4 Cups, 950 Grams. Supports liver detox, immune system, healthy skin & coat, joint strength, digestive health, and hydration.',
     price: 14.00,
     images: [
-      '/images/products/Bone-Broth-Topper-Bowl-scaled_a43724fa-096f-44fb-a4c1-1a37180596c5.jpg',
-      '/images/products/Bone_Broth_Topper.jpg',
-      '/images/products/Bone_Veggie_Broth_Reg_a39c5a72-866e-43d8-b0e8-af04be4458c1.jpg'
+      '/images/products/Bone-Broth-Topper-Bowl-scaled_a43724fa-096f-44fb-a4c1-1a37180596c5.jpg'
     ],
     category: 'Dog Food',
     collection: 'meal-toppers',
@@ -315,11 +296,9 @@ export const mealToppersProducts: Product[] = [
     handle: 'prince-jax-stew-2',
     title: 'Prince Jax Stew',
     description: 'We recommend using this as a topper for any of our meals. Combine two meal packs with this stew for all the benefits of our bone broth and more!',
-    price: 19.29,
+    price: 19.00,
     images: [
-      '/images/products/Prince-Jax-Stew-Bowl-scaled_f10ad903-2361-4b6c-ac52-c785dcdb5a49.jpg',
-      '/images/products/Prince_Jax_Stew_Reg.jpg',
-      '/images/products/Prince_Jax_Stew_b80cf6f6-e5a4-4007-a3ca-42c8852f0167.jpg'
+      '/images/products/Prince-Jax-Stew-Bowl-scaled_f10ad903-2361-4b6c-ac52-c785dcdb5a49.jpg'
     ],
     category: 'Dog Food',
     collection: 'meal-toppers',
@@ -327,9 +306,26 @@ export const mealToppersProducts: Product[] = [
     status: 'active',
     ingredients: 'Beef Bone Broth, Turkey, Sweet Potatoes, Carrots, Green Beans, Spinach, Kale, Apple Cider Vinegar, Oregano, Turmeric, Ginger',
     analysis: 'Crude Protein (min) 8%, Crude Fat (min) 3%, Crude Fiber (max) 1.5%, Moisture (max) 78%',
-    weight: '300g',
+    weight: '5-cup pack',
     inStock: true,
     stockQty: 959
+  },
+  {
+    id: 'pumpkin-broth',
+    handle: 'pumpkin-broth',
+    title: 'Daily Dish Pumpkin Broth',
+    description: 'Shelf-stable pumpkin broth perfect for digestive support and hydration. Great for picky eaters or adding moisture to meals.',
+    price: 9.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Food',
+    collection: 'meal-toppers',
+    tags: ['broth', 'pumpkin', 'digestive-health', 'hydration', 'shelf-stable', 'topper'],
+    status: 'active',
+    ingredients: 'Pumpkin Puree, Bone Broth, Cinnamon, Ginger',
+    analysis: 'Supports digestive health, rich in fiber',
+    weight: '12 oz',
+    inStock: true,
+    stockQty: 100
   }
 ];
 
@@ -342,9 +338,7 @@ export const treatsProducts: Product[] = [
     description: 'Treat your pup to something truly special—13 hand-rolled, hearty meatballs made with love at Waggin Meals! Perfect for even the pickiest eaters.',
     price: 16.99,
     images: [
-      '/images/products/meatballs.jpg',
-      '/images/products/meatball_treats.jpg',
-      '/images/products/Jax.jpg'
+      '/images/products/meatballs.jpg'
     ],
     category: 'Dog Treats',
     collection: 'treats',
@@ -426,8 +420,7 @@ export const treatsProducts: Product[] = [
     description: 'Soft lamb treats made with all natural lamb hearts. Perfect for picky dogs and training sessions. Single Source Protein.',
     price: 16.99,
     images: [
-      '/images/products/LambChewyBars.jpg',
-      '/images/products/Lamb_Chips_png.png'
+      '/images/products/LambChewyBars.jpg'
     ],
     category: 'Dog Treats',
     collection: 'treats',
@@ -470,6 +463,222 @@ export const treatsProducts: Product[] = [
     weight: 'Multiple sizes',
     inStock: true,
     stockQty: 17
+  },
+  // === NOVEL PROTEIN BAKED BITES ===
+  {
+    id: 'rabbit-baked-bites',
+    handle: 'rabbit-baked-bites',
+    title: 'Rabbit Baked Bites',
+    description: 'Premium novel protein treat perfect for dogs with food sensitivities. Made with 100% rabbit, these grain-free bites are ideal for elimination diets and training.',
+    price: 13.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Treats',
+    collection: 'treats',
+    tags: ['treats', 'rabbit', 'novel-protein', 'grain-free', 'allergy-friendly', 'training'],
+    status: 'active',
+    ingredients: 'Rabbit, Sweet Potato Flour, Coconut Oil',
+    analysis: 'Single source novel protein, grain-free',
+    weight: '4 oz',
+    inStock: true,
+    stockQty: 50
+  },
+  {
+    id: 'venison-baked-bites',
+    handle: 'venison-baked-bites',
+    title: 'Venison Baked Bites',
+    description: 'Wild-sourced venison treats perfect for sensitive stomachs. These grain-free, limited ingredient bites are ideal for dogs with food allergies or intolerances.',
+    price: 13.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Treats',
+    collection: 'treats',
+    tags: ['treats', 'venison', 'novel-protein', 'grain-free', 'allergy-friendly', 'training'],
+    status: 'active',
+    ingredients: 'Venison, Sweet Potato Flour, Coconut Oil',
+    analysis: 'Single source novel protein, grain-free',
+    weight: '4 oz',
+    inStock: true,
+    stockQty: 50
+  },
+  {
+    id: 'duck-baked-bites',
+    handle: 'duck-baked-bites',
+    title: 'Duck Baked Bites',
+    description: 'Rich, flavorful duck treats for dogs with chicken or beef sensitivities. Grain-free and perfect for picky eaters or dogs needing a novel protein source.',
+    price: 13.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Treats',
+    collection: 'treats',
+    tags: ['treats', 'duck', 'novel-protein', 'grain-free', 'allergy-friendly', 'training'],
+    status: 'active',
+    ingredients: 'Duck, Sweet Potato Flour, Coconut Oil',
+    analysis: 'Single source novel protein, grain-free',
+    weight: '4 oz',
+    inStock: true,
+    stockQty: 50
+  },
+  {
+    id: 'salmon-baked-bites',
+    handle: 'salmon-baked-bites',
+    title: 'Salmon Baked Bites',
+    description: 'Omega-3 rich salmon treats perfect for skin and coat health. Grain-free, limited ingredient recipe ideal for dogs with food sensitivities.',
+    price: 13.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Treats',
+    collection: 'treats',
+    tags: ['treats', 'salmon', 'novel-protein', 'grain-free', 'omega-3', 'skin-coat', 'training'],
+    status: 'active',
+    ingredients: 'Salmon, Sweet Potato Flour, Coconut Oil',
+    analysis: 'Single source novel protein, grain-free, rich in Omega-3',
+    weight: '4 oz',
+    inStock: true,
+    stockQty: 50
+  },
+  {
+    id: 'alligator-baked-bites',
+    handle: 'alligator-baked-bites',
+    title: 'Alligator Baked Bites',
+    description: 'Exotic novel protein perfect for dogs with multiple food allergies. Ultra-lean, grain-free, and hypoallergenic - ideal for elimination diets.',
+    price: 13.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Treats',
+    collection: 'treats',
+    tags: ['treats', 'alligator', 'novel-protein', 'grain-free', 'hypoallergenic', 'low-fat', 'training'],
+    status: 'active',
+    ingredients: 'Alligator, Sweet Potato Flour, Coconut Oil',
+    analysis: 'Single source novel protein, grain-free, ultra-lean',
+    weight: '4 oz',
+    inStock: true,
+    stockQty: 50
+  },
+  {
+    id: 'wild-boar-baked-bites',
+    handle: 'wild-boar-baked-bites',
+    title: 'Wild Boar Baked Bites',
+    description: 'Rich, gamey wild boar treats for adventurous eaters. Grain-free novel protein perfect for dogs with common protein allergies or sensitivities.',
+    price: 13.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Treats',
+    collection: 'treats',
+    tags: ['treats', 'wild-boar', 'novel-protein', 'grain-free', 'allergy-friendly', 'training'],
+    status: 'active',
+    ingredients: 'Wild Boar, Sweet Potato Flour, Coconut Oil',
+    analysis: 'Single source novel protein, grain-free',
+    weight: '4 oz',
+    inStock: true,
+    stockQty: 50
+  }
+];
+
+// === WAGGIN MEALS CARE COLLECTION ===
+export const careProducts: Product[] = [
+  {
+    id: 'bug-shield-soap',
+    handle: 'bug-shield-dog-soap',
+    title: 'Bug Shield Dog Soap',
+    description: 'Natural bug-repelling dog soap with essential oils. Gentle formula cleanses while protecting against fleas, ticks, and mosquitoes. Made with neem oil, citronella, eucalyptus, and lavender.',
+    price: 13.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Care',
+    collection: 'care',
+    tags: ['soap', 'bug-repellent', 'natural', 'essential-oils', 'flea-tick'],
+    status: 'active',
+    ingredients: 'Saponified Oils (Coconut, Olive, Palm), Neem Oil, Citronella Essential Oil, Eucalyptus Essential Oil, Lavender Essential Oil, Cedarwood Essential Oil, Peppermint Essential Oil',
+    analysis: 'Natural insect repellent, chemical-free',
+    weight: '4 oz bar',
+    inStock: true,
+    stockQty: 75
+  },
+  {
+    id: 'bug-shield-spray',
+    handle: 'bug-shield-spray',
+    title: 'Bug Shield Spray',
+    description: 'All-natural bug repellent spray for dogs. Botanical blend of essential oils safely repels fleas, ticks, and mosquitoes. No harsh chemicals - just pure plant power.',
+    price: 12.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Care',
+    collection: 'care',
+    tags: ['spray', 'bug-repellent', 'natural', 'essential-oils', 'flea-tick', 'chemical-free'],
+    status: 'active',
+    ingredients: 'Distilled Water, Witch Hazel, Neem Oil, Citronella Essential Oil, Eucalyptus Essential Oil, Lavender Essential Oil, Cedarwood Essential Oil, Lemongrass Essential Oil, Peppermint Essential Oil',
+    analysis: 'Botanical insect repellent, safe for daily use',
+    weight: '8 oz spray bottle',
+    inStock: true,
+    stockQty: 100
+  },
+  {
+    id: 'derma-shield-shampoo',
+    handle: 'derma-shield-shampoo',
+    title: 'Derma Shield Shampoo',
+    description: 'Gentle, therapeutic shampoo for sensitive skin. Soothes irritation, reduces inflammation, and promotes healing. Perfect for dogs with skin allergies, hot spots, or dermatitis.',
+    price: 13.99,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Dog Care',
+    collection: 'care',
+    tags: ['shampoo', 'sensitive-skin', 'therapeutic', 'anti-inflammatory', 'healing', 'allergies'],
+    status: 'active',
+    ingredients: 'Aloe Vera Juice, Saponified Oils (Coconut, Olive), Colloidal Oatmeal, Calendula Extract, Chamomile Extract, Lavender Essential Oil, Tea Tree Oil, Vitamin E',
+    analysis: 'pH-balanced, hypoallergenic, soap-free',
+    weight: '8 oz bottle',
+    inStock: true,
+    stockQty: 80
+  }
+];
+
+// === BUNDLES COLLECTION ===
+export const bundleProducts: Product[] = [
+  {
+    id: 'smart-pup-starter-pack',
+    handle: 'smart-pup-starter-pack',
+    title: 'Smart Pup Starter Pack',
+    description: 'Perfect introduction to Waggin Meals! Includes 2 farm meal packs (your choice of protein), 1 superfood topper, and a training treat sample. Great for trying our products or gifting to a new dog parent.',
+    price: 49.99,
+    compareAtPrice: 55.00,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Bundles',
+    collection: 'bundles',
+    tags: ['bundle', 'starter', 'sample', 'gift'],
+    status: 'active',
+    ingredients: 'Bundle includes: 2 Fresh Farm Meals (choice of protein), 1 Superfood Topper (2 oz sample), 1 Training Treat Pack',
+    weight: 'Variety bundle',
+    inStock: true,
+    stockQty: 25,
+    hasVariants: true
+  },
+  {
+    id: 'standard-pup-pack',
+    handle: 'standard-pup-pack',
+    title: 'Standard Pup Pack',
+    description: 'Everything your pup needs for a week! Includes 4 farm meal packs (mix proteins), 1 full-size superfood topper, 1 bone broth, and a healthy treat pack. Save $12 vs buying individually.',
+    price: 89.99,
+    compareAtPrice: 102.00,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Bundles',
+    collection: 'bundles',
+    tags: ['bundle', 'weekly', 'value', 'complete'],
+    status: 'active',
+    ingredients: 'Bundle includes: 4 Fresh Farm Meals (choice of proteins), 1 Superfood Topper (6 oz), 1 Bone & Veggie Broth, 1 Healthy Treat Pack',
+    weight: 'Weekly supply',
+    inStock: true,
+    stockQty: 30,
+    hasVariants: true
+  },
+  {
+    id: 'premium-pup-pack',
+    handle: 'premium-pup-pack',
+    title: 'Premium Pup Pack',
+    description: 'The ultimate monthly nutrition package! Includes 16 farm meal packs (variety of proteins), 2 superfood toppers, 2 bone broths, Pup-a-Loaf, treat variety pack, and your choice of 1 care product. Save $35!',
+    price: 249.99,
+    compareAtPrice: 285.00,
+    images: ['/images/products/Waggin_Meals.png'],
+    category: 'Bundles',
+    collection: 'bundles',
+    tags: ['bundle', 'monthly', 'premium', 'complete', 'best-value'],
+    status: 'active',
+    ingredients: 'Bundle includes: 16 Fresh Farm Meals (variety), 2 Superfood Toppers, 2 Bone Broths, 1 Pup-a-Loaf, Treat Variety Pack (3 flavors), 1 Care Product (choice of Bug Shield Soap, Bug Shield Spray, or Derma Shield Shampoo)',
+    weight: 'Monthly supply',
+    inStock: true,
+    stockQty: 20,
+    hasVariants: true
   }
 ];
 
@@ -498,6 +707,22 @@ export const collections: Collection[] = [
     description: 'Nutritious treats made with superfoods and limited ingredients. Perfect for training, rewards, or just showing your pup some love.',
     image: '/images/products/meatballs.jpg',
     products: treatsProducts
+  },
+  {
+    id: 'care',
+    name: 'Waggin Meals Care',
+    slug: 'care',
+    description: 'Natural care products for your dog\'s skin and coat. Bug repellent soaps, sprays, and therapeutic shampoos made with essential oils and botanicals.',
+    image: '/images/products/Waggin_Meals.png',
+    products: careProducts
+  },
+  {
+    id: 'bundles',
+    name: 'Value Bundles',
+    slug: 'bundles',
+    description: 'Save money with our curated bundles! Starter packs, weekly supplies, and premium monthly packages. Everything your dog needs in one convenient package.',
+    image: '/images/products/Waggin_Meals.png',
+    products: bundleProducts
   }
 ];
 
@@ -505,7 +730,9 @@ export const collections: Collection[] = [
 export const allProducts: Product[] = [
   ...freshFoodProducts,
   ...mealToppersProducts,
-  ...treatsProducts
+  ...treatsProducts,
+  ...careProducts,
+  ...bundleProducts
 ];
 
 // === HELPER FUNCTIONS ===

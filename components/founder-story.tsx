@@ -4,7 +4,7 @@ export function FounderStory() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 md:grid-cols-2">
           {/* Image placeholder - will add actual image later */}
-          <div className="relative h-[400px] overflow-hidden rounded-lg bg-gradient-to-br from-primary-blue/20 to-accent-lavender/20">
+          <div className="relative h-[400px] overflow-hidden rounded-lg bg-primary-blue/20">
             <div className="flex h-full items-center justify-center text-text-muted">
               <p className="text-center px-4">
                 Founder photo with dog<br />

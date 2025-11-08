@@ -43,7 +43,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] py-16 px-4">
+    <div className="min-h-screen bg-[#f8f9fa] py-16 px-4">
       <div className="max-w-md mx-auto">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -88,7 +88,7 @@ export default function SignupPage() {
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                   required
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 />
@@ -101,7 +101,7 @@ export default function SignupPage() {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                   required
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 />
@@ -116,7 +116,7 @@ export default function SignupPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 required
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               />
@@ -130,7 +130,7 @@ export default function SignupPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 required
                 minLength={6}
                 style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -143,7 +143,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="w-full bg-[#8FAE8F] text-white py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors disabled:opacity-50"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               {loading ? 'Creating Account...' : 'Create Account'}
@@ -153,7 +153,7 @@ export default function SignupPage() {
           <div className="mt-6 pt-6 border-t border-gray-200 text-center">
             <p className="text-sm text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Already have an account?{' '}
-              <Link href="/login" className="text-[#a5b5eb] hover:text-[#8a9fd9] font-semibold">
+              <Link href="/login" className="text-[#8FAE8F] hover:text-[#6d8c6d] font-semibold">
                 Log In
               </Link>
             </p>

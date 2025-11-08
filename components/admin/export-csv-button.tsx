@@ -33,7 +33,7 @@ export default function ExportCSVButton({ data, filename, headers }: ExportCSVBu
   return (
     <button
       onClick={handleExport}
-      className="bg-[#a5b5eb] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#8a9fd9] transition-colors"
+      className="bg-[#8FAE8F] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#6d8c6d] transition-colors"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
       Export to CSV

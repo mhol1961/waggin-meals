@@ -28,7 +28,7 @@ export function ProductVariantSelector({ variants, onVariantChange }: ProductVar
     const savings = calculateSavings(variant);
 
     return (
-      <div className="bg-[#f8f9fa] rounded-lg p-4 border-2 border-[#a5b5eb]">
+      <div className="bg-[#f8f9fa] rounded-lg p-4 border-2 border-[#8FAE8F]">
         <div className="flex justify-between items-center">
           <div>
             <p className="text-lg font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -39,7 +39,7 @@ export function ProductVariantSelector({ variants, onVariantChange }: ProductVar
             </p>
           </div>
           <div className="text-right">
-            <p className="text-2xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <p className="text-2xl font-bold text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
               ${variant.price.toFixed(2)}
             </p>
             {savings > 0 && (
@@ -75,10 +75,10 @@ export function ProductVariantSelector({ variants, onVariantChange }: ProductVar
                 disabled={isOutOfStock}
                 className={`relative w-full text-left p-4 rounded-lg border-2 transition-all ${
                   isSelected
-                    ? 'border-[#a5b5eb] bg-[#e8f4fb]'
+                    ? 'border-[#8FAE8F] bg-[#e8f4fb]'
                     : isOutOfStock
                     ? 'border-gray-200 bg-gray-50 cursor-not-allowed opacity-60'
-                    : 'border-gray-200 hover:border-[#a5b5eb] bg-white'
+                    : 'border-gray-200 hover:border-[#8FAE8F] bg-white'
                 }`}
               >
                 {/* Out of Stock Badge */}
@@ -100,7 +100,7 @@ export function ProductVariantSelector({ variants, onVariantChange }: ProductVar
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        isSelected ? 'border-[#a5b5eb] bg-[#a5b5eb]' : 'border-gray-300'
+                        isSelected ? 'border-[#8FAE8F] bg-[#8FAE8F]' : 'border-gray-300'
                       }`}>
                         {isSelected && (
                           <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -126,7 +126,7 @@ export function ProductVariantSelector({ variants, onVariantChange }: ProductVar
 
                   {/* Price Info */}
                   <div className="text-right">
-                    <p className={`text-2xl font-bold ${isSelected ? 'text-[#a5b5eb]' : 'text-[#3c3a47]'}`} style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <p className={`text-2xl font-bold ${isSelected ? 'text-[#8FAE8F]' : 'text-[#3c3a47]'}`} style={{ fontFamily: "'Poppins', sans-serif" }}>
                       ${variant.price.toFixed(2)}
                     </p>
                     {savings > 0 && (
@@ -151,13 +151,13 @@ export function ProductVariantSelector({ variants, onVariantChange }: ProductVar
       </div>
 
       {/* Selected Variant Summary */}
-      <div className="bg-[#e8f4fb] rounded-lg p-4 border-l-4 border-[#a5b5eb]">
+      <div className="bg-[#e8f4fb] rounded-lg p-4 border-l-4 border-[#8FAE8F]">
         <p className="text-sm font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
           Selected: {selectedVariant.title}
         </p>
         <div className="flex justify-between items-center text-sm text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
           <span>{selectedVariant.servings} cups ({selectedVariant.weight})</span>
-          <span className="font-semibold text-[#a5b5eb]">${selectedVariant.price.toFixed(2)}</span>
+          <span className="font-semibold text-[#8FAE8F]">${selectedVariant.price.toFixed(2)}</span>
         </div>
       </div>
     </div>

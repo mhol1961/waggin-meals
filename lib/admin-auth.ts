@@ -1,36 +1,67 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs';
 
 /**
  * Admin Authentication Utilities
  *
  * Simple password-based authentication for the admin panel
  * Uses JWT tokens stored in HTTP-only cookies
+ * Passwords are hashed with bcrypt for security
  */
 
 const SESSION_COOKIE_NAME = 'admin-session';
 const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
 /**
- * Verify admin credentials
- * TODO: Upgrade to bcrypt password hashing for production
+ * Verify admin credentials using bcrypt password hashing
+ *
+ * IMPORTANT: The ADMIN_PASSWORD_HASH environment variable must contain
+ * a bcrypt hash, not a plain text password.
+ *
+ * To generate a hash, run:
+ *   node scripts/generate-admin-password-hash.js YourPasswordHere
  */
 export async function verifyAdminCredentials(
   username: string,
   password: string
 ): Promise<boolean> {
   const adminUsername = process.env.ADMIN_USERNAME;
-  const adminPassword = process.env.ADMIN_PASSWORD;
+  const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+  const adminPasswordPlainText = process.env.ADMIN_PASSWORD; // Legacy fallback
 
-  if (!adminUsername || !adminPassword) {
-    console.error('Admin credentials not configured in environment variables');
+  if (!adminUsername) {
+    console.error('❌ ADMIN_USERNAME not configured in environment variables');
     return false;
   }
 
-  // SECURITY WARNING: This is plain text comparison
-  // For production, use bcrypt.compare() with hashed passwords
-  return username === adminUsername && password === adminPassword;
+  // Username must match first
+  if (username !== adminUsername) {
+    return false;
+  }
+
+  // PREFERRED: Use bcrypt hash comparison
+  if (adminPasswordHash) {
+    try {
+      const isValid = await bcrypt.compare(password, adminPasswordHash);
+      return isValid;
+    } catch (error) {
+      console.error('❌ Error comparing password hash:', error);
+      return false;
+    }
+  }
+
+  // LEGACY FALLBACK: Plain text comparison (NOT RECOMMENDED)
+  if (adminPasswordPlainText) {
+    console.warn('⚠️  WARNING: Using plain text password comparison. Please upgrade to bcrypt hashes.');
+    console.warn('   Run: node scripts/generate-admin-password-hash.js YourPasswordHere');
+    return password === adminPasswordPlainText;
+  }
+
+  console.error('❌ Neither ADMIN_PASSWORD_HASH nor ADMIN_PASSWORD is configured');
+  console.error('   Run: node scripts/generate-admin-password-hash.js YourPasswordHere');
+  return false;
 }
 
 /**

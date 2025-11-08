@@ -135,7 +135,7 @@ export default function CaseStudiesPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-6xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Case Studies & Success Stories
@@ -156,7 +156,7 @@ export default function CaseStudiesPage() {
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               />
               <svg
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-[#a5b5eb]"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-[#8FAE8F]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -184,7 +184,7 @@ export default function CaseStudiesPage() {
                 </svg>
                 <span className="font-semibold">Filters</span>
                 {activeFilterCount > 0 && (
-                  <span className="bg-[#a5b5eb] text-white text-xs rounded-full px-2 py-0.5">
+                  <span className="bg-[#8FAE8F] text-white text-xs rounded-full px-2 py-0.5">
                     {activeFilterCount}
                   </span>
                 )}
@@ -193,7 +193,7 @@ export default function CaseStudiesPage() {
               {activeFilterCount > 0 && (
                 <button
                   onClick={clearFilters}
-                  className="text-sm text-[#a5b5eb] hover:text-[#8a9fd9] font-semibold"
+                  className="text-sm text-[#8FAE8F] hover:text-[#6d8c6d] font-semibold"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Clear all
@@ -212,7 +212,7 @@ export default function CaseStudiesPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="px-4 py-2 border border-[#e0e0e0] rounded-lg bg-white text-sm focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                className="px-4 py-2 border border-[#e0e0e0] rounded-lg bg-white text-sm focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 <option value="featured">Featured First</option>
@@ -261,7 +261,7 @@ export default function CaseStudiesPage() {
                           type="checkbox"
                           checked={selectedHealthIssues.includes(issue)}
                           onChange={() => toggleHealthIssue(issue)}
-                          className="w-4 h-4 text-[#a5b5eb] focus:ring-[#a5b5eb] rounded"
+                          className="w-4 h-4 text-[#8FAE8F] focus:ring-[#8FAE8F] rounded"
                         />
                         <span className="text-sm text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           {issue}
@@ -279,7 +279,7 @@ export default function CaseStudiesPage() {
                   <select
                     value={selectedSize}
                     onChange={(e) => setSelectedSize(e.target.value as DogSize | '')}
-                    className="w-full px-4 py-2 border border-[#e0e0e0] rounded-lg bg-white focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-[#e0e0e0] rounded-lg bg-white focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     <option value="">All Sizes</option>
@@ -303,7 +303,7 @@ export default function CaseStudiesPage() {
                           value={age}
                           checked={selectedAgeRange === age}
                           onChange={(e) => setSelectedAgeRange(e.target.value as any)}
-                          className="w-4 h-4 text-[#a5b5eb] focus:ring-[#a5b5eb]"
+                          className="w-4 h-4 text-[#8FAE8F] focus:ring-[#8FAE8F]"
                         />
                         <span className="text-sm text-[#3c3a47] capitalize" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           {age === 'all' ? 'All Ages' : age}
@@ -334,7 +334,7 @@ export default function CaseStudiesPage() {
               </p>
               <button
                 onClick={clearFilters}
-                className="inline-block bg-[#a5b5eb] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#8a9fd9] transition-colors"
+                className="inline-block bg-[#8FAE8F] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#6d8c6d] transition-colors"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Clear All Filters
@@ -355,7 +355,7 @@ export default function CaseStudiesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Ready to Write Your Dog's Success Story?
@@ -365,7 +365,7 @@ export default function CaseStudiesPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
+            className="inline-block bg-[#8FAE8F] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Book Free Consultation
@@ -395,13 +395,13 @@ function CaseStudyCardGrid({ caseStudy }: { caseStudy: CaseStudy }) {
             Featured
           </div>
         )}
-        <div className="absolute bottom-3 left-3 bg-[#a5b5eb] text-white px-3 py-1 rounded-full text-xs font-semibold">
+        <div className="absolute bottom-3 left-3 bg-[#8FAE8F] text-white px-3 py-1 rounded-full text-xs font-semibold">
           {caseStudy.category}
         </div>
       </div>
 
       <div className="p-6">
-        <h3 className="text-xl font-semibold text-[#3c3a47] mb-2 group-hover:text-[#a5b5eb] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
+        <h3 className="text-xl font-semibold text-[#3c3a47] mb-2 group-hover:text-[#8FAE8F] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
           {caseStudy.dogName} - {caseStudy.breed}
         </h3>
         <p className="text-sm text-[#666666] mb-3 line-clamp-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -418,7 +418,7 @@ function CaseStudyCardGrid({ caseStudy }: { caseStudy: CaseStudy }) {
 
         <div className="flex items-center justify-between text-sm text-[#999999]">
           <span>Results in {caseStudy.timeToResults}</span>
-          <span className="text-[#a5b5eb] font-semibold group-hover:text-[#8a9fd9]">
+          <span className="text-[#8FAE8F] font-semibold group-hover:text-[#6d8c6d]">
             Read Story →
           </span>
         </div>
@@ -446,7 +446,7 @@ function CaseStudyCardList({ caseStudy }: { caseStudy: CaseStudy }) {
       <div className="flex-1">
         <div className="flex items-start justify-between mb-2">
           <div>
-            <h3 className="text-2xl font-semibold text-[#3c3a47] group-hover:text-[#a5b5eb] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <h3 className="text-2xl font-semibold text-[#3c3a47] group-hover:text-[#8FAE8F] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
               {caseStudy.dogName} - {caseStudy.breed}
             </h3>
             <p className="text-sm text-[#999999]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -465,7 +465,7 @@ function CaseStudyCardList({ caseStudy }: { caseStudy: CaseStudy }) {
         </p>
 
         <div className="flex flex-wrap gap-2 mb-4">
-          <span className="text-sm bg-[#a5b5eb] bg-opacity-10 text-[#a5b5eb] px-3 py-1 rounded-full font-semibold">
+          <span className="text-sm bg-[#8FAE8F] bg-opacity-10 text-[#8FAE8F] px-3 py-1 rounded-full font-semibold">
             {caseStudy.category}
           </span>
           {caseStudy.healthIssues.slice(0, 3).map(issue => (
@@ -479,7 +479,7 @@ function CaseStudyCardList({ caseStudy }: { caseStudy: CaseStudy }) {
           <span className="text-sm text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Results in {caseStudy.timeToResults}
           </span>
-          <span className="text-[#a5b5eb] font-semibold group-hover:text-[#8a9fd9] flex items-center gap-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <span className="text-[#8FAE8F] font-semibold group-hover:text-[#6d8c6d] flex items-center gap-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
             Read Full Story
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

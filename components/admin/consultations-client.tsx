@@ -117,7 +117,7 @@ export function ConsultationsClient() {
       case 'contacted':
         return `${baseClasses} bg-blue-100 text-blue-800`;
       case 'scheduled':
-        return `${baseClasses} bg-purple-100 text-purple-800`;
+        return `${baseClasses} bg-[#8FAE8F]/10 text-[#5E8C8C]`;
       case 'completed':
         return `${baseClasses} bg-green-100 text-green-800`;
       case 'cancelled':

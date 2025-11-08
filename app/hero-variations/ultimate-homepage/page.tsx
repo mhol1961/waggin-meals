@@ -323,8 +323,8 @@ export default function UltimateHomepage() {
       <section className="relative px-4 py-16 overflow-hidden bg-gradient-to-br from-[#9b8bb3] via-[#8b7ba8] to-[#7b6b98]">
         {/* Subtle background gradients */}
         <div className="absolute inset-0 pointer-events-none opacity-30">
-          <div className="absolute -top-40 -left-24 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-indigo-300/20 rounded-full blur-3xl" />
+          <div className="absolute -top-40 -left-24 w-96 h-96 bg-[#8FAE8F]/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] bg-[#5E8C8C]/20 rounded-full blur-3xl" />
         </div>
 
         <div className="mx-auto max-w-6xl relative z-10 grid lg:grid-cols-[1.15fr_0.85fr] gap-16 items-center">

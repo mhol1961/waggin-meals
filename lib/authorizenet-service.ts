@@ -615,8 +615,9 @@ export async function createCustomerProfileWithPayment(params: {
     if (response.messages?.resultCode === 'Ok') {
       const profileId = response.customerProfileId;
       // When creating profile with payment, the payment profile IDs are in a different location
+      // Authorize.net returns: customerPaymentProfileIdList.numericString[0]
       const paymentProfileId = response.customerPaymentProfileId ||
-        (response as any).customerPaymentProfileIdList?.[0];
+        (response as any).customerPaymentProfileIdList?.numericString?.[0];
 
       console.log(`[Authorize.net] Customer profile created with payment: Profile ${profileId}, Payment ${paymentProfileId}`);
 

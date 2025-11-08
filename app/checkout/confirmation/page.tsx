@@ -86,7 +86,7 @@ function ConfirmationContent() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#a5b5eb] border-r-transparent"></div>
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8FAE8F] border-r-transparent"></div>
           <p className="mt-4 text-gray-600" style={{ fontFamily: "'Poppins', sans-serif" }}>Loading order details...</p>
         </div>
       </div>
@@ -96,7 +96,7 @@ function ConfirmationContent() {
   return (
     <main className="bg-white min-h-screen">
       {/* Header */}
-      <section className="bg-gradient-to-r from-green-500 to-green-600 px-4 py-16">
+      <section className="bg-green-500 px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           {/* Success Icon */}
           <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-6">
@@ -195,7 +195,7 @@ function ConfirmationContent() {
               {/* Step 1 */}
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-[#a5b5eb] text-white rounded-full flex items-center justify-center font-semibold">
+                  <div className="w-10 h-10 bg-[#8FAE8F] text-white rounded-full flex items-center justify-center font-semibold">
                     1
                   </div>
                 </div>
@@ -219,7 +219,7 @@ function ConfirmationContent() {
               {/* Step 2 */}
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-[#a5b5eb] text-white rounded-full flex items-center justify-center font-semibold">
+                  <div className="w-10 h-10 bg-[#8FAE8F] text-white rounded-full flex items-center justify-center font-semibold">
                     2
                   </div>
                 </div>
@@ -244,7 +244,7 @@ function ConfirmationContent() {
               {/* Step 3 */}
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-[#a5b5eb] text-white rounded-full flex items-center justify-center font-semibold">
+                  <div className="w-10 h-10 bg-[#8FAE8F] text-white rounded-full flex items-center justify-center font-semibold">
                     3
                   </div>
                 </div>
@@ -269,7 +269,7 @@ function ConfirmationContent() {
               {subscriptionId && (
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
-                    <div className="w-10 h-10 bg-[#a5b5eb] text-white rounded-full flex items-center justify-center font-semibold">
+                    <div className="w-10 h-10 bg-[#8FAE8F] text-white rounded-full flex items-center justify-center font-semibold">
                       4
                     </div>
                   </div>
@@ -289,7 +289,7 @@ function ConfirmationContent() {
                     </p>
                     <Link
                       href="/account/subscriptions"
-                      className="text-[#a5b5eb] hover:underline font-medium"
+                      className="text-[#8FAE8F] hover:underline font-medium"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       View Your Subscriptions →
@@ -317,14 +317,14 @@ function ConfirmationContent() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                className="inline-flex items-center justify-center bg-[#8FAE8F] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Contact Support
               </Link>
               <a
                 href="mailto:support@wagginmeals.com"
-                className="inline-flex items-center justify-center bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                className="inline-flex items-center justify-center bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 support@wagginmeals.com
@@ -336,14 +336,14 @@ function ConfirmationContent() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/shop"
-              className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors text-center"
+              className="inline-block bg-[#8FAE8F] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#6d8c6d] transition-colors text-center"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Continue Shopping
             </Link>
             <Link
               href="/account/orders"
-              className="inline-block bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 transition-colors text-center"
+              className="inline-block bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 transition-colors text-center"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               View Order History
