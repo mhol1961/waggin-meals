@@ -75,7 +75,7 @@ export default function OrdersPage() {
     const badges: { [key: string]: { bg: string; text: string; label: string } } = {
       pending: { bg: 'bg-yellow-100', text: 'text-yellow-800', label: 'Pending' },
       processing: { bg: 'bg-blue-100', text: 'text-blue-800', label: 'Processing' },
-      shipped: { bg: 'bg-purple-100', text: 'text-purple-800', label: 'Shipped' },
+      shipped: { bg: 'bg-[#8FAE8F]/10', text: 'text-[#5E8C8C]', label: 'Shipped' },
       delivered: { bg: 'bg-green-100', text: 'text-green-800', label: 'Delivered' },
       cancelled: { bg: 'bg-red-100', text: 'text-red-800', label: 'Cancelled' },
       payment_failed: { bg: 'bg-red-100', text: 'text-red-800', label: 'Payment Failed' },
@@ -116,7 +116,7 @@ export default function OrdersPage() {
   if (loading || ordersLoading) {
     return (
       <div className="min-h-screen bg-white">
-        <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-12">
+        <section className="bg-[#8FAE8F] px-4 py-12">
           <div className="mx-auto max-w-6xl">
             <h1 className="text-4xl font-normal text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
               Order History
@@ -125,7 +125,7 @@ export default function OrdersPage() {
         </section>
         <section className="px-4 py-12">
           <div className="mx-auto max-w-6xl text-center">
-            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#a5b5eb] border-r-transparent"></div>
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8FAE8F] border-r-transparent"></div>
             <p className="mt-4 text-gray-600">Loading your orders...</p>
           </div>
         </section>
@@ -136,7 +136,7 @@ export default function OrdersPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-12">
+      <section className="bg-[#8FAE8F] px-4 py-12">
         <div className="mx-auto max-w-6xl">
           <Link
             href="/account"
@@ -195,7 +195,7 @@ export default function OrdersPage() {
                           <p className="text-sm text-gray-500" style={{ fontFamily: "'Poppins', sans-serif" }}>
                             Total
                           </p>
-                          <p className="text-lg font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          <p className="text-lg font-bold text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                             ${order.total.toFixed(2)}
                           </p>
                         </div>
@@ -241,7 +241,7 @@ export default function OrdersPage() {
                     {order.tracking_number && (
                       <div className="mt-4 pt-4 border-t border-gray-200">
                         <div className="flex items-center gap-2 text-sm">
-                          <svg className="w-5 h-5 text-[#a5b5eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 text-[#8FAE8F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                           </svg>
                           <span className="text-gray-600" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -257,7 +257,7 @@ export default function OrdersPage() {
                     <div className="flex flex-col sm:flex-row gap-3">
                       <Link
                         href={`/account/orders/${order.id}`}
-                        className="inline-flex items-center justify-center px-6 py-2 bg-[#a5b5eb] text-white rounded-lg font-medium hover:bg-[#8a9fd9] transition-colors"
+                        className="inline-flex items-center justify-center px-6 py-2 bg-[#8FAE8F] text-white rounded-lg font-medium hover:bg-[#6d8c6d] transition-colors"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       >
                         View Details
@@ -268,7 +268,7 @@ export default function OrdersPage() {
                             // TODO: Implement reorder functionality
                             console.log('Reorder:', order.id);
                           }}
-                          className="inline-flex items-center justify-center px-6 py-2 bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] rounded-lg font-medium hover:bg-blue-50 transition-colors"
+                          className="inline-flex items-center justify-center px-6 py-2 bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] rounded-lg font-medium hover:bg-blue-50 transition-colors"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         >
                           Order Again
@@ -311,7 +311,7 @@ export default function OrdersPage() {
               </p>
               <Link
                 href="/shop"
-                className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                className="inline-block bg-[#8FAE8F] text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Shop Now

@@ -5,7 +5,7 @@ export default function DigestiveHealthPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Digestive Health
@@ -120,7 +120,7 @@ export default function DigestiveHealthPage() {
           </h2>
 
           <div className="space-y-6">
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 High Digestibility
               </h3>
@@ -132,7 +132,7 @@ export default function DigestiveHealthPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Appropriate Fiber
               </h3>
@@ -144,7 +144,7 @@ export default function DigestiveHealthPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Probiotics & Prebiotics
               </h3>
@@ -156,7 +156,7 @@ export default function DigestiveHealthPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Limited Ingredients
               </h3>
@@ -168,7 +168,7 @@ export default function DigestiveHealthPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Anti-Inflammatory Foods
               </h3>
@@ -356,7 +356,7 @@ export default function DigestiveHealthPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Get Customized Digestive Support
@@ -367,7 +367,7 @@ export default function DigestiveHealthPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg inline-block"
+            className="bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg inline-block"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Schedule a Consultation

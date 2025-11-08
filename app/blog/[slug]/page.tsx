@@ -36,10 +36,32 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
+  const keywords = post.tags && post.tags.length > 0
+    ? post.tags.join(', ')
+    : `dog nutrition, ${post.category}, fresh dog food, pet health`;
+
   return {
     title: `${post.title} | Waggin Meals Blog`,
     description: post.excerpt || post.title,
+    keywords,
     openGraph: {
+      title: post.title,
+      description: post.excerpt || '',
+      type: 'article',
+      url: `https://wagginmeals.com/blog/${slug}`,
+      publishedTime: post.published_date,
+      modifiedTime: post.updated_at || post.published_date,
+      images: post.featured_image ? [
+        {
+          url: post.featured_image,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: post.title,
       description: post.excerpt || '',
       images: post.featured_image ? [post.featured_image] : [],
@@ -63,10 +85,43 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       })
     : '';
 
+  // Generate Article schema
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt || '',
+    image: post.featured_image || 'https://wagginmeals.com/images/logo-waggin-meals.png',
+    author: {
+      '@type': 'Person',
+      name: post.author || 'Christie Naquin',
+      jobTitle: 'Board-Certified Canine Nutritionist',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: "Waggin' Meals",
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://wagginmeals.com/images/logo-waggin-meals.png',
+      },
+    },
+    datePublished: post.published_date,
+    dateModified: post.updated_at || post.published_date,
+    articleSection: post.category,
+    keywords: post.tags ? post.tags.join(', ') : '',
+  };
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#f8f9fa] to-white">
+    <>
+      {/* Article Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+
+      <main className="min-h-screen bg-[#f8f9fa]">
       {/* Beautiful Hero Section */}
-      <div className="relative bg-gradient-to-br from-[#a5b5eb] via-[#c5d4f7] to-[#e8f4fb] overflow-hidden">
+      <div className="relative bg-[#8FAE8F] overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 right-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
@@ -107,18 +162,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {/* Meta Info */}
           <div className="flex flex-wrap items-center gap-6 text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#bc2c2c] to-[#d63447] flex items-center justify-center text-white font-bold">
+              <div className="w-10 h-10 rounded-full bg-[#bc2c2c] flex items-center justify-center text-white font-bold">
                 {post.author?.[0] || 'C'}
               </div>
               <span className="font-medium text-[#3c3a47]">{post.author}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-[#a5b5eb]" />
+              <Calendar className="w-4 h-4 text-[#8FAE8F]" />
               <span>{publishedDate}</span>
             </div>
             {post.read_time && (
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[#a5b5eb]" />
+                <Clock className="w-4 h-4 text-[#8FAE8F]" />
                 <span>{post.read_time} min read</span>
               </div>
             )}
@@ -158,7 +213,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 prose-ul:text-[#666666] prose-ul:font-['Poppins']
                 prose-ol:text-[#666666] prose-ol:font-['Poppins']
                 prose-li:mb-2
-                prose-blockquote:border-l-4 prose-blockquote:border-[#a5b5eb] prose-blockquote:bg-[#f8f9fa] prose-blockquote:p-6 prose-blockquote:rounded-r-xl prose-blockquote:italic
+                prose-blockquote:border-l-4 prose-blockquote:border-[#8FAE8F] prose-blockquote:bg-[#f8f9fa] prose-blockquote:p-6 prose-blockquote:rounded-r-xl prose-blockquote:italic
                 prose-img:rounded-xl prose-img:shadow-lg"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
@@ -173,7 +228,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   {post.tags.map((tag: string) => (
                     <span
                       key={tag}
-                      className="px-4 py-2 bg-gradient-to-r from-[#a5b5eb]/10 to-[#c5d4f7]/10 text-[#3c3a47] rounded-full text-[14px] font-medium border border-[#a5b5eb]/20 hover:border-[#a5b5eb] transition-colors"
+                      className="px-4 py-2 bg-[#8FAE8F]/10 text-[#3c3a47] rounded-full text-[14px] font-medium border border-[#8FAE8F]/20 hover:border-[#8FAE8F] transition-colors"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       {tag}
@@ -188,7 +243,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <aside className="lg:col-span-4">
             <div className="sticky top-8 space-y-6">
               {/* Quick Resources Card */}
-              <div className="bg-gradient-to-br from-[#e8f4fb] to-[#f0f4ff] rounded-2xl p-6 border-2 border-[#a5b5eb]/20 shadow-lg">
+              <div className="bg-[#e8f4fb] rounded-2xl p-6 border-2 border-[#8FAE8F]/20 shadow-lg">
                 <h3 className="text-[20px] font-bold text-[#3c3a47] mb-4 flex items-center gap-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
                   <BookOpen className="w-6 h-6 text-[#bc2c2c]" />
                   Helpful Resources
@@ -204,7 +259,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         Feeding Calculator
                       </span>
                     </div>
-                    <ExternalLink className="w-4 h-4 text-[#a5b5eb] group-hover:text-[#bc2c2c] transition-colors" />
+                    <ExternalLink className="w-4 h-4 text-[#8FAE8F] group-hover:text-[#bc2c2c] transition-colors" />
                   </Link>
 
                   <Link
@@ -217,7 +272,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         Success Stories
                       </span>
                     </div>
-                    <ExternalLink className="w-4 h-4 text-[#a5b5eb] group-hover:text-[#bc2c2c] transition-colors" />
+                    <ExternalLink className="w-4 h-4 text-[#8FAE8F] group-hover:text-[#bc2c2c] transition-colors" />
                   </Link>
 
                   <Link
@@ -230,13 +285,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         Fresh Food Guide
                       </span>
                     </div>
-                    <ExternalLink className="w-4 h-4 text-[#a5b5eb] group-hover:text-[#bc2c2c] transition-colors" />
+                    <ExternalLink className="w-4 h-4 text-[#8FAE8F] group-hover:text-[#bc2c2c] transition-colors" />
                   </Link>
                 </div>
               </div>
 
               {/* Consultation CTA */}
-              <div className="bg-gradient-to-br from-[#bc2c2c] to-[#d63447] rounded-2xl p-6 text-white shadow-xl">
+              <div className="bg-[#bc2c2c] rounded-2xl p-6 text-white shadow-xl">
                 <div className="flex items-center gap-2 mb-3">
                   <Heart className="w-6 h-6" />
                   <h3 className="text-[20px] font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
@@ -255,7 +310,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               {/* Category Link */}
-              <div className="bg-white rounded-2xl p-6 border-2 border-[#e0e0e0] hover:border-[#a5b5eb] transition-colors">
+              <div className="bg-white rounded-2xl p-6 border-2 border-[#e0e0e0] hover:border-[#8FAE8F] transition-colors">
                 <Link
                   href={`/blog?category=${encodeURIComponent(post.category)}`}
                   className="flex items-center justify-between group"
@@ -263,7 +318,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <span className="text-[14px] font-medium text-[#666666] group-hover:text-[#bc2c2c] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     More in <strong>{post.category}</strong>
                   </span>
-                  <ExternalLink className="w-4 h-4 text-[#a5b5eb] group-hover:text-[#bc2c2c] transition-colors" />
+                  <ExternalLink className="w-4 h-4 text-[#8FAE8F] group-hover:text-[#bc2c2c] transition-colors" />
                 </Link>
               </div>
             </div>
@@ -272,7 +327,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </div>
 
       {/* Bottom CTA Section */}
-      <section className="bg-gradient-to-br from-[#2f4b38] to-[#3a5a45] text-white py-16 mt-12">
+      <section className="bg-[#2f4b38] text-white py-16 mt-12">
         <div className="container mx-auto px-4 text-center max-w-4xl">
           <h2 className="text-white text-[36px] md:text-[42px] font-bold mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Ready to Transform Your Dog's Health?
@@ -298,6 +353,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

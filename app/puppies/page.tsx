@@ -5,7 +5,7 @@ export default function PuppiesPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Puppy Nutrition
@@ -38,7 +38,7 @@ export default function PuppiesPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-3xl mb-4 mx-auto">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-3xl mb-4 mx-auto">
                 🦴
               </div>
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -50,7 +50,7 @@ export default function PuppiesPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-3xl mb-4 mx-auto">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-3xl mb-4 mx-auto">
                 🧠
               </div>
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -62,7 +62,7 @@ export default function PuppiesPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-3xl mb-4 mx-auto">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-3xl mb-4 mx-auto">
                 🛡️
               </div>
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -84,7 +84,7 @@ export default function PuppiesPage() {
           </h2>
 
           <div className="space-y-6">
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Protein (22-32% of diet)
               </h3>
@@ -93,7 +93,7 @@ export default function PuppiesPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Fat (8-15% of diet)
               </h3>
@@ -102,7 +102,7 @@ export default function PuppiesPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Calcium & Phosphorus (Balanced 1:1 to 2:1 ratio)
               </h3>
@@ -111,7 +111,7 @@ export default function PuppiesPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 DHA
               </h3>
@@ -120,7 +120,7 @@ export default function PuppiesPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Vitamins & Minerals
               </h3>
@@ -146,28 +146,28 @@ export default function PuppiesPage() {
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <span className="inline-block w-2 h-2 bg-[#a5b5eb] rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span className="inline-block w-2 h-2 bg-[#8FAE8F] rounded-full mt-2 mr-3 flex-shrink-0"></span>
                   <div>
                     <strong className="text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>6-12 weeks:</strong>
                     <span className="text-[#666666] ml-2" style={{ fontFamily: "'Poppins', sans-serif" }}>4 meals per day</span>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="inline-block w-2 h-2 bg-[#a5b5eb] rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span className="inline-block w-2 h-2 bg-[#8FAE8F] rounded-full mt-2 mr-3 flex-shrink-0"></span>
                   <div>
                     <strong className="text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>3-6 months:</strong>
                     <span className="text-[#666666] ml-2" style={{ fontFamily: "'Poppins', sans-serif" }}>3 meals per day</span>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="inline-block w-2 h-2 bg-[#a5b5eb] rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span className="inline-block w-2 h-2 bg-[#8FAE8F] rounded-full mt-2 mr-3 flex-shrink-0"></span>
                   <div>
                     <strong className="text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>6-12 months:</strong>
                     <span className="text-[#666666] ml-2" style={{ fontFamily: "'Poppins', sans-serif" }}>2 meals per day</span>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="inline-block w-2 h-2 bg-[#a5b5eb] rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span className="inline-block w-2 h-2 bg-[#8FAE8F] rounded-full mt-2 mr-3 flex-shrink-0"></span>
                   <div>
                     <strong className="text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>12+ months:</strong>
                     <span className="text-[#666666] ml-2" style={{ fontFamily: "'Poppins', sans-serif" }}>1-2 meals per day</span>
@@ -250,7 +250,7 @@ export default function PuppiesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Get a Custom Puppy Nutrition Plan
@@ -261,7 +261,7 @@ export default function PuppiesPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg inline-block"
+            className="bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg inline-block"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Schedule a Consultation

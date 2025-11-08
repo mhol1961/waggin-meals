@@ -65,7 +65,7 @@ export default function CartDrawer() {
               <Link
                 href="/shop"
                 onClick={closeCart}
-                className="bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                className="bg-[#8FAE8F] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Continue Shopping
@@ -134,7 +134,7 @@ export default function CartDrawer() {
                         </button>
                       </div>
                       <span
-                        className="text-sm font-bold text-[#a5b5eb]"
+                        className="text-sm font-bold text-[#8FAE8F]"
                         style={{ fontFamily: "'Poppins', sans-serif" }}
                       >
                         ${(item.price * item.quantity).toFixed(2)}
@@ -202,7 +202,7 @@ export default function CartDrawer() {
                 Subtotal
               </span>
               <span
-                className="text-2xl font-bold text-[#a5b5eb]"
+                className="text-2xl font-bold text-[#8FAE8F]"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 ${totalPrice.toFixed(2)}
@@ -213,7 +213,7 @@ export default function CartDrawer() {
               <Link
                 href="/checkout"
                 onClick={closeCart}
-                className="block w-full bg-[#a5b5eb] text-white text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
+                className="block w-full bg-[#8FAE8F] text-white text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Proceed to Checkout
@@ -229,7 +229,7 @@ export default function CartDrawer() {
             )}
             <button
               onClick={closeCart}
-              className="block w-full mt-3 bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] text-center px-6 py-3 rounded-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors"
+              className="block w-full mt-3 bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] text-center px-6 py-3 rounded-lg font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Continue Shopping

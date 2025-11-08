@@ -68,9 +68,9 @@ export default function SmartBundlesPage() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#f8f9fa] via-white to-[#e8f4fb] px-4 py-20 overflow-hidden">
+      <section className="relative bg-[#f8f9fa] px-4 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 right-10 w-96 h-96 bg-[#a5b5eb] rounded-full blur-3xl"></div>
+          <div className="absolute top-10 right-10 w-96 h-96 bg-[#8FAE8F] rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#10b981] rounded-full blur-3xl"></div>
         </div>
 
@@ -82,7 +82,7 @@ export default function SmartBundlesPage() {
 
           <h1 className="text-5xl lg:text-6xl font-normal text-[#3c3a47] mb-6 leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Smart Bundles:{' '}
-            <span className="text-[#a5b5eb]">Complete Nutrition</span>
+            <span className="text-[#8FAE8F]">Complete Nutrition</span>
             <br />
             Made Simple
           </h1>
@@ -141,7 +141,7 @@ export default function SmartBundlesPage() {
                   <h3 className="text-2xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     {bundle.name}
                   </h3>
-                  <p className="text-sm text-[#a5b5eb] font-semibold mb-4">{bundle.tagline}</p>
+                  <p className="text-sm text-[#8FAE8F] font-semibold mb-4">{bundle.tagline}</p>
 
                   <div className="mb-6">
                     <div className="flex items-baseline gap-2 mb-2">
@@ -177,7 +177,7 @@ export default function SmartBundlesPage() {
                     className={`block w-full text-center py-4 rounded-lg font-semibold transition-colors ${
                       bundle.popular
                         ? 'bg-green-600 text-white hover:bg-green-700'
-                        : 'bg-[#a5b5eb] text-white hover:bg-[#8a9fd9]'
+                        : 'bg-[#8FAE8F] text-white hover:bg-[#6d8c6d]'
                     }`}
                   >
                     Add to Cart
@@ -220,8 +220,8 @@ export default function SmartBundlesPage() {
               }
             ].map((feature, i) => (
               <div key={i} className="bg-white rounded-xl shadow-lg p-8 flex items-start">
-                <div className="w-14 h-14 bg-[#a5b5eb]/10 rounded-full flex items-center justify-center flex-shrink-0 mr-6">
-                  <feature.icon className="w-7 h-7 text-[#a5b5eb]" />
+                <div className="w-14 h-14 bg-[#8FAE8F]/10 rounded-full flex items-center justify-center flex-shrink-0 mr-6">
+                  <feature.icon className="w-7 h-7 text-[#8FAE8F]" />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-[#3c3a47] mb-3">{feature.title}</h3>
@@ -247,7 +247,7 @@ export default function SmartBundlesPage() {
               { step: '3', title: 'Serve & Enjoy', desc: 'Simply thaw, portion, and serve. Watch your dog love every bite!' }
             ].map((step, i) => (
               <div key={i} className="text-center">
-                <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl font-bold text-white">{step.step}</span>
                 </div>
                 <h3 className="text-xl font-semibold text-[#3c3a47] mb-3">{step.title}</h3>
@@ -318,7 +318,7 @@ export default function SmartBundlesPage() {
             }
           ].map((t, i) => (
             <div key={i} className="bg-[#f5f5f5] p-6 rounded-lg">
-              <div className="mb-4 text-[48px] leading-none text-[#a5b5eb] opacity-30">&quot;</div>
+              <div className="mb-4 text-[48px] leading-none text-[#8FAE8F] opacity-30">&quot;</div>
               <p className="mb-4 text-[15px] leading-relaxed text-[#3c3a47]">{t.quote}</p>
               <p className="text-[14px] font-semibold text-[#3c3a47]">{t.author}</p>
             </div>
@@ -327,7 +327,7 @@ export default function SmartBundlesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="text-4xl font-normal mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Ready to Give Your Dog the Gift of Real Food?
@@ -338,13 +338,13 @@ export default function SmartBundlesPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/shop"
-              className="bg-white text-[#a5b5eb] px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+              className="bg-white text-[#8FAE8F] px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg"
             >
               Shop Smart Bundles
             </Link>
             <Link
               href="/nutrition-services"
-              className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-[#a5b5eb] transition-colors"
+              className="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-[#8FAE8F] transition-colors"
             >
               Book Free Consultation
             </Link>
@@ -353,7 +353,7 @@ export default function SmartBundlesPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#2f4b38] to-[#1f3324] text-white mt-16">
+      <footer className="bg-[#2f4b38] text-white mt-16">
         {/* Main Footer Content */}
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

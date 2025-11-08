@@ -25,18 +25,17 @@ type ComplianceBannerProps = {
 };
 
 export function ComplianceBanner({ className, variant = 'default' }: ComplianceBannerProps) {
-  const gradient =
+  const bgColor =
     variant === 'frost'
-      ? 'from-[#edf6ff] via-white to-[#fff6ed]'
-      : 'from-[#f0f7ff] via-white to-[#fff4ec]';
+      ? 'bg-[#edf6ff]'
+      : 'bg-[#f0f7ff]';
 
   return (
     <section className={cn('px-4 py-6', className)}>
       <div
         className={cn(
           'mx-auto max-w-6xl rounded-3xl border border-[#e6ddce] shadow-sm p-6',
-          'bg-gradient-to-r',
-          gradient,
+          bgColor,
         )}
       >
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">

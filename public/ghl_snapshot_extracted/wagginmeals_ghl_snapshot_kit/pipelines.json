@@ -1,0 +1,27 @@
+{
+  "consultations": {
+    "name": "Consultations ($395)",
+    "stages": [
+      "Inquiry",
+      "Booking Pending",
+      "Scheduled",
+      "Paid & Confirmed",
+      "Completed",
+      "No Show",
+      "Cancelled"
+    ]
+  },
+  "orders_subscriptions": {
+    "name": "Orders & Subscriptions",
+    "stages": [
+      "Cart Active",
+      "Cart Abandoned",
+      "Order Placed",
+      "Processing",
+      "Shipped",
+      "Delivered",
+      "Subscription Active",
+      "Subscription Past Due"
+    ]
+  }
+}

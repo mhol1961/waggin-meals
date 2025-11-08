@@ -109,7 +109,7 @@ export default function BundlesPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#2f4b38] via-[#3d5e49] to-[#2f4b38] px-4 py-20">
+      <section className="bg-[#2f4b38] px-4 py-20">
         <div className="mx-auto max-w-6xl text-center">
           <div className="inline-block bg-[#a4341f] text-white px-4 py-2 rounded-full text-sm font-semibold mb-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
             <Package className="inline w-4 h-4 mr-2" />
@@ -179,7 +179,7 @@ export default function BundlesPage() {
                 )}
 
                 {/* Image Gallery */}
-                <div className="relative h-48 bg-gradient-to-br from-[#f5f1ea] to-[#ded2bf] p-4">
+                <div className="relative h-48 bg-[#f5f1ea] p-4">
                   <div className="grid grid-cols-3 gap-2 h-full">
                     {sampleProductImages.slice(0, 3).map((img, idx) => (
                       <button
@@ -541,7 +541,7 @@ export default function BundlesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#2f4b38] via-[#3d5e49] to-[#2f4b38] px-4 py-16">
+      <section className="bg-[#2f4b38] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Not Sure Which Bundle Is Right?

@@ -19,7 +19,7 @@ export default function AccountPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#a5b5eb] mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8FAE8F] mx-auto"></div>
           <p className="mt-4 text-[#666666]">Loading your account...</p>
         </div>
       </div>
@@ -82,7 +82,7 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb]">
+    <div className="min-h-screen bg-[#f8f9fa]">
       <div className="max-w-6xl mx-auto px-4 py-16">
         {/* Header */}
         <div className="flex justify-between items-start mb-12">
@@ -123,15 +123,15 @@ export default function AccountPage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border-2 border-transparent hover:border-[#a5b5eb]"
+                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border-2 border-transparent hover:border-[#8FAE8F]"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#a5b5eb] to-[#c5d4f7] flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-[#8FAE8F] flex items-center justify-center flex-shrink-0">
                     <Icon className="w-6 h-6 text-white" />
                   </div>
                   <div className="flex-1">
                     <h3
-                      className="text-xl font-bold text-[#3c3a47] mb-2 group-hover:text-[#a5b5eb] transition-colors"
+                      className="text-xl font-bold text-[#3c3a47] mb-2 group-hover:text-[#8FAE8F] transition-colors"
                       style={{ fontFamily: "'Abril Fatface', serif" }}
                     >
                       {link.title}
@@ -160,28 +160,28 @@ export default function AccountPage() {
           <div className="grid sm:grid-cols-2 gap-3">
             <Link
               href="/shop"
-              className="text-[#a5b5eb] hover:text-[#8a9fd9] transition-colors text-sm font-medium"
+              className="text-[#8FAE8F] hover:text-[#6d8c6d] transition-colors text-sm font-medium"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               → Shop Products
             </Link>
             <Link
               href="/nutrition-services"
-              className="text-[#a5b5eb] hover:text-[#8a9fd9] transition-colors text-sm font-medium"
+              className="text-[#8FAE8F] hover:text-[#6d8c6d] transition-colors text-sm font-medium"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               → Nutrition Consultation
             </Link>
             <Link
               href="/contact"
-              className="text-[#a5b5eb] hover:text-[#8a9fd9] transition-colors text-sm font-medium"
+              className="text-[#8FAE8F] hover:text-[#6d8c6d] transition-colors text-sm font-medium"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               → Contact Support
             </Link>
             <Link
               href="/"
-              className="text-[#a5b5eb] hover:text-[#8a9fd9] transition-colors text-sm font-medium"
+              className="text-[#8FAE8F] hover:text-[#6d8c6d] transition-colors text-sm font-medium"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               → Back to Homepage

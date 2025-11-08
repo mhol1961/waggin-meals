@@ -129,25 +129,67 @@ export async function POST(request: NextRequest) {
       },
     ]);
 
-    // Send notification to GoHighLevel
-    const { data: customer } = await supabase
-      .from('customers')
-      .select('email, first_name, last_name, phone')
-      .eq('id', customer_id)
-      .single();
+    // =================================
+    // SYNC TO GHL (Tag Accumulation)
+    // =================================
+    try {
+      const { data: customer } = await supabase
+        .from('customers')
+        .select('email, first_name, last_name, phone')
+        .eq('id', customer_id)
+        .single();
 
-    if (customer) {
-      await GHL.notifySubscriptionCreated({
-        customer_email: customer.email,
-        customer_first_name: customer.first_name,
-        customer_last_name: customer.last_name,
-        customer_phone: customer.phone,
-        subscription_id: subscription.id,
-        frequency: subscription.frequency,
-        next_billing_date: nextBillingDate.toISOString().split('T')[0],
-        amount: subscription.amount,
-        items: subscription.items,
-      });
+      if (customer) {
+        // Build tags for new subscription
+        const tags = [
+          'subscriber',           // Base tag for anyone with a subscription
+          'subscription-active',  // Currently has active subscription
+        ];
+
+        // Sync to GHL with tag accumulation
+        const ghlResult: GHL.GHLSyncResult = await GHL.syncContactToGHL({
+          email: customer.email,
+          firstName: customer.first_name,
+          lastName: customer.last_name,
+          phone: customer.phone,
+          tags,
+          customFields: {
+            subscription_id: subscription.id,
+            subscription_frequency: subscription.frequency,
+            subscription_amount: subscription.amount.toString(),
+            next_billing_date: nextBillingDate.toISOString().split('T')[0],
+          },
+        });
+
+        // Log GHL sync result to subscriptions table
+        if (ghlResult.success && ghlResult.contactId) {
+          await supabase
+            .from('subscriptions')
+            .update({
+              ghl_contact_id: ghlResult.contactId,
+              ghl_tags: tags,
+              ghl_last_sync_at: new Date().toISOString(),
+              ghl_sync_error: null,
+            })
+            .eq('id', subscription.id);
+
+          console.log(`[GHL] ✅ Synced subscription ${subscription.id} for ${customer.email} with tags:`, tags);
+        } else {
+          // Log error but don't fail subscription creation
+          await supabase
+            .from('subscriptions')
+            .update({
+              ghl_sync_error: ghlResult.error || 'Unknown GHL error',
+              ghl_last_sync_at: new Date().toISOString(),
+            })
+            .eq('id', subscription.id);
+
+          console.error('[GHL] Failed to sync subscription:', ghlResult.error);
+        }
+      }
+    } catch (ghlError) {
+      console.error('[GHL] Error during subscription sync:', ghlError);
+      // Don't fail the subscription if GHL sync fails
     }
 
     return NextResponse.json({ subscription }, { status: 201 });

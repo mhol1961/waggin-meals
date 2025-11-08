@@ -84,7 +84,7 @@ export default function HeroVariationsIndex() {
   return (
     <main className="bg-white min-h-screen">
       {/* Header */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-gradient-to-r from-[#8FAE8F] to-[#F8F5F0] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Hero Section Variations
@@ -134,18 +134,18 @@ export default function HeroVariationsIndex() {
               <Link
                 key={variation.id}
                 href={`/hero-variations/${variation.id}`}
-                className="bg-white border-2 border-[#e0e0e0] rounded-lg p-8 hover:shadow-2xl hover:border-[#a5b5eb] transition-all group"
+                className="bg-white border-2 border-[#e0e0e0] rounded-lg p-8 hover:shadow-2xl hover:border-[#8FAE8F] transition-all group"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-xl font-bold">
+                  <div className="w-12 h-12 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-xl font-bold">
                     {String.fromCharCode(65 + index)}
                   </div>
-                  <svg className="w-6 h-6 text-[#a5b5eb] group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-[#8FAE8F] group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
 
-                <h3 className="text-2xl font-semibold text-[#3c3a47] mb-3 group-hover:text-[#a5b5eb] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <h3 className="text-2xl font-semibold text-[#3c3a47] mb-3 group-hover:text-[#8FAE8F] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   {variation.title}
                 </h3>
 
@@ -173,7 +173,7 @@ export default function HeroVariationsIndex() {
                 </div>
 
                 <div className="pt-4 border-t border-gray-200">
-                  <span className="text-[#a5b5eb] font-semibold group-hover:underline" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <span className="text-[#8FAE8F] font-semibold group-hover:underline" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     View Live Demo →
                   </span>
                 </div>
@@ -192,7 +192,7 @@ export default function HeroVariationsIndex() {
 
           <div className="overflow-x-auto">
             <table className="w-full bg-white rounded-lg shadow-lg">
-              <thead className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7]">
+              <thead className="bg-gradient-to-r from-[#8FAE8F] to-[#F8F5F0]">
                 <tr>
                   <th className="px-6 py-4 text-left text-white font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Feature</th>
                   <th className="px-6 py-4 text-left text-white font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>Variation A</th>
@@ -247,7 +247,7 @@ export default function HeroVariationsIndex() {
       <section className="px-4 py-12 text-center">
         <Link
           href="/"
-          className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+          className="inline-block bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
           style={{ fontFamily: "'Poppins', sans-serif" }}
         >
           ← Back to Current Home Page

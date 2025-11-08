@@ -6,3 +6,83 @@
    - Environments: .env.local
 
    Creating an optimized production build ...
+ ⚠ Compiled with warnings in 108s
+
+./app/admin/conditions/[id]/edit/page.tsx
+Attempted import error: 'createClient' is not exported from '@/lib/supabase/client' (imported as 'createClient').
+
+Import trace for requested module:
+./app/admin/conditions/[id]/edit/page.tsx
+
+./app/admin/conditions/new/page.tsx
+Attempted import error: 'createClient' is not exported from '@/lib/supabase/client' (imported as 'createClient').
+
+Import trace for requested module:
+./app/admin/conditions/new/page.tsx
+
+./app/admin/conditions/page.tsx
+Attempted import error: 'createClient' is not exported from '@/lib/supabase/client' (imported as 'createClient').
+
+Import trace for requested module:
+./app/admin/conditions/page.tsx
+
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (118kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ⚠ Compiled with warnings in 11.6s
+
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+A Node.js API is used (process.versions at line: 32) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+./node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js
+./node_modules/@supabase/realtime-js/dist/module/index.js
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./node_modules/@supabase/ssr/dist/module/createServerClient.js
+./node_modules/@supabase/ssr/dist/module/index.js
+./lib/supabase/middleware.ts
+
+./node_modules/@supabase/supabase-js/dist/module/index.js
+A Node.js API is used (process.version at line: 24) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+./node_modules/@supabase/supabase-js/dist/module/index.js
+./node_modules/@supabase/ssr/dist/module/createServerClient.js
+./node_modules/@supabase/ssr/dist/module/index.js
+./lib/supabase/middleware.ts
+
+ ⚠ Compiled with warnings in 81s
+
+./app/admin/conditions/[id]/edit/page.tsx
+Attempted import error: 'createClient' is not exported from '@/lib/supabase/client' (imported as 'createClient').
+
+Import trace for requested module:
+./app/admin/conditions/[id]/edit/page.tsx
+
+./app/admin/conditions/new/page.tsx
+Attempted import error: 'createClient' is not exported from '@/lib/supabase/client' (imported as 'createClient').
+
+Import trace for requested module:
+./app/admin/conditions/new/page.tsx
+
+./app/admin/conditions/page.tsx
+Attempted import error: 'createClient' is not exported from '@/lib/supabase/client' (imported as 'createClient').
+
+Import trace for requested module:
+./app/admin/conditions/page.tsx
+
+ ✓ Compiled successfully in 3.3min
+   Linting and checking validity of types ...
+Failed to compile.
+
+./app/admin/conditions/[id]/edit/page.tsx:6:10
+Type error: Module '"@/lib/supabase/client"' declares 'createClient' locally, but it is not exported.
+
+[0m [90m 4 |[39m [36mimport[39m [33mLink[39m [36mfrom[39m [32m'next/link'[39m[33m;[39m
+ [90m 5 |[39m [36mimport[39m { useRouter[33m,[39m useParams } [36mfrom[39m [32m'next/navigation'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m { createClient } [36mfrom[39m [32m'@/lib/supabase/client'[39m[33m;[39m
+ [90m   |[39m          [31m[1m^[22m[39m
+ [90m 7 |[39m [36mimport[39m type { [33mConditionPage[39m } [36mfrom[39m [32m'@/types/condition-page'[39m[33m;[39m
+ [90m 8 |[39m
+ [90m 9 |[39m [36mconst[39m supabase [33m=[39m createClient()[33m;[39m[0m
+Next.js build worker exited with code: 1 and signal: null

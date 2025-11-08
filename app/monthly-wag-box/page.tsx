@@ -67,7 +67,7 @@ export default function MonthlyWagBoxPage() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#fef3c7] via-[#fef7e8] to-[#f0f9ff] px-4 py-20 overflow-hidden">
+      <section className="relative bg-[#fef7e8] px-4 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           {[...Array(8)].map((_, i) => (
             <Sparkles
@@ -93,7 +93,7 @@ export default function MonthlyWagBoxPage() {
             The Monthly{' '}
             <span className="text-[#f59e0b]">Wag Box:</span>
             <br />
-            <span className="text-[#a5b5eb]">Fresh Meals</span> Delivered Monthly
+            <span className="text-[#8FAE8F]">Fresh Meals</span> Delivered Monthly
           </h1>
 
           <p className="text-xl text-[#666666] mb-10 leading-relaxed max-w-3xl mx-auto" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -200,7 +200,7 @@ export default function MonthlyWagBoxPage() {
                     className={`block w-full text-center py-4 rounded-lg font-semibold transition-colors ${
                       box.popular
                         ? 'bg-green-600 text-white hover:bg-green-700'
-                        : 'bg-[#a5b5eb] text-white hover:bg-[#8a9fd9]'
+                        : 'bg-[#8FAE8F] text-white hover:bg-[#6d8c6d]'
                     }`}
                   >
                     Subscribe Now
@@ -229,11 +229,11 @@ export default function MonthlyWagBoxPage() {
               { step: '4', icon: Sparkles, title: 'Enjoy & Repeat', desc: 'Boxes arrive on schedule. Your dog loves it, every single time!' }
             ].map((step, i) => (
               <div key={i} className="bg-white rounded-xl shadow-lg p-6 text-center">
-                <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl font-bold text-white">{step.step}</span>
                 </div>
-                <div className="w-12 h-12 bg-[#a5b5eb]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <step.icon className="w-6 h-6 text-[#a5b5eb]" />
+                <div className="w-12 h-12 bg-[#8FAE8F]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <step.icon className="w-6 h-6 text-[#8FAE8F]" />
                 </div>
                 <h3 className="text-lg font-semibold text-[#3c3a47] mb-3">{step.title}</h3>
                 <p className="text-sm text-[#666666] leading-relaxed">{step.desc}</p>
@@ -284,7 +284,7 @@ export default function MonthlyWagBoxPage() {
               }
             ].map((benefit, i) => (
               <div key={i} className="bg-[#f5f5f5] rounded-xl p-6 text-center">
-                <div className="w-14 h-14 bg-[#a5b5eb] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-14 h-14 bg-[#8FAE8F] rounded-full flex items-center justify-center mx-auto mb-4">
                   <benefit.icon className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-lg font-semibold text-[#3c3a47] mb-3">{benefit.title}</h3>
@@ -326,7 +326,7 @@ export default function MonthlyWagBoxPage() {
               </div>
               <p className="mb-4 text-[15px] leading-relaxed text-[#3c3a47]">{t.quote}</p>
               <p className="text-[14px] font-semibold text-[#3c3a47] mb-1">{t.author}</p>
-              <p className="text-xs text-[#a5b5eb]">{t.plan} Subscriber</p>
+              <p className="text-xs text-[#8FAE8F]">{t.plan} Subscriber</p>
             </div>
           ))}
         </div>
@@ -376,7 +376,7 @@ export default function MonthlyWagBoxPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-[#f59e0b] to-[#fbbf24] px-4 py-16">
+      <section className="bg-[#f59e0b] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="text-4xl font-normal mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Ready to Start Your Dog's Monthly Surprise?
@@ -403,7 +403,7 @@ export default function MonthlyWagBoxPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#2f4b38] to-[#1f3324] text-white mt-16">
+      <footer className="bg-[#2f4b38] text-white mt-16">
         {/* Main Footer Content */}
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

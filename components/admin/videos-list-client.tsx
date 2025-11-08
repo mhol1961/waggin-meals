@@ -98,7 +98,7 @@ export default function VideosListClient({ initialVideos }: VideosListClientProp
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {video.category && (
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-[#8FAE8F]/10 text-[#5E8C8C]">
                         {video.category}
                       </span>
                     )}

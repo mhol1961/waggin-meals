@@ -331,7 +331,7 @@ export default function CheckoutPage() {
             </p>
             <Link
               href="/shop"
-              className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+              className="inline-block bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Continue Shopping
@@ -345,7 +345,7 @@ export default function CheckoutPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Header */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-8">
+      <section className="bg-[#8FAE8F] px-4 py-8">
         <div className="mx-auto max-w-7xl">
           <h1 className="text-3xl font-normal text-white" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Checkout
@@ -400,7 +400,7 @@ export default function CheckoutPage() {
                         {item.variant_title && (
                           <p className="text-sm text-gray-500">{item.variant_title}</p>
                         )}
-                        <p className="text-sm font-bold text-[#a5b5eb]">${item.price.toFixed(2)}</p>
+                        <p className="text-sm font-bold text-[#8FAE8F]">${item.price.toFixed(2)}</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="flex items-center border border-gray-300 rounded-md">
@@ -445,7 +445,7 @@ export default function CheckoutPage() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       placeholder="you@example.com"
                     />
                   </div>
@@ -458,7 +458,7 @@ export default function CheckoutPage() {
                         required
                         value={shippingAddress.first_name}
                         onChange={(e) => setShippingAddress({ ...shippingAddress, first_name: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       />
                     </div>
                     <div>
@@ -468,7 +468,7 @@ export default function CheckoutPage() {
                         required
                         value={shippingAddress.last_name}
                         onChange={(e) => setShippingAddress({ ...shippingAddress, last_name: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       />
                     </div>
                   </div>
@@ -480,7 +480,7 @@ export default function CheckoutPage() {
                       required
                       value={shippingAddress.address}
                       onChange={(e) => setShippingAddress({ ...shippingAddress, address: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     />
                   </div>
 
@@ -490,7 +490,7 @@ export default function CheckoutPage() {
                       type="text"
                       value={shippingAddress.address2 || ''}
                       onChange={(e) => setShippingAddress({ ...shippingAddress, address2: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     />
                   </div>
 
@@ -502,7 +502,7 @@ export default function CheckoutPage() {
                         required
                         value={shippingAddress.city}
                         onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       />
                     </div>
                     <div>
@@ -512,7 +512,7 @@ export default function CheckoutPage() {
                         required
                         value={shippingAddress.state}
                         onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       />
                     </div>
                   </div>
@@ -525,7 +525,7 @@ export default function CheckoutPage() {
                         required
                         value={shippingAddress.zip}
                         onChange={(e) => setShippingAddress({ ...shippingAddress, zip: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       />
                     </div>
                     <div>
@@ -535,7 +535,7 @@ export default function CheckoutPage() {
                         required
                         value={shippingAddress.phone}
                         onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                         placeholder="(555) 123-4567"
                       />
                     </div>
@@ -554,7 +554,7 @@ export default function CheckoutPage() {
                       key={method.id}
                       className={`flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition-colors ${
                         selectedShippingMethod === method.id
-                          ? 'border-[#a5b5eb] bg-blue-50'
+                          ? 'border-[#8FAE8F] bg-blue-50'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
@@ -565,7 +565,7 @@ export default function CheckoutPage() {
                           value={method.id}
                           checked={selectedShippingMethod === method.id}
                           onChange={(e) => setSelectedShippingMethod(e.target.value)}
-                          className="w-4 h-4 text-[#a5b5eb]"
+                          className="w-4 h-4 text-[#8FAE8F]"
                         />
                         <div>
                           <div className="font-medium text-gray-900">{method.name}</div>
@@ -656,7 +656,7 @@ export default function CheckoutPage() {
                 <div className="border-t-2 border-gray-300 pt-4 mb-6">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold text-gray-900">Total</span>
-                    <span className="text-2xl font-bold text-[#a5b5eb]">${total.toFixed(2)}</span>
+                    <span className="text-2xl font-bold text-[#8FAE8F]">${total.toFixed(2)}</span>
                   </div>
                 </div>
 

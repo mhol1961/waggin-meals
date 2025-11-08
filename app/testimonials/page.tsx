@@ -106,7 +106,7 @@ export default function TestimonialsPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Real Results from Real Dogs
@@ -131,7 +131,7 @@ export default function TestimonialsPage() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === category
-                    ? "bg-[#a5b5eb] text-white"
+                    ? "bg-[#8FAE8F] text-white"
                     : "bg-gray-100 text-[#666666] hover:bg-gray-200"
                 }`}
                 style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -167,7 +167,7 @@ export default function TestimonialsPage() {
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute top-4 right-4 bg-[#a5b5eb] text-white px-4 py-1 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <div className="absolute top-4 right-4 bg-[#8FAE8F] text-white px-4 py-1 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     {testimonial.category}
                   </div>
                 </div>
@@ -225,7 +225,7 @@ export default function TestimonialsPage() {
                     <p className="text-xs text-[#999999] mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       Service Used:
                     </p>
-                    <p className="text-sm font-semibold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <p className="text-sm font-semibold text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       {testimonial.service}
                     </p>
                   </div>
@@ -245,7 +245,7 @@ export default function TestimonialsPage() {
 
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <div className="text-4xl font-bold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 98%
               </div>
               <p className="text-sm text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -253,7 +253,7 @@ export default function TestimonialsPage() {
               </p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <div className="text-4xl font-bold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 300+
               </div>
               <p className="text-sm text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -261,7 +261,7 @@ export default function TestimonialsPage() {
               </p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <div className="text-4xl font-bold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 15+
               </div>
               <p className="text-sm text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -269,7 +269,7 @@ export default function TestimonialsPage() {
               </p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-[#a5b5eb] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <div className="text-4xl font-bold text-[#8FAE8F] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 100%
               </div>
               <p className="text-sm text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -281,7 +281,7 @@ export default function TestimonialsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Your Dog Could Be Next
@@ -292,7 +292,7 @@ export default function TestimonialsPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
+            className="inline-block bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Book Your Consultation - $395

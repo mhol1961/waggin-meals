@@ -1,0 +1,276 @@
+
+> waggin-meals@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.6
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 117s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/180) ...
+   Generating static pages (21/180) 
+   Generating static pages (45/180) 
+   Generating static pages (90/180) 
+   Generating static pages (135/180) 
+ ✓ Generating static pages (180/180)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                         Size  First Load JS
+┌ ○ /                                            8.12 kB         118 kB
+├ ○ /_not-found                                     1 kB         103 kB
+├ ○ /about                                       11.8 kB         122 kB
+├ ○ /about2                                      11.2 kB         122 kB
+├ ○ /about3                                      11.9 kB         122 kB
+├ ○ /account                                     4.96 kB         163 kB
+├ ƒ /account/[token]                             2.52 kB         104 kB
+├ ○ /account/addresses                            2.2 kB         156 kB
+├ ○ /account/consultations                       3.38 kB         161 kB
+├ ○ /account/orders                              3.48 kB         161 kB
+├ ƒ /account/orders/[id]                         3.97 kB         162 kB
+├ ○ /account/payment-methods                     4.06 kB         159 kB
+├ ○ /account/profile                             2.46 kB         156 kB
+├ ○ /account/settings                            2.34 kB         156 kB
+├ ○ /account/subscriptions                          3 kB         161 kB
+├ ƒ /account/subscriptions/[id]                  6.09 kB         160 kB
+├ ○ /admin                                       5.49 kB         111 kB
+├ ○ /admin/archive                               2.64 kB         108 kB
+├ ƒ /admin/blog                                  2.53 kB         108 kB
+├ ƒ /admin/blog/[id]                               143 B         250 kB
+├ ƒ /admin/blog/new                                143 B         250 kB
+├ ○ /admin/case-studies                          4.02 kB         109 kB
+├ ○ /admin/case-studies/new                      7.25 kB         224 kB
+├ ○ /admin/conditions                            2.88 kB         157 kB
+├ ƒ /admin/conditions/[id]/edit                  3.02 kB         157 kB
+├ ○ /admin/conditions/new                         5.4 kB         159 kB
+├ ○ /admin/conditions/seo-dashboard              3.09 kB         157 kB
+├ ○ /admin/conditions/settings                   3.15 kB         157 kB
+├ ƒ /admin/consultations                         2.49 kB         156 kB
+├ ƒ /admin/customers                             2.83 kB         157 kB
+├ ƒ /admin/customers/[id]                        2.78 kB         157 kB
+├ ƒ /admin/discounts                             2.45 kB         108 kB
+├ ƒ /admin/events                                2.46 kB         108 kB
+├ ƒ /admin/events/[id]                             136 B         133 kB
+├ ƒ /admin/events/new                              135 B         133 kB
+├ ○ /admin/inventory                             4.31 kB         109 kB
+├ ○ /admin/inventory/adjustments                 2.22 kB         107 kB
+├ ○ /admin/inventory/low-stock                   2.03 kB         107 kB
+├ ○ /admin/login                                 2.02 kB         109 kB
+├ ƒ /admin/newsletter                              633 B         106 kB
+├ ƒ /admin/orders                                2.95 kB         108 kB
+├ ƒ /admin/orders/[id]                           7.89 kB         113 kB
+├ ○ /admin/paid-consultations                    2.02 kB         111 kB
+├ ƒ /admin/paid-consultations/[id]               5.95 kB         115 kB
+├ ƒ /admin/products                              2.59 kB         108 kB
+├ ƒ /admin/products/[id]                           129 B         108 kB
+├ ƒ /admin/products/[id]/variants                2.66 kB         108 kB
+├ ƒ /admin/products/[id]/variants/[variantId]    3.26 kB         108 kB
+├ ƒ /admin/products/new                            129 B         108 kB
+├ ƒ /admin/resources                               167 B         105 kB
+├ ƒ /admin/resources/[id]                          135 B         133 kB
+├ ƒ /admin/resources/new                           136 B         133 kB
+├ ƒ /admin/settings                              2.03 kB         107 kB
+├ ○ /admin/settings/tax                          4.21 kB         109 kB
+├ ○ /admin/subscriptions                         2.17 kB         107 kB
+├ ƒ /admin/subscriptions/[id]                    2.97 kB         108 kB
+├ ○ /admin/subscriptions/invoices                1.98 kB         107 kB
+├ ƒ /admin/testimonials                          2.45 kB         108 kB
+├ ƒ /admin/testimonials/[id]                       135 B         133 kB
+├ ƒ /admin/testimonials/new                        135 B         133 kB
+├ ƒ /admin/videos                                2.49 kB         108 kB
+├ ƒ /admin/videos/[id]                             137 B         133 kB
+├ ƒ /admin/videos/new                              137 B         133 kB
+├ ƒ /api/admin/archive                             456 B         102 kB
+├ ƒ /api/admin/archive/restore                     456 B         102 kB
+├ ƒ /api/admin/auth/check                          456 B         102 kB
+├ ƒ /api/admin/auth/login                          456 B         102 kB
+├ ƒ /api/admin/auth/logout                         456 B         102 kB
+├ ƒ /api/admin/blog                                456 B         102 kB
+├ ƒ /api/admin/blog/[id]                           456 B         102 kB
+├ ƒ /api/admin/blog/posts                          456 B         102 kB
+├ ƒ /api/admin/case-studies                        456 B         102 kB
+├ ƒ /api/admin/case-studies/[id]                   456 B         102 kB
+├ ƒ /api/admin/dashboard/stats                     456 B         102 kB
+├ ƒ /api/admin/discounts                           456 B         102 kB
+├ ƒ /api/admin/discounts/[id]                      456 B         102 kB
+├ ƒ /api/admin/events                              456 B         102 kB
+├ ƒ /api/admin/events/[id]                         456 B         102 kB
+├ ƒ /api/admin/inventory/adjustments               456 B         102 kB
+├ ƒ /api/admin/inventory/low-stock                 456 B         102 kB
+├ ƒ /api/admin/invoices/failed                     456 B         102 kB
+├ ƒ /api/admin/login                               456 B         102 kB
+├ ƒ /api/admin/logout                              456 B         102 kB
+├ ƒ /api/admin/orders/[id]                         456 B         102 kB
+├ ƒ /api/admin/orders/[id]/shipping                456 B         102 kB
+├ ƒ /api/admin/paid-consultations/[id]             456 B         102 kB
+├ ƒ /api/admin/parse-document                      456 B         102 kB
+├ ƒ /api/admin/products                            456 B         102 kB
+├ ƒ /api/admin/products/[id]                       456 B         102 kB
+├ ƒ /api/admin/products/[id]/variants              456 B         102 kB
+├ ƒ /api/admin/resources                           456 B         102 kB
+├ ƒ /api/admin/resources/[id]                      456 B         102 kB
+├ ƒ /api/admin/settings                            456 B         102 kB
+├ ƒ /api/admin/setup/discount-codes-table          456 B         102 kB
+├ ƒ /api/admin/subscriptions                       456 B         102 kB
+├ ƒ /api/admin/subscriptions/[id]                  456 B         102 kB
+├ ƒ /api/admin/subscriptions/[id]/history          456 B         102 kB
+├ ƒ /api/admin/subscriptions/[id]/invoices         456 B         102 kB
+├ ƒ /api/admin/subscriptions/manual-billing        456 B         102 kB
+├ ƒ /api/admin/testimonials                        456 B         102 kB
+├ ƒ /api/admin/testimonials/[id]                   456 B         102 kB
+├ ƒ /api/admin/upload-image                        456 B         102 kB
+├ ƒ /api/admin/videos                              456 B         102 kB
+├ ƒ /api/admin/videos/[id]                         456 B         102 kB
+├ ƒ /api/auth/get-role                             456 B         102 kB
+├ ƒ /api/auth/logout                               456 B         102 kB
+├ ƒ /api/auth/magic-link                           456 B         102 kB
+├ ƒ /api/auth/session                              456 B         102 kB
+├ ƒ /api/auth/verify                               456 B         102 kB
+├ ƒ /api/case-studies                              456 B         102 kB
+├ ƒ /api/case-studies/[slug]                       456 B         102 kB
+├ ƒ /api/checkout/create-order                     456 B         102 kB
+├ ƒ /api/checkout/create-subscription              456 B         102 kB
+├ ƒ /api/collections                               456 B         102 kB
+├ ƒ /api/conditions/test-ai                        456 B         102 kB
+├ ƒ /api/consultations/complete-payment            456 B         102 kB
+├ ƒ /api/consultations/questionnaire               456 B         102 kB
+├ ƒ /api/contact                                   456 B         102 kB
+├ ƒ /api/contact-expert                            456 B         102 kB
+├ ƒ /api/cron/process-billing                      456 B         102 kB
+├ ƒ /api/cron/process-subscription-billing         456 B         102 kB
+├ ƒ /api/cron/process-subscriptions                456 B         102 kB
+├ ƒ /api/cron/retry-failed-payments                456 B         102 kB
+├ ƒ /api/customer/addresses                        456 B         102 kB
+├ ƒ /api/customer/addresses/[id]                   456 B         102 kB
+├ ƒ /api/customer/profile                          456 B         102 kB
+├ ƒ /api/discounts/validate                        456 B         102 kB
+├ ƒ /api/ghl/booking                               456 B         102 kB
+├ ƒ /api/ghl/contact                               456 B         102 kB
+├ ƒ /api/inventory/adjust                          456 B         102 kB
+├ ƒ /api/inventory/all                             456 B         102 kB
+├ ƒ /api/inventory/bulk-update                     456 B         102 kB
+├ ƒ /api/inventory/history                         456 B         102 kB
+├ ƒ /api/inventory/low-stock                       456 B         102 kB
+├ ƒ /api/inventory/status                          456 B         102 kB
+├ ƒ /api/newsletter                                456 B         102 kB
+├ ƒ /api/newsletter/subscribe                      456 B         102 kB
+├ ƒ /api/orders                                    456 B         102 kB
+├ ƒ /api/orders/my-orders                          456 B         102 kB
+├ ƒ /api/payment-methods                           456 B         102 kB
+├ ƒ /api/payment-methods/[id]                      456 B         102 kB
+├ ƒ /api/payments                                  456 B         102 kB
+├ ƒ /api/payments/[id]/refund                      456 B         102 kB
+├ ƒ /api/products                                  456 B         102 kB
+├ ƒ /api/products/[handle]                         456 B         102 kB
+├ ƒ /api/products/[handle]/variants                456 B         102 kB
+├ ƒ /api/products/by-handle/[handle]               456 B         102 kB
+├ ƒ /api/send-email                                456 B         102 kB
+├ ƒ /api/settings/site                             456 B         102 kB
+├ ƒ /api/shipping/calculate                        456 B         102 kB
+├ ƒ /api/subscriptions                             456 B         102 kB
+├ ƒ /api/subscriptions/[id]                        456 B         102 kB
+├ ƒ /api/subscriptions/[id]/change-frequency       456 B         102 kB
+├ ƒ /api/subscriptions/[id]/invoices               456 B         102 kB
+├ ƒ /api/subscriptions/[id]/pause                  456 B         102 kB
+├ ƒ /api/subscriptions/[id]/resume                 456 B         102 kB
+├ ƒ /api/subscriptions/[id]/skip-next              456 B         102 kB
+├ ƒ /api/subscriptions/[id]/update-address         456 B         102 kB
+├ ƒ /api/subscriptions/[id]/update-items           456 B         102 kB
+├ ƒ /api/subscriptions/my-subscriptions            456 B         102 kB
+├ ƒ /api/tax/calculate                             456 B         102 kB
+├ ƒ /api/tax/rates                                 456 B         102 kB
+├ ƒ /api/tax/rates/[id]                            456 B         102 kB
+├ ƒ /api/variants/[id]                             456 B         102 kB
+├ ƒ /api/variants/[id]/adjust-inventory            456 B         102 kB
+├ ƒ /api/variants/[id]/adjustments                 456 B         102 kB
+├ ƒ /api/variants/check-stock                      456 B         102 kB
+├ ○ /apple-icon.png                                  0 B            0 B
+├ ○ /auth/callback                               1.27 kB         156 kB
+├ ○ /auth/forgot-password                        2.51 kB         160 kB
+├ ○ /auth/login                                  3.09 kB         161 kB
+├ ○ /auth/reset-password                         2.61 kB         161 kB
+├ ○ /auth/signup                                 2.83 kB         161 kB
+├ ƒ /blog                                        1.13 kB         111 kB
+├ ƒ /blog/[slug]                                   205 B         111 kB
+├ ○ /boost-nutrition                               205 B         111 kB
+├ ○ /bundles                                     7.81 kB         118 kB
+├ ○ /case-studies                                4.65 kB         115 kB
+├ ƒ /case-studies/[slug]                           205 B         111 kB
+├ ○ /case-studies/zeppelin                         218 B         105 kB
+├ ○ /checkout                                    7.99 kB         171 kB
+├ ○ /checkout/confirmation                       2.85 kB         108 kB
+├ ○ /collections                                   205 B         111 kB
+├ ƒ /collections/[slug]                          10.4 kB         121 kB
+├ ○ /conditions                                    218 B         105 kB
+├ ƒ /conditions/[slug]                             218 B         105 kB
+├ ○ /contact                                     3.48 kB         105 kB
+├ ○ /contact-expert                              3.67 kB         109 kB
+├ ƒ /customer/account                            1.96 kB         107 kB
+├ ƒ /customer/addresses                          2.68 kB         108 kB
+├ ƒ /customer/orders                             2.31 kB         107 kB
+├ ƒ /customer/profile                            2.03 kB         107 kB
+├ ○ /diagnostic                                    456 B         102 kB
+├ ○ /digestive-health                              218 B         105 kB
+├ ○ /events                                       3.8 kB         109 kB
+├ ○ /faq                                         3.16 kB         108 kB
+├ ○ /feeding-calculator                          5.58 kB         116 kB
+├ ○ /feeding-made-simple                           218 B         105 kB
+├ ○ /food-sensitivities                            205 B         111 kB
+├ ○ /guides/fresh-food-guide                     7.06 kB         112 kB
+├ ○ /hero-variations                               218 B         105 kB
+├ ○ /hero-variations/biome-color-palette         8.67 kB         119 kB
+├ ○ /hero-variations/biome-experience            8.41 kB         119 kB
+├ ○ /hero-variations/diagnostic-detective        7.29 kB         118 kB
+├ ○ /hero-variations/height-compact                11 kB         121 kB
+├ ○ /hero-variations/height-current              10.9 kB         121 kB
+├ ○ /hero-variations/height-medium                 11 kB         121 kB
+├ ○ /hero-variations/lavender-luxe-homepage      11.8 kB         125 kB
+├ ○ /hero-variations/luxury-expert-homepage      9.05 kB         122 kB
+├ ○ /hero-variations/premium-experience           8.2 kB         119 kB
+├ ○ /hero-variations/science-educator             8.1 kB         118 kB
+├ ○ /hero-variations/triple-threat               7.82 kB         118 kB
+├ ○ /hero-variations/ultimate-homepage           11.6 kB         122 kB
+├ ○ /hero-variations/waggin-biome-fusion         7.15 kB         117 kB
+├ ○ /hero-variations/waggin-holistic-experience  8.01 kB         118 kB
+├ ○ /icon.png                                        0 B            0 B
+├ ○ /ingredient-sourcing                           205 B         111 kB
+├ ○ /kidney-health                                 218 B         105 kB
+├ ○ /login                                       1.61 kB         103 kB
+├ ○ /market-brochure                             4.22 kB         111 kB
+├ ○ /meal-toppers                                  205 B         111 kB
+├ ○ /monthly-wag-box                               205 B         111 kB
+├ ○ /nutrition-services                          10.7 kB         121 kB
+├ ○ /partnerships/twisted-laurel                 3.99 kB         114 kB
+├ ○ /privacy                                       218 B         105 kB
+├ ƒ /products/[handle]                           5.58 kB         116 kB
+├ ○ /proteins/beef                                 218 B         105 kB
+├ ○ /proteins/chicken                              218 B         105 kB
+├ ○ /proteins/turkey                               218 B         105 kB
+├ ○ /puppies                                       218 B         105 kB
+├ ○ /recommended-products                        5.03 kB         115 kB
+├ ○ /resources                                     205 B         111 kB
+├ ○ /resources/novel-proteins                      218 B         105 kB
+├ ○ /robots.txt                                    456 B         102 kB
+├ ○ /shipping                                      218 B         105 kB
+├ ○ /shop                                        1.63 kB         112 kB
+├ ○ /signup                                      1.67 kB         155 kB
+├ ○ /sitemap.xml                                   456 B         102 kB
+├ ○ /smart-bundles                                 205 B         111 kB
+├ ○ /supplementation                               218 B         105 kB
+├ ○ /terms                                         218 B         105 kB
+├ ○ /test                                          456 B         102 kB
+├ ○ /testimonials                                4.05 kB         114 kB
+└ ○ /weight-management                             218 B         105 kB
++ First Load JS shared by all                     102 kB
+  ├ chunks/1255-26f05d8bf86e016d.js              45.5 kB
+  ├ chunks/4bd1b696-100b9d70ed4e49c1.js          54.2 kB
+  └ other shared chunks (total)                  2.01 kB
+
+
+ƒ Middleware                                     79.6 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

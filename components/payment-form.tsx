@@ -355,7 +355,7 @@ export default function PaymentForm({
         <button
           type="submit"
           disabled={isFormDisabled}
-          className="w-full bg-[#a5b5eb] hover:bg-[#8fa3e3] text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+          className="w-full bg-[#8FAE8F] hover:bg-[#8fa3e3] text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           {isProcessing ? 'Validating Card...' : 'Validate Payment Method'}
         </button>

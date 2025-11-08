@@ -161,7 +161,7 @@ export default function ContactExpertPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Free Nutrition Consultation
@@ -201,7 +201,7 @@ export default function ContactExpertPage() {
           <form onSubmit={handleSubmit} className="space-y-8">
 
             {/* Contact Information */}
-            <div className="bg-[#f8f9fa] rounded-lg p-6 border-l-4 border-[#a5b5eb]">
+            <div className="bg-[#f8f9fa] rounded-lg p-6 border-l-4 border-[#8FAE8F]">
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Your Contact Information
               </h2>
@@ -217,7 +217,7 @@ export default function ContactExpertPage() {
                     value={formData.firstName}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                 </div>
@@ -232,7 +232,7 @@ export default function ContactExpertPage() {
                     value={formData.lastName}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                 </div>
@@ -247,7 +247,7 @@ export default function ContactExpertPage() {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                 </div>
@@ -262,7 +262,7 @@ export default function ContactExpertPage() {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                 </div>
@@ -278,7 +278,7 @@ export default function ContactExpertPage() {
                     onChange={handleInputChange}
                     required
                     placeholder="For shipping/delivery cost estimates"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                 </div>
@@ -293,7 +293,7 @@ export default function ContactExpertPage() {
                     value={formData.city}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                 </div>
@@ -308,7 +308,7 @@ export default function ContactExpertPage() {
                     value={formData.state}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                 </div>
@@ -323,7 +323,7 @@ export default function ContactExpertPage() {
                     value={formData.zipCode}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                 </div>
@@ -332,7 +332,7 @@ export default function ContactExpertPage() {
 
             {/* Pet Information */}
             {pets.map((pet, index) => (
-              <div key={pet.id} className="bg-[#e8f4fb] rounded-lg p-6 border-2 border-[#a5b5eb]">
+              <div key={pet.id} className="bg-[#e8f4fb] rounded-lg p-6 border-2 border-[#8FAE8F]">
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-2xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Abril Fatface', serif" }}>
                     🐾 Pet #{index + 1} Information
@@ -358,7 +358,7 @@ export default function ContactExpertPage() {
                       value={pet.name}
                       onChange={(e) => handlePetChange(pet.id, 'name', e.target.value)}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -371,7 +371,7 @@ export default function ContactExpertPage() {
                       type="text"
                       value={pet.breed}
                       onChange={(e) => handlePetChange(pet.id, 'breed', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -385,7 +385,7 @@ export default function ContactExpertPage() {
                       value={pet.weight}
                       onChange={(e) => handlePetChange(pet.id, 'weight', e.target.value)}
                       placeholder="e.g., 25 lbs"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -397,7 +397,7 @@ export default function ContactExpertPage() {
                     <select
                       value={pet.bodyCondition}
                       onChange={(e) => handlePetChange(pet.id, 'bodyCondition', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       <option value="">Select...</option>
@@ -415,7 +415,7 @@ export default function ContactExpertPage() {
                       value={pet.recentHealthIssues}
                       onChange={(e) => handlePetChange(pet.id, 'recentHealthIssues', e.target.value)}
                       rows={2}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -429,7 +429,7 @@ export default function ContactExpertPage() {
                       onChange={(e) => handlePetChange(pet.id, 'allergies', e.target.value)}
                       rows={2}
                       placeholder="List any known food allergies or sensitivities"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -443,7 +443,7 @@ export default function ContactExpertPage() {
                       onChange={(e) => handlePetChange(pet.id, 'currentFeeding', e.target.value)}
                       rows={2}
                       placeholder="Brand, amount, frequency (e.g., 'Purina Pro Plan, 2 cups twice daily')"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -455,7 +455,7 @@ export default function ContactExpertPage() {
                     <select
                       value={pet.activityLevel}
                       onChange={(e) => handlePetChange(pet.id, 'activityLevel', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       <option value="">Select...</option>
@@ -472,7 +472,7 @@ export default function ContactExpertPage() {
                     <select
                       value={pet.mealType}
                       onChange={(e) => handlePetChange(pet.id, 'mealType', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       <option value="">Select...</option>
@@ -490,7 +490,7 @@ export default function ContactExpertPage() {
                       onChange={(e) => handlePetChange(pet.id, 'healthGoals', e.target.value)}
                       rows={2}
                       placeholder="e.g., improve digestion, support joint health, maintain healthy coat"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -504,7 +504,7 @@ export default function ContactExpertPage() {
                       onChange={(e) => handlePetChange(pet.id, 'supplements', e.target.value)}
                       rows={2}
                       placeholder="List any supplements or medications your pet is currently taking"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -517,7 +517,7 @@ export default function ContactExpertPage() {
                       value={pet.behavioralChanges}
                       onChange={(e) => handlePetChange(pet.id, 'behavioralChanges', e.target.value)}
                       rows={2}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -531,7 +531,7 @@ export default function ContactExpertPage() {
                       value={pet.proteinPreferences}
                       onChange={(e) => handlePetChange(pet.id, 'proteinPreferences', e.target.value)}
                       placeholder="e.g., chicken, beef, fish - avoid lamb"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                   </div>
@@ -574,7 +574,7 @@ export default function ContactExpertPage() {
               <button
                 type="button"
                 onClick={addPet}
-                className="bg-[#c5d4f7] text-[#3c3a47] px-6 py-3 rounded-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors"
+                className="bg-[#F8F5F0] text-[#3c3a47] px-6 py-3 rounded-lg font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 + Add Another Pet
@@ -582,7 +582,7 @@ export default function ContactExpertPage() {
             </div>
 
             {/* Budget & Delivery Preferences */}
-            <div className="bg-[#f8f9fa] rounded-lg p-6 border-l-4 border-[#a5b5eb]">
+            <div className="bg-[#f8f9fa] rounded-lg p-6 border-l-4 border-[#8FAE8F]">
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Budget & Delivery Preferences
               </h2>
@@ -598,7 +598,7 @@ export default function ContactExpertPage() {
                     value={formData.currentSpending}
                     onChange={handleInputChange}
                     placeholder="e.g., $50-75/week"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   />
                 </div>
@@ -611,7 +611,7 @@ export default function ContactExpertPage() {
                     name="deliveryFrequency"
                     value={formData.deliveryFrequency}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     <option value="">Select...</option>
@@ -624,7 +624,7 @@ export default function ContactExpertPage() {
             </div>
 
             {/* Additional Notes */}
-            <div className="bg-[#f8f9fa] rounded-lg p-6 border-l-4 border-[#a5b5eb]">
+            <div className="bg-[#f8f9fa] rounded-lg p-6 border-l-4 border-[#8FAE8F]">
               <h2 className="text-2xl font-semibold text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 Additional Information
               </h2>
@@ -638,7 +638,7 @@ export default function ContactExpertPage() {
                 onChange={handleInputChange}
                 rows={6}
                 placeholder="Share any additional information that might help us create the perfect nutrition plan for your pet..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               />
             </div>
@@ -648,40 +648,40 @@ export default function ContactExpertPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-[#a5b5eb] text-white px-12 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="bg-[#8FAE8F] text-white px-12 py-4 rounded-lg text-lg font-semibold hover:bg-[#6d8c6d] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 {isSubmitting ? 'Submitting...' : 'Request Free Consultation'}
               </button>
               <p className="mt-4 text-sm text-gray-600" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 By submitting this form, you agree to our{' '}
-                <Link href="/privacy" className="text-[#a5b5eb] hover:underline">Privacy Policy</Link>
+                <Link href="/privacy" className="text-[#8FAE8F] hover:underline">Privacy Policy</Link>
                 {' '}and{' '}
-                <Link href="/terms" className="text-[#a5b5eb] hover:underline">Terms of Service</Link>
+                <Link href="/terms" className="text-[#8FAE8F] hover:underline">Terms of Service</Link>
               </p>
             </div>
           </form>
 
           {/* What to Expect */}
-          <div className="mt-12 bg-[#e8f4fb] rounded-lg p-8 border-2 border-[#a5b5eb]">
+          <div className="mt-12 bg-[#e8f4fb] rounded-lg p-8 border-2 border-[#8FAE8F]">
             <h2 className="text-2xl font-semibold text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
               What to Expect
             </h2>
             <ul className="space-y-3 text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
               <li className="flex items-start">
-                <span className="text-[#a5b5eb] mr-3 text-xl">✓</span>
+                <span className="text-[#8FAE8F] mr-3 text-xl">✓</span>
                 <span><strong>24-48 Hour Response:</strong> We'll review your information and reach out to schedule your consultation</span>
               </li>
               <li className="flex items-start">
-                <span className="text-[#a5b5eb] mr-3 text-xl">✓</span>
+                <span className="text-[#8FAE8F] mr-3 text-xl">✓</span>
                 <span><strong>Personalized Nutrition Plan:</strong> Receive a custom feeding plan tailored to your pet's needs</span>
               </li>
               <li className="flex items-start">
-                <span className="text-[#a5b5eb] mr-3 text-xl">✓</span>
+                <span className="text-[#8FAE8F] mr-3 text-xl">✓</span>
                 <span><strong>Product Recommendations:</strong> Get specific meal and supplement suggestions</span>
               </li>
               <li className="flex items-start">
-                <span className="text-[#a5b5eb] mr-3 text-xl">✓</span>
+                <span className="text-[#8FAE8F] mr-3 text-xl">✓</span>
                 <span><strong>Ongoing Support:</strong> Questions? We're here to help every step of the way</span>
               </li>
             </ul>

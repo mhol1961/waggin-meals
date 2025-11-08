@@ -7,6 +7,7 @@ import {
   isConfigured as isAuthorizeNetConfigured
 } from '@/lib/authorizenet-service';
 import { checkCartAvailability, decrementInventory } from '@/lib/inventory';
+import { syncContactToGHL, GHLSyncResult } from '@/lib/ghl-service';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -393,26 +394,85 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      // Add to GoHighLevel
+      // =================================
+      // SYNC TO GHL (Tag Accumulation)
+      // =================================
       try {
-        await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/ghl/add-contact`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: email,
-            firstName: shipping_address.first_name,
-            lastName: shipping_address.last_name,
-            phone: shipping_address.phone,
-            tags: ['customer', 'order-placed'],
-            customFields: {
-              last_order_number: orderNumber,
-              last_order_total: total,
-            },
-          }),
+        // Determine if this is first order or repeat customer
+        const { data: orderHistory } = await supabase
+          .from('orders')
+          .select('id')
+          .eq('customer_id', customerId)
+          .eq('status', 'completed');
+
+        const isFirstOrder = !orderHistory || orderHistory.length <= 1;
+
+        // Build tags based on customer journey
+        const tags = ['customer']; // Base tag for any customer
+
+        if (isFirstOrder) {
+          tags.push('first-order');
+        } else {
+          tags.push('repeat-customer');
+        }
+
+        // Check if high-value customer ($500+ total spent) and get existing tags
+        const { data: customerData } = await supabase
+          .from('customers')
+          .select('total_spent, ghl_tags')
+          .eq('id', customerId)
+          .single();
+
+        if (customerData && customerData.total_spent >= 500) {
+          tags.push('high-value-customer');
+        }
+
+        // Sync to GHL with tag accumulation
+        const ghlResult: GHLSyncResult = await syncContactToGHL({
+          email: email,
+          firstName: shipping_address.first_name,
+          lastName: shipping_address.last_name,
+          phone: shipping_address.phone,
+          tags,
+          customFields: {
+            last_order_number: orderNumber,
+            last_order_total: total.toString(),
+            order_count: (orderHistory?.length || 1).toString(),
+          },
         });
+
+        // Log GHL sync result to customer record
+        if (ghlResult.success && ghlResult.contactId) {
+          // TAG ACCUMULATION: Merge existing tags with new tags
+          const existingTags = customerData?.ghl_tags || [];
+          const allTags = [...new Set([...existingTags, ...tags])];
+
+          await supabase
+            .from('customers')
+            .update({
+              ghl_contact_id: ghlResult.contactId,
+              ghl_tags: allTags, // Accumulated tags, not just new ones
+              ghl_last_sync_at: new Date().toISOString(),
+              ghl_sync_error: null,
+            })
+            .eq('id', customerId);
+
+          console.log(`[GHL] ✅ Synced customer ${email} with tags:`, tags);
+        } else {
+          // Log error but don't fail order
+          await supabase
+            .from('customers')
+            .update({
+              ghl_sync_error: ghlResult.error || 'Unknown GHL error',
+              ghl_last_sync_at: new Date().toISOString(),
+            })
+            .eq('id', customerId);
+
+          console.error('[GHL] Failed to sync customer:', ghlResult.error);
+        }
       } catch (ghlError) {
-        console.error('Error adding to GHL:', ghlError);
-        // Don't fail the order if GHL fails
+        console.error('[GHL] Error during sync:', ghlError);
+        // Don't fail the order if GHL sync fails
       }
     }
 

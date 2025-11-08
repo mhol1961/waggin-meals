@@ -81,7 +81,7 @@ export default async function ShopPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Shop Waggin Meals
@@ -93,7 +93,7 @@ export default async function ShopPage() {
       </section>
 
       {/* Bundles Promotion Banner */}
-      <section className="bg-gradient-to-r from-[#2f4b38] to-[#3d5e49] px-4 py-12">
+      <section className="bg-[#2f4b38] px-4 py-12">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
@@ -120,25 +120,6 @@ export default async function ShopPage() {
               >
                 View Bundles →
               </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Coming Soon Notice - Phase 2 */}
-      <section className="bg-[#fff3cd] border-b-4 border-[#ffc107] px-4 py-6">
-        <div className="mx-auto max-w-4xl">
-          <div className="flex items-center justify-center">
-            <svg className="h-8 w-8 text-[#856404] mr-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
-            </svg>
-            <div>
-              <h3 className="text-xl font-semibold text-[#856404]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                E-Commerce Coming Soon
-              </h3>
-              <p className="text-[14px] text-[#856404]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Online ordering will be available in Phase 2. For now, browse our products and contact us to order.
-              </p>
             </div>
           </div>
         </div>
@@ -206,7 +187,7 @@ export default async function ShopPage() {
 
                     <div className="flex items-center justify-between mb-3">
                       <div>
-                        <span className="text-2xl font-bold text-[#a5b5eb]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <span className="text-2xl font-bold text-[#8FAE8F]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           ${product.price.toFixed(2)}
                         </span>
                         {product.compareAtPrice && (
@@ -274,7 +255,7 @@ export default async function ShopPage() {
 
           <div className="grid md:grid-cols-4 gap-6">
             <div className="bg-white rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 1
               </div>
               <h3 className="text-lg font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -286,7 +267,7 @@ export default async function ShopPage() {
             </div>
 
             <div className="bg-white rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 2
               </div>
               <h3 className="text-lg font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -298,7 +279,7 @@ export default async function ShopPage() {
             </div>
 
             <div className="bg-white rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 3
               </div>
               <h3 className="text-lg font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -310,7 +291,7 @@ export default async function ShopPage() {
             </div>
 
             <div className="bg-white rounded-lg p-6 text-center">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 4
               </div>
               <h3 className="text-lg font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -333,7 +314,7 @@ export default async function ShopPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-20 h-20 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-4">
+              <div className="w-20 h-20 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-4">
                 ✓
               </div>
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -345,7 +326,7 @@ export default async function ShopPage() {
             </div>
 
             <div className="text-center">
-              <div className="w-20 h-20 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-4">
+              <div className="w-20 h-20 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-4">
                 🌱
               </div>
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -357,7 +338,7 @@ export default async function ShopPage() {
             </div>
 
             <div className="text-center">
-              <div className="w-20 h-20 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-4">
+              <div className="w-20 h-20 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-4">
                 💙
               </div>
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -372,7 +353,7 @@ export default async function ShopPage() {
       </section>
 
       {/* Temporary Contact CTA */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Ready to Order?
@@ -384,45 +365,18 @@ export default async function ShopPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg inline-block"
+              className="bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg inline-block"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Contact Us to Order
             </Link>
             <Link
               href="/nutrition-services"
-              className="bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors shadow-lg inline-block"
+              className="bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors shadow-lg inline-block"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Schedule Consultation
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Phase 2 Development Note */}
-      <section className="bg-[#d1ecf1] px-4 py-6">
-        <div className="mx-auto max-w-4xl">
-          <div className="flex items-start">
-            <svg className="h-8 w-8 text-[#0c5460] mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
-            </svg>
-            <div>
-              <h3 className="text-lg font-semibold text-[#0c5460] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Phase 2: E-Commerce Development
-              </h3>
-              <p className="text-[14px] text-[#0c5460]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                This shop page structure is ready for Phase 2 expansion. Future development will include:
-              </p>
-              <ul className="list-disc list-inside mt-2 text-[13px] text-[#0c5460] space-y-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <li>Individual product pages with detailed descriptions and pricing</li>
-                <li>Shopping cart functionality</li>
-                <li>Secure payment processing integration (QuickBooks)</li>
-                <li>Customer account system for order history and subscriptions</li>
-                <li>Inventory management</li>
-                <li>Shipping calculator and delivery scheduling</li>
-              </ul>
-            </div>
           </div>
         </div>
       </section>

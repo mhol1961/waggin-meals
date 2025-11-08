@@ -198,7 +198,7 @@ export default function PremiumExperienceFullPage() {
       <section className="relative bg-gradient-to-br from-[#1e1b4b] via-[#312e81] to-[#4c1d95] px-4 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-96 h-96 bg-amber-400 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#8FAE8F] rounded-full blur-3xl"></div>
         </div>
 
         <div className="absolute inset-0 overflow-hidden">
@@ -345,7 +345,7 @@ export default function PremiumExperienceFullPage() {
 
       <section className="bg-[#f5f5f5] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-6 text-[60px] leading-none text-[#a5b5eb] opacity-30">&quot;</div>
+          <div className="mb-6 text-[60px] leading-none text-[#8FAE8F] opacity-30">&quot;</div>
           <blockquote className="mb-8 text-[18px] italic leading-relaxed text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             I do not try to compete with big box companies. What we offer is specialized nutrition. We listen, and do not use computer generated responses to determine what your special dog needs. Because every dog is different.
           </blockquote>
@@ -353,7 +353,7 @@ export default function PremiumExperienceFullPage() {
         </div>
       </section>
 
-      <section className="bg-gradient-to-r from-purple-900 to-indigo-900 px-4 py-12">
+      <section className="bg-gradient-to-r from-[#5E8C8C] to-[#5E8C8C] px-4 py-12">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="text-3xl font-normal mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>Variation D: The Premium Experience</h2>
           <p className="text-lg mb-6">This approach positions Waggin Meals as a luxury, comprehensive nutrition service for high-end clients who want white-glove care and are willing to invest significantly in their dog's health.</p>

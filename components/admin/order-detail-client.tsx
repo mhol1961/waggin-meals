@@ -64,8 +64,8 @@ const ORDER_STATUSES = [
 const STATUS_COLORS: Record<string, string> = {
   pending: 'bg-yellow-100 text-yellow-800',
   processing: 'bg-blue-100 text-blue-800',
-  shipped: 'bg-indigo-100 text-indigo-800',
-  out_for_delivery: 'bg-purple-100 text-purple-800',
+  shipped: 'bg-[#5E8C8C]/10 text-[#5E8C8C]',
+  out_for_delivery: 'bg-[#8FAE8F]/10 text-[#5E8C8C]',
   delivered: 'bg-green-100 text-green-800',
   canceled: 'bg-red-100 text-red-800',
   refunded: 'bg-gray-100 text-gray-800'
@@ -235,7 +235,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
             <div className="relative">
               <button
                 onClick={() => setShowPrintMenu(!showPrintMenu)}
-                className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-[#a5b5eb] text-[#a5b5eb] rounded-lg hover:bg-blue-50 transition-colors font-medium"
+                className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-[#8FAE8F] text-[#8FAE8F] rounded-lg hover:bg-blue-50 transition-colors font-medium"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
@@ -298,7 +298,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
                 disabled={isUpdating || order.status === status}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   order.status === status
-                    ? 'bg-[#a5b5eb] text-white'
+                    ? 'bg-[#8FAE8F] text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 } disabled:opacity-50`}
               >
@@ -332,7 +332,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
           <h3 className="text-lg font-semibold text-gray-900">Order Type</h3>
           <button
             onClick={() => setShowOrderTypeEdit(!showOrderTypeEdit)}
-            className="text-sm text-[#a5b5eb] hover:text-[#8a9fd9] font-medium"
+            className="text-sm text-[#8FAE8F] hover:text-[#6d8c6d] font-medium"
           >
             {showOrderTypeEdit ? 'Cancel' : 'Edit'}
           </button>
@@ -346,7 +346,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
                   value="standard"
                   checked={orderType === 'standard'}
                   onChange={(e) => setOrderType(e.target.value)}
-                  className="w-4 h-4 text-[#a5b5eb]"
+                  className="w-4 h-4 text-[#8FAE8F]"
                 />
                 <div>
                   <div className="font-medium text-gray-900">Standard Shipping</div>
@@ -359,7 +359,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
                   value="local_delivery"
                   checked={orderType === 'local_delivery'}
                   onChange={(e) => setOrderType(e.target.value)}
-                  className="w-4 h-4 text-[#a5b5eb]"
+                  className="w-4 h-4 text-[#8FAE8F]"
                 />
                 <div>
                   <div className="font-medium text-gray-900">Local Delivery</div>
@@ -372,7 +372,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
                   value="pickup"
                   checked={orderType === 'pickup'}
                   onChange={(e) => setOrderType(e.target.value)}
-                  className="w-4 h-4 text-[#a5b5eb]"
+                  className="w-4 h-4 text-[#8FAE8F]"
                 />
                 <div>
                   <div className="font-medium text-gray-900">Customer Pickup</div>
@@ -383,7 +383,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
             <button
               onClick={updateOrderType}
               disabled={isUpdating}
-              className="px-6 py-2 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors disabled:opacity-50"
+              className="px-6 py-2 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors disabled:opacity-50"
             >
               {isUpdating ? 'Saving...' : 'Save Order Type'}
             </button>
@@ -391,7 +391,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
         ) : (
           <div className="flex items-center gap-2">
             {orderType === 'local_delivery' && (
-              <span className="inline-flex px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+              <span className="inline-flex px-3 py-1 rounded-full text-sm font-medium bg-[#8FAE8F]/10 text-[#5E8C8C]">
                 🚗 Local Delivery
               </span>
             )}
@@ -516,7 +516,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
           {order.status !== 'shipped' && order.status !== 'delivered' && !showShippingForm && (
             <button
               onClick={() => setShowShippingForm(true)}
-              className="text-sm text-[#a5b5eb] hover:text-[#8a9fd9] font-medium"
+              className="text-sm text-[#8FAE8F] hover:text-[#6d8c6d] font-medium"
             >
               Add Tracking
             </button>
@@ -532,7 +532,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
               <select
                 value={carrier}
                 onChange={(e) => setCarrier(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
               >
                 <option value="USPS">USPS</option>
                 <option value="UPS">UPS</option>
@@ -548,7 +548,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
                 type="text"
                 value={trackingNumber}
                 onChange={(e) => setTrackingNumber(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 placeholder="Enter tracking number"
               />
             </div>
@@ -556,7 +556,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
               <button
                 onClick={addTrackingNumber}
                 disabled={isUpdating}
-                className="px-6 py-2 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors disabled:opacity-50"
+                className="px-6 py-2 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors disabled:opacity-50"
               >
                 {isUpdating ? 'Sending...' : 'Add Tracking & Notify Customer'}
               </button>
@@ -592,7 +592,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
                       href={getTrackingUrl(order.carrier, order.tracking_number)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-[#a5b5eb] hover:text-[#8a9fd9] font-medium flex items-center gap-1"
+                      className="text-sm text-[#8FAE8F] hover:text-[#6d8c6d] font-medium flex items-center gap-1"
                     >
                       Track Package
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -637,7 +637,7 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
           <h3 className="text-lg font-semibold text-gray-900">Order Notes</h3>
           <button
             onClick={() => setShowNotesEdit(!showNotesEdit)}
-            className="text-sm text-[#a5b5eb] hover:text-[#8a9fd9] font-medium"
+            className="text-sm text-[#8FAE8F] hover:text-[#6d8c6d] font-medium"
           >
             {showNotesEdit ? 'Cancel' : 'Edit'}
           </button>
@@ -648,13 +648,13 @@ export default function OrderDetailClient({ order: initialOrder }: { order: Orde
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
               placeholder="Add notes about this order..."
             />
             <button
               onClick={updateOrderNotes}
               disabled={isUpdating}
-              className="px-6 py-2 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors disabled:opacity-50"
+              className="px-6 py-2 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors disabled:opacity-50"
             >
               {isUpdating ? 'Saving...' : 'Save Notes'}
             </button>

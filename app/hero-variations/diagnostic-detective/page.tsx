@@ -198,8 +198,8 @@ export default function DiagnosticDetectiveFullPage() {
       {/* HERO: VARIATION A - THE DIAGNOSTIC DETECTIVE */}
       <section className="relative bg-gradient-to-br from-[#f8f9fa] via-white to-[#e8f4fb] px-4 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 right-10 w-96 h-96 bg-[#a5b5eb] rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#c5d4f7] rounded-full blur-3xl"></div>
+          <div className="absolute top-10 right-10 w-96 h-96 bg-[#8FAE8F] rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#F8F5F0] rounded-full blur-3xl"></div>
         </div>
 
         <div className="mx-auto max-w-7xl relative z-10">
@@ -215,7 +215,7 @@ export default function DiagnosticDetectiveFullPage() {
 
               <h1 className="text-5xl lg:text-6xl font-normal text-[#3c3a47] mb-6 leading-tight" style={{ fontFamily: "'Abril Fatface', serif" }}>
                 When Veterinarians Can't Find Answers,{' '}
-                <span className="text-[#a5b5eb]">We Look at Nutrition</span>
+                <span className="text-[#8FAE8F]">We Look at Nutrition</span>
               </h1>
 
               <p className="text-xl text-[#666666] mb-8 leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -234,10 +234,10 @@ export default function DiagnosticDetectiveFullPage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Link href="/nutrition-services" className="bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg text-center">
+                <Link href="/nutrition-services" className="bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg text-center">
                   Book Diagnostic Consultation
                 </Link>
-                <Link href="/testimonials" className="bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors shadow-lg text-center">
+                <Link href="/testimonials" className="bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors shadow-lg text-center">
                   See Success Stories
                 </Link>
               </div>
@@ -253,12 +253,12 @@ export default function DiagnosticDetectiveFullPage() {
             <div>
               <div className="bg-white rounded-2xl shadow-2xl p-8 mb-6">
                 <div className="flex items-center mb-6">
-                  <div className="w-20 h-20 bg-[#a5b5eb] rounded-full flex items-center justify-center mr-6">
+                  <div className="w-20 h-20 bg-[#8FAE8F] rounded-full flex items-center justify-center mr-6">
                     <span className="text-3xl font-bold text-white">CW</span>
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold text-[#3c3a47] mb-1">Christie A. Willett</h3>
-                    <p className="text-[15px] text-[#a5b5eb] font-semibold mb-1">M.A., M.S.</p>
+                    <p className="text-[15px] text-[#8FAE8F] font-semibold mb-1">M.A., M.S.</p>
                     <p className="text-sm text-[#666666]">Canine Integrative Animal Nutritionist</p>
                   </div>
                 </div>
@@ -280,7 +280,7 @@ export default function DiagnosticDetectiveFullPage() {
               <div className="grid grid-cols-3 gap-4">
                 {[{num: '500+', label: 'Dogs Helped'}, {num: '15+', label: 'Years Experience'}, {num: '95%', label: 'Satisfaction'}].map((stat, i) => (
                   <div key={i} className="bg-white rounded-lg shadow-lg p-4 text-center">
-                    <div className="text-3xl font-bold text-[#a5b5eb] mb-1">{stat.num}</div>
+                    <div className="text-3xl font-bold text-[#8FAE8F] mb-1">{stat.num}</div>
                     <div className="text-xs text-[#666666]">{stat.label}</div>
                   </div>
                 ))}
@@ -318,7 +318,7 @@ export default function DiagnosticDetectiveFullPage() {
       {/* Quote */}
       <section className="bg-[#f5f5f5] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-6 text-[60px] leading-none text-[#a5b5eb] opacity-30">&quot;</div>
+          <div className="mb-6 text-[60px] leading-none text-[#8FAE8F] opacity-30">&quot;</div>
           <blockquote className="mb-8 text-[18px] italic leading-relaxed text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
             I do not try to compete with big box companies. What we offer is specialized nutrition. We listen, and do not use computer generated responses to determine what your special dog needs. Because every dog is different.
           </blockquote>
@@ -337,7 +337,7 @@ export default function DiagnosticDetectiveFullPage() {
             {quote: '"Top notch, healthiest possible dog meals! The new location is fantastic!!"', author: 'Thom Slater'}
           ].map((t, i) => (
             <div key={i} className="bg-white p-6">
-              <div className="mb-4 text-[48px] leading-none text-[#a5b5eb] opacity-30">&quot;</div>
+              <div className="mb-4 text-[48px] leading-none text-[#8FAE8F] opacity-30">&quot;</div>
               <p className="mb-4 text-[15px] leading-relaxed text-[#3c3a47]">{t.quote}</p>
               <p className="text-[14px] font-semibold text-[#3c3a47]">{t.author}</p>
             </div>
@@ -346,7 +346,7 @@ export default function DiagnosticDetectiveFullPage() {
       </section>
 
       {/* Variation Info Footer */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-12">
+      <section className="bg-gradient-to-r from-[#8FAE8F] to-[#F8F5F0] px-4 py-12">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="text-3xl font-normal mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>Variation A: The Diagnostic Detective</h2>
           <p className="text-lg mb-6">This approach targets desperate pet owners with complex cases that vets couldn't solve, positioning Christie as the diagnostic expert who solves mysterious health issues.</p>

@@ -26,7 +26,7 @@ export default function LoginPage() {
         <div className="mt-6 text-center text-sm text-gray-600">
           <p>New to Waggin' Meals?</p>
           <p className="mt-1">
-            <a href="/" className="text-[#a5b5eb] hover:underline">
+            <a href="/" className="text-[#8FAE8F] hover:underline">
               Start shopping
             </a>
             {' '}to create an account

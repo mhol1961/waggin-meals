@@ -43,7 +43,7 @@ export default async function CustomerPortalPage({ params }: PageProps) {
             </p>
             <a
               href="/contact"
-              className="inline-block px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors"
+              className="inline-block px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors"
             >
               Contact Support
             </a>

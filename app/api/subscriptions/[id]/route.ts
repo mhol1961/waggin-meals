@@ -19,9 +19,31 @@ export async function GET(
   try {
     const { id } = await params;
 
+    // =================================
+    // SECURITY: Authenticate user
+    // =================================
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Unauthorized - missing authentication' },
+        { status: 401 }
+      );
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser(
+      authHeader.replace('Bearer ', '')
+    );
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - invalid authentication' },
+        { status: 401 }
+      );
+    }
+
     const { data: subscription, error } = await supabase
       .from('subscriptions')
-      .select('*')
+      .select('*, customers!inner(*)')
       .eq('id', id)
       .single();
 
@@ -29,6 +51,17 @@ export async function GET(
       return NextResponse.json(
         { error: 'Subscription not found' },
         { status: 404 }
+      );
+    }
+
+    // =================================
+    // SECURITY: Verify user owns this subscription
+    // =================================
+    if (subscription.customers.email !== user.email) {
+      console.warn(`🚨 Unauthorized action attempt: User ${user.email} tried to access subscription ${id} owned by ${subscription.customers.email}`);
+      return NextResponse.json(
+        { error: 'Forbidden - you do not own this subscription' },
+        { status: 403 }
       );
     }
 
@@ -52,12 +85,35 @@ export async function PATCH(
 ) {
   try {
     const { id } = await params;
+
+    // =================================
+    // SECURITY: Authenticate user
+    // =================================
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Unauthorized - missing authentication' },
+        { status: 401 }
+      );
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser(
+      authHeader.replace('Bearer ', '')
+    );
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - invalid authentication' },
+        { status: 401 }
+      );
+    }
+
     const body: UpdateSubscriptionRequest = await request.json();
 
     // Get current subscription
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
-      .select('*')
+      .select('*, customers!inner(*)')
       .eq('id', id)
       .single();
 
@@ -65,6 +121,17 @@ export async function PATCH(
       return NextResponse.json(
         { error: 'Subscription not found' },
         { status: 404 }
+      );
+    }
+
+    // =================================
+    // SECURITY: Verify user owns this subscription
+    // =================================
+    if (currentSub.customers.email !== user.email) {
+      console.warn(`🚨 Unauthorized action attempt: User ${user.email} tried to modify subscription ${id} owned by ${currentSub.customers.email}`);
+      return NextResponse.json(
+        { error: 'Forbidden - you do not own this subscription' },
+        { status: 403 }
       );
     }
 
@@ -138,13 +205,36 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
+
+    // =================================
+    // SECURITY: Authenticate user
+    // =================================
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Unauthorized - missing authentication' },
+        { status: 401 }
+      );
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser(
+      authHeader.replace('Bearer ', '')
+    );
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - invalid authentication' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const reason = searchParams.get('reason');
 
     // Get current subscription
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
-      .select('*')
+      .select('*, customers!inner(*)')
       .eq('id', id)
       .single();
 
@@ -152,6 +242,17 @@ export async function DELETE(
       return NextResponse.json(
         { error: 'Subscription not found' },
         { status: 404 }
+      );
+    }
+
+    // =================================
+    // SECURITY: Verify user owns this subscription
+    // =================================
+    if (currentSub.customers.email !== user.email) {
+      console.warn(`🚨 Unauthorized action attempt: User ${user.email} tried to cancel subscription ${id} owned by ${currentSub.customers.email}`);
+      return NextResponse.json(
+        { error: 'Forbidden - you do not own this subscription' },
+        { status: 403 }
       );
     }
 
@@ -187,25 +288,54 @@ export async function DELETE(
       },
     ]);
 
-    // Send notification to GoHighLevel
-    const { data: customer } = await supabase
-      .from('customers')
-      .select('email, first_name, last_name, phone')
-      .eq('id', subscription.customer_id)
-      .single();
+    // =================================
+    // SYNC TO GHL (Tag Accumulation)
+    // =================================
+    try {
+      const { data: customer } = await supabase
+        .from('customers')
+        .select('email, first_name, last_name, phone')
+        .eq('id', subscription.customer_id)
+        .single();
 
-    if (customer) {
-      await GHL.notifySubscriptionCancelled({
-        customer_email: customer.email,
-        customer_first_name: customer.first_name,
-        customer_last_name: customer.last_name,
-        customer_phone: customer.phone,
-        subscription_id: subscription.id,
-        frequency: subscription.frequency,
-        amount: subscription.amount,
-        items: subscription.items,
-        cancellation_reason: reason || undefined,
-      });
+      if (customer) {
+        // Add tag for subscription cancellation
+        const tags = ['subscription-cancelled'];
+
+        const ghlResult: GHL.GHLSyncResult = await GHL.syncContactToGHL({
+          email: customer.email,
+          firstName: customer.first_name,
+          lastName: customer.last_name,
+          phone: customer.phone,
+          tags,
+          customFields: {
+            subscription_id: subscription.id,
+            subscription_status: 'cancelled',
+            cancelled_at: new Date().toISOString(),
+            cancellation_reason: reason || 'Not specified',
+          },
+        });
+
+        // Log GHL sync result
+        if (ghlResult.success && ghlResult.contactId) {
+          await supabase
+            .from('subscriptions')
+            .update({
+              ghl_contact_id: ghlResult.contactId,
+              ghl_tags: [...(currentSub.ghl_tags || []), ...tags],
+              ghl_last_sync_at: new Date().toISOString(),
+              ghl_sync_error: null,
+            })
+            .eq('id', id);
+
+          console.log(`[GHL] ✅ Synced subscription cancellation for ${customer.email}`);
+        } else {
+          console.error('[GHL] Failed to sync subscription cancellation:', ghlResult.error);
+        }
+      }
+    } catch (ghlError) {
+      console.error('[GHL] Error during cancellation sync:', ghlError);
+      // Don't fail the request if GHL sync fails
     }
 
     return NextResponse.json({ subscription });

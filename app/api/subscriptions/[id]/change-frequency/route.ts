@@ -22,6 +22,28 @@ export async function POST(
     const body = await request.json();
     const { frequency, reason } = body;
 
+    // =================================
+    // SECURITY: Authenticate user
+    // =================================
+    const authHeader = request.headers.get('Authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Unauthorized - missing authentication' },
+        { status: 401 }
+      );
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser(
+      authHeader.replace('Bearer ', '')
+    );
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - invalid authentication' },
+        { status: 401 }
+      );
+    }
+
     // Validate frequency
     if (!frequency || !VALID_FREQUENCIES.includes(frequency)) {
       return NextResponse.json(
@@ -33,10 +55,10 @@ export async function POST(
       );
     }
 
-    // Get current subscription
+    // Get current subscription WITH customer join for ownership check
     const { data: currentSub, error: fetchError } = await supabase
       .from('subscriptions')
-      .select('*')
+      .select('*, customers!inner(*)')
       .eq('id', id)
       .single();
 
@@ -44,6 +66,17 @@ export async function POST(
       return NextResponse.json(
         { error: 'Subscription not found' },
         { status: 404 }
+      );
+    }
+
+    // =================================
+    // SECURITY: Verify user owns this subscription
+    // =================================
+    if (currentSub.customers.email !== user.email) {
+      console.warn(`🚨 Unauthorized frequency change attempt: User ${user.email} tried to change subscription ${id} owned by ${currentSub.customers.email}`);
+      return NextResponse.json(
+        { error: 'Forbidden - you do not own this subscription' },
+        { status: 403 }
       );
     }
 
@@ -114,25 +147,54 @@ export async function POST(
       },
     ]);
 
-    // Send notification to GoHighLevel
-    const { data: customer } = await supabase
-      .from('customers')
-      .select('email, first_name, last_name, phone')
-      .eq('id', subscription.customer_id)
-      .single();
+    // =================================
+    // SYNC TO GHL (Tag Accumulation)
+    // =================================
+    try {
+      const { data: customer } = await supabase
+        .from('customers')
+        .select('email, first_name, last_name, phone')
+        .eq('id', subscription.customer_id)
+        .single();
 
-    if (customer) {
-      await GHL.notifySubscriptionFrequencyChanged({
-        customer_email: customer.email,
-        customer_first_name: customer.first_name,
-        customer_last_name: customer.last_name,
-        customer_phone: customer.phone,
-        subscription_id: subscription.id,
-        old_frequency: currentSub.frequency,
-        new_frequency: frequency,
-        next_billing_date: newNextBilling.toISOString().split('T')[0],
-        amount: subscription.amount,
-      });
+      if (customer) {
+        // Add tag for frequency change
+        const tags = ['subscription-frequency-changed'];
+
+        const ghlResult: GHL.GHLSyncResult = await GHL.syncContactToGHL({
+          email: customer.email,
+          firstName: customer.first_name,
+          lastName: customer.last_name,
+          phone: customer.phone,
+          tags,
+          customFields: {
+            subscription_id: subscription.id,
+            subscription_frequency: frequency,
+            next_billing_date: newNextBilling.toISOString().split('T')[0],
+            subscription_amount: subscription.amount.toString(),
+          },
+        });
+
+        // Log GHL sync result
+        if (ghlResult.success && ghlResult.contactId) {
+          await supabase
+            .from('subscriptions')
+            .update({
+              ghl_contact_id: ghlResult.contactId,
+              ghl_tags: [...(currentSub.ghl_tags || []), ...tags],
+              ghl_last_sync_at: new Date().toISOString(),
+              ghl_sync_error: null,
+            })
+            .eq('id', id);
+
+          console.log(`[GHL] ✅ Synced frequency change for ${customer.email}: ${currentSub.frequency} → ${frequency}`);
+        } else {
+          console.error('[GHL] Failed to sync frequency change:', ghlResult.error);
+        }
+      }
+    } catch (ghlError) {
+      console.error('[GHL] Error during frequency change sync:', ghlError);
+      // Don't fail the request if GHL sync fails
     }
 
     return NextResponse.json({

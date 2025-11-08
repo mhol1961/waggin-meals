@@ -1,0 +1,1 @@
+Heads up: your subscription renews in 3 days. Amount: ${{subscription_amount}} Manage: {{manage_subscription_url}} Reply STOP to opt out.

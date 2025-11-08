@@ -1,0 +1,1 @@
+Your order #{{order_number}} is ready for pickup (Asheville). Address: {{pickup_address}} Hours: {{pickup_hours}} See you soon! 🐾

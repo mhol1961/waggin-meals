@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export function HeroSection() {
   return (
-    <section className="relative h-[500px] w-full bg-gradient-to-br from-bg-light-blue to-white md:h-[600px]">
+    <section className="relative h-[500px] w-full bg-bg-light-blue md:h-[600px]">
       {/* Background image removed during optimization - placeholder not needed */}
 
       {/* Content */}

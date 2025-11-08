@@ -123,7 +123,7 @@ export function ShippingCalculator({
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
-              className="bg-[#a5b5eb] h-2 rounded-full transition-all duration-300"
+              className="bg-[#8FAE8F] h-2 rounded-full transition-all duration-300"
               style={{
                 width: `${Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100)}%`,
               }}
@@ -160,15 +160,15 @@ export function ShippingCalculator({
               onClick={() => handleMethodSelect(method)}
               className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
                 isSelected
-                  ? 'border-[#a5b5eb] bg-[#e8f4fb]'
-                  : 'border-gray-200 bg-white hover:border-[#a5b5eb]'
+                  ? 'border-[#8FAE8F] bg-[#e8f4fb]'
+                  : 'border-gray-200 bg-white hover:border-[#8FAE8F]'
               }`}
             >
               <div className="flex justify-between items-start">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                      isSelected ? 'border-[#a5b5eb] bg-[#a5b5eb]' : 'border-gray-300'
+                      isSelected ? 'border-[#8FAE8F] bg-[#8FAE8F]' : 'border-gray-300'
                     }`}>
                       {isSelected && (
                         <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -205,7 +205,7 @@ export function ShippingCalculator({
       <div className="pt-4 border-t border-gray-200">
         <button
           onClick={() => setShowCalculator(!showCalculator)}
-          className="text-[#a5b5eb] hover:text-[#8a9fd9] font-semibold text-sm flex items-center gap-2"
+          className="text-[#8FAE8F] hover:text-[#6d8c6d] font-semibold text-sm flex items-center gap-2"
           style={{ fontFamily: "'Poppins', sans-serif" }}
         >
           <svg className={`w-4 h-4 transition-transform ${showCalculator ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">
@@ -224,7 +224,7 @@ export function ShippingCalculator({
                 type="text"
                 value={address.city}
                 onChange={(e) => setAddress({ ...address, city: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
                 placeholder="Enter city"
               />
@@ -238,7 +238,7 @@ export function ShippingCalculator({
                 <select
                   value={address.state}
                   onChange={(e) => setAddress({ ...address, state: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   {US_STATES.map((state) => (
@@ -257,7 +257,7 @@ export function ShippingCalculator({
                   type="text"
                   value={address.zipCode}
                   onChange={(e) => setAddress({ ...address, zipCode: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                   placeholder="ZIP"
                   maxLength={5}

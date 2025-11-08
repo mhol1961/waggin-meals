@@ -123,7 +123,7 @@ export default function FeedingCalculator() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-7xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Interactive Feeding Calculator
@@ -144,7 +144,7 @@ export default function FeedingCalculator() {
               {/* Question 1: Dog's Name */}
               <div className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
                 <div className="flex items-center mb-4">
-                  <div className="bg-[#a5b5eb] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <div className="bg-[#8FAE8F] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     1
                   </div>
                   <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -156,7 +156,7 @@ export default function FeedingCalculator() {
                   value={dogName}
                   onChange={(e) => setDogName(e.target.value)}
                   placeholder="Enter your pup's name"
-                  className="w-full px-4 py-3 border-2 border-[#e0e0e0] rounded-lg focus:outline-none focus:border-[#a5b5eb] text-[15px] transition-colors"
+                  className="w-full px-4 py-3 border-2 border-[#e0e0e0] rounded-lg focus:outline-none focus:border-[#8FAE8F] text-[15px] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 />
                 <p className="text-xs text-[#999999] mt-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -167,7 +167,7 @@ export default function FeedingCalculator() {
               {/* Question 2: Weight */}
               <div className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
                 <div className="flex items-center mb-4">
-                  <div className="bg-[#a5b5eb] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <div className="bg-[#8FAE8F] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     2
                   </div>
                   <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -181,7 +181,7 @@ export default function FeedingCalculator() {
                     max="150"
                     value={weight || 50}
                     onChange={(e) => setWeight(e.target.value)}
-                    className="w-full h-2 bg-[#e0e0e0] rounded-lg appearance-none cursor-pointer accent-[#a5b5eb]"
+                    className="w-full h-2 bg-[#e0e0e0] rounded-lg appearance-none cursor-pointer accent-[#8FAE8F]"
                   />
                   <div className="flex items-center gap-3">
                     <input
@@ -189,7 +189,7 @@ export default function FeedingCalculator() {
                       value={weight}
                       onChange={(e) => setWeight(e.target.value)}
                       placeholder="50"
-                      className="w-24 px-4 py-3 border-2 border-[#e0e0e0] rounded-lg focus:outline-none focus:border-[#a5b5eb] text-[15px] text-center font-bold"
+                      className="w-24 px-4 py-3 border-2 border-[#e0e0e0] rounded-lg focus:outline-none focus:border-[#8FAE8F] text-[15px] text-center font-bold"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     />
                     <span className="text-lg text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -202,7 +202,7 @@ export default function FeedingCalculator() {
               {/* Question 3: Life Stage */}
               <div className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
                 <div className="flex items-center mb-4">
-                  <div className="bg-[#a5b5eb] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <div className="bg-[#8FAE8F] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     3
                   </div>
                   <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -214,8 +214,8 @@ export default function FeedingCalculator() {
                     onClick={() => setAge('puppy')}
                     className={`p-4 rounded-lg border-2 transition-all ${
                       age === 'puppy'
-                        ? 'border-[#a5b5eb] bg-[#a5b5eb] text-white'
-                        : 'border-[#e0e0e0] hover:border-[#a5b5eb]'
+                        ? 'border-[#8FAE8F] bg-[#8FAE8F] text-white'
+                        : 'border-[#e0e0e0] hover:border-[#8FAE8F]'
                     }`}
                   >
                     <div className="text-3xl mb-2">🐕</div>
@@ -230,8 +230,8 @@ export default function FeedingCalculator() {
                     onClick={() => setAge('adult')}
                     className={`p-4 rounded-lg border-2 transition-all ${
                       age === 'adult'
-                        ? 'border-[#a5b5eb] bg-[#a5b5eb] text-white'
-                        : 'border-[#e0e0e0] hover:border-[#a5b5eb]'
+                        ? 'border-[#8FAE8F] bg-[#8FAE8F] text-white'
+                        : 'border-[#e0e0e0] hover:border-[#8FAE8F]'
                     }`}
                   >
                     <div className="text-3xl mb-2">🐶</div>
@@ -246,8 +246,8 @@ export default function FeedingCalculator() {
                     onClick={() => setAge('senior')}
                     className={`p-4 rounded-lg border-2 transition-all ${
                       age === 'senior'
-                        ? 'border-[#a5b5eb] bg-[#a5b5eb] text-white'
-                        : 'border-[#e0e0e0] hover:border-[#a5b5eb]'
+                        ? 'border-[#8FAE8F] bg-[#8FAE8F] text-white'
+                        : 'border-[#e0e0e0] hover:border-[#8FAE8F]'
                     }`}
                   >
                     <div className="text-3xl mb-2">🦮</div>
@@ -265,7 +265,7 @@ export default function FeedingCalculator() {
               <div className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
-                    <div className="bg-[#a5b5eb] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <div className="bg-[#8FAE8F] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       4
                     </div>
                     <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -274,7 +274,7 @@ export default function FeedingCalculator() {
                   </div>
                   <button
                     onClick={() => setShowBodyConditionGuide(!showBodyConditionGuide)}
-                    className="text-xs text-[#a5b5eb] underline hover:text-[#8a9fd9]"
+                    className="text-xs text-[#8FAE8F] underline hover:text-[#6d8c6d]"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     {showBodyConditionGuide ? 'Hide' : 'View'} Guide
@@ -364,7 +364,7 @@ export default function FeedingCalculator() {
               {/* Question 5: Activity Level */}
               <div className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
                 <div className="flex items-center mb-4">
-                  <div className="bg-[#a5b5eb] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <div className="bg-[#8FAE8F] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     5
                   </div>
                   <h3 className="text-xl font-semibold text-[#3c3a47]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -376,8 +376,8 @@ export default function FeedingCalculator() {
                     onClick={() => setActivityLevel('low')}
                     className={`p-4 rounded-lg border-2 transition-all text-left ${
                       activityLevel === 'low'
-                        ? 'border-[#a5b5eb] bg-[#a5b5eb] text-white'
-                        : 'border-[#e0e0e0] hover:border-[#a5b5eb]'
+                        ? 'border-[#8FAE8F] bg-[#8FAE8F] text-white'
+                        : 'border-[#e0e0e0] hover:border-[#8FAE8F]'
                     }`}
                   >
                     <div className="text-2xl mb-2">🛋️</div>
@@ -392,8 +392,8 @@ export default function FeedingCalculator() {
                     onClick={() => setActivityLevel('moderate')}
                     className={`p-4 rounded-lg border-2 transition-all text-left ${
                       activityLevel === 'moderate'
-                        ? 'border-[#a5b5eb] bg-[#a5b5eb] text-white'
-                        : 'border-[#e0e0e0] hover:border-[#a5b5eb]'
+                        ? 'border-[#8FAE8F] bg-[#8FAE8F] text-white'
+                        : 'border-[#e0e0e0] hover:border-[#8FAE8F]'
                     }`}
                   >
                     <div className="text-2xl mb-2">🚶</div>
@@ -408,8 +408,8 @@ export default function FeedingCalculator() {
                     onClick={() => setActivityLevel('high')}
                     className={`p-4 rounded-lg border-2 transition-all text-left ${
                       activityLevel === 'high'
-                        ? 'border-[#a5b5eb] bg-[#a5b5eb] text-white'
-                        : 'border-[#e0e0e0] hover:border-[#a5b5eb]'
+                        ? 'border-[#8FAE8F] bg-[#8FAE8F] text-white'
+                        : 'border-[#e0e0e0] hover:border-[#8FAE8F]'
                     }`}
                   >
                     <div className="text-2xl mb-2">🏃</div>
@@ -424,8 +424,8 @@ export default function FeedingCalculator() {
                     onClick={() => setActivityLevel('veryHigh')}
                     className={`p-4 rounded-lg border-2 transition-all text-left ${
                       activityLevel === 'veryHigh'
-                        ? 'border-[#a5b5eb] bg-[#a5b5eb] text-white'
-                        : 'border-[#e0e0e0] hover:border-[#a5b5eb]'
+                        ? 'border-[#8FAE8F] bg-[#8FAE8F] text-white'
+                        : 'border-[#e0e0e0] hover:border-[#8FAE8F]'
                     }`}
                   >
                     <div className="text-2xl mb-2">⚡</div>
@@ -463,7 +463,7 @@ export default function FeedingCalculator() {
                   // Results view with animation
                   <div className="animate-fadeIn">
                     {/* Personalized Header */}
-                    <div className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] p-8">
+                    <div className="bg-[#8FAE8F] p-8">
                       <h3 className="text-2xl font-semibold text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
                         {dogName ? `${dogName}'s` : 'Your Dog\'s'} Meal Plan
                       </h3>
@@ -475,7 +475,7 @@ export default function FeedingCalculator() {
                     {/* Main Results */}
                     <div className="p-8 space-y-6">
                       {/* Cups per Day - Large Display */}
-                      <div className="text-center p-6 bg-gradient-to-br from-[#a5b5eb] to-[#c5d4f7] rounded-xl shadow-lg">
+                      <div className="text-center p-6 bg-[#8FAE8F] rounded-xl shadow-lg">
                         <div className="text-6xl font-bold text-white mb-2" style={{ fontFamily: "'Abril Fatface', serif" }}>
                           {result.cupsPerDay}
                         </div>
@@ -492,7 +492,7 @@ export default function FeedingCalculator() {
                       {/* Calories & Schedule Grid */}
                       <div className="grid grid-cols-2 gap-4">
                         <div className="text-center p-4 bg-[#f8f9fa] rounded-lg">
-                          <div className="text-3xl font-bold text-[#a5b5eb] mb-1" style={{ fontFamily: "'Abril Fatface', serif" }}>
+                          <div className="text-3xl font-bold text-[#8FAE8F] mb-1" style={{ fontFamily: "'Abril Fatface', serif" }}>
                             {result.caloriesPerDay}
                           </div>
                           <div className="text-xs text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -501,13 +501,13 @@ export default function FeedingCalculator() {
                           {/* Calorie Bar Visualization */}
                           <div className="mt-3 bg-[#e0e0e0] rounded-full h-2 overflow-hidden">
                             <div
-                              className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] h-full transition-all duration-500"
+                              className="bg-[#8FAE8F] h-full transition-all duration-500"
                               style={{ width: `${Math.min((result.caloriesPerDay / 2000) * 100, 100)}%` }}
                             ></div>
                           </div>
                         </div>
                         <div className="text-center p-4 bg-[#f8f9fa] rounded-lg">
-                          <div className="text-lg font-bold text-[#a5b5eb] mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                          <div className="text-lg font-bold text-[#8FAE8F] mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                             {result.feedingSchedule}
                           </div>
                           <div className="text-xs text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -518,7 +518,7 @@ export default function FeedingCalculator() {
                       </div>
 
                       {/* Additional Tips based on inputs */}
-                      <div className="p-4 bg-blue-50 border-l-4 border-[#a5b5eb] rounded">
+                      <div className="p-4 bg-blue-50 border-l-4 border-[#8FAE8F] rounded">
                         <p className="text-xs font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           Pro Tip:
                         </p>
@@ -536,14 +536,14 @@ export default function FeedingCalculator() {
                       <div className="pt-4 border-t-2 border-[#e0e0e0]">
                         <Link
                           href="/shop"
-                          className="block w-full text-center bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] text-white px-6 py-4 rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
+                          className="block w-full text-center bg-[#8FAE8F] text-white px-6 py-4 rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         >
                           Shop Waggin Meals →
                         </Link>
                         <Link
                           href="/nutrition-services"
-                          className="block w-full text-center mt-3 bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] px-6 py-3 rounded-lg text-sm font-semibold hover:bg-[#a5b5eb] hover:text-white transition-all"
+                          className="block w-full text-center mt-3 bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] px-6 py-3 rounded-lg text-sm font-semibold hover:bg-[#8FAE8F] hover:text-white transition-all"
                           style={{ fontFamily: "'Poppins', sans-serif" }}
                         >
                           Get Personalized Consultation
@@ -575,7 +575,7 @@ export default function FeedingCalculator() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="p-6 bg-[#f8f9fa] rounded-lg">
-              <h3 className="text-xl font-semibold text-[#a5b5eb] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-xl font-semibold text-[#8FAE8F] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Transitioning to Fresh Food
               </h3>
               <p className="text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -584,7 +584,7 @@ export default function FeedingCalculator() {
             </div>
 
             <div className="p-6 bg-[#f8f9fa] rounded-lg">
-              <h3 className="text-xl font-semibold text-[#a5b5eb] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-xl font-semibold text-[#8FAE8F] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Monitoring Your Dog
               </h3>
               <p className="text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -593,7 +593,7 @@ export default function FeedingCalculator() {
             </div>
 
             <div className="p-6 bg-[#f8f9fa] rounded-lg">
-              <h3 className="text-xl font-semibold text-[#a5b5eb] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-xl font-semibold text-[#8FAE8F] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Storage Guidelines
               </h3>
               <p className="text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -602,7 +602,7 @@ export default function FeedingCalculator() {
             </div>
 
             <div className="p-6 bg-[#f8f9fa] rounded-lg">
-              <h3 className="text-xl font-semibold text-[#a5b5eb] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <h3 className="text-xl font-semibold text-[#8FAE8F] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Need Personalized Help?
               </h3>
               <p className="text-[15px] text-[#3c3a47] leading-relaxed" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -656,7 +656,7 @@ export default function FeedingCalculator() {
                 </div>
                 <Link
                   href="/shop"
-                  className="block w-full text-center bg-[#a5b5eb] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#8a9fd9] transition-colors"
+                  className="block w-full text-center bg-[#8FAE8F] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#6d8c6d] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   View Product →
@@ -694,7 +694,7 @@ export default function FeedingCalculator() {
                 </div>
                 <Link
                   href="/shop"
-                  className="block w-full text-center bg-[#a5b5eb] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#8a9fd9] transition-colors"
+                  className="block w-full text-center bg-[#8FAE8F] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#6d8c6d] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   View Product →
@@ -733,7 +733,7 @@ export default function FeedingCalculator() {
                 </div>
                 <Link
                   href="/shop"
-                  className="block w-full text-center bg-[#a5b5eb] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#8a9fd9] transition-colors"
+                  className="block w-full text-center bg-[#8FAE8F] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#6d8c6d] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   View Product →
@@ -748,7 +748,7 @@ export default function FeedingCalculator() {
             </p>
             <Link
               href="/shop"
-              className="inline-block bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors"
+              className="inline-block bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               Browse All Products

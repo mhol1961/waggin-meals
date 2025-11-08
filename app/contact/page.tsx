@@ -90,7 +90,7 @@ export default function ContactPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Get in Touch
@@ -108,7 +108,7 @@ export default function ContactPage() {
             {/* Phone */}
             <div className="text-center p-6 bg-[#f8f9fa] rounded-lg">
               <div className="mb-4 flex justify-center">
-                <svg className="h-12 w-12 text-[#a5b5eb]" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="h-12 w-12 text-[#8FAE8F]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27 11.36 11.36 0 003.48.56 1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.56 3.48 1 1 0 01-.27 1.11l-2.17 2.2z"/>
                 </svg>
               </div>
@@ -118,7 +118,7 @@ export default function ContactPage() {
               <p className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Call us for immediate assistance
               </p>
-              <a href="tel:+18285551234" className="block mt-3 text-[#a5b5eb] font-semibold hover:text-[#8a9fd9]">
+              <a href="tel:+18285551234" className="block mt-3 text-[#8FAE8F] font-semibold hover:text-[#6d8c6d]">
                 (828) 555-1234
               </a>
             </div>
@@ -126,7 +126,7 @@ export default function ContactPage() {
             {/* Email */}
             <div className="text-center p-6 bg-[#f8f9fa] rounded-lg">
               <div className="mb-4 flex justify-center">
-                <svg className="h-12 w-12 text-[#a5b5eb]" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="h-12 w-12 text-[#8FAE8F]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                 </svg>
               </div>
@@ -136,7 +136,7 @@ export default function ContactPage() {
               <p className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Send us a message anytime
               </p>
-              <a href="mailto:info@wagginmeals.com" className="block mt-3 text-[#a5b5eb] font-semibold hover:text-[#8a9fd9]">
+              <a href="mailto:info@wagginmeals.com" className="block mt-3 text-[#8FAE8F] font-semibold hover:text-[#6d8c6d]">
                 info@wagginmeals.com
               </a>
             </div>
@@ -144,7 +144,7 @@ export default function ContactPage() {
             {/* Location */}
             <div className="text-center p-6 bg-[#f8f9fa] rounded-lg">
               <div className="mb-4 flex justify-center">
-                <svg className="h-12 w-12 text-[#a5b5eb]" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="h-12 w-12 text-[#8FAE8F]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/>
                 </svg>
               </div>
@@ -222,7 +222,7 @@ export default function ContactPage() {
                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                     required
                     disabled={isSubmitting}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#8FAE8F] disabled:bg-gray-100 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                     placeholder="First name"
                   />
@@ -244,7 +244,7 @@ export default function ContactPage() {
                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                     required
                     disabled={isSubmitting}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#8FAE8F] disabled:bg-gray-100 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                     placeholder="Last name"
                   />
@@ -268,7 +268,7 @@ export default function ContactPage() {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                     disabled={isSubmitting}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#8FAE8F] disabled:bg-gray-100 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                     placeholder="your@email.com"
                   />
@@ -289,7 +289,7 @@ export default function ContactPage() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     disabled={isSubmitting}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#8FAE8F] disabled:bg-gray-100 disabled:cursor-not-allowed"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                     placeholder="(555) 123-4567"
                   />
@@ -312,7 +312,7 @@ export default function ContactPage() {
                   required
                   disabled={isSubmitting}
                   rows={6}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#a5b5eb] disabled:bg-gray-100 disabled:cursor-not-allowed resize-y"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-[#e0e0e0] focus:outline-none focus:border-[#8FAE8F] disabled:bg-gray-100 disabled:cursor-not-allowed resize-y"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                   placeholder="Tell us about your dog and how we can help..."
                 />
@@ -322,7 +322,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-[#a5b5eb] text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center gap-2"
+                  className="bg-[#8FAE8F] text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center gap-2"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   {isSubmitting ? (
@@ -378,7 +378,7 @@ export default function ContactPage() {
                 Do you offer nutrition consultations?
               </h3>
               <p className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Yes! Christie, our Canine Integrative Animal Nutritionist, offers personalized consultations. <a href="/nutrition-services" className="text-[#a5b5eb] underline hover:text-[#8a9fd9]">Learn more about our nutrition services</a>.
+                Yes! Christie, our Canine Integrative Animal Nutritionist, offers personalized consultations. <a href="/nutrition-services" className="text-[#8FAE8F] underline hover:text-[#6d8c6d]">Learn more about our nutrition services</a>.
               </p>
             </div>
 
@@ -396,7 +396,7 @@ export default function ContactPage() {
                 How do I customize a meal plan for my dog?
               </h3>
               <p className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Start with our <a href="/feeding-calculator" className="text-[#a5b5eb] underline hover:text-[#8a9fd9]">feeding calculator</a> to determine portion sizes, then reach out to us for a personalized meal plan consultation.
+                Start with our <a href="/feeding-calculator" className="text-[#8FAE8F] underline hover:text-[#6d8c6d]">feeding calculator</a> to determine portion sizes, then reach out to us for a personalized meal plan consultation.
               </p>
             </div>
           </div>

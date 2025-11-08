@@ -149,7 +149,7 @@ export default function About3() {
             />
           </div>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/60" />
+          <div className="absolute inset-0 bg-black/60" />
 
           <div
             className="absolute inset-0 flex items-center justify-center"
@@ -161,7 +161,7 @@ export default function About3() {
             <div className="container mx-auto px-6">
               <div className="max-w-5xl mx-auto text-center">
                 <div className="mb-8">
-                  <span className="text-sm md:text-base uppercase tracking-[0.3em] text-purple-300 font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span className="text-sm md:text-base uppercase tracking-[0.3em] text-[#8FAE8F]/70 font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
                     A story of love, loss, and purpose
                   </span>
                 </div>
@@ -169,14 +169,14 @@ export default function About3() {
                 <h1 className="mb-10" style={{ fontFamily: 'Playfair Display, serif' }}>
                   <span className="block text-5xl md:text-6xl lg:text-8xl text-white font-light">When Grief</span>
                   <span className="block text-5xl md:text-6xl lg:text-8xl text-white font-normal">Became Our</span>
-                  <span className="block text-5xl md:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Greatest Teacher</span>
+                  <span className="block text-5xl md:text-6xl lg:text-8xl font-bold bg-[#8FAE8F] bg-clip-text text-transparent">Greatest Teacher</span>
                 </h1>
 
                 <div className="max-w-2xl mx-auto mb-12 space-y-4">
                   <p className="text-lg md:text-xl lg:text-2xl text-white font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Christie Willett lost her mother and beloved dog Jack to the same disease.
                   </p>
-                  <p className="text-lg md:text-xl lg:text-2xl text-purple-200 font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <p className="text-lg md:text-xl lg:text-2xl text-[#8FAE8F]/80 font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
                     What happened next would transform the lives of thousands of dogs.
                   </p>
                 </div>
@@ -198,7 +198,7 @@ export default function About3() {
             <div className="max-w-7xl mx-auto">
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div className="relative">
-                  <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-purple-100">
+                  <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-[#8FAE8F]/20">
                     <Image
                       src="/images/Christy-holding-black-dog.webp"
                       alt="Christie Willett"
@@ -207,25 +207,25 @@ export default function About3() {
                       className="w-full h-auto object-cover"
                     />
                   </div>
-                  <div className="absolute -bottom-6 -right-6 bg-gradient-to-br from-purple-600 to-pink-600 text-white px-6 py-4 rounded-2xl shadow-xl">
+                  <div className="absolute -bottom-6 -right-6 bg-[#8FAE8F] text-white px-6 py-4 rounded-2xl shadow-xl">
                     <p className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>520+</p>
                     <p className="text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>Dogs Transformed</p>
                   </div>
                 </div>
 
                 <div>
-                  <span className="text-sm font-semibold text-purple-600 uppercase tracking-[0.3em] mb-3 block" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span className="text-sm font-semibold text-[#8FAE8F] uppercase tracking-[0.3em] mb-3 block" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Our Founder's Journey
                   </span>
                   <h2 className="text-4xl md:text-5xl font-normal text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
                     Meet Christie Willett, M.A., M.S.
                   </h2>
-                  <h3 className="text-xl text-purple-600 mb-6 font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <h3 className="text-xl text-[#8FAE8F] mb-6 font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Founder, Animal Nutritionist, & Your Dog's Wellness Advocate
                   </h3>
 
                   <div className="space-y-4 text-gray-700 leading-relaxed mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    <p className="first-letter:text-6xl first-letter:font-bold first-letter:text-purple-600 first-letter:float-left first-letter:mr-2 first-letter:leading-[0.8]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    <p className="first-letter:text-6xl first-letter:font-bold first-letter:text-[#8FAE8F] first-letter:float-left first-letter:mr-2 first-letter:leading-[0.8]" style={{ fontFamily: 'Playfair Display, serif' }}>
                       When I lost both my mother and my beloved dachshund Jack to the same liver disease, I knew there had to be a better way. That devastating loss became my purpose: creating real, wholesome nutrition that treats dogs as the family members they are.
                     </p>
 
@@ -234,18 +234,18 @@ export default function About3() {
                     </p>
                   </div>
 
-                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border-l-4 border-purple-600 mb-6">
+                  <div className="bg-[#F8F5F0] rounded-2xl p-6 border-l-4 border-[#8FAE8F] mb-6">
                     <p className="text-lg italic text-gray-900 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                       "I believe food should be the first step toward healing—not the last."
                     </p>
-                    <p className="text-sm font-semibold text-purple-600" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <p className="text-sm font-semibold text-[#8FAE8F]" style={{ fontFamily: 'Inter, sans-serif' }}>
                       — Christie Willett, M.A., M.S.
                     </p>
                   </div>
 
                   <button
                     onClick={() => setActiveModal('christie')}
-                    className="px-8 py-4 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition-all hover:scale-105"
+                    className="px-8 py-4 bg-[#8FAE8F] text-white rounded-full font-semibold hover:bg-[#6d8c6d] transition-all hover:scale-105"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
                     Read Christie's Full Story
@@ -257,11 +257,11 @@ export default function About3() {
         </section>
 
         {/* TIMELINE */}
-        <section className="py-20 md:py-32 bg-gradient-to-br from-purple-50 to-pink-50">
+        <section className="py-20 md:py-32 bg-[#F8F5F0]">
           <div className="container mx-auto px-6">
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-16">
-                <span className="text-sm font-semibold text-purple-600 uppercase tracking-[0.3em] mb-3 block" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <span className="text-sm font-semibold text-[#8FAE8F] uppercase tracking-[0.3em] mb-3 block" style={{ fontFamily: 'Inter, sans-serif' }}>
                   Our Journey
                 </span>
                 <h2 className="text-4xl md:text-5xl font-normal text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -270,7 +270,7 @@ export default function About3() {
               </div>
 
               <div className="relative">
-                <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-600 via-purple-400 to-pink-400 transform md:-translate-x-1/2" />
+                <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-[#8FAE8F] transform md:-translate-x-1/2" />
 
                 <div className="space-y-12">
                   {timeline.map((item, index) => (
@@ -282,13 +282,13 @@ export default function About3() {
                       onMouseEnter={() => setActiveTimeline(index)}
                       onMouseLeave={() => setActiveTimeline(null)}
                     >
-                      <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-purple-600 rounded-full transform md:-translate-x-1/2 border-4 border-white shadow-lg z-10" />
+                      <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-[#8FAE8F] rounded-full transform md:-translate-x-1/2 border-4 border-white shadow-lg z-10" />
 
                       <div className={`ml-20 md:ml-0 md:w-5/12 ${index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:pl-12'}`}>
-                        <div className={`bg-white rounded-2xl p-6 shadow-lg border-2 border-purple-100 transition-all duration-300 ${
-                          activeTimeline === index ? 'shadow-2xl border-purple-400 scale-105' : ''
+                        <div className={`bg-white rounded-2xl p-6 shadow-lg border-2 border-[#8FAE8F]/20 transition-all duration-300 ${
+                          activeTimeline === index ? 'shadow-2xl border-[#8FAE8F] scale-105' : ''
                         }`}>
-                          <p className="text-3xl font-bold text-purple-600 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                          <p className="text-3xl font-bold text-[#8FAE8F] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                             {item.year}
                           </p>
                           <h3 className="text-xl font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -311,7 +311,7 @@ export default function About3() {
         <section className="py-20 md:py-32 bg-white">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-[#8FAE8F] bg-clip-text text-transparent" style={{ fontFamily: 'Playfair Display, serif' }}>
                 The Hearts Behind<br />the Mission
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -335,14 +335,14 @@ export default function About3() {
                         className="object-cover transition-transform duration-500 hover:scale-110"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+                      <div className="w-full h-full bg-[#8FAE8F] flex items-center justify-center">
                         <span className="text-7xl font-bold text-white" style={{ fontFamily: 'Playfair Display, serif' }}>
                           {member.initials}
                         </span>
                       </div>
                     )}
                     <div className="absolute top-4 left-4">
-                      <span className="px-4 py-2 bg-purple-600 text-white text-xs font-bold uppercase tracking-wider rounded-full" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      <span className="px-4 py-2 bg-[#8FAE8F] text-white text-xs font-bold uppercase tracking-wider rounded-full" style={{ fontFamily: 'Inter, sans-serif' }}>
                         {member.badge}
                       </span>
                     </div>
@@ -352,13 +352,13 @@ export default function About3() {
                     <h3 className="text-xl font-bold mb-2 text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
                       {member.name}
                     </h3>
-                    <p className="text-purple-600 font-semibold mb-4 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <p className="text-[#8FAE8F] font-semibold mb-4 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                       {member.role}
                     </p>
                     <p className="text-gray-600 text-sm mb-4 line-clamp-3" style={{ fontFamily: 'Inter, sans-serif' }}>
                       {member.shortBio}
                     </p>
-                    <button className="text-purple-600 font-semibold hover:text-purple-700 flex items-center gap-2 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <button className="text-[#8FAE8F] font-semibold hover:text-[#6d8c6d] flex items-center gap-2 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
                       Read Full Bio
                       <ArrowRight className="w-4 h-4" />
                     </button>
@@ -373,7 +373,7 @@ export default function About3() {
         <section className="py-24 md:py-32 bg-white">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" style={{ fontFamily: 'Playfair Display, serif' }}>
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-[#8FAE8F] bg-clip-text text-transparent" style={{ fontFamily: 'Playfair Display, serif' }}>
                 What Sets Us Apart
               </h2>
             </div>
@@ -387,7 +387,7 @@ export default function About3() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-black/40" />
                 <div className="absolute bottom-6 left-6 right-6 text-white">
                   <h3 className="text-4xl font-bold mb-2 text-white" style={{ fontFamily: 'Playfair Display, serif', color: 'white' }}>
                     Farm to Bowl
@@ -399,7 +399,7 @@ export default function About3() {
               </div>
 
               {/* Science-Based Card */}
-              <div className="bg-purple-500 p-8 rounded-3xl flex flex-col justify-center items-center text-center shadow-xl hover:shadow-2xl transition-all duration-300">
+              <div className="bg-[#F8F5F0]0 p-8 rounded-3xl flex flex-col justify-center items-center text-center shadow-xl hover:shadow-2xl transition-all duration-300">
                 <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center mb-6">
                   <FlaskConical className="w-10 h-10 text-white" />
                 </div>
@@ -412,8 +412,8 @@ export default function About3() {
               </div>
 
               {/* Personalized Card */}
-              <div className="bg-purple-50 p-8 rounded-3xl flex flex-col justify-center shadow-xl hover:shadow-2xl transition-all duration-300">
-                <HeartPulse className="w-12 h-12 text-purple-600 mb-4" />
+              <div className="bg-[#F8F5F0] p-8 rounded-3xl flex flex-col justify-center shadow-xl hover:shadow-2xl transition-all duration-300">
+                <HeartPulse className="w-12 h-12 text-[#8FAE8F] mb-4" />
                 <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                   Personalized
                 </h3>
@@ -423,8 +423,8 @@ export default function About3() {
               </div>
 
               {/* Compassionate Card */}
-              <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-8 rounded-3xl flex flex-col justify-center shadow-xl hover:shadow-2xl transition-all duration-300">
-                <Gift className="w-12 h-12 text-purple-600 mb-4" />
+              <div className="bg-[#F8F5F0] p-8 rounded-3xl flex flex-col justify-center shadow-xl hover:shadow-2xl transition-all duration-300">
+                <Gift className="w-12 h-12 text-[#8FAE8F] mb-4" />
                 <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                   Compassionate
                 </h3>
@@ -441,7 +441,7 @@ export default function About3() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent" />
+                <div className="absolute inset-0 bg-black/35" />
                 <div className="absolute inset-0 p-8 flex flex-col justify-center">
                   <h3 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                     520+ Dogs Transformed
@@ -453,7 +453,7 @@ export default function About3() {
               </div>
 
               {/* 100% Real Ingredients */}
-              <div className="bg-purple-600 p-8 rounded-3xl flex flex-col justify-center items-center text-center shadow-xl hover:shadow-2xl transition-all duration-300">
+              <div className="bg-[#8FAE8F] p-8 rounded-3xl flex flex-col justify-center items-center text-center shadow-xl hover:shadow-2xl transition-all duration-300">
                 <div className="text-5xl font-bold text-white mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                   100%
                 </div>
@@ -466,10 +466,10 @@ export default function About3() {
         </section>
 
         {/* VALUES */}
-        <section className="py-20 md:py-32 bg-gradient-to-br from-purple-50 to-pink-50">
+        <section className="py-20 md:py-32 bg-[#F8F5F0]">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <p className="text-sm font-semibold text-[#5E8C8C] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 What We Stand For
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -479,10 +479,10 @@ export default function About3() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
               {[
-                { icon: Leaf, title: 'Farm Fresh', description: 'Local Blue Ridge Mountain farms', color: '#9657EE' },
-                { icon: FlaskConical, title: 'Science-Based', description: 'Credentialed nutritionists', color: '#A855F7' },
-                { icon: HeartPulse, title: 'Personalized', description: 'Custom meal plans', color: '#C26AF0' },
-                { icon: Gift, title: 'Compassionate', description: 'Giving back to community', color: '#EC4899' }
+                { icon: Leaf, title: 'Farm Fresh', description: 'Local Blue Ridge Mountain farms', color: '#5E8C8C' },
+                { icon: FlaskConical, title: 'Science-Based', description: 'Credentialed nutritionists', color: '#5E8C8C' },
+                { icon: HeartPulse, title: 'Personalized', description: 'Custom meal plans', color: '#C97B63' },
+                { icon: Gift, title: 'Compassionate', description: 'Giving back to community', color: '#C97B63' }
               ].map((value, idx) => {
                 const IconComponent = value.icon;
                 return (
@@ -516,7 +516,7 @@ export default function About3() {
             </div>
 
             <div className="relative mb-16">
-              <div className="hidden lg:block absolute top-8 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-purple-400 to-pink-400" style={{ top: '2rem' }} />
+              <div className="hidden lg:block absolute top-8 left-0 right-0 h-1 bg-[#8FAE8F]" style={{ top: '2rem' }} />
 
               <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-8">
                 {[
@@ -529,7 +529,7 @@ export default function About3() {
                   const IconComponent = step.icon;
                   return (
                     <div key={idx} className="relative text-center">
-                      <div className="relative z-10 w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white shadow-xl">
+                      <div className="relative z-10 w-16 h-16 mx-auto mb-4 rounded-full bg-[#8FAE8F] flex items-center justify-center text-white shadow-xl">
                         <IconComponent className="w-8 h-8" />
                       </div>
                       <h3 className="text-lg font-bold text-gray-900 mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -568,7 +568,7 @@ export default function About3() {
         </section>
 
         {/* CERTIFICATIONS */}
-        <section className="py-20 md:py-32 bg-gradient-to-br from-purple-50 to-pink-50">
+        <section className="py-20 md:py-32 bg-[#F8F5F0]">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -586,7 +586,7 @@ export default function About3() {
                 const IconComponent = cert.icon;
                 return (
                   <div key={idx} className="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300">
-                    <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white shadow-lg">
+                    <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-[#8FAE8F] flex items-center justify-center text-white shadow-lg">
                       <IconComponent className="w-8 h-8" />
                     </div>
                     <h3 className="text-lg font-bold text-gray-900 mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -612,8 +612,8 @@ export default function About3() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-10 shadow-xl">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white mb-6 shadow-lg">
+              <div className="bg-[#F8F5F0] rounded-3xl p-10 shadow-xl">
+                <div className="w-16 h-16 rounded-2xl bg-[#8FAE8F] flex items-center justify-center text-white mb-6 shadow-lg">
                   <Gift className="w-8 h-8" />
                 </div>
                 <h3 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -624,18 +624,18 @@ export default function About3() {
                 </p>
                 <div className="flex gap-8">
                   <div>
-                    <p className="text-4xl font-bold text-purple-600" style={{ fontFamily: 'Playfair Display, serif' }}>520+</p>
+                    <p className="text-4xl font-bold text-[#8FAE8F]" style={{ fontFamily: 'Playfair Display, serif' }}>520+</p>
                     <p className="text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>Dogs Helped</p>
                   </div>
                   <div>
-                    <p className="text-4xl font-bold text-purple-600" style={{ fontFamily: 'Playfair Display, serif' }}>12</p>
+                    <p className="text-4xl font-bold text-[#8FAE8F]" style={{ fontFamily: 'Playfair Display, serif' }}>12</p>
                     <p className="text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>States Reached</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-3xl p-10 shadow-xl">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-600 to-purple-600 flex items-center justify-center text-white mb-6 shadow-lg">
+              <div className="bg-[#F8F5F0] rounded-3xl p-10 shadow-xl">
+                <div className="w-16 h-16 rounded-2xl bg-[#C97B63] flex items-center justify-center text-white mb-6 shadow-lg">
                   <HeartPulse className="w-8 h-8" />
                 </div>
                 <h3 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -644,7 +644,7 @@ export default function About3() {
                 <p className="text-gray-700 leading-relaxed mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
                   Named in honor of Christie's beloved dachshund Jack, this fund helps families facing unexpected veterinary expenses. Because no pet parent should have to choose between their dog's health and financial hardship.
                 </p>
-                <p className="text-purple-600 font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-[#8FAE8F] font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
                   In memory of Jack, who taught us that love is the best medicine 💜
                 </p>
               </div>
@@ -653,7 +653,7 @@ export default function About3() {
         </section>
 
         {/* TESTIMONIALS */}
-        <section className="py-20 md:py-32 bg-gradient-to-b from-gray-900 to-black">
+        <section className="py-20 md:py-32 bg-gray-900">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -670,7 +670,7 @@ export default function About3() {
                 { name: 'Elizabeth Joslin', text: 'Christie is so helpful, kind & very knowledgeable. You can tell she genuinely cares about your dog\'s health.' },
                 { name: 'Amber Munoz', text: 'My dogs love this food!! Both my girls look forward to meal times and jump for joy.' }
               ].map((testimonial, idx) => (
-                <div key={idx} className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 shadow-2xl">
+                <div key={idx} className="bg-gray-800 rounded-3xl p-8 shadow-2xl">
                   <div className="flex gap-1 mb-4">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
@@ -680,7 +680,7 @@ export default function About3() {
                     "{testimonial.text}"
                   </p>
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-[#8FAE8F] flex items-center justify-center">
                       <span className="text-white font-bold text-lg" style={{ fontFamily: 'Playfair Display, serif' }}>
                         {testimonial.name[0]}
                       </span>
@@ -696,10 +696,10 @@ export default function About3() {
         </section>
 
         {/* WHY CHOOSE US - COMPARISON */}
-        <section className="py-20 md:py-32 bg-gradient-to-br from-purple-50 to-pink-50">
+        <section className="py-20 md:py-32 bg-[#F8F5F0]">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <p className="text-sm font-semibold text-[#5E8C8C] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Why Choose Us
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -731,8 +731,8 @@ export default function About3() {
                 </div>
 
                 {/* Waggin Meals */}
-                <div className="p-8 bg-gradient-to-br from-[#d8c6ff] to-[#e9dcff]">
-                  <h3 className="text-2xl font-semibold text-[#5E3B76] mb-8 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <div className="p-8 bg-[#F8F5F0]">
+                  <h3 className="text-2xl font-semibold text-[#8FAE8F] mb-8 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     Waggin Meals
                   </h3>
                   <div className="space-y-4">
@@ -744,8 +744,8 @@ export default function About3() {
                       'Direct nutritionist access & support'
                     ].map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-[#5E3B76] flex-shrink-0 mt-1" />
-                        <p className="text-sm text-[#2b1d3b] font-medium" style={{ fontFamily: "'Poppins', sans-serif" }}>{item}</p>
+                        <CheckCircle2 className="w-5 h-5 text-[#8FAE8F] flex-shrink-0 mt-1" />
+                        <p className="text-sm text-[#333333] font-medium" style={{ fontFamily: "'Poppins', sans-serif" }}>{item}</p>
                       </div>
                     ))}
                   </div>
@@ -771,25 +771,25 @@ export default function About3() {
 
               {/* Right - Location Details */}
               <div>
-                <p className="text-sm font-semibold text-[#9657EE] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <p className="text-sm font-semibold text-[#5E8C8C] mb-3 uppercase tracking-[0.3em]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Visit Us
                 </p>
-                <h2 className="text-4xl font-bold text-[#2b1d3b] mb-8" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <h2 className="text-4xl font-bold text-[#333333] mb-8" style={{ fontFamily: 'Playfair Display, serif' }}>
                   Find Our Farm Shop
                 </h2>
 
                 <div className="space-y-6">
                   {/* Hours */}
-                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 shadow-lg">
+                  <div className="bg-[#F8F5F0] rounded-2xl p-6 shadow-lg">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5E3B76] to-[#9657EE] flex items-center justify-center text-white flex-shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-[#8FAE8F] flex items-center justify-center text-white flex-shrink-0">
                         <Clock className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-[#2b1d3b] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <h3 className="text-lg font-semibold text-[#333333] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           Farm Shop Hours
                         </h3>
-                        <p className="text-sm text-[#6e5c8f]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <p className="text-sm text-[#333333]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           <strong>Monday - Friday:</strong> 9:00 AM - 5:00 PM<br />
                           <strong>Saturday:</strong> 10:00 AM - 3:00 PM<br />
                           <strong>Sunday:</strong> Closed
@@ -799,20 +799,20 @@ export default function About3() {
                   </div>
 
                   {/* Address */}
-                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 shadow-lg">
+                  <div className="bg-[#F8F5F0] rounded-2xl p-6 shadow-lg">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5E3B76] to-[#9657EE] flex items-center justify-center text-white flex-shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-[#8FAE8F] flex items-center justify-center text-white flex-shrink-0">
                         <MapPin className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-[#2b1d3b] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <h3 className="text-lg font-semibold text-[#333333] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           Our Location
                         </h3>
-                        <p className="text-sm text-[#6e5c8f] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <p className="text-sm text-[#333333] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           <strong>768 Alexander Road</strong><br />
                           Alexander, NC 28701
                         </p>
-                        <p className="text-xs text-[#8a7ba8] italic" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <p className="text-xs text-[#333333] italic" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           By appointment recommended
                         </p>
                       </div>
@@ -820,16 +820,16 @@ export default function About3() {
                   </div>
 
                   {/* Service Area */}
-                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 shadow-lg">
+                  <div className="bg-[#F8F5F0] rounded-2xl p-6 shadow-lg">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5E3B76] to-[#9657EE] flex items-center justify-center text-white flex-shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-[#8FAE8F] flex items-center justify-center text-white flex-shrink-0">
                         <Truck className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-[#2b1d3b] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <h3 className="text-lg font-semibold text-[#333333] mb-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           We Deliver
                         </h3>
-                        <p className="text-sm text-[#6e5c8f]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                        <p className="text-sm text-[#333333]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                           Shipping nationwide with fresh meals delivered right to your door
                         </p>
                       </div>
@@ -842,7 +842,7 @@ export default function About3() {
         </section>
 
         {/* CTA */}
-        <section className="relative py-32 md:py-40 bg-gradient-to-br from-purple-100 via-lavender-200 to-purple-200 overflow-hidden">
+        <section className="relative py-32 md:py-40 bg-[#F8F5F0] overflow-hidden">
           <div className="absolute inset-0 opacity-20">
             <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(139,92,246,0.3) 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
           </div>
@@ -851,7 +851,7 @@ export default function About3() {
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight" style={{ fontFamily: 'Playfair Display, serif' }}>
                 Your Dog's Health<br />
-                <span className="text-purple-600">Transformation Starts Today</span>
+                <span className="text-[#8FAE8F]">Transformation Starts Today</span>
               </h2>
 
               <p className="text-xl md:text-2xl text-gray-800 mb-12" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -861,7 +861,7 @@ export default function About3() {
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Link
                   href="/nutrition-services"
-                  className="group px-10 py-5 bg-purple-600 text-white rounded-full font-bold text-lg shadow-2xl hover:scale-105 hover:bg-purple-700 transition-all flex items-center gap-3"
+                  className="group px-10 py-5 bg-[#8FAE8F] text-white rounded-full font-bold text-lg shadow-2xl hover:scale-105 hover:bg-[#6d8c6d] transition-all flex items-center gap-3"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <span>Book Consultation</span>
@@ -870,7 +870,7 @@ export default function About3() {
 
                 <Link
                   href="/shop"
-                  className="px-10 py-5 bg-white text-purple-600 border-2 border-purple-300 rounded-full font-bold text-lg hover:bg-purple-50 transition-all flex items-center gap-3"
+                  className="px-10 py-5 bg-white text-[#8FAE8F] border-2 border-[#8FAE8F]/40 rounded-full font-bold text-lg hover:bg-[#F8F5F0] transition-all flex items-center gap-3"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <span>Explore Meals</span>
@@ -885,7 +885,7 @@ export default function About3() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  <a href="mailto:wagginmeals@gmail.com" className="hover:text-purple-600 transition-colors">
+                  <a href="mailto:wagginmeals@gmail.com" className="hover:text-[#8FAE8F] transition-colors">
                     wagginmeals@gmail.com
                   </a>
                 </div>
@@ -928,7 +928,7 @@ export default function About3() {
                       />
                     </div>
                   ) : (
-                    <div className="h-80 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center">
+                    <div className="h-80 bg-[#8FAE8F] rounded-2xl flex items-center justify-center">
                       <span className="text-8xl font-bold text-white" style={{ fontFamily: 'Playfair Display, serif' }}>
                         {teamData[activeModal as keyof typeof teamData].initials}
                       </span>
@@ -936,13 +936,13 @@ export default function About3() {
                   )}
 
                   <div className="mt-6">
-                    <p className="text-purple-600 font-bold mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <p className="text-[#8FAE8F] font-bold mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>
                       {teamData[activeModal as keyof typeof teamData].role}
                     </p>
                     <div className="space-y-2">
                       {teamData[activeModal as keyof typeof teamData].credentials.map((cred, idx) => (
                         <div key={idx} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-5 h-5 text-[#8FAE8F] flex-shrink-0 mt-0.5" />
                           <span className="text-sm text-gray-700" style={{ fontFamily: 'Inter, sans-serif' }}>{cred}</span>
                         </div>
                       ))}
@@ -960,8 +960,8 @@ export default function About3() {
                   </div>
 
                   {(teamData[activeModal as keyof typeof teamData] as any).stats?.number && (
-                    <div className="mt-8 p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl">
-                      <p className="text-5xl font-bold text-purple-600 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    <div className="mt-8 p-6 bg-[#F8F5F0] rounded-2xl">
+                      <p className="text-5xl font-bold text-[#8FAE8F] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                         {(teamData[activeModal as keyof typeof teamData] as any).stats?.number}
                       </p>
                       <p className="text-gray-700" style={{ fontFamily: 'Inter, sans-serif' }}>

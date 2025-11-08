@@ -5,7 +5,7 @@ export default function ResourcesPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Free Resources
@@ -35,7 +35,7 @@ export default function ResourcesPage() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Fresh Food Feeding Guide */}
             <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-              <div className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-8 py-12 text-center">
+              <div className="bg-[#8FAE8F] px-8 py-12 text-center">
                 <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-5xl mx-auto mb-4">
                   📘
                 </div>
@@ -49,7 +49,7 @@ export default function ResourcesPage() {
                 </h3>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -57,7 +57,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -65,7 +65,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -73,7 +73,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -81,7 +81,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -89,7 +89,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -100,7 +100,7 @@ export default function ResourcesPage() {
                 <div className="space-y-3">
                   <Link
                     href="/guides/fresh-food-guide"
-                    className="block w-full bg-[#a5b5eb] text-white text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
+                    className="block w-full bg-[#8FAE8F] text-white text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     Read Online Guide
@@ -108,10 +108,10 @@ export default function ResourcesPage() {
                   <a
                     href="/downloads/fresh-food-feeding-guide.pdf"
                     download
-                    className="block w-full bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors shadow-lg"
+                    className="block w-full bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors shadow-lg"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
-                    Download PDF (Coming Soon)
+                    Download PDF
                   </a>
                 </div>
                 <p className="text-[12px] text-[#999999] text-center mt-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -122,7 +122,7 @@ export default function ResourcesPage() {
 
             {/* Portion Size & Feeding Guide */}
             <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-              <div className="bg-gradient-to-r from-[#8a9fd9] to-[#a5b5eb] px-8 py-12 text-center">
+              <div className="bg-[#6d8c6d] px-8 py-12 text-center">
                 <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-5xl mx-auto mb-4">
                   📊
                 </div>
@@ -136,7 +136,7 @@ export default function ResourcesPage() {
                 </h3>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -144,7 +144,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -152,7 +152,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -160,7 +160,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -168,7 +168,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -176,7 +176,7 @@ export default function ResourcesPage() {
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="h-6 w-6 text-[#a5b5eb] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="h-6 w-6 text-[#8FAE8F] mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-[15px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -187,7 +187,7 @@ export default function ResourcesPage() {
                 <a
                   href="/downloads/portion-feeding-guide.pdf"
                   download
-                  className="block w-full bg-[#a5b5eb] text-white text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
+                  className="block w-full bg-[#8FAE8F] text-white text-center px-6 py-4 rounded-lg text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Download Guide (PDF)
@@ -287,7 +287,7 @@ export default function ResourcesPage() {
                   href="#"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center bg-[#a5b5eb] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#8a9fd9] transition-colors"
+                  className="block w-full text-center bg-[#8FAE8F] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#6d8c6d] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   View on Amazon →
@@ -327,7 +327,7 @@ export default function ResourcesPage() {
                   href="#"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center bg-[#a5b5eb] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#8a9fd9] transition-colors"
+                  className="block w-full text-center bg-[#8FAE8F] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#6d8c6d] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   View on Amazon →
@@ -367,7 +367,7 @@ export default function ResourcesPage() {
                   href="#"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center bg-[#a5b5eb] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#8a9fd9] transition-colors"
+                  className="block w-full text-center bg-[#8FAE8F] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#6d8c6d] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   View on Amazon →
@@ -407,7 +407,7 @@ export default function ResourcesPage() {
                   href="#"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center bg-[#a5b5eb] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#8a9fd9] transition-colors"
+                  className="block w-full text-center bg-[#8FAE8F] text-white px-4 py-3 rounded-lg text-sm font-semibold hover:bg-[#6d8c6d] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Explore Courses →
@@ -422,7 +422,7 @@ export default function ResourcesPage() {
             </p>
             <Link
               href="/recommended-products"
-              className="inline-block bg-white text-[#a5b5eb] border-2 border-[#a5b5eb] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors"
+              className="inline-block bg-white text-[#8FAE8F] border-2 border-[#8FAE8F] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               View All Recommended Products
@@ -459,7 +459,7 @@ export default function ResourcesPage() {
                 <a
                   href="/downloads/quick-feeding-guide.png"
                   download
-                  className="block w-full bg-[#a5b5eb] text-white text-center px-6 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                  className="block w-full bg-[#8FAE8F] text-white text-center px-6 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Download Image (PNG)
@@ -487,7 +487,7 @@ export default function ResourcesPage() {
                 <a
                   href="/downloads/weight-management-guide.png"
                   download
-                  className="block w-full bg-[#a5b5eb] text-white text-center px-6 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                  className="block w-full bg-[#8FAE8F] text-white text-center px-6 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
                   Download Image (PNG)
@@ -498,35 +498,8 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      {/* Note About PDF Conversion */}
-      <section className="bg-[#fff3cd] border-t-4 border-[#ffc107] px-4 py-8">
-        <div className="mx-auto max-w-4xl">
-          <div className="flex items-start">
-            <svg className="h-8 w-8 text-[#856404] mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
-            </svg>
-            <div>
-              <h3 className="text-xl font-semibold text-[#856404] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Note: Comprehensive PDF Guides Coming Soon
-              </h3>
-              <p className="text-[15px] text-[#856404]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                The comprehensive PDF guides above are being prepared for download. The source documents are available in the
-                <code className="bg-[#856404] bg-opacity-10 px-2 py-1 rounded mx-1">/public/downloads/</code> folder:
-              </p>
-              <ul className="list-disc list-inside mt-3 text-[14px] text-[#856404] space-y-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <li><strong>Fresh Food Guide for Your Dog.docx</strong> - Needs conversion to <code className="bg-[#856404] bg-opacity-10 px-1 rounded">fresh-food-feeding-guide.pdf</code></li>
-                <li><strong>Whats in the Box..docx</strong> - Additional resource document</li>
-              </ul>
-              <p className="text-[14px] text-[#856404] mt-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                To complete setup: Convert the Word documents to PDF format and rename them as indicated above.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Need Personalized Guidance?
@@ -537,7 +510,7 @@ export default function ResourcesPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg inline-block"
+            className="bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg inline-block"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Schedule a Consultation

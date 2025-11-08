@@ -127,7 +127,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
       {!showCreateForm && (
         <button
           onClick={() => setShowCreateForm(true)}
-          className="px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors font-medium"
+          className="px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors font-medium"
         >
           Create New Discount Code
         </button>
@@ -148,7 +148,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                   required
                   value={formData.code}
                   onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb] uppercase"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F] uppercase"
                   placeholder="SUMMER2024"
                 />
               </div>
@@ -161,7 +161,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                   required
                   value={formData.discount_type}
                   onChange={(e) => setFormData({ ...formData, discount_type: e.target.value as 'percentage' | 'fixed' })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 >
                   <option value="percentage">Percentage (%)</option>
                   <option value="fixed">Fixed Amount ($)</option>
@@ -179,7 +179,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                   min="0"
                   value={formData.discount_value}
                   onChange={(e) => setFormData({ ...formData, discount_value: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                   placeholder={formData.discount_type === 'percentage' ? '20' : '10.00'}
                 />
               </div>
@@ -193,7 +193,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                   min="1"
                   value={formData.usage_limit}
                   onChange={(e) => setFormData({ ...formData, usage_limit: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                   placeholder="Unlimited"
                 />
               </div>
@@ -208,7 +208,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                   min="0"
                   value={formData.minimum_purchase}
                   onChange={(e) => setFormData({ ...formData, minimum_purchase: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                   placeholder="No minimum"
                 />
               </div>
@@ -221,7 +221,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                   type="datetime-local"
                   value={formData.starts_at}
                   onChange={(e) => setFormData({ ...formData, starts_at: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 />
               </div>
 
@@ -233,7 +233,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                   type="datetime-local"
                   value={formData.expires_at}
                   onChange={(e) => setFormData({ ...formData, expires_at: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 />
               </div>
             </div>
@@ -246,7 +246,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                 rows={3}
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 placeholder="Optional description for internal use"
               />
             </div>
@@ -257,7 +257,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                 id="is_active"
                 checked={formData.is_active}
                 onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                className="w-4 h-4 text-[#a5b5eb] border-gray-300 rounded focus:ring-[#a5b5eb]"
+                className="w-4 h-4 text-[#8FAE8F] border-gray-300 rounded focus:ring-[#8FAE8F]"
               />
               <label htmlFor="is_active" className="text-sm text-gray-700">
                 Active (code can be used immediately)
@@ -268,7 +268,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors disabled:opacity-50"
+                className="px-6 py-2 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors disabled:opacity-50"
               >
                 {isSubmitting ? 'Creating...' : 'Create Discount Code'}
               </button>
@@ -363,7 +363,7 @@ export default function DiscountCodesClient({ initialDiscounts }: { initialDisco
                     <td className="px-6 py-4 text-right text-sm space-x-2">
                       <button
                         onClick={() => toggleStatus(discount.id, discount.is_active)}
-                        className="text-[#a5b5eb] hover:text-[#8a9fd9] font-medium"
+                        className="text-[#8FAE8F] hover:text-[#6d8c6d] font-medium"
                       >
                         {discount.is_active ? 'Deactivate' : 'Activate'}
                       </button>

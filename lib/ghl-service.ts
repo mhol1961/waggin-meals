@@ -449,3 +449,347 @@ export async function notifySubscriptionAddressChanged(data: {
 export function isGHLConfigured(): boolean {
   return !!process.env.GHL_WEBHOOK_URL;
 }
+
+/**
+ * =============================================================================
+ * GHL DIRECT API INTEGRATION (for tag-based contact management)
+ * =============================================================================
+ *
+ * The functions below use the GHL REST API to create/update contacts with tags.
+ * This is used for newsletter signups, consultations, and customer lifecycle events.
+ *
+ * Key Principle: TAGS ACCUMULATE - never remove tags, only add them.
+ * This allows sophisticated segmentation and multi-workflow automation.
+ */
+
+const GHL_API_BASE_URL = 'https://rest.gohighlevel.com/v1';
+
+export interface GHLContact {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  tags?: string[];
+  customFields?: Record<string, string>;
+}
+
+export interface GHLSyncResult {
+  success: boolean;
+  contactId?: string;
+  error?: string;
+  addedTags?: string[];
+}
+
+/**
+ * Get GHL API credentials from environment
+ */
+function getGHLConfig() {
+  const apiKey = process.env.GHL_API_KEY;
+  const locationId = process.env.GHL_LOCATION_ID;
+
+  if (!apiKey || !locationId) {
+    console.error('GHL credentials missing:', {
+      hasApiKey: !!apiKey,
+      hasLocationId: !!locationId
+    });
+  }
+
+  return { apiKey, locationId };
+}
+
+/**
+ * Make an API request to GHL with retry logic
+ */
+async function ghlRequest(
+  endpoint: string,
+  options: RequestInit,
+  retries = 2
+): Promise<Response> {
+  const { apiKey } = getGHLConfig();
+
+  if (!apiKey) {
+    throw new Error('GHL API key not configured');
+  }
+
+  const url = `${GHL_API_BASE_URL}${endpoint}`;
+  const headers = {
+    'Authorization': `Bearer ${apiKey}`,
+    'Content-Type': 'application/json',
+    ...options.headers,
+  };
+
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, { ...options, headers });
+
+      // If successful or client error (4xx), return immediately
+      if (response.ok || (response.status >= 400 && response.status < 500)) {
+        return response;
+      }
+
+      // Server error (5xx), retry
+      if (attempt < retries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+        continue;
+      }
+
+      return response;
+    } catch (error) {
+      if (attempt === retries) throw error;
+      await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+    }
+  }
+
+  throw new Error('GHL request failed after retries');
+}
+
+/**
+ * Get an existing contact by email
+ */
+export async function getContactByEmail(email: string): Promise<any | null> {
+  try {
+    const response = await ghlRequest(`/contacts/?email=${encodeURIComponent(email)}`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      console.error('Failed to get GHL contact:', response.status, response.statusText);
+      return null;
+    }
+
+    const data = await response.json();
+
+    // GHL returns an array of contacts
+    if (data.contacts && data.contacts.length > 0) {
+      return data.contacts[0];
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error getting GHL contact:', error);
+    return null;
+  }
+}
+
+/**
+ * Create a new contact in GHL
+ */
+async function createContact(contact: GHLContact): Promise<GHLSyncResult> {
+  const { locationId } = getGHLConfig();
+
+  if (!locationId) {
+    return { success: false, error: 'GHL location ID not configured' };
+  }
+
+  try {
+    const payload: any = {
+      email: contact.email,
+      locationId,
+    };
+
+    if (contact.firstName) payload.firstName = contact.firstName;
+    if (contact.lastName) payload.lastName = contact.lastName;
+    if (contact.phone) payload.phone = contact.phone;
+    if (contact.tags && contact.tags.length > 0) payload.tags = contact.tags;
+    if (contact.customFields) payload.customField = contact.customFields;
+
+    const response = await ghlRequest('/contacts/', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Failed to create GHL contact:', response.status, errorText);
+      return { success: false, error: `HTTP ${response.status}: ${errorText}` };
+    }
+
+    const data = await response.json();
+
+    return {
+      success: true,
+      contactId: data.contact?.id,
+      addedTags: contact.tags || [],
+    };
+  } catch (error) {
+    console.error('Error creating GHL contact:', error);
+    return { success: false, error: String(error) };
+  }
+}
+
+/**
+ * Update an existing contact in GHL
+ * IMPORTANT: This ACCUMULATES tags - never removes existing tags
+ */
+async function updateContact(
+  contactId: string,
+  contact: GHLContact,
+  existingTags: string[] = []
+): Promise<GHLSyncResult> {
+  try {
+    const payload: any = {};
+
+    if (contact.firstName) payload.firstName = contact.firstName;
+    if (contact.lastName) payload.lastName = contact.lastName;
+    if (contact.phone) payload.phone = contact.phone;
+    if (contact.customFields) payload.customField = contact.customFields;
+
+    // TAG ACCUMULATION: Combine existing tags with new tags
+    if (contact.tags && contact.tags.length > 0) {
+      const allTags = [...new Set([...existingTags, ...contact.tags])];
+      payload.tags = allTags;
+    }
+
+    const response = await ghlRequest(`/contacts/${contactId}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Failed to update GHL contact:', response.status, errorText);
+      return { success: false, error: `HTTP ${response.status}: ${errorText}` };
+    }
+
+    const data = await response.json();
+
+    return {
+      success: true,
+      contactId: data.contact?.id,
+      addedTags: contact.tags || [],
+    };
+  } catch (error) {
+    console.error('Error updating GHL contact:', error);
+    return { success: false, error: String(error) };
+  }
+}
+
+/**
+ * Sync a contact to GHL (create or update with tag accumulation)
+ *
+ * This is the main function to use for all GHL contact syncs.
+ * It handles creating new contacts or updating existing ones,
+ * and ALWAYS accumulates tags rather than replacing them.
+ *
+ * @param contact - Contact data to sync
+ * @returns Sync result with success status and contact ID
+ */
+export async function syncContactToGHL(contact: GHLContact): Promise<GHLSyncResult> {
+  try {
+    // Check if contact already exists
+    const existingContact = await getContactByEmail(contact.email);
+
+    if (existingContact) {
+      // Update existing contact (tags will accumulate)
+      const existingTags = existingContact.tags || [];
+      return await updateContact(existingContact.id, contact, existingTags);
+    } else {
+      // Create new contact
+      return await createContact(contact);
+    }
+  } catch (error) {
+    console.error('Error syncing contact to GHL:', error);
+    return { success: false, error: String(error) };
+  }
+}
+
+/**
+ * Add tags to an existing contact
+ * This is a convenience function that only adds tags without updating other fields
+ */
+export async function addTagsToContact(
+  email: string,
+  tags: string[]
+): Promise<GHLSyncResult> {
+  return syncContactToGHL({
+    email,
+    tags,
+  });
+}
+
+/**
+ * Remove specific tags from a contact
+ * USE WITH CAUTION: This goes against the tag accumulation principle.
+ * Only use for special cases like subscription cancellation.
+ */
+export async function removeTagsFromContact(
+  email: string,
+  tagsToRemove: string[]
+): Promise<GHLSyncResult> {
+  try {
+    const existingContact = await getContactByEmail(email);
+
+    if (!existingContact) {
+      return { success: false, error: 'Contact not found' };
+    }
+
+    const existingTags = existingContact.tags || [];
+    const newTags = existingTags.filter((tag: string) => !tagsToRemove.includes(tag));
+
+    const payload = { tags: newTags };
+
+    const response = await ghlRequest(`/contacts/${existingContact.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      return { success: false, error: `HTTP ${response.status}: ${errorText}` };
+    }
+
+    return { success: true, contactId: existingContact.id };
+  } catch (error) {
+    console.error('Error removing tags from GHL contact:', error);
+    return { success: false, error: String(error) };
+  }
+}
+
+/**
+ * Update custom fields for a contact
+ */
+export async function updateCustomFields(
+  email: string,
+  fields: Record<string, string>
+): Promise<GHLSyncResult> {
+  return syncContactToGHL({
+    email,
+    customFields: fields,
+  });
+}
+
+/**
+ * Log GHL sync attempt to database (for tracking/debugging)
+ * This should be called by the API route after attempting a GHL sync
+ */
+export function logGHLSync(
+  tableName: string,
+  recordId: string,
+  result: GHLSyncResult,
+  supabase: any
+) {
+  const logData: any = {
+    ghl_last_sync_at: new Date().toISOString(),
+  };
+
+  if (result.success && result.contactId) {
+    logData.ghl_contact_id = result.contactId;
+    if (result.addedTags && result.addedTags.length > 0) {
+      logData.ghl_tags = result.addedTags;
+    }
+    logData.ghl_sync_error = null; // Clear any previous errors
+  } else {
+    logData.ghl_sync_error = result.error || 'Unknown error';
+  }
+
+  // Don't await - fire and forget to avoid blocking
+  supabase
+    .from(tableName)
+    .update(logData)
+    .eq('id', recordId)
+    .then((response: any) => {
+      if (response.error) {
+        console.error('Failed to log GHL sync:', response.error);
+      }
+    });
+}

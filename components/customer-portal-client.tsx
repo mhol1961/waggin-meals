@@ -183,7 +183,7 @@ export default function CustomerPortalClient({ subscription, customer }: Custome
 
           <button
             onClick={handleUpdatePayment}
-            className="w-full px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors font-medium"
+            className="w-full px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors font-medium"
           >
             {subscription.payment_last_four ? 'Update Payment Method' : 'Add Payment Method'}
           </button>
@@ -208,7 +208,7 @@ export default function CustomerPortalClient({ subscription, customer }: Custome
                 maxLength={16}
                 pattern="[0-9]{13,16}"
                 placeholder="4111111111111111"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
               />
             </div>
 
@@ -224,7 +224,7 @@ export default function CustomerPortalClient({ subscription, customer }: Custome
                   maxLength={2}
                   pattern="[0-9]{2}"
                   placeholder="12"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 />
               </div>
 
@@ -239,7 +239,7 @@ export default function CustomerPortalClient({ subscription, customer }: Custome
                   maxLength={4}
                   pattern="[0-9]{4}"
                   placeholder="2025"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 />
               </div>
 
@@ -254,7 +254,7 @@ export default function CustomerPortalClient({ subscription, customer }: Custome
                   maxLength={4}
                   pattern="[0-9]{3,4}"
                   placeholder="123"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 />
               </div>
             </div>
@@ -269,7 +269,7 @@ export default function CustomerPortalClient({ subscription, customer }: Custome
                 required
                 maxLength={10}
                 placeholder="28403"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
               />
             </div>
 
@@ -277,7 +277,7 @@ export default function CustomerPortalClient({ subscription, customer }: Custome
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="flex-1 px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors font-medium disabled:opacity-50"
+                className="flex-1 px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors font-medium disabled:opacity-50"
               >
                 {isUpdating ? 'Processing...' : 'Update Payment Method'}
               </button>

@@ -65,17 +65,17 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#a5b5eb]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8FAE8F]"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb]">
+    <div className="min-h-screen bg-[#f8f9fa]">
       <div className="max-w-2xl mx-auto px-4 py-16">
         <Link
           href="/account"
-          className="inline-flex items-center gap-2 text-[#a5b5eb] hover:text-[#8a9fd9] mb-8"
+          className="inline-flex items-center gap-2 text-[#8FAE8F] hover:text-[#6d8c6d] mb-8"
           style={{ fontFamily: "'Poppins', sans-serif" }}
         >
           <ArrowLeft className="w-4 h-4" />
@@ -114,7 +114,7 @@ export default function SettingsPage() {
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 required
                 minLength={6}
                 style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -129,7 +129,7 @@ export default function SettingsPage() {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#a5b5eb]"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#8FAE8F]"
                 required
                 minLength={6}
                 style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -139,7 +139,7 @@ export default function SettingsPage() {
             <button
               type="submit"
               disabled={changingPassword}
-              className="w-full bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="w-full bg-[#8FAE8F] text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               {changingPassword ? 'Updating Password...' : 'Update Password'}

@@ -90,7 +90,7 @@ export function NextBoxPreview() {
 
   if (subscriptions.length === 0) {
     return (
-      <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-lg border border-green-200 p-6">
+      <div className="bg-green-50 rounded-lg border border-green-200 p-6">
         <div className="flex items-start">
           <svg className="w-6 h-6 text-green-600 mr-3 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -128,7 +128,7 @@ export function NextBoxPreview() {
       </div>
 
       {/* Countdown */}
-      <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+      <div className="mb-4 p-4 bg-green-50 rounded-lg border border-green-200">
         <div className="flex items-center justify-between">
           <div>
             <div className="text-sm text-gray-600">Ships in</div>

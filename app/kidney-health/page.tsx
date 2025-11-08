@@ -5,7 +5,7 @@ export default function KidneyHealthPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Kidney Health Nutrition
@@ -38,7 +38,7 @@ export default function KidneyHealthPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl mb-4 mx-auto">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl mb-4 mx-auto">
                 🔄
               </div>
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -50,7 +50,7 @@ export default function KidneyHealthPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl mb-4 mx-auto">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl mb-4 mx-auto">
                 💧
               </div>
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -62,7 +62,7 @@ export default function KidneyHealthPage() {
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="w-16 h-16 bg-[#a5b5eb] rounded-full flex items-center justify-center text-white text-2xl mb-4 mx-auto">
+              <div className="w-16 h-16 bg-[#8FAE8F] rounded-full flex items-center justify-center text-white text-2xl mb-4 mx-auto">
                 ⚗️
               </div>
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 text-center" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -84,7 +84,7 @@ export default function KidneyHealthPage() {
           </h2>
 
           <div className="space-y-6">
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Moderate, High-Quality Protein
               </h3>
@@ -96,7 +96,7 @@ export default function KidneyHealthPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Reduced Phosphorus
               </h3>
@@ -108,7 +108,7 @@ export default function KidneyHealthPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Controlled Sodium
               </h3>
@@ -120,7 +120,7 @@ export default function KidneyHealthPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Omega-3 Fatty Acids
               </h3>
@@ -132,7 +132,7 @@ export default function KidneyHealthPage() {
               </p>
             </div>
 
-            <div className="border-l-4 border-[#a5b5eb] pl-6 py-2">
+            <div className="border-l-4 border-[#8FAE8F] pl-6 py-2">
               <h3 className="text-xl font-semibold text-[#3c3a47] mb-2" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Increased Hydration
               </h3>
@@ -161,7 +161,7 @@ export default function KidneyHealthPage() {
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -169,7 +169,7 @@ export default function KidneyHealthPage() {
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -177,7 +177,7 @@ export default function KidneyHealthPage() {
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -185,7 +185,7 @@ export default function KidneyHealthPage() {
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -193,7 +193,7 @@ export default function KidneyHealthPage() {
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -209,7 +209,7 @@ export default function KidneyHealthPage() {
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -217,7 +217,7 @@ export default function KidneyHealthPage() {
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -225,7 +225,7 @@ export default function KidneyHealthPage() {
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -233,7 +233,7 @@ export default function KidneyHealthPage() {
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -241,7 +241,7 @@ export default function KidneyHealthPage() {
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-5 w-5 text-[#a5b5eb] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 w-5 text-[#8FAE8F] mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                   </svg>
                   <span className="text-[14px] text-[#666666]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -323,7 +323,7 @@ export default function KidneyHealthPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Get Expert Kidney Disease Support
@@ -334,7 +334,7 @@ export default function KidneyHealthPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg inline-block"
+            className="bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg inline-block"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Schedule a Consultation

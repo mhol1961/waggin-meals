@@ -127,11 +127,11 @@ export default function PaidConsultationsClient({ initialConsultations }: Props)
       },
       reviewed: {
         label: 'Reviewed - Ready to Schedule',
-        className: 'bg-purple-100 text-purple-800 border-purple-300'
+        className: 'bg-[#8FAE8F]/10 text-[#5E8C8C] border-[#8FAE8F]/40'
       },
       scheduled: {
         label: 'Scheduled',
-        className: 'bg-indigo-100 text-indigo-800 border-indigo-300'
+        className: 'bg-[#5E8C8C]/10 text-[#5E8C8C] border-[#5E8C8C]/40'
       },
       completed: {
         label: 'Completed',
@@ -326,7 +326,7 @@ export default function PaidConsultationsClient({ initialConsultations }: Props)
         </div>
         <div className="bg-white rounded-lg shadow p-4">
           <div className="text-sm text-gray-500">Scheduled</div>
-          <div className="text-2xl font-bold text-indigo-600">{statusCounts.scheduled || 0}</div>
+          <div className="text-2xl font-bold text-[#5E8C8C]">{statusCounts.scheduled || 0}</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4">
           <div className="text-sm text-gray-500">Completed</div>

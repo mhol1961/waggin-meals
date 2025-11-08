@@ -25,11 +25,11 @@ const CONTENT_TYPE_LABELS: Record<string, string> = {
 
 const CONTENT_TYPE_COLORS: Record<string, string> = {
   blog_post: 'bg-blue-100 text-blue-800',
-  product: 'bg-pink-100 text-pink-800',
-  video: 'bg-purple-100 text-purple-800',
+  product: 'bg-[#C97B63]/10 text-[#C97B63]',
+  video: 'bg-[#8FAE8F]/100 text-[#5E8C8C]',
   testimonial: 'bg-green-100 text-green-800',
   case_study: 'bg-orange-100 text-orange-800',
-  event: 'bg-indigo-100 text-indigo-800'
+  event: 'bg-[#5E8C8C]/10 text-[#5E8C8C]'
 };
 
 export default function ArchivePage() {

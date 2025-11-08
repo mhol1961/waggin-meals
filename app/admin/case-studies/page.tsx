@@ -81,7 +81,7 @@ export default function AdminCaseStudiesPage() {
           </div>
           <Link
             href="/admin/case-studies/new"
-            className="flex items-center gap-2 bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8fa3d9] transition-colors"
+            className="flex items-center gap-2 bg-[#8FAE8F] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8fa3d9] transition-colors"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             <Plus className="w-5 h-5" />
@@ -96,7 +96,7 @@ export default function AdminCaseStudiesPage() {
               onClick={() => setFilter('all')}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 filter === 'all'
-                  ? 'bg-[#a5b5eb] text-white'
+                  ? 'bg-[#8FAE8F] text-white'
                   : 'bg-gray-100 text-[#666666] hover:bg-gray-200'
               }`}
               style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -107,7 +107,7 @@ export default function AdminCaseStudiesPage() {
               onClick={() => setFilter('published')}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 filter === 'published'
-                  ? 'bg-[#a5b5eb] text-white'
+                  ? 'bg-[#8FAE8F] text-white'
                   : 'bg-gray-100 text-[#666666] hover:bg-gray-200'
               }`}
               style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -118,7 +118,7 @@ export default function AdminCaseStudiesPage() {
               onClick={() => setFilter('draft')}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 filter === 'draft'
-                  ? 'bg-[#a5b5eb] text-white'
+                  ? 'bg-[#8FAE8F] text-white'
                   : 'bg-gray-100 text-[#666666] hover:bg-gray-200'
               }`}
               style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -138,7 +138,7 @@ export default function AdminCaseStudiesPage() {
             <p className="text-[#666666] mb-4">No case studies found</p>
             <Link
               href="/admin/case-studies/new"
-              className="inline-flex items-center gap-2 bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8fa3d9] transition-colors"
+              className="inline-flex items-center gap-2 bg-[#8FAE8F] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8fa3d9] transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               <Plus className="w-5 h-5" />
@@ -207,7 +207,7 @@ export default function AdminCaseStudiesPage() {
                     </td>
                     <td className="px-6 py-4 text-center">
                       {caseStudy.featured && (
-                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">
+                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-[#8FAE8F]/100 text-[#6d8c6d]">
                           ⭐ Featured
                         </span>
                       )}
@@ -223,7 +223,7 @@ export default function AdminCaseStudiesPage() {
                           <Link
                             href={`/case-studies/${caseStudy.slug}`}
                             target="_blank"
-                            className="p-2 text-[#666666] hover:text-[#a5b5eb] transition-colors"
+                            className="p-2 text-[#666666] hover:text-[#8FAE8F] transition-colors"
                             title="View"
                           >
                             <Eye className="w-4 h-4" />
@@ -231,7 +231,7 @@ export default function AdminCaseStudiesPage() {
                         )}
                         <Link
                           href={`/admin/case-studies/${caseStudy.id}`}
-                          className="p-2 text-[#666666] hover:text-[#a5b5eb] transition-colors"
+                          className="p-2 text-[#666666] hover:text-[#8FAE8F] transition-colors"
                           title="Edit"
                         >
                           <Edit className="w-4 h-4" />

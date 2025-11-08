@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mail, Phone, ShieldCheck, Award, Leaf } from 'lucide-react';
+import { FooterNewsletter } from './footer-newsletter';
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-br from-[#5E3B76] to-[#452a6d] text-white mt-16">
+    <footer className="bg-[#6d8c6d] text-white mt-16">
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          {/* About Section */}
+        {/* Newsletter Signup */}
+        <FooterNewsletter />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+          {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Image
@@ -15,7 +19,7 @@ export function Footer() {
                 alt="Waggin Meals"
                 width={50}
                 height={50}
-                className="rounded-full border border-[#ead9ff]"
+                className="rounded-full border border-[#F8F5F0]"
               />
               <div>
                 <p className="text-sm font-bold" style={{ fontFamily: "'Abril Fatface', serif" }}>
@@ -27,61 +31,77 @@ export function Footer() {
               </div>
             </div>
             <p className="text-xs leading-relaxed opacity-90 mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              Specialized nutrition tailored to your dog's unique needs. Every meal scientifically formulated by Christie Webb, M.S. Animal Nutrition & M.A. Food Science.
+              Specialized nutrition tailored to your dog's unique needs. Every meal scientifically formulated by Christie Willett, M.A., M.S. - Integrative Animal Nutrition.
             </p>
             <div className="space-y-2 text-xs">
               <div className="flex items-center gap-2 opacity-90">
                 <Mail className="w-4 h-4" />
-                <a href="mailto:info@wagginmeals.com" className="hover:text-[#e6b4ff] transition-colors">
+                <a href="mailto:info@wagginmeals.com" className="hover:text-[#d4e4d4] transition-colors">
                   info@wagginmeals.com
                 </a>
               </div>
               <div className="flex items-center gap-2 opacity-90">
                 <Phone className="w-4 h-4" />
-                <a href="tel:+1234567890" className="hover:text-[#e6b4ff] transition-colors">
+                <a href="tel:+1234567890" className="hover:text-[#d4e4d4] transition-colors">
                   Contact Us
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Services & Shop */}
           <div>
             <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              Quick Links
+              Services & Shop
             </h3>
             <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              <li><Link href="/" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Home</Link></li>
-              <li><Link href="/shop" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Shop</Link></li>
-              <li><Link href="/nutrition-services" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Nutrition Services</Link></li>
-              <li><Link href="/case-studies" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Success Stories</Link></li>
-              <li><Link href="/blog" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Pet Nutrition Insights</Link></li>
+              <li><Link href="/nutrition-services" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Nutrition Consultation</Link></li>
+              <li><Link href="/food-sensitivities" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Food Sensitivity Testing</Link></li>
+              <li><Link href="/shop" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Shop All Products</Link></li>
+              <li><Link href="/bundles" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Bundles & Save</Link></li>
+              <li><Link href="/collections" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Collections</Link></li>
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Resources & Learning */}
           <div>
             <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              Resources
+              Resources & Learning
             </h3>
             <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              <li><Link href="/feeding-calculator" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Feeding Calculator</Link></li>
-              <li><Link href="/guides/fresh-food-guide" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Fresh Food Guide</Link></li>
-              <li><Link href="/resources" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Free PDF Guides</Link></li>
-              <li><Link href="/faq" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">FAQs</Link></li>
-              <li><Link href="/contact" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Contact Us</Link></li>
+              <li><Link href="/guides/fresh-food-guide" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Fresh Food Feeding Guide</Link></li>
+              <li><Link href="/resources" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Free PDF Guides</Link></li>
+              <li><Link href="/blog" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Pet Nutrition Insights</Link></li>
+              <li><Link href="/case-studies" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Case Studies</Link></li>
+              <li><Link href="/testimonials" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Testimonials</Link></li>
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Health Topics */}
           <div>
             <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              Legal
+              Health Topics
             </h3>
             <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              <li><Link href="/shipping" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Shipping & Delivery</Link></li>
-              <li><Link href="/privacy" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="opacity-90 hover:text-[#e6b4ff] hover:opacity-100 transition-all">Terms of Service</Link></li>
+              <li><Link href="/puppies" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Puppies</Link></li>
+              <li><Link href="/weight-management" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Weight Management</Link></li>
+              <li><Link href="/kidney-health" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Kidney Health</Link></li>
+              <li><Link href="/digestive-health" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Digestive Health</Link></li>
+            </ul>
+          </div>
+
+          {/* Support & Legal */}
+          <div>
+            <h3 className="text-sm font-bold mb-4 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              Support & Legal
+            </h3>
+            <ul className="space-y-2 text-xs" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <li><Link href="/about" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">About Us</Link></li>
+              <li><Link href="/contact" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Contact Us</Link></li>
+              <li><Link href="/faq" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">FAQs</Link></li>
+              <li><Link href="/shipping" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Shipping & Delivery</Link></li>
+              <li><Link href="/privacy" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="opacity-90 hover:text-[#d4e4d4] hover:opacity-100 transition-all">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
@@ -90,7 +110,7 @@ export function Footer() {
         <div className="border-t border-white/20 pt-8 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-[#e6b4ff] flex-shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-[#d4e4d4] flex-shrink-0" />
               <div>
                 <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   FDA Pet Feed Program
@@ -101,7 +121,7 @@ export function Footer() {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Award className="w-5 h-5 text-[#e6b4ff] flex-shrink-0" />
+              <Award className="w-5 h-5 text-[#d4e4d4] flex-shrink-0" />
               <div>
                 <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Christie Formulated
@@ -112,7 +132,7 @@ export function Footer() {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Leaf className="w-5 h-5 text-[#e6b4ff] flex-shrink-0" />
+              <Leaf className="w-5 h-5 text-[#d4e4d4] flex-shrink-0" />
               <div>
                 <p className="text-xs font-semibold mb-1" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   AAFCO Complete

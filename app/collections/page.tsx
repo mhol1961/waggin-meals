@@ -12,7 +12,7 @@ export default function CollectionsPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-6xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Shop by Collection
@@ -96,7 +96,7 @@ export default function CollectionsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-[#5a6fa8] to-[#7a8fc5] px-4 py-16">
+      <section className="bg-[#5a6fa8] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Need Help Choosing?
@@ -107,7 +107,7 @@ export default function CollectionsPage() {
 
           <Link
             href="/nutrition-services"
-            className="inline-block bg-white text-[#a5b5eb] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+            className="inline-block bg-white text-[#8FAE8F] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-lg"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Book Free Consultation
@@ -140,13 +140,13 @@ function CollectionCard({ collection }: { collection: Collection }) {
       </div>
 
       <div className="p-6">
-        <h3 className="text-xl font-semibold text-[#3c3a47] mb-2 group-hover:text-[#a5b5eb] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
+        <h3 className="text-xl font-semibold text-[#3c3a47] mb-2 group-hover:text-[#8FAE8F] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
           {collection.title}
         </h3>
         <p className="text-sm text-[#666666] leading-relaxed mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
           {collection.description}
         </p>
-        <div className="flex items-center text-[#a5b5eb] font-semibold text-sm group-hover:text-[#8a9fd9]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+        <div className="flex items-center text-[#8FAE8F] font-semibold text-sm group-hover:text-[#6d8c6d]" style={{ fontFamily: "'Poppins', sans-serif" }}>
           Shop Now
           <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

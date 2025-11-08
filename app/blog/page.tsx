@@ -63,17 +63,27 @@ async function getCategories() {
   return ["All Posts", ...uniqueCategories];
 }
 
-export default async function BlogPage() {
+interface BlogPageProps {
+  searchParams: Promise<{ category?: string }>;
+}
+
+export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const { category: selectedCategory } = await searchParams;
   const allPosts = await getBlogPosts();
   const categories = await getCategories();
 
-  // Featured post is the most recent
-  const featuredPost = allPosts[0] || null;
-  const blogPosts = allPosts.slice(1);
+  // Filter posts by category if one is selected
+  const filteredPosts = selectedCategory && selectedCategory !== 'All Posts'
+    ? allPosts.filter(post => post.category === selectedCategory)
+    : allPosts;
+
+  // Featured post is the most recent from filtered results
+  const featuredPost = filteredPosts[0] || null;
+  const blogPosts = filteredPosts.slice(1);
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#a5b5eb] to-[#c5d4f7] px-4 py-16">
+      <section className="bg-[#8FAE8F] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-5xl font-normal text-white mb-6" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Pet Nutrition Insights
@@ -91,19 +101,28 @@ export default async function BlogPage() {
       <section className="bg-white border-b border-gray-200 px-4 py-6">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-wrap gap-3 justify-center">
-            {categories.map((category) => (
-              <button
-                key={category}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  category === "All Posts"
-                    ? "bg-[#a5b5eb] text-white"
-                    : "bg-gray-100 text-[#666666] hover:bg-gray-200"
-                }`}
-                style={{ fontFamily: "'Poppins', sans-serif" }}
-              >
-                {category}
-              </button>
-            ))}
+            {categories.map((category) => {
+              const isActive = category === 'All Posts'
+                ? !selectedCategory || selectedCategory === 'All Posts'
+                : selectedCategory === category;
+
+              const href = category === 'All Posts' ? '/blog' : `/blog?category=${encodeURIComponent(category)}`;
+
+              return (
+                <Link
+                  key={category}
+                  href={href}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-[#8FAE8F] text-white"
+                      : "bg-gray-100 text-[#666666] hover:bg-gray-200"
+                  }`}
+                  style={{ fontFamily: "'Poppins', sans-serif" }}
+                >
+                  {category}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -122,14 +141,14 @@ export default async function BlogPage() {
                     className="object-cover"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="bg-[#a5b5eb] text-white px-4 py-1 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <span className="bg-[#8FAE8F] text-white px-4 py-1 rounded-full text-xs font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       Featured
                     </span>
                   </div>
                 </div>
                 <div className="p-8 md:p-12 flex flex-col justify-center">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-xs font-semibold text-[#a5b5eb] uppercase tracking-wide" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <span className="text-xs font-semibold text-[#8FAE8F] uppercase tracking-wide" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       {featuredPost.category}
                     </span>
                     <span className="text-xs text-[#999999]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -144,7 +163,7 @@ export default async function BlogPage() {
                   </p>
                   <Link
                     href={`/blog/${featuredPost.slug}`}
-                    className="inline-block bg-[#a5b5eb] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8a9fd9] transition-colors"
+                    className="inline-block bg-[#8FAE8F] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6d8c6d] transition-colors"
                     style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     Read Full Article →
@@ -160,22 +179,38 @@ export default async function BlogPage() {
       <section className="bg-white px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-12 text-center" style={{ fontFamily: "'Abril Fatface', serif" }}>
-            Latest Articles
+            {selectedCategory && selectedCategory !== 'All Posts'
+              ? `${selectedCategory} Articles`
+              : 'Latest Articles'}
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
+          {blogPosts.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-xl text-[#666666] mb-4" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                No articles found in this category yet.
+              </p>
+              <Link
+                href="/blog"
+                className="inline-block text-[#8FAE8F] hover:text-[#6d8c6d] font-semibold"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                ← View all articles
+              </Link>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {blogPosts.map((post) => (
               <article key={post.slug} className="bg-[#f8f9fa] rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="text-xs font-semibold text-[#a5b5eb] uppercase tracking-wide" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <span className="text-xs font-semibold text-[#8FAE8F] uppercase tracking-wide" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       {post.category}
                     </span>
                     <span className="text-xs text-[#999999]" style={{ fontFamily: "'Poppins', sans-serif" }}>
                       {post.readTime}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 hover:text-[#a5b5eb] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  <h3 className="text-xl font-semibold text-[#3c3a47] mb-3 hover:text-[#8FAE8F] transition-colors" style={{ fontFamily: "'Poppins', sans-serif" }}>
                     <Link href={`/blog/${post.slug}`}>
                       {post.title}
                     </Link>
@@ -189,7 +224,7 @@ export default async function BlogPage() {
                     </span>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="text-sm font-semibold text-[#a5b5eb] hover:text-[#8a9fd9] transition-colors"
+                      className="text-sm font-semibold text-[#8FAE8F] hover:text-[#6d8c6d] transition-colors"
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       Read More →
@@ -197,23 +232,26 @@ export default async function BlogPage() {
                   </div>
                 </div>
               </article>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* Load More Button */}
-          <div className="text-center mt-12">
-            <button
-              className="bg-white border-2 border-[#a5b5eb] text-[#a5b5eb] px-8 py-3 rounded-lg font-semibold hover:bg-[#a5b5eb] hover:text-white transition-colors"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
-            >
-              Load More Articles
-            </button>
-          </div>
+          {blogPosts.length > 0 && (
+            <div className="text-center mt-12">
+              <button
+                className="bg-white border-2 border-[#8FAE8F] text-[#8FAE8F] px-8 py-3 rounded-lg font-semibold hover:bg-[#8FAE8F] hover:text-white transition-colors"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                Load More Articles
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
       {/* Newsletter Signup */}
-      <section className="bg-gradient-to-br from-[#f8f9fa] to-[#e8f4fb] px-4 py-16">
+      <section className="bg-[#f8f9fa] px-4 py-16">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-normal text-[#3c3a47] mb-4" style={{ fontFamily: "'Abril Fatface', serif" }}>
             Never Miss a Post
@@ -236,7 +274,7 @@ export default async function BlogPage() {
           </p>
           <Link
             href="/nutrition-services"
-            className="inline-block bg-[#a5b5eb] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#8a9fd9] transition-colors shadow-lg"
+            className="inline-block bg-[#8FAE8F] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6d8c6d] transition-colors shadow-lg"
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             Book Your Consultation - $395

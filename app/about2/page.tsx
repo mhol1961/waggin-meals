@@ -103,7 +103,7 @@ export default function About2() {
         .split-text-line:nth-child(3) {
           animation-delay: 0.6s;
           font-weight: 700;
-          background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
+          background: linear-gradient(135deg, #8FAE8F 0%, #5E8C8C 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -235,11 +235,11 @@ export default function About2() {
           float: left;
           line-height: 0.8;
           margin: 0.1em 0.1em 0 0;
-          color: #A855F7;
+          color: #8FAE8F;
         }
 
         .gradient-text {
-          background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
+          background: linear-gradient(135deg, #8FAE8F 0%, #5E8C8C 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -302,7 +302,7 @@ export default function About2() {
               <div className="max-w-5xl mx-auto text-center">
                 {/* Intro Text */}
                 <div className="mb-8 opacity-90">
-                  <span className="text-sm md:text-base uppercase tracking-[0.3em] text-purple-300 font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span className="text-sm md:text-base uppercase tracking-[0.3em] text-[#8FAE8F]/70 font-semibold" style={{ fontFamily: 'Inter, sans-serif' }}>
                     A story of love, loss, and purpose
                   </span>
                 </div>
@@ -319,7 +319,7 @@ export default function About2() {
                   <p className="text-lg md:text-xl lg:text-2xl text-white font-light" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Christie Willett lost her mother and beloved dog Jack to the same disease.
                   </p>
-                  <p className="text-lg md:text-xl lg:text-2xl text-purple-200 font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <p className="text-lg md:text-xl lg:text-2xl text-[#8FAE8F]/80 font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>
                     What happened next would transform the lives of thousands of dogs.
                   </p>
                 </div>
@@ -344,16 +344,16 @@ export default function About2() {
                 {/* Sidebar Chapter Navigation */}
                 <div className="lg:col-span-2">
                   <div className="lg:sticky lg:top-24">
-                    <span className="text-xs uppercase tracking-widest text-purple-600 font-bold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <span className="text-xs uppercase tracking-widest text-[#8FAE8F] font-bold" style={{ fontFamily: 'Inter, sans-serif' }}>
                       Chapter 01
                     </span>
                     <h3 className="mt-2 text-2xl font-bold text-gray-900" style={{ fontFamily: 'Playfair Display, serif' }}>
                       The Beginning
                     </h3>
                     <div className="mt-6 flex gap-2">
-                      <div className="w-2 h-2 rounded-full bg-purple-600" />
-                      <div className="w-2 h-2 rounded-full bg-purple-300" />
-                      <div className="w-2 h-2 rounded-full bg-purple-200" />
+                      <div className="w-2 h-2 rounded-full bg-[#8FAE8F]" />
+                      <div className="w-2 h-2 rounded-full bg-[#8FAE8F]/30" />
+                      <div className="w-2 h-2 rounded-full bg-[#8FAE8F]/20" />
                     </div>
                   </div>
                 </div>
@@ -372,11 +372,11 @@ export default function About2() {
                     </p>
 
                     {/* Pull Quote */}
-                    <blockquote className="my-12 py-8 px-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border-l-4 border-purple-600">
+                    <blockquote className="my-12 py-8 px-6 bg-[#F8F5F0] rounded-2xl border-l-4 border-[#8FAE8F]">
                       <p className="text-2xl md:text-3xl font-light text-gray-900 italic mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
                         "I knew there had to be a better way. Jack's memory became my mission."
                       </p>
-                      <cite className="text-sm uppercase tracking-wider text-purple-600 font-semibold not-italic" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      <cite className="text-sm uppercase tracking-wider text-[#8FAE8F] font-semibold not-italic" style={{ fontFamily: 'Inter, sans-serif' }}>
                         — Christie Willett, Founder
                       </cite>
                     </blockquote>
@@ -417,11 +417,11 @@ export default function About2() {
                         { year: '2025', label: 'Legacy' }
                       ].map((item, idx) => (
                         <div key={idx} className="flex items-start gap-3">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
-                            <div className="w-3 h-3 rounded-full bg-purple-600" />
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#8FAE8F]/10 flex items-center justify-center">
+                            <div className="w-3 h-3 rounded-full bg-[#8FAE8F]" />
                           </div>
                           <div>
-                            <div className="text-xs font-bold text-purple-600" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <div className="text-xs font-bold text-[#8FAE8F]" style={{ fontFamily: 'Inter, sans-serif' }}>
                               {item.year}
                             </div>
                             <div className="text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -439,7 +439,7 @@ export default function About2() {
         </section>
 
         {/* APPLE-STYLE TEAM SECTION */}
-        <section className="py-24 md:py-32 bg-gradient-to-b from-gray-50 to-white">
+        <section className="py-24 md:py-32 bg-gray-50">
           <div className="container mx-auto px-6">
             <div className="text-center mb-20">
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 gradient-text" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -455,7 +455,7 @@ export default function About2() {
               <article className="team-card bg-white rounded-3xl overflow-hidden shadow-xl">
                 <div className="relative h-80 overflow-hidden">
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="px-4 py-2 bg-purple-600 text-white text-xs font-bold uppercase tracking-wider rounded-full" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <span className="px-4 py-2 bg-[#8FAE8F] text-white text-xs font-bold uppercase tracking-wider rounded-full" style={{ fontFamily: 'Inter, sans-serif' }}>
                       Founder
                     </span>
                   </div>
@@ -470,7 +470,7 @@ export default function About2() {
                   <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                     Christie Willett
                   </h3>
-                  <p className="text-purple-600 font-semibold mb-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <p className="text-[#8FAE8F] font-semibold mb-1" style={{ fontFamily: 'Inter, sans-serif' }}>
                     M.A., M.S. in Agriculture
                   </p>
                   <p className="text-gray-600 text-sm mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -479,7 +479,7 @@ export default function About2() {
 
                   <div className="flex gap-6 mb-6">
                     <div>
-                      <div className="text-3xl font-bold text-purple-600" style={{ fontFamily: 'Playfair Display, serif' }}>
+                      <div className="text-3xl font-bold text-[#8FAE8F]" style={{ fontFamily: 'Playfair Display, serif' }}>
                         520+
                       </div>
                       <div className="text-xs text-gray-500 uppercase tracking-wider" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -487,7 +487,7 @@ export default function About2() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-purple-600" style={{ fontFamily: 'Playfair Display, serif' }}>
+                      <div className="text-3xl font-bold text-[#8FAE8F]" style={{ fontFamily: 'Playfair Display, serif' }}>
                         5+
                       </div>
                       <div className="text-xs text-gray-500 uppercase tracking-wider" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -500,7 +500,7 @@ export default function About2() {
                     Currently pursuing PhD in obesity, stress, and gerodietic nutrition in canines. Brings cutting-edge research to every meal formulated.
                   </p>
 
-                  <button className="magnetic-button w-full px-6 py-3 bg-purple-600 text-white font-semibold rounded-full hover:bg-purple-700 transition-colors" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <button className="magnetic-button w-full px-6 py-3 bg-[#8FAE8F] text-white font-semibold rounded-full hover:bg-[#6d8c6d] transition-colors" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Read Full Story
                   </button>
                 </div>
@@ -508,7 +508,7 @@ export default function About2() {
 
               {/* Tres Card */}
               <article className="team-card bg-white rounded-3xl overflow-hidden shadow-xl">
-                <div className="relative h-80 bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+                <div className="relative h-80 bg-[#8FAE8F] flex items-center justify-center">
                   <div className="text-8xl font-bold text-white" style={{ fontFamily: 'Playfair Display, serif' }}>
                     TN
                   </div>
@@ -517,7 +517,7 @@ export default function About2() {
                   <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                     Tres Naquin (CJ)
                   </h3>
-                  <p className="text-purple-600 font-semibold mb-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <p className="text-[#8FAE8F] font-semibold mb-1" style={{ fontFamily: 'Inter, sans-serif' }}>
                     CFO & Director of Operations
                   </p>
                   <p className="text-gray-600 text-sm mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -544,7 +544,7 @@ export default function About2() {
                   <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                     Kristen Peterson
                   </h3>
-                  <p className="text-purple-600 font-semibold mb-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <p className="text-[#8FAE8F] font-semibold mb-1" style={{ fontFamily: 'Inter, sans-serif' }}>
                     Executive Operations Coordinator
                   </p>
                   <p className="text-gray-600 text-sm mb-6" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -578,7 +578,7 @@ export default function About2() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-black/40" />
                 <div className="absolute bottom-6 left-6 right-6 text-white">
                   <h3 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                     Farm to Bowl
@@ -590,7 +590,7 @@ export default function About2() {
               </div>
 
               {/* Tall Purple Gradient */}
-              <div className="bento-item bento-tall bg-gradient-to-br from-purple-600 to-pink-600 p-8 flex flex-col justify-center items-center text-center">
+              <div className="bento-item bento-tall bg-[#8FAE8F] p-8 flex flex-col justify-center items-center text-center">
                 <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center mb-6">
                   <FlaskConical className="w-10 h-10 text-white" />
                 </div>
@@ -603,8 +603,8 @@ export default function About2() {
               </div>
 
               {/* Regular Item */}
-              <div className="bento-item bg-purple-50 p-8 flex flex-col justify-center">
-                <HeartPulse className="w-12 h-12 text-purple-600 mb-4" />
+              <div className="bento-item bg-[#F8F5F0] p-8 flex flex-col justify-center">
+                <HeartPulse className="w-12 h-12 text-[#8FAE8F] mb-4" />
                 <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                   Personalized
                 </h3>
@@ -614,8 +614,8 @@ export default function About2() {
               </div>
 
               {/* Regular Item */}
-              <div className="bento-item bg-gradient-to-br from-pink-50 to-purple-50 p-8 flex flex-col justify-center">
-                <Gift className="w-12 h-12 text-purple-600 mb-4" />
+              <div className="bento-item bg-[#F8F5F0] p-8 flex flex-col justify-center">
+                <Gift className="w-12 h-12 text-[#8FAE8F] mb-4" />
                 <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                   Compassionate
                 </h3>
@@ -632,7 +632,7 @@ export default function About2() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-black/30" />
                 <div className="absolute inset-0 p-8 flex flex-col justify-center">
                   <h3 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                     520+ Dogs Transformed
@@ -644,7 +644,7 @@ export default function About2() {
               </div>
 
               {/* Regular Item */}
-              <div className="bento-item bg-purple-600 p-8 flex flex-col justify-center items-center text-center">
+              <div className="bento-item bg-[#8FAE8F] p-8 flex flex-col justify-center items-center text-center">
                 <div className="text-5xl font-bold text-white mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
                   100%
                 </div>
@@ -657,7 +657,7 @@ export default function About2() {
         </section>
 
         {/* NETFLIX-STYLE TESTIMONIALS */}
-        <section className="py-24 md:py-32 bg-gradient-to-b from-gray-900 to-black">
+        <section className="py-24 md:py-32 bg-gray-900">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-5xl md:text-6xl font-bold text-white mb-6" style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -687,7 +687,7 @@ export default function About2() {
                   rating: 5
                 }
               ].map((testimonial, idx) => (
-                <div key={idx} className="testimonial-card relative rounded-3xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 shadow-2xl group">
+                <div key={idx} className="testimonial-card relative rounded-3xl overflow-hidden bg-gray-800 shadow-2xl group">
                   <div className="p-8">
                     <div className="flex gap-1 mb-4">
                       {[...Array(testimonial.rating)].map((_, i) => (
@@ -698,7 +698,7 @@ export default function About2() {
                       "{testimonial.text}"
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-[#8FAE8F] flex items-center justify-center">
                         <span className="text-white font-bold text-lg" style={{ fontFamily: 'Playfair Display, serif' }}>
                           {testimonial.name[0]}
                         </span>
@@ -728,7 +728,7 @@ export default function About2() {
         </section>
 
         {/* DIMENSIONAL CTA */}
-        <section className="relative py-32 md:py-40 bg-gradient-to-br from-purple-900 via-purple-700 to-pink-600 overflow-hidden">
+        <section className="relative py-32 md:py-40 bg-[#5E8C8C] overflow-hidden">
           {/* Floating Elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="floating-element absolute top-20 left-10 w-32 h-32 opacity-20">
@@ -758,7 +758,7 @@ export default function About2() {
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Link
                   href="/nutrition-services"
-                  className="magnetic-button group px-10 py-5 bg-white text-purple-900 rounded-full font-bold text-lg shadow-2xl hover:shadow-3xl transition-all flex items-center gap-3"
+                  className="magnetic-button group px-10 py-5 bg-white text-[#5E8C8C] rounded-full font-bold text-lg shadow-2xl hover:shadow-3xl transition-all flex items-center gap-3"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <span>Book Consultation</span>

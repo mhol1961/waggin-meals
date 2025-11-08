@@ -98,7 +98,7 @@ export default function CustomerAccountClient({ customer, recentOrders, subscrip
             <nav className="bg-white rounded-lg shadow-sm p-4 space-y-2">
               <Link
                 href="/customer/account"
-                className="block px-4 py-3 rounded-lg bg-[#a5b5eb] text-white font-medium"
+                className="block px-4 py-3 rounded-lg bg-[#8FAE8F] text-white font-medium"
               >
                 Dashboard
               </Link>
@@ -189,7 +189,7 @@ export default function CustomerAccountClient({ customer, recentOrders, subscrip
                 {subscription.secure_token && (
                   <Link
                     href={`/account/${subscription.secure_token}`}
-                    className="mt-4 block w-full text-center px-4 py-2 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors"
+                    className="mt-4 block w-full text-center px-4 py-2 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors"
                   >
                     Manage Subscription
                   </Link>
@@ -203,7 +203,7 @@ export default function CustomerAccountClient({ customer, recentOrders, subscrip
                 <h2 className="text-xl font-semibold text-gray-900">Recent Orders</h2>
                 <Link
                   href="/customer/orders"
-                  className="text-sm text-[#a5b5eb] hover:underline"
+                  className="text-sm text-[#8FAE8F] hover:underline"
                 >
                   View All
                 </Link>
@@ -214,7 +214,7 @@ export default function CustomerAccountClient({ customer, recentOrders, subscrip
                   <p>No orders yet</p>
                   <Link
                     href="/shop"
-                    className="mt-4 inline-block text-[#a5b5eb] hover:underline"
+                    className="mt-4 inline-block text-[#8FAE8F] hover:underline"
                   >
                     Start Shopping
                   </Link>
@@ -260,7 +260,7 @@ export default function CustomerAccountClient({ customer, recentOrders, subscrip
                   <h2 className="text-xl font-semibold text-gray-900">Default Address</h2>
                   <Link
                     href="/customer/addresses"
-                    className="text-sm text-[#a5b5eb] hover:underline"
+                    className="text-sm text-[#8FAE8F] hover:underline"
                   >
                     Manage Addresses
                   </Link>

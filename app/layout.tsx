@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   description: 'Master\'s-trained canine nutritionist specializing in gut health. Fresh dog food, custom meal plans, and expert nutrition consultations. Based in Asheville, NC. Healthy Gut = Clean Butt. Transform your dog\'s health with science-backed nutrition.',
   keywords: ['dog food', 'canine nutrition', 'fresh dog food', 'dog nutritionist', 'custom dog meals', 'Asheville dog food', 'pet nutrition consultant', 'dog gut health', 'master\'s trained nutritionist'],
-  authors: [{ name: 'Christie Webb' }],
+  authors: [{ name: 'Christie Willett' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',

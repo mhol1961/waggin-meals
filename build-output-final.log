@@ -1,0 +1,270 @@
+
+> waggin-meals@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.6
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 48s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/175) ...
+   Generating static pages (43/175) 
+   Generating static pages (87/175) 
+   Generating static pages (131/175) 
+ ✓ Generating static pages (175/175)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                         Size  First Load JS
+┌ ○ /                                              493 B         107 kB
+├ ○ /_not-found                                     1 kB         103 kB
+├ ○ /about                                         12 kB         122 kB
+├ ○ /about2                                      11.3 kB         122 kB
+├ ○ /about3                                      12.1 kB         122 kB
+├ ○ /account                                     4.99 kB         163 kB
+├ ƒ /account/[token]                             2.52 kB         104 kB
+├ ○ /account/addresses                           2.23 kB         156 kB
+├ ○ /account/consultations                       3.38 kB         161 kB
+├ ○ /account/orders                               3.5 kB         161 kB
+├ ƒ /account/orders/[id]                         3.99 kB         162 kB
+├ ○ /account/payment-methods                     4.06 kB         159 kB
+├ ○ /account/profile                             2.49 kB         156 kB
+├ ○ /account/settings                            2.38 kB         156 kB
+├ ○ /account/subscriptions                          3 kB         161 kB
+├ ƒ /account/subscriptions/[id]                  6.12 kB         160 kB
+├ ○ /admin                                       5.52 kB         111 kB
+├ ○ /admin/archive                               2.63 kB         108 kB
+├ ƒ /admin/blog                                  2.53 kB         108 kB
+├ ƒ /admin/blog/[id]                               143 B         250 kB
+├ ƒ /admin/blog/new                                143 B         250 kB
+├ ○ /admin/case-studies                          4.02 kB         109 kB
+├ ○ /admin/case-studies/new                      7.25 kB         224 kB
+├ ○ /admin/conditions                            2.86 kB         157 kB
+├ ƒ /admin/conditions/[id]/edit                  3.02 kB         157 kB
+├ ○ /admin/conditions/new                         5.4 kB         159 kB
+├ ○ /admin/conditions/seo-dashboard              3.08 kB         157 kB
+├ ○ /admin/conditions/settings                   3.15 kB         157 kB
+├ ƒ /admin/consultations                         2.47 kB         156 kB
+├ ƒ /admin/customers                             2.83 kB         157 kB
+├ ƒ /admin/customers/[id]                        2.78 kB         157 kB
+├ ƒ /admin/discounts                             2.45 kB         108 kB
+├ ƒ /admin/events                                2.46 kB         108 kB
+├ ƒ /admin/events/[id]                             136 B         133 kB
+├ ƒ /admin/events/new                              135 B         133 kB
+├ ○ /admin/inventory                             4.31 kB         109 kB
+├ ○ /admin/inventory/adjustments                 2.21 kB         107 kB
+├ ○ /admin/inventory/low-stock                   2.03 kB         107 kB
+├ ○ /admin/login                                 2.04 kB         109 kB
+├ ƒ /admin/newsletter                              632 B         106 kB
+├ ƒ /admin/orders                                2.97 kB         108 kB
+├ ƒ /admin/orders/[id]                           7.89 kB         113 kB
+├ ○ /admin/paid-consultations                       2 kB         111 kB
+├ ƒ /admin/paid-consultations/[id]               5.95 kB         115 kB
+├ ƒ /admin/products                              2.58 kB         108 kB
+├ ƒ /admin/products/[id]                           129 B         108 kB
+├ ƒ /admin/products/[id]/variants                2.66 kB         108 kB
+├ ƒ /admin/products/[id]/variants/[variantId]    3.26 kB         108 kB
+├ ƒ /admin/products/new                            129 B         108 kB
+├ ƒ /admin/resources                               167 B         105 kB
+├ ƒ /admin/resources/[id]                          135 B         133 kB
+├ ƒ /admin/resources/new                           136 B         133 kB
+├ ƒ /admin/settings                              2.03 kB         107 kB
+├ ○ /admin/settings/tax                          4.21 kB         109 kB
+├ ○ /admin/subscriptions                         2.17 kB         107 kB
+├ ƒ /admin/subscriptions/[id]                    2.97 kB         108 kB
+├ ○ /admin/subscriptions/invoices                1.98 kB         107 kB
+├ ƒ /admin/testimonials                          2.45 kB         108 kB
+├ ƒ /admin/testimonials/[id]                       135 B         133 kB
+├ ƒ /admin/testimonials/new                        135 B         133 kB
+├ ƒ /admin/videos                                2.48 kB         108 kB
+├ ƒ /admin/videos/[id]                             137 B         133 kB
+├ ƒ /admin/videos/new                              137 B         133 kB
+├ ƒ /api/admin/archive                             449 B         102 kB
+├ ƒ /api/admin/archive/restore                     449 B         102 kB
+├ ƒ /api/admin/auth/check                          449 B         102 kB
+├ ƒ /api/admin/auth/login                          449 B         102 kB
+├ ƒ /api/admin/auth/logout                         449 B         102 kB
+├ ƒ /api/admin/blog                                449 B         102 kB
+├ ƒ /api/admin/blog/[id]                           449 B         102 kB
+├ ƒ /api/admin/blog/posts                          449 B         102 kB
+├ ƒ /api/admin/case-studies                        449 B         102 kB
+├ ƒ /api/admin/case-studies/[id]                   449 B         102 kB
+├ ƒ /api/admin/dashboard/stats                     449 B         102 kB
+├ ƒ /api/admin/discounts                           449 B         102 kB
+├ ƒ /api/admin/discounts/[id]                      449 B         102 kB
+├ ƒ /api/admin/events                              449 B         102 kB
+├ ƒ /api/admin/events/[id]                         449 B         102 kB
+├ ƒ /api/admin/inventory/adjustments               449 B         102 kB
+├ ƒ /api/admin/inventory/low-stock                 449 B         102 kB
+├ ƒ /api/admin/invoices/failed                     449 B         102 kB
+├ ƒ /api/admin/login                               449 B         102 kB
+├ ƒ /api/admin/logout                              449 B         102 kB
+├ ƒ /api/admin/orders/[id]                         449 B         102 kB
+├ ƒ /api/admin/orders/[id]/shipping                449 B         102 kB
+├ ƒ /api/admin/paid-consultations/[id]             449 B         102 kB
+├ ƒ /api/admin/parse-document                      449 B         102 kB
+├ ƒ /api/admin/products                            449 B         102 kB
+├ ƒ /api/admin/products/[id]                       449 B         102 kB
+├ ƒ /api/admin/products/[id]/variants              449 B         102 kB
+├ ƒ /api/admin/resources                           449 B         102 kB
+├ ƒ /api/admin/resources/[id]                      449 B         102 kB
+├ ƒ /api/admin/settings                            449 B         102 kB
+├ ƒ /api/admin/setup/discount-codes-table          449 B         102 kB
+├ ƒ /api/admin/subscriptions                       449 B         102 kB
+├ ƒ /api/admin/subscriptions/[id]                  449 B         102 kB
+├ ƒ /api/admin/subscriptions/[id]/history          449 B         102 kB
+├ ƒ /api/admin/subscriptions/[id]/invoices         449 B         102 kB
+├ ƒ /api/admin/subscriptions/manual-billing        449 B         102 kB
+├ ƒ /api/admin/testimonials                        449 B         102 kB
+├ ƒ /api/admin/testimonials/[id]                   449 B         102 kB
+├ ƒ /api/admin/upload-image                        449 B         102 kB
+├ ƒ /api/admin/videos                              449 B         102 kB
+├ ƒ /api/admin/videos/[id]                         449 B         102 kB
+├ ƒ /api/auth/get-role                             449 B         102 kB
+├ ƒ /api/auth/logout                               449 B         102 kB
+├ ƒ /api/auth/magic-link                           449 B         102 kB
+├ ƒ /api/auth/session                              449 B         102 kB
+├ ƒ /api/auth/verify                               449 B         102 kB
+├ ƒ /api/case-studies                              449 B         102 kB
+├ ƒ /api/case-studies/[slug]                       449 B         102 kB
+├ ƒ /api/checkout/create-order                     449 B         102 kB
+├ ƒ /api/checkout/create-subscription              449 B         102 kB
+├ ƒ /api/collections                               449 B         102 kB
+├ ƒ /api/conditions/test-ai                        449 B         102 kB
+├ ƒ /api/consultations/complete-payment            449 B         102 kB
+├ ƒ /api/consultations/questionnaire               449 B         102 kB
+├ ƒ /api/contact                                   449 B         102 kB
+├ ƒ /api/contact-expert                            449 B         102 kB
+├ ƒ /api/cron/process-billing                      449 B         102 kB
+├ ƒ /api/cron/process-subscription-billing         449 B         102 kB
+├ ƒ /api/cron/process-subscriptions                449 B         102 kB
+├ ƒ /api/cron/retry-failed-payments                449 B         102 kB
+├ ƒ /api/customer/addresses                        449 B         102 kB
+├ ƒ /api/customer/addresses/[id]                   449 B         102 kB
+├ ƒ /api/customer/profile                          449 B         102 kB
+├ ƒ /api/discounts/validate                        449 B         102 kB
+├ ƒ /api/ghl/booking                               449 B         102 kB
+├ ƒ /api/ghl/contact                               449 B         102 kB
+├ ƒ /api/inventory/adjust                          449 B         102 kB
+├ ƒ /api/inventory/all                             449 B         102 kB
+├ ƒ /api/inventory/bulk-update                     449 B         102 kB
+├ ƒ /api/inventory/history                         449 B         102 kB
+├ ƒ /api/inventory/low-stock                       449 B         102 kB
+├ ƒ /api/inventory/status                          449 B         102 kB
+├ ƒ /api/newsletter                                449 B         102 kB
+├ ƒ /api/orders                                    449 B         102 kB
+├ ƒ /api/orders/my-orders                          449 B         102 kB
+├ ƒ /api/payment-methods                           449 B         102 kB
+├ ƒ /api/payment-methods/[id]                      449 B         102 kB
+├ ƒ /api/payments                                  449 B         102 kB
+├ ƒ /api/payments/[id]/refund                      449 B         102 kB
+├ ƒ /api/products                                  449 B         102 kB
+├ ƒ /api/products/[handle]                         449 B         102 kB
+├ ƒ /api/products/[handle]/variants                449 B         102 kB
+├ ƒ /api/products/by-handle/[handle]               449 B         102 kB
+├ ƒ /api/send-email                                449 B         102 kB
+├ ƒ /api/settings/site                             449 B         102 kB
+├ ƒ /api/shipping/calculate                        449 B         102 kB
+├ ƒ /api/subscriptions                             449 B         102 kB
+├ ƒ /api/subscriptions/[id]                        449 B         102 kB
+├ ƒ /api/subscriptions/[id]/change-frequency       449 B         102 kB
+├ ƒ /api/subscriptions/[id]/invoices               449 B         102 kB
+├ ƒ /api/subscriptions/[id]/pause                  449 B         102 kB
+├ ƒ /api/subscriptions/[id]/resume                 449 B         102 kB
+├ ƒ /api/subscriptions/[id]/skip-next              449 B         102 kB
+├ ƒ /api/subscriptions/[id]/update-address         449 B         102 kB
+├ ƒ /api/subscriptions/[id]/update-items           449 B         102 kB
+├ ƒ /api/subscriptions/my-subscriptions            449 B         102 kB
+├ ƒ /api/tax/calculate                             449 B         102 kB
+├ ƒ /api/tax/rates                                 449 B         102 kB
+├ ƒ /api/tax/rates/[id]                            449 B         102 kB
+├ ƒ /api/variants/[id]                             449 B         102 kB
+├ ƒ /api/variants/[id]/adjust-inventory            449 B         102 kB
+├ ƒ /api/variants/[id]/adjustments                 449 B         102 kB
+├ ƒ /api/variants/check-stock                      449 B         102 kB
+├ ○ /apple-icon.png                                  0 B            0 B
+├ ○ /auth/callback                               1.26 kB         156 kB
+├ ○ /auth/forgot-password                        2.51 kB         160 kB
+├ ○ /auth/login                                  3.09 kB         161 kB
+├ ○ /auth/reset-password                         2.61 kB         161 kB
+├ ○ /auth/signup                                 2.83 kB         161 kB
+├ ƒ /blog                                        1.13 kB         111 kB
+├ ƒ /blog/[slug]                                   203 B         111 kB
+├ ○ /boost-nutrition                               203 B         111 kB
+├ ○ /bundles                                     7.84 kB         118 kB
+├ ○ /case-studies                                4.76 kB         115 kB
+├ ƒ /case-studies/[slug]                            5 kB         115 kB
+├ ○ /case-studies/zeppelin                         210 B         105 kB
+├ ○ /checkout                                    8.02 kB         171 kB
+├ ○ /checkout/confirmation                       2.87 kB         108 kB
+├ ○ /collections                                   203 B         111 kB
+├ ƒ /collections/[slug]                          8.92 kB         119 kB
+├ ○ /conditions                                    210 B         105 kB
+├ ƒ /conditions/[slug]                             210 B         105 kB
+├ ○ /contact                                     3.51 kB         105 kB
+├ ○ /contact-expert                              3.69 kB         109 kB
+├ ƒ /customer/account                            1.96 kB         107 kB
+├ ƒ /customer/addresses                          2.68 kB         108 kB
+├ ƒ /customer/orders                             2.31 kB         107 kB
+├ ƒ /customer/profile                            2.03 kB         107 kB
+├ ○ /diagnostic                                    449 B         102 kB
+├ ○ /digestive-health                              210 B         105 kB
+├ ○ /events                                      3.84 kB         109 kB
+├ ○ /faq                                         3.19 kB         108 kB
+├ ○ /feeding-calculator                          5.62 kB         116 kB
+├ ○ /feeding-made-simple                           210 B         105 kB
+├ ○ /food-sensitivities                            203 B         111 kB
+├ ○ /guides/fresh-food-guide                       210 B         105 kB
+├ ○ /hero-variations                               210 B         105 kB
+├ ○ /hero-variations/biome-color-palette         8.67 kB         119 kB
+├ ○ /hero-variations/biome-experience            8.41 kB         119 kB
+├ ○ /hero-variations/diagnostic-detective        7.29 kB         118 kB
+├ ○ /hero-variations/height-compact                11 kB         121 kB
+├ ○ /hero-variations/height-current              10.9 kB         121 kB
+├ ○ /hero-variations/height-medium                 11 kB         121 kB
+├ ○ /hero-variations/lavender-luxe-homepage      9.89 kB         123 kB
+├ ○ /hero-variations/luxury-expert-homepage      9.05 kB         122 kB
+├ ○ /hero-variations/premium-experience           8.2 kB         119 kB
+├ ○ /hero-variations/science-educator             8.1 kB         118 kB
+├ ○ /hero-variations/triple-threat               7.82 kB         118 kB
+├ ○ /hero-variations/ultimate-homepage           11.6 kB         122 kB
+├ ○ /hero-variations/waggin-biome-fusion         7.15 kB         117 kB
+├ ○ /hero-variations/waggin-holistic-experience  8.01 kB         118 kB
+├ ○ /icon.png                                        0 B            0 B
+├ ○ /ingredient-sourcing                           203 B         111 kB
+├ ○ /kidney-health                                 210 B         105 kB
+├ ○ /login                                       1.61 kB         103 kB
+├ ○ /market-brochure                             4.22 kB         111 kB
+├ ○ /meal-toppers                                  203 B         111 kB
+├ ○ /monthly-wag-box                               203 B         111 kB
+├ ○ /nutrition-services                          11.1 kB         121 kB
+├ ○ /partnerships/twisted-laurel                 4.03 kB         114 kB
+├ ○ /privacy                                       210 B         105 kB
+├ ƒ /products/[handle]                           7.23 kB         118 kB
+├ ○ /puppies                                       210 B         105 kB
+├ ○ /recommended-products                        5.07 kB         115 kB
+├ ○ /resources                                     203 B         111 kB
+├ ○ /robots.txt                                    449 B         102 kB
+├ ○ /shipping                                      210 B         105 kB
+├ ○ /shop                                        1.62 kB         112 kB
+├ ○ /signup                                       1.7 kB         156 kB
+├ ○ /sitemap.xml                                   449 B         102 kB
+├ ○ /smart-bundles                                 203 B         111 kB
+├ ○ /supplementation                               210 B         105 kB
+├ ○ /terms                                         210 B         105 kB
+├ ○ /test                                          449 B         102 kB
+├ ○ /testimonials                                4.09 kB         114 kB
+└ ○ /weight-management                             210 B         105 kB
++ First Load JS shared by all                     102 kB
+  ├ chunks/1255-26f05d8bf86e016d.js              45.5 kB
+  ├ chunks/4bd1b696-100b9d70ed4e49c1.js          54.2 kB
+  └ other shared chunks (total)                  2.01 kB
+
+
+ƒ Middleware                                     79.6 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -10,29 +10,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Waggin Meals Brand Colors
+        // Waggin Meals Brand Colors - Clinical Farm-to-Table Theme
         primary: {
-          blue: '#2ea3f2',
-          dark: '#32373c',
+          sage: '#8FAE8F',       // Primary buttons & main actions
+          'sage-dark': '#6d8c6d', // Hover state for sage
+          'sage-light': '#d4e4d4', // Light sage backgrounds
+          teal: '#5E8C8C',       // Secondary buttons
+          'teal-dark': '#4a6e6e', // Hover state for teal
+          cream: '#F8F5F0',      // Primary background
         },
         text: {
-          heading: '#333333',
-          body: '#666666',
-          muted: '#999999',
+          heading: '#333333',    // Dark charcoal for headings
+          body: '#4a4a4a',       // Slightly lighter for body text
+          muted: '#757575',      // Muted gray for secondary text
+          charcoal: '#333333',   // Alias for consistency
         },
         bg: {
-          'light-blue': '#e8f4fb',
-          'light-gray': '#f5f5f5',
-          'green-accent': '#4CAF50',
+          cream: '#F8F5F0',      // Main background (soft cream)
+          'cream-light': '#fdfcfa', // Lighter cream for cards
+          'cream-dark': '#f0ede8',  // Darker cream for contrast
+          sage: '#d4e4d4',       // Sage tint for highlights
+          teal: '#d4e0e0',       // Teal tint for accents
         },
         border: {
-          light: '#e2e2e2',
-          medium: '#dddddd',
-          dark: '#bbbbbb',
+          light: '#e8e5e0',      // Light cream border
+          medium: '#d4d1cc',     // Medium border
+          dark: '#b8b5b0',       // Darker border
+          sage: '#8FAE8F',       // Sage accent border
         },
         accent: {
-          lavender: '#9b7fc5',
-          sage: '#a8c5a8',
+          terracotta: '#C97B63', // Warm terracotta for highlights
+          'terracotta-dark': '#b3664d', // Hover state
+          'terracotta-light': '#e8bfb0', // Light terracotta
+          sage: '#8FAE8F',       // Sage green accent
+          teal: '#5E8C8C',       // Teal accent
         },
       },
       fontFamily: {

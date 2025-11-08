@@ -1,0 +1,1 @@
+We couldn't process your payment for {{wm_dog_name}}. Update here: {{update_payment_url}} Reply STOP to opt out.

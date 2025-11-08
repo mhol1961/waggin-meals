@@ -80,7 +80,7 @@ export default async function ResourcesListPage() {
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-indigo-100 text-indigo-800">
+                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-[#5E8C8C]/10 text-[#5E8C8C]">
                       {resource.resource_type}
                     </span>
                   </td>

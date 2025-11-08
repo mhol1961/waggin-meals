@@ -73,7 +73,7 @@ export default function LoginClient() {
             setSuccess(false);
             setEmail('');
           }}
-          className="mt-6 text-[#a5b5eb] hover:underline text-sm"
+          className="mt-6 text-[#8FAE8F] hover:underline text-sm"
         >
           Send to a different email
         </button>
@@ -112,7 +112,7 @@ export default function LoginClient() {
             onChange={(e) => setEmail(e.target.value)}
             required
             placeholder="you@example.com"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a5b5eb] focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8FAE8F] focus:border-transparent"
             disabled={isLoading}
           />
         </div>
@@ -120,7 +120,7 @@ export default function LoginClient() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full px-6 py-3 bg-[#a5b5eb] text-white rounded-lg hover:bg-[#8a9fd9] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-6 py-3 bg-[#8FAE8F] text-white rounded-lg hover:bg-[#6d8c6d] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? 'Sending...' : 'Send Login Link'}
         </button>
